@@ -15,4 +15,24 @@ public:
     uint depHndListFreeIndex;
     // Keep track of how many times we use less than half handles
     uint shrinkHint;
+
+    AppDomain* getAppDomain()
+    {
+        return appDomain;
+    }
+
+    CQuickArrayList!ObjectHandle getDepHndList()
+    {
+        return depHndList;
+    }
+
+    uint getDepHndListFreeIndex()
+    {
+        return depHndListFreeIndex;
+    }
+
+    uint getShrinkHint()
+    {
+        return shrinkHint;
+    }
 }

@@ -41,54 +41,54 @@ public:
         CorElementType, "elemType", 5
     ));
 
-    uint getMB() const
+    uint getMB()
     {
         return mb;
     }
 
-    bool isStatic() const
+    bool isStatic()
     {
         return isfStatic;
     }
 
-    bool isThreadLocal() const
+    bool isThreadLocal()
     {
         return isfThreadLocal;
     }
 
-    bool isRVA() const
+    bool isRVA()
     {
         return isfRVA;
     }
 
-    bool isPrivate() const
+    bool isPrivate()
     {
         return (protection & Protection.Private) == 0 ||
             (protection & Protection.PrivateProtected) == 0;
     }
 
-    bool isInternal() const
+    bool isInternal()
     {
         return (protection & Protection.Internal) == 0;
     }
 
-    bool isProtected() const
+    bool isProtected()
     {
         return (protection & Protection.Protected) == 0 ||
             (protection & Protection.ProtectedInternal) == 0;
     }
 
-    bool isPublic() const
+    bool isPublic()
     {
         return (protection & Protection.Public) == 0;
     }
 
-    uint getOffset() const
+    uint getOffset()
     {
         return offset;
     }
 
-    CorElementType getElemType() const
+    CorElementType getElemType()
     {
         return elemType;
     }

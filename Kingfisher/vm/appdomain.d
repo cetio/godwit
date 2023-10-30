@@ -13,6 +13,8 @@ import vm.mngstdinterfaces;
 import inc.shash;
 import vm.rcwrefcache;
 import vm.nativeimage;
+import vm.eehash;
+import vm.comreflectioncache;
 
 public struct BaseDomain
 {
@@ -91,11 +93,9 @@ public:
     CrstExplicitInit reflectionCrst;
     CrstExplicitInit refClassFactCrst;
     // Hash table that maps a class factory info to a COM comp.
-    // -----> EEClassFactoryInfoHashTable* <-----
     // #ifdef FEATURE_COMINTEROP
-    void* refClassFactHash;
-    // -----> DispIDCache* <-----
-    void* refDispIDCache;
+    EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) refClassFactHash;
+    DispIDCache* refDispIDCache;
     // Handle points to Missing.Value Object which is used for [Optional] arg scenario during IDispatch CCW Call
     ObjectHandle hndMissing;
     SString friendlyName;
@@ -114,6 +114,16 @@ public:
     // this cache stores the RCW -> CCW references in this domain
     RCWRefCache* rcwRefCache; 
     Stage stage;
+
+    CrstExplicitInit getReflectionCrst()
+    {
+        return reflectionCrst;
+    }
+
+    CrstExplicitInit getRefClassFactCrst()
+    {
+        return refClassFactCrst;
+    }
 }
 
 public struct PinnedHeapHandleBucket
