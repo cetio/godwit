@@ -5,7 +5,7 @@ import vm.appdomain;
 
 public struct StringLiteralMap
 {
-public
+public:
     // -----> EEUnicodeStringLiteralHashTable* <-----
     // Hash tables that maps a Unicode string to a COM+ string handle.
     void* stringToEntryHashTable;

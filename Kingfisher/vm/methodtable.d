@@ -223,18 +223,18 @@ public:
         // TypeDef token for assemblies with more than 64k types. Never happens in real world.                          \
     //    METHODTABLE_OPTIONAL_MEMBER(TokenOverflow,          TADDR,                          GetTokenOverflowPtr         ) \
 
-    RelatedTypeKind getRelatedTypeKind() const
+    RelatedTypeKind getRelatedTypeKind()
     {
         return cast(RelatedTypeKind)(unType & 3);
     }
 
-    bool isIntegerSized() const
+    bool isIntegerSized()
     {
         return ((getBaseSize() & 1) == 0 && 
             getBaseSize() <= 8 && getBaseSize() != 6);
     }
 
-    uint getBaseSize() const
+    uint getBaseSize()
     {
         if (baseSize <= 0)
             return 1;
@@ -242,127 +242,127 @@ public:
         return baseSize;
     }
 
-    bool hasTokenOverflow() const
+    bool hasTokenOverflow()
     {
         return mdToken == 0xFFFF;
     }
 
-    bool isNonDynamic() const
+    bool isNonDynamic()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.NonDynamic);
     }
 
-    bool isDynamic() const
+    bool isDynamic()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.Dynamic);
     }
 
-    bool hasGenerics() const
+    bool hasGenerics()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.Generics);
     }
 
-    bool hasCrossModuleGenerics() const
+    bool hasCrossModuleGenerics()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.CrossModuleGenerics);
     }
 
-    bool isNotInPZM() const
+    bool isNotInPZM()
     {
         return genericFlags.HasFlag(GenericFlags.NotInPZM);
     }
 
-    bool isNonGeneric() const
+    bool isNonGeneric()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.NonGeneric);
     }
 
-    bool isGenericInst() const
+    bool isGenericInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.GenericInst);
     }
 
-    bool isSharedInst() const
+    bool isSharedInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.SharedInst);
     }
 
-    bool isTypicalInst() const
+    bool isTypicalInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.TypicalInst);
     }
 
-    bool hasRemotingVtsInfo() const
+    bool hasRemotingVtsInfo()
     {
         return genericFlags.HasFlag(GenericFlags.HasRemotingVtsInfo);
     }
 
-    bool hasVariance() const
+    bool hasVariance()
     {
         return genericFlags.HasFlag(GenericFlags.HasVariance);
     }
 
-    bool hasDefaultCtor() const
+    bool hasDefaultCtor()
     {
         return genericFlags.HasFlag(GenericFlags.HasDefaultCtor);
     }
 
-    bool hasPreciseInitCctors() const
+    bool hasPreciseInitCctors()
     {
         return genericFlags.HasFlag(GenericFlags.HasPreciseInitCctors);
     }
 
-    bool isHFA() const
+    bool isHFA()
     {
         return genericFlags.HasFlag(GenericFlags.IsHFA);
     }
 
-    bool isRegStructPassed() const
+    bool isRegStructPassed()
     {
         return genericFlags.HasFlag(GenericFlags.IsRegStructPassed);
     }
 
-    bool isByRefLike() const
+    bool isByRefLike()
     {
        return genericFlags.HasFlag(GenericFlags.IsByRefLike);
     }
 
-    bool isClass() const
+    bool isClass()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Class);
     }
 
-    bool isMarshalByRef() const
+    bool isMarshalByRef()
     {
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.MarshalByRef);
     }
 
-    bool isContextful() const
+    bool isContextful()
     {
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.Contextful);
     }
 
-    bool isValueType() const
+    bool isValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.ValueType);
     }
 
-    bool isNullable() const
+    bool isNullable()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Nullable);
     }
 
-    bool isPrimitiveValueType() const
+    bool isPrimitiveValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.PrimitiveValueType);
     }
 
-    bool isTruePrimitive() const
+    bool isTruePrimitive()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.TruePrimitive);
     }
 
-    bool isArray() const
+    bool isArray()
     {
         return typeFlags.HasFlagMasked(TypeFlags.ArrayMask, TypeFlags.Array);
     }
@@ -372,7 +372,7 @@ public:
         typeFlags.SetFlagMasked(TypeFlags.ArrayMask, TypeFlags.Array, state);
     }
 
-    bool isSzArray() const
+    bool isSzArray()
     {
         return typeFlags.HasFlag(TypeFlags.IfArrayThenSzArray);
     }
@@ -382,7 +382,7 @@ public:
         typeFlags.SetFlag(TypeFlags.Array, state);
     }
 
-    bool isInterface() const
+    bool isInterface()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Interface);
     }
@@ -392,7 +392,7 @@ public:
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Interface, state);
     }
 
-    bool isTransparentProxy() const
+    bool isTransparentProxy()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.TransparentProxy);
     }
@@ -402,7 +402,7 @@ public:
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.TransparentProxy, state);
     }
 
-    bool isAsyncPin() const
+    bool isAsyncPin()
     {
         return (typeFlags & TypeFlags.Mask) == TypeFlags.AsyncPin;
     }
@@ -415,7 +415,7 @@ public:
             typeFlags &= ~TypeFlags.AsyncPin;
     }
 
-    bool hasFinalizer() const
+    bool hasFinalizer()
     {
         return (typeFlags & TypeFlags.Mask) == TypeFlags.HasFinalizer;
     }
@@ -428,7 +428,7 @@ public:
             typeFlags &= ~TypeFlags.HasFinalizer;
     }
 
-    bool isMarshalable() const
+    bool isMarshalable()
     {
         return (typeFlags & TypeFlags.IfNotInterfaceThenMarshalable) != 0;
     }
@@ -441,7 +441,7 @@ public:
             typeFlags &= ~TypeFlags.IfNotInterfaceThenMarshalable;
     }
 
-    bool hasGuidInfo() const
+    bool hasGuidInfo()
     {
         return (typeFlags & TypeFlags.IfInterfaceThenHasGuidInfo) != 0;
     }

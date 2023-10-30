@@ -94,7 +94,7 @@ public:
         MethodProperties, "properties", 13
     ));
 
-    public int getBaseSize() const
+    public int getBaseSize()
     {
         if (isIL())
             return ILMethodDesc.sizeof;
@@ -117,7 +117,7 @@ public:
         return DynamicMethodDesc.sizeof;
     }
 
-    public int getOptionalSize() const
+    public int getOptionalSize()
     {
         int size = 0;
 
@@ -133,52 +133,52 @@ public:
         return size;
     }
 
-    bool isIL() const
+    bool isIL()
     {
         return classification == MethodClassification.IL;
     }
 
-    bool isFCall() const
+    bool isFCall()
     {
         return classification == MethodClassification.FCall;
     }
 
-    bool isNDirect() const
+    bool isNDirect()
     {
         return classification == MethodClassification.NDirect;
     }
 
-    bool isEEImpl() const
+    bool isEEImpl()
     {
         return classification == MethodClassification.EEImpl;
     }
 
-    bool isInstantiated() const
+    bool isInstantiated()
     {
         return classification == MethodClassification.Instantiated;
     }
 
-    bool isComPlus() const
+    bool isComPlus()
     {
         return classification == MethodClassification.ComPlus;
     }
 
-    bool isDynamic() const
+    bool isDynamic()
     {
         return classification == MethodClassification.Dynamic;
     }
 
-    bool hasNonVtableSlot() const
+    bool hasNonVtableSlot()
     {
         return properties.HasFlag(MethodProperties.HasNonVtableSlot);
     }
 
-    bool hasMethodImpl() const
+    bool hasMethodImpl()
     {
         return properties.HasFlag(MethodProperties.MethodImpl);
     }
 
-    bool hasNativeCodeSlot() const
+    bool hasNativeCodeSlot()
     {
         return properties.HasFlag(MethodProperties.HasNativeCodeSlot);
     }
