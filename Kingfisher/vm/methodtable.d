@@ -7,6 +7,7 @@ import vm.ceeload;
 import vm.genericdict;
 import flags;
 import inc.corhdr;
+import gc.gcdesc;
 
 public struct WriteableData
 {
@@ -379,7 +380,7 @@ public:
 
     void setIsSzArray(bool state)
     {
-        typeFlags.SetFlag(TypeFlags.Array, state);
+        typeFlags.SetFlag(TypeFlags.IfArrayThenSzArray, state);
     }
 
     bool isInterface()
@@ -404,53 +405,87 @@ public:
 
     bool isAsyncPin()
     {
-        return (typeFlags & TypeFlags.Mask) == TypeFlags.AsyncPin;
+        return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.AsyncPin);
     }
 
     void setIsAsyncPin(bool state)
     {
-        if (state)
-            typeFlags |= TypeFlags.AsyncPin;
-        else
-            typeFlags &= ~TypeFlags.AsyncPin;
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.AsyncPin, state);
     }
 
     bool hasFinalizer()
     {
-        return (typeFlags & TypeFlags.Mask) == TypeFlags.HasFinalizer;
+        return typeFlags.HasFlag(TypeFlags.HasFinalizer);
     }
 
     void setHasFinalizer(bool state)
     {
-        if (state)
-            typeFlags |= TypeFlags.HasFinalizer;
-        else
-            typeFlags &= ~TypeFlags.HasFinalizer;
+        typeFlags.SetFlag(TypeFlags.HasFinalizer, state);
     }
 
     bool isMarshalable()
     {
-        return (typeFlags & TypeFlags.IfNotInterfaceThenMarshalable) != 0;
+        return typeFlags.HasFlag(TypeFlags.IfNotInterfaceThenMarshalable);
     }
 
     void setIsMarshalable(bool state)
     {
-        if (state)
-            typeFlags |= TypeFlags.IfNotInterfaceThenMarshalable;
-        else
-            typeFlags &= ~TypeFlags.IfNotInterfaceThenMarshalable;
+        typeFlags.SetFlag(TypeFlags.IfNotInterfaceThenMarshalable, state);
     }
 
     bool hasGuidInfo()
     {
-        return (typeFlags & TypeFlags.IfInterfaceThenHasGuidInfo) != 0;
+        return typeFlags.HasFlag(TypeFlags.IfInterfaceThenHasGuidInfo);
     }
 
     void setHasGuidInfo(bool state)
     {
-        if (state)
-            typeFlags |= TypeFlags.IfInterfaceThenHasGuidInfo;
-        else
-            typeFlags &= ~TypeFlags.IfInterfaceThenHasGuidInfo;
+        typeFlags.SetFlag(TypeFlags.IfInterfaceThenHasGuidInfo, state);
+    }
+
+    bool isICastable()
+    {
+        return typeFlags.HasFlag(TypeFlags.ICastable);
+    }
+
+    void setIsICastable(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.ICastable, state);
+    }
+
+    bool hasIndirectParent()
+    {
+        return typeFlags.HasFlag(TypeFlags.HasIndirectParent);
+    }
+
+    void setHasIndirectParent(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.HasIndirectParent, state);
+    }
+
+    bool containsPointers()
+    {
+        return typeFlags.HasFlag(TypeFlags.ContainsPointers);
+    }
+
+    void setContainsPointers(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.ContainsPointers, state);
+    }
+
+    bool hasTypeEquivalence()
+    {
+        return typeFlags.HasFlag(TypeFlags.HasTypeEquivalence);
+    }
+
+    void setHasTypeEquivalence(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.HasTypeEquivalence, state);
+    }
+
+    GCDesc* GetGCDesc()
+        return scope
+    {
+        return cast(GCDesc*)&this;
     }
 }

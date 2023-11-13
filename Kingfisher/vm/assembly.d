@@ -7,12 +7,12 @@ import vm.loaderallocator;
 import vm.appdomain;
 import vm.clsload;
 import inc.arraylist;
+import inc.corhdr;
 
 // Equivalent to System.Runtime.Assembly.
 public struct Assembly
 {
 public:
-    // Base (parent) domain.
     BaseDomain* baseDomain;
     // Pointer to the struct loader responsible for loading types from this assembly.
     ClassLoader* classLoader;
@@ -29,19 +29,27 @@ public:
     // Indicates whether this assembly is dynamically generated (e.g., at runtime).
     bool isDynamic;
     // Indicates whether or not this assembly can be collected (unloaded) if none of the types are being used.
-    // Requires FEATURE_COLLECTIBLE_TYPES
+    //#ifdef FEATURE_COLLECTIBLE_TYPES
     bool isCollectible;
     // Pointer to the loader allocator responsible for allocating memory for this assembly.
     LoaderAllocator* loaderAllocator;
     // If a TypeLib is ever required for this module, cache the pointer here.
     // Interop Type Library
+    //#ifdef FEATURE_COMINTEROP
     ubyte* itypeLib;
-    // Status information related to interop attributes and marshaling.
     uint interopAttribStatus;
-    // Status information related to debugging and runtime control.
-    uint debugControlStatus;
+    DebuggerAssemblyControlFlags debuggerFlags;
     // Indicates whether this assembly has been terminated or unloaded.
     bool isTerminated;
+/*
+    enum IsInstrumentedStatus {
+        IS_INSTRUMENTED_UNSET = 0,
+        IS_INSTRUMENTED_FALSE = 1,
+        IS_INSTRUMENTED_TRUE = 2,
+    };
+    IsInstrumentedStatus    m_isInstrumentedStatus;
+#endif // FEATURE_READYTORUN
+*/
 }
 
 public struct FriendAssemblyDescriptor
@@ -51,5 +59,5 @@ public:
     ArrayList fullAccessFriendAssemblies;
     // Subject assemblies which we will not perform access checks against
     ArrayList subjectAssemblies;
-    long refCount;
+    int refCount;
 }
