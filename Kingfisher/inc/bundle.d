@@ -14,7 +14,7 @@ public struct Bundle
 {
 public:
     SString path;
-    uint* probe;
+    bool function(const char* path, long* offset, long* size, long* compressedSize) probe;
     SString basePath;
-    size_t basePathLen;
+    uint basePathLen;
 }
