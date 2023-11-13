@@ -63,7 +63,23 @@ public:
     wchar* srvName;
 }
 
+public struct EEStringData
+{
+public:
+    // The string data.
+    wchar* string;
+    uint length;
+    /*
+    #ifdef _DEBUG
+        BOOL            bDebugOnlyLowChars;      // Does the string contain only characters less than 0x80?
+        DWORD           dwDebugCch;
+    #endif // _DEBUG
+    */  
+}
+
 public class EEClassFactoryInfoHashTableHelper
 {
     
 }
+
+alias EEUnicodeStringLiteralHashTable = EEHashTable(EEStringData*, EEClassFactoryInfoHashTableHelper, true)

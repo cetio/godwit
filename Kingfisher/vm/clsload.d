@@ -2,13 +2,13 @@ module vm.clsload;
 
 import vm.assembly;
 import vm.crst;
+import vm.pendingload;
 
 public struct ClassLoader
 {
 public:
-    // -----> PendingTypeLoadTable* <-----
     // Classes for which load is in progress
-    ubyte* unresolvedClassHash;
+    PendingTypeLoadTable* unresolvedClassHash;
     CrstExplicitInit unresolvedClassLock;
     // Protects addition of elements to module's m_pAvailableClasses.
     // (indeed thus protects addition of elements to any m_pAvailableClasses in any

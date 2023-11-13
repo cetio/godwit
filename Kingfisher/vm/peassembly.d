@@ -1,6 +1,8 @@
 module vm.peassembly;
 
 import vm.peimage;
+import vm.assemblybinder;
+import binder.assembly;
 
 public struct PEAssembly
 {
@@ -13,7 +15,7 @@ public:
     bool mdImportIsRWDBGUseOnly;
     union
     {
-        ubyte* m_pMDImport;
+        ubyte* mdImport;
         // NB: m_pMDImport_UseAccessor appears to be never assigned a value, but its purpose is just
         //     to be a placeholder that has the same type and offset as m_pMDImport.
         //
@@ -21,7 +23,7 @@ public:
         //     Only GetMDInternalRWAddress is supposed to use it via (TADDR)m_pMDImport_UseAccessor,
         //     which at that point will match the m_pMDImport on the debuggee side.
         //     See more scary comments in GetMDInternalRWAddress.
-        ubyte* m_pMDImport_UseAccessor;
+        ubyte* mdImportUseAccessor;
     };
     // IMetaDataImport2
     ubyte* importer;
@@ -29,7 +31,7 @@ public:
     ubyte* emitter;
     uint refCount;
     bool isSystem;
-    ubyte* hostAssembly;
+    BinderSpace* hostAssembly;
     // For certain assemblies, we do not have m_pHostAssembly since they are not bound using an actual binder.
     // An example is Ref-Emitted assemblies. Thus, when such assemblies trigger load of their dependencies,
     // we need to ensure they are loaded in appropriate load context.
@@ -37,5 +39,5 @@ public:
     // To enable this, we maintain a concept of "FallbackBinder", which will be set to the Binder of the
     // assembly that created the dynamic assembly. If the creator assembly is dynamic itself, then its fallback
     // load context would be propagated to the assembly being dynamically generated.
-    ubyte* fallbackBinder;
+    AssemblyBinder* fallbackBinder;
 }
