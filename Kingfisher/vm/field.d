@@ -2,6 +2,7 @@ module vm.field;
 
 import std.bitmanip;
 import inc.corhdr;
+import flags;
 
 // Equivalent to System.Runtime.FieldInfo.
 public struct FieldDesc
@@ -61,26 +62,31 @@ public:
         return isfRVA;
     }
 
+    Protection getProtection()
+    {
+        return protection;
+    }
+
     bool isPrivate()
     {
-        return (protection & Protection.Private) == 0 ||
-            (protection & Protection.PrivateProtected) == 0;
+        return protection.HasFlag(Protection.Private) ||
+            protection.HasFlag(Protection.PrivateProtected);
     }
 
     bool isInternal()
     {
-        return (protection & Protection.Internal) == 0;
+        return protection.HasFlag(Protection.Internal);
     }
 
     bool isProtected()
     {
-        return (protection & Protection.Protected) == 0 ||
-            (protection & Protection.ProtectedInternal) == 0;
+        return protection.HasFlag(Protection.Protected) ||
+            protection.HasFlag(Protection.ProtectedInternal);
     }
 
     bool isPublic()
     {
-        return (protection & Protection.Public) == 0;
+        return protection.HasFlag(Protection.Public);
     }
 
     uint getOffset()
@@ -91,5 +97,10 @@ public:
     CorElementType getElemType()
     {
         return elemType;
+    }
+
+    ubyte* getAddress(ubyte* ptr)
+    {
+        return ptr + getOffset();
     }
 }
