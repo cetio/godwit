@@ -1,6 +1,8 @@
 module vm.clrex;
 
 import vm.method;
+import inc.ex;
+import vm.objects;
 
 public struct StackTraceInfo
 {
@@ -33,4 +35,22 @@ public:
     uint* sp;
     MethodDesc* fnptr;
     StackTraceElementFlags flags;      
+}
+
+public struct CLRException
+{
+    Exception exception;
+    alias exception this;
+
+public:
+    ObjectHandle throwableHandle;
+}
+
+public struct EEException
+{
+    CLRException clrException;
+    alias clrException this;
+
+public:
+    const RuntimeExceptionKind kind;
 }

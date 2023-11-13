@@ -4,6 +4,7 @@ import vm.crst;
 import inc.sbuffer;
 import vm.peimagelayout;
 import inc.bundle;
+import vm.simplerwlock;
 
 public struct PEImage
 {
@@ -32,9 +33,7 @@ public struct PEImage
     // hook (public API on hosting) to take an additional file name hint.
     // We are piggy backing on the fact that module name is the same as file name!!!
     SString   moduleFileNameHintUsedByDac; // This is only used by DAC
-    // -----> SimpleRWLock* <-----
-    void* layoutLock;
+    SimpleRWLock* layoutLock;
     PEImageLayout*[IMAGE_COUNT] layouts;
-    // -----> IMDInternalImport* <-----
     ubyte* mdImport;
 }
