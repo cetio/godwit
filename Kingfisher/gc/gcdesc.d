@@ -63,6 +63,17 @@ public:
         return cast(GCDescSeries*)((cast(size_t*)&this) - 1) - 1;
     }
 
+    // Size of the entire slot map.
+    size_t GetSize ()
+    {
+        size_t numSeries = GetNumSeries();
+
+        if (numSeries < 0)
+            return ComputeSizeRepeating(-numSeries);
+
+        return ComputeSize(numSeries);
+    }
+
     ubyte* getStartOfGCData()
     {
         return (cast(ubyte*)&this) - GetSize();
