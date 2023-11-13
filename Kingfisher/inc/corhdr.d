@@ -141,3 +141,23 @@ enum CorElementType : ubyte
     Sentinel = 0x01 | Modifier,
     Pinned = 0x05 | Modifier,
 }
+
+// corbpriv.h
+//
+// Flags used to control the debuggable state of modules and
+// assemblies.
+//
+public enum DebuggerAssemblyControlFlags
+{
+    None = 0x00,
+    UserOverride = 0x01,
+    AllowJITOpts = 0x02,
+    // obsolete in V2.0, we're always tracking.
+    ObsoleteTrackJITInfo = 0x04, 
+    ENCEnabled = 0x08,
+    IgnorePDBs = 0x20,
+    ControlFlagsMask = 0x2F,
+
+    PDBsCopied = 0x10,
+    MiscFlagsMask = 0x10,
+};

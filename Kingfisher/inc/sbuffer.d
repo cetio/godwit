@@ -28,8 +28,8 @@ public:
     State flags;
     union
     {
-        ubyte* m_buffer;
-        wchar* m_asStr;
+        ubyte* buffer;
+        wchar* asString;
     }
 
     bool isAllocated()

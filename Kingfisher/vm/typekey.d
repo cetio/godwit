@@ -1,7 +1,7 @@
 module vm.typekey;
 
 import inc.corhdr;
-import vm.clsload;
+import vm.ceeload;
 import vm.typehandle;
 
 public struct TypeKey
@@ -17,7 +17,7 @@ public:
     {
         struct AsClass
         {
-            Module* ceeload;
+            Module* ceemodule;
             MDToken typeDef;
             // 0 for non-generic types
             uint numGenericArgs; 
