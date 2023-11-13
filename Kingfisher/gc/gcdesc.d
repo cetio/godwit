@@ -66,13 +66,13 @@ public:
     // similarity with the go_through_object family of macros.
     // size is only used if you have an array of value types.
 //#ifndef DACCESS_COMPILE
-    static int getNumPointers(MethodTable* pMT, uint size, uint numComps) const
+    static int getNumPointers(MethodTable* pmt, uint size, uint numComps) const
     {
-        if (!pMT.containsPointers)
+        if (!pmt.containsPointers)
             return 0;
 
         int count = 0;
-        GCDesc* map = pMT.getGCDesc();
+        GCDesc* map = pmt.getGCDesc();
         GCDescSeries* cur = map.getHighestSeries();
         size_t numSeries = map.getNumSeries();
 
@@ -95,7 +95,7 @@ public:
         }
 /*
 #ifndef FEATURE_NATIVEAOT
-        if (pMT->Collectible())
+        if (pmt->Collectible())
         {
             NumOfPointers += 1;
         }

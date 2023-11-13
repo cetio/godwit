@@ -483,7 +483,7 @@ public:
         typeFlags.SetFlag(TypeFlags.HasTypeEquivalence, state);
     }
 
-    GCDesc* GetGCDesc()
+    GCDesc* GetGCDesc() const
         return scope
     {
         return cast(GCDesc*)&this;
