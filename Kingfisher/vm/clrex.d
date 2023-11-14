@@ -39,7 +39,11 @@ public:
 
 public struct CLRException
 {
+<<<<<<< HEAD
     Exception exception;
+=======
+    EXException exception;
+>>>>>>> d6d6d12 (😱😱😱)
     alias exception this;
 
 public:
@@ -52,5 +56,9 @@ public struct EEException
     alias clrException this;
 
 public:
+<<<<<<< HEAD
     const RuntimeExceptionKind kind;
+=======
+    const uint kind;
+>>>>>>> d6d6d12 (😱😱😱)
 }

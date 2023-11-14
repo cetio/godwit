@@ -257,7 +257,7 @@ public:
        struct
         {
             uint rank;
-            CorElementType elemCorElementType;
+            CorElementType elemType;
         }
 
         Stub* staticCallStub;

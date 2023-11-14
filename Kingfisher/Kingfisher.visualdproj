@@ -282,7 +282,7 @@
   <useIn>0</useIn>
   <useOut>0</useOut>
   <useArrayBounds>0</useArrayBounds>
-  <boundscheck>0</boundscheck>
+  <boundscheck>2</boundscheck>
   <useSwitchError>0</useSwitchError>
   <useUnitTests>0</useUnitTests>
   <useInline>0</useInline>
@@ -1519,6 +1519,7 @@
    <File path="inc\bundle.d" />
    <File path="inc\cor.d" />
    <File path="inc\corhdr.d" />
+   <File path="inc\ex.d" />
    <File path="inc\loaderheap.d" />
    <File path="inc\memorypool.d" />
    <File path="inc\pal.d" />
@@ -1528,19 +1529,6 @@
    <File path="inc\stringarraylist.d" />
   </Folder>
   <Folder name="readers">
-   <Folder name="pe">
-    <File path="readers\pe\cor20.d" />
-    <File path="readers\pe\file.d" />
-    <File path="readers\pe\manifestresource.d" />
-    <File path="readers\pe\metadata.d" />
-    <File path="readers\pe\msdos.d" />
-    <File path="readers\pe\nt.d" />
-    <File path="readers\pe\resourcessection.d" />
-    <File path="readers\pe\sectionheader.d" />
-    <File path="readers\pe\streamheader.d" />
-    <File path="readers\pe\tildastream.d" />
-    <File path="readers\pe\utils.d" />
-   </Folder>
    <File path="readers\metadata.d" />
    <File path="readers\packedfields.d" />
   </Folder>
@@ -1580,10 +1568,12 @@
    <File path="vm\peassembly.d" />
    <File path="vm\peimage.d" />
    <File path="vm\peimagelayout.d" />
+   <File path="vm\pendingload.d" />
    <File path="vm\precode.d" />
    <File path="vm\rcwrefcache.d" />
    <File path="vm\readytoruninfo.d" />
    <File path="vm\siginfo.d" />
+   <File path="vm\simplerwlock.d" />
    <File path="vm\stringliteralmap.d" />
    <File path="vm\stub.d" />
    <File path="vm\threads.d" />
@@ -1591,6 +1581,7 @@
    <File path="vm\typedesc.d" />
    <File path="vm\typehandle.d" />
    <File path="vm\typehash.d" />
+   <File path="vm\typekey.d" />
   </Folder>
   <File path="flags.d" />
   <File path="hresult.d" />

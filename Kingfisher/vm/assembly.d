@@ -38,6 +38,10 @@ public:
     //#ifdef FEATURE_COMINTEROP
     ubyte* itypeLib;
     uint interopAttribStatus;
+<<<<<<< HEAD
+=======
+    //
+>>>>>>> d6d6d12 (😱😱😱)
     DebuggerAssemblyControlFlags debuggerFlags;
     // Indicates whether this assembly has been terminated or unloaded.
     bool isTerminated;
