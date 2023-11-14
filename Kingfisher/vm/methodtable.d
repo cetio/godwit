@@ -164,22 +164,19 @@ public:
 
     enum RelatedTypeKind
     {
-        UNION_EECLASS      = 0,    //  0 - pointer to EEClass. This MethodTable is the canonical method table.
-        UNION_INVALID      = 1,    //  1 - not used
-        UNION_METHODTABLE  = 2,    //  2 - pointer to canonical MethodTable.
-        UNION_INDIRECTION  = 3     //  3 - pointer to indirection cell that points to canonical MethodTable.
+        EEClass = 0,    //  0 - pointer to EEClass. This MethodTable is the canonical method table.
+        Invalid = 1,    //  1 - not used
+        CanonMT = 2,    //  2 - pointer to canonical MethodTable.
+        Indirection  = 3     //  3 - pointer to indirection cell that points to canonical MethodTable.
     }                              //      (used only if FEATURE_PREJIT is defined)
 
     union
     {
-        union
-        {
-            TypeFlags typeFlags;
-            mixin(bitfields!(
-                ushort, "componentSize", 16,
-                GenericFlags, "genericFlags", 16
-            ));
-        }
+        TypeFlags typeFlags;
+        mixin(bitfields!(
+            ushort, "componentSize", 16,
+            GenericFlags, "genericFlags", 16
+        ));
     }
     // Base size of instance of this struct when allocated on the heap, including padding
     uint baseSize;
@@ -188,6 +185,11 @@ public:
     HalfMDToken mdToken;
     ushort numVirtuals;
     ushort numInterfaces;
+    /*
+    #ifdef _DEBUG
+    LPCUTF8         debug_m_szClassName;
+    #endif //_DEBUG
+    */
     MethodTable* parentMethodTable;
     Module* ceemodule;
     WriteableData* writeableData;
@@ -231,8 +233,8 @@ public:
 
     bool isIntegerSized()
     {
-        return ((getBaseSize() & 1) == 0 && 
-            getBaseSize() <= 8 && getBaseSize() != 6);
+        return ((eeClass.layoutInfo.managedSize & 1) == 0 && 
+            eeClass.layoutInfo.managedSize <= 8 && eeClass.layoutInfo.managedSize != 6);
     }
 
     uint getBaseSize()
@@ -483,9 +485,104 @@ public:
         typeFlags.SetFlag(TypeFlags.HasTypeEquivalence, state);
     }
 
+<<<<<<< HEAD
     GCDesc* GetGCDesc() const
         return scope
     {
         return cast(GCDesc*)&this;
+=======
+    bool hasRCWPerTypeData()
+    {
+        return typeFlags.HasFlag(TypeFlags.HasRCWPerTypeData);
+    }
+
+    void setHasRCWPerTypeData(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.HasRCWPerTypeData, state);
+    }
+
+    bool hasCriticalFinalizer()
+    {
+        return typeFlags.HasFlag(TypeFlags.HasCriticalFinalizer);
+    }
+
+    void setHasCriticalFinalizer(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.HasCriticalFinalizer, state);
+    }
+
+    bool isCollectible()
+    {
+        return typeFlags.HasFlag(TypeFlags.Collectible);
+    }
+
+    void setIsCollectible(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.Collectible, state);
+    }
+
+    bool containsGenericVariables()
+    {
+        return typeFlags.HasFlag(TypeFlags.ContainsGenericVariables);
+    }
+
+    void setContainsGenericVariables(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.ContainsGenericVariables, state);
+    }
+
+    bool isComObject()
+    {
+        return typeFlags.HasFlag(TypeFlags.ComObject);
+    }
+
+    void setIsComObject(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.ComObject, state);
+    }
+
+    bool hasComponentSize()
+    {
+        return typeFlags.HasFlag(TypeFlags.HasComponentSize);
+    }
+
+    void setHasComponentSize(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.HasComponentSize, state);
+    }
+
+    bool isNonTrivialInterfaceCast()
+    {
+        return typeFlags.HasFlag(TypeFlags.NonTrivialInterfaceCast);
+    }
+
+    void setIsNonTrivialInterfaceCast(bool state)
+    {
+        typeFlags.SetFlag(TypeFlags.NonTrivialInterfaceCast, state);
+    }
+
+    bool hasModuleOverride()
+    {
+        return interfaceFlags.HasFlag(InterfaceFlags.HasModuleOverride);
+    }
+
+    void setHasModuleOverride(bool state)
+    {
+        interfaceFlags.SetFlag(InterfaceFlags.HasModuleOverride, state);
+    }
+
+    GCDesc* getGCDesc() const
+        return scope
+    {
+        return cast(GCDesc*)&this;
+    }
+
+    Module* getModule()
+    {
+        if (!hasComponentSize() && isNonGeneric())
+            return ceemodule;
+
+        return canonMethodTable.getModule();
+>>>>>>> d6d6d12 (😱😱😱)
     }
 }

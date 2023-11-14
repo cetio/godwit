@@ -160,7 +160,7 @@ public:
     LookupMap!size_t methodDefToPropertyInfoMap;
     // IL stub cache with fabricated MethodTable parented by this module.
     ILStubCache* ilStubCache;
-    uint m_DefaultDllImportSearchPathsAttributeValue;
+    uint defaultDllImportSearchPathsAttributeValue;
     // Hash of available types by name
     EEClassHashTable* availableClasses;
     // Hashtable of generic type instances
