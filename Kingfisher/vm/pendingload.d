@@ -17,11 +17,7 @@ public:
     int waitCount;
     // Error result, propagated to all threads loading this class
     HResult hresult;
-<<<<<<< HEAD
-    Exception* exception;
-=======
     EXException* exception;
->>>>>>> d6d6d12 (😱😱😱)
     // m_Crst was acquired
     bool lockAcquired;
 }
