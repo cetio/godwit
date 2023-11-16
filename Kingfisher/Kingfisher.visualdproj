@@ -315,13 +315,13 @@
   <preview_in>0</preview_in>
   <preview_inclincontracts>0</preview_inclincontracts>
   <transition_vmarkdown>0</transition_vmarkdown>
-  <compiler>0</compiler>
+  <compiler>2</compiler>
   <otherDMD>0</otherDMD>
   <cccmd>$(CC) -c</cccmd>
   <ccTransOpt>1</ccTransOpt>
-  <addDepImp>0</addDepImp>
+  <addDepImp>1</addDepImp>
   <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-  <imppath />
+  <imppath>..\Kingfisher.Streams</imppath>
   <fileImppath />
   <outdir>$(PlatformName)\$(ConfigurationName)</outdir>
   <objdir>$(OutDir)</objdir>
@@ -1529,6 +1529,7 @@
    <File path="inc\stringarraylist.d" />
   </Folder>
   <Folder name="readers">
+   <Folder name="pe" />
    <File path="readers\metadata.d" />
    <File path="readers\packedfields.d" />
   </Folder>
@@ -1586,7 +1587,7 @@
   <File path="flags.d" />
   <File path="hresult.d" />
   <File path="interop.d" />
-  <File path="kingfisher.d" />
+  <File path="main.d" />
   <File path="lure.d" />
  </Folder>
 </DProject>
