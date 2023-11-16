@@ -485,12 +485,6 @@ public:
         typeFlags.SetFlag(TypeFlags.HasTypeEquivalence, state);
     }
 
-<<<<<<< HEAD
-    GCDesc* GetGCDesc() const
-        return scope
-    {
-        return cast(GCDesc*)&this;
-=======
     bool hasRCWPerTypeData()
     {
         return typeFlags.HasFlag(TypeFlags.HasRCWPerTypeData);
@@ -583,6 +577,5 @@ public:
             return ceemodule;
 
         return canonMethodTable.getModule();
->>>>>>> d6d6d12 (😱😱😱)
     }
 }

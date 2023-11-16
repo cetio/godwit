@@ -1,10 +1,7 @@
 module vm.eehash;
 
-<<<<<<< HEAD
-=======
 import std.uuid;
 
->>>>>>> d6d6d12 (😱😱😱)
 public struct EEHashEntry
 {
 public:
@@ -51,32 +48,20 @@ public:
     EEThreadId      m_writerThreadId;
     BOOL            m_CheckThreadSafety;
 
-<<<<<<< HEAD
-    #endif
-=======
     #endif 
->>>>>>> d6d6d12 (😱😱😱)
     */
 }
 
 public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
 {
-<<<<<<< HEAD
-    EEHashTableBase(KEY, HELPER, ISDEEPCOPY) eeHashTableBase;
-=======
     EEHashTableBase!(KEY, HELPER, ISDEEPCOPY) eeHashTableBase;
->>>>>>> d6d6d12 (😱😱😱)
     alias eeHashTableBase this;
 }
 
 public struct ClassFactoryInfo
 {
 public:
-<<<<<<< HEAD
-    Uuid clsId;
-=======
     UUID clsId;
->>>>>>> d6d6d12 (😱😱😱)
     wchar* srvName;
 }
 
@@ -99,8 +84,4 @@ public class EEClassFactoryInfoHashTableHelper
     
 }
 
-<<<<<<< HEAD
-alias EEUnicodeStringLiteralHashTable = EEHashTable(EEStringData*, EEClassFactoryInfoHashTableHelper, true)
-=======
 alias EEUnicodeStringLiteralHashTable = EEHashTable!(EEStringData*, EEClassFactoryInfoHashTableHelper, true);
->>>>>>> d6d6d12 (😱😱😱)
