@@ -10,7 +10,7 @@ using System.Linq;
 #else
         [DllImport("kingfisher.dll")]
 #endif
-static extern unsafe void Initialize(nint pmt);
+static extern unsafe void Initialize(nint pmt, string filePath);
 
 if (!File.Exists("C:\\Users\\cet\\source\\repos\\kingfisher\\kingfisher\\x64\\Debug\\kingfisher.dll"))
     throw new Exception("Kingfisher.dll not found!");
@@ -18,7 +18,7 @@ if (!File.Exists("C:\\Users\\cet\\source\\repos\\kingfisher\\kingfisher\\x64\\De
 unsafe
 {
     var handle = typeof(TestStructure).Module.ModuleHandle;
-    Initialize(*(nint*)Unsafe.AsPointer(ref handle));
+    Initialize(*(nint*)Unsafe.AsPointer(ref handle), AppDomain.CurrentDomain.BaseDirectory + "\\tests.dll");
     /*int a = 1;
     float b = 3.1415f;
     TestStructure c = new TestStructure(1, 2, 3, 4, 5, 6);
