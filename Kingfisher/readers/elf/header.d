@@ -1,4 +1,4 @@
-module readers.elf.elfheader;
+module readers.elf.header;
 
 public enum Architecture : ubyte
 {

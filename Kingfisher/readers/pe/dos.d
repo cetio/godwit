@@ -1,7 +1,10 @@
-module pe.dosheader;
+module readers.pe.dos;
+
+import readers.pe.coff;
 
 public struct DOSHeader 
 {
+public:
     ushort e_magic;
     ushort e_cblp;
     ushort e_cp;
@@ -21,4 +24,10 @@ public struct DOSHeader
     ushort e_oeminfo;
     ushort[10] e_res2;
     uint e_lfanew;
+    ubyte[e_lfanew] dosStub;
+
+    COFFHeader* getCOFFHeader()
+    {
+        return cast(COFFHeader*)e_lfanew;
+    }
 }
