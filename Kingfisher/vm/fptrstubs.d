@@ -1,4 +1,4 @@
-module inc.fptrstubs;
+module vm.fptrstubs;
 
 import vm.crst;
 import vm.method;

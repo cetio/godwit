@@ -1,4 +1,4 @@
-module inc.codeman;
+module vm.codeman;
 
 import inc.loaderheap;
 import vm.crst;

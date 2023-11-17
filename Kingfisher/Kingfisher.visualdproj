@@ -253,7 +253,7 @@
  <Config platform="x64" name="Debug">
   <obj>0</obj>
   <link>0</link>
-  <lib>2</lib>
+  <lib>0</lib>
   <subsystem>1</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
@@ -319,9 +319,9 @@
   <otherDMD>0</otherDMD>
   <cccmd>$(CC) -c</cccmd>
   <ccTransOpt>1</ccTransOpt>
-  <addDepImp>1</addDepImp>
+  <addDepImp>0</addDepImp>
   <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-  <imppath>..\Kingfisher.Streams</imppath>
+  <imppath />
   <fileImppath />
   <outdir>$(PlatformName)\$(ConfigurationName)</outdir>
   <objdir>$(OutDir)</objdir>
@@ -363,7 +363,7 @@
   <libpaths />
   <deffile />
   <resfile />
-  <exefile>$(OutDir)\$(ProjectName).dll</exefile>
+  <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <pdbfile>$(IntDir)\$(SafeProjectName).pdb</pdbfile>
   <impfile>$(IntDir)\$(SafeProjectName).lib</impfile>
   <mapfile>$(IntDir)\$(SafeProjectName).map</mapfile>
@@ -1529,9 +1529,21 @@
    <File path="inc\stringarraylist.d" />
   </Folder>
   <Folder name="readers">
-   <Folder name="pe" />
+   <Folder name="elf">
+    <File path="readers\elf\elfheader.d" />
+    <File path="readers\elf\programheader.d" />
+    <File path="readers\elf\sectionheader.d" />
+   </Folder>
+   <Folder name="pe">
+    <File path="readers\pe\coffheader.d" />
+    <File path="readers\pe\datadirectories.d" />
+    <File path="readers\pe\dosheader.d" />
+    <File path="readers\pe\optionalheader.d" />
+    <File path="readers\pe\sectiontable.d" />
+   </Folder>
    <File path="readers\metadata.d" />
    <File path="readers\packedfields.d" />
+   <File path="readers\stream.d" />
   </Folder>
   <Folder name="vm">
    <File path="vm\appdomain.d" />
@@ -1587,7 +1599,7 @@
   <File path="flags.d" />
   <File path="hresult.d" />
   <File path="interop.d" />
-  <File path="main.d" />
   <File path="lure.d" />
+  <File path="main.d" />
  </Folder>
 </DProject>

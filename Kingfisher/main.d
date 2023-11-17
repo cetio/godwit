@@ -1,7 +1,7 @@
-module kingfisher;
+module main;
 
-import core.sys.windows.windows;
-import core.sys.windows.dll;
+//import core.sys.windows.windows;
+//import core.sys.windows.dll;
 import vm.appdomain;
 import vm.ceeload;
 import vm.methodtable;
@@ -10,7 +10,7 @@ import vm.loaderallocator;
 import std.stdio;
 import vm.eeclass;
 
-mixin SimpleDllMain;
+//mixin SimpleDllMain;
 
 import std.stdio;
 import std.file;
@@ -49,42 +49,35 @@ struct IMAGE_FILE_HEADER {
     ushort Characteristics;
 }
 
-extern (C) export void Initialize(Module* pmd, string filePath)
+int main()
 {
-    filePath = r"C:\Users\cet\source\repos\Kingfisher\Tests\bin\Debug\net7.0\Tests.dll";
+    Initialize();
+    readln();
+    return 1;
+}
+
+extern (C) export void Initialize()
+{
+    import readers.stream;
+    ubyte[8] bytes;
+    string filePath = r"C:\Users\cet\source\repos\Kingfisher\Tests\bin\Debug\net7.0\Tests.dll";
     writeln(filePath);
     if (!exists(filePath)) {
         writeln("File not found!");
         return;
     }
 
-    auto fileContent = cast(ubyte[])read(filePath);
-    if (fileContent.length < size_t.sizeof + size_t.sizeof) {
-        writeln("Invalid file format!");
-        return;
-    }
+    Stream stream = new Stream(filePath);
 
-    // Read DOS Header
-    auto dosHeader = *cast(IMAGE_DOS_HEADER*)fileContent.ptr;
-
-    // Check if the file is a valid PE file
-    if (dosHeader.e_magic != 0x5A4D) {
+    auto dosHeader = stream.read!IMAGE_DOS_HEADER();
+    if (dosHeader.e_magic != 0x5A4D)
         writeln("Not a valid PE file!");
-        return;
-    }
 
-    // Get the offset to PE signature
-    size_t peOffset = dosHeader.e_lfanew;
+    stream.position = dosHeader.e_lfanew;
 
-    // Read PE Signature (PE Header)
-    auto peSignature = *cast(uint*)(fileContent.ptr + peOffset);
-    if (peSignature != 0x4550) {
+    if (stream.read!int() != 0x4550)
         writeln("PE signature not found!");
-        return;
-    }
-
-    // Read IMAGE_FILE_HEADER
-    auto fileHeader = *cast(IMAGE_FILE_HEADER*)(fileContent.ptr + peOffset + 4);
+    auto fileHeader = stream.read!IMAGE_FILE_HEADER();
 
     writeln("Machine: ", fileHeader.Machine.to!string(16));
     writeln("Number of Sections: ", fileHeader.NumberOfSections.to!string(16));

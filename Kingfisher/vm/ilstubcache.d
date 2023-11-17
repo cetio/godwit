@@ -1,4 +1,4 @@
-module inc.ilstubcache;
+module vm.ilstubcache;
 
 import vm.crst;
 import inc.loaderheap;
