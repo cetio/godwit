@@ -1,9 +1,9 @@
 module vm.loaderallocator;
 
 import inc.loaderheap;
-import inc.codeman;
+import vm.codeman;
 import vm.crst;
-import inc.fptrstubs;
+import vm.fptrstubs;
 import vm.stringliteralmap;
 import vm.objects;
 

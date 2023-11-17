@@ -6,7 +6,7 @@ import vm.assembly;
 import vm.peassembly;
 import vm.loaderallocator;
 import vm.methodtable;
-import inc.ilstubcache;
+import vm.ilstubcache;
 import vm.method;
 import vm.field;
 import vm.typedesc;
