@@ -1530,16 +1530,16 @@
   </Folder>
   <Folder name="readers">
    <Folder name="elf">
-    <File path="readers\elf\elfheader.d" />
-    <File path="readers\elf\programheader.d" />
-    <File path="readers\elf\sectionheader.d" />
+    <File path="readers\elf\header.d" />
+    <File path="readers\elf\program.d" />
+    <File path="readers\elf\sections.d" />
    </Folder>
    <Folder name="pe">
-    <File path="readers\pe\coffheader.d" />
-    <File path="readers\pe\datadirectories.d" />
-    <File path="readers\pe\dosheader.d" />
-    <File path="readers\pe\optionalheader.d" />
-    <File path="readers\pe\sectiontable.d" />
+    <File path="readers\pe\coff.d" />
+    <File path="readers\pe\datadir.d" />
+    <File path="readers\pe\dos.d" />
+    <File path="readers\pe\windows.d" />
+    <File path="readers\pe\sections.d" />
    </Folder>
    <File path="readers\metadata.d" />
    <File path="readers\packedfields.d" />
@@ -1596,6 +1596,7 @@
    <File path="vm\typehash.d" />
    <File path="vm\typekey.d" />
   </Folder>
+  <File path="abi.d" />
   <File path="flags.d" />
   <File path="hresult.d" />
   <File path="interop.d" />
