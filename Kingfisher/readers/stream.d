@@ -3,6 +3,7 @@ module readers.stream;
 import std.file;
 import std.conv;
 import std.algorithm.mutation;
+import std.algorithm : canFind;
 import std.traits;
 
 public enum Endianness : ubyte
@@ -19,7 +20,7 @@ public enum Seek
     End
 }
 
-public class Stream
+public class ByteStream
 {
 public:
     ubyte[] data;
@@ -365,5 +366,66 @@ public:
             if (val == 0)
                 return;
         }
+    }
+
+    /**
+    * Reads a type from the stream using optional fields.
+    *
+    * Params:
+    *   - `TO': The type to be read from the stream.
+    *   - `ARGS...`: The arguments for optional fields.
+    *
+    * Returns:
+    *   The read type read from the stream.
+    */
+    TO readPlasticized(TO, ARGS...)()
+        if (ARGS % 3 == 0)
+    {
+        TO val = read!(TO)();
+        string field;
+        string conditionalField;
+        foreach (i, ARG; ARGS)
+        {
+            if (i % 3 == 0)
+            {
+                static assert(is(typeof(ARG) : string),
+                          "Field name expected, found " ~ ARG.stringof);
+
+                field = ARG;
+            }
+            else if (i % 3 == 1)
+            {
+                static assert(is(typeof(ARG) : string),
+                          "Conditional field name expected, found " ~ ARG.stringof);
+
+                conditionalField = ARG;
+            }
+            else
+            {
+                if (__traits(getMember, val, conditionalField) != ARG)
+                {
+                    __traits(getMember, val, field) = __traits(getMember, val, field).init;
+                    position -= __traits(getMember, val, field).sizeof;
+                }
+            }
+        }
+    }
+
+    /**
+    * Reads a type from the stream without advancing the stream position and using optional fields.
+    *
+    * Params:
+    *   - `TO': The type to be read from the stream.
+    *   - `ARGS...`: The arguments for optional fields.
+    *
+    * Returns:
+    *   The read type read from the stream.
+    */
+    TO peekPlasticized(TO, ARGS...)()
+        if (ARGS % 3 == 0)
+    {
+        ulong _position = position;
+        scope(exit) position = _position;
+        return readPlasticized!(TO, ARGS)();
     }
 }
