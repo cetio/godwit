@@ -315,9 +315,19 @@ public:
         return genericFlags.HasFlag(GenericFlags.HasPreciseInitCctors);
     }
 
+    void setHasPreciseInitCctors(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.HasPreciseInitCctors, state);
+    }
+
     bool isHFA()
     {
         return genericFlags.HasFlag(GenericFlags.IsHFA);
+    }
+
+    void setIsHFA(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.IsHFA, state);
     }
 
     bool isRegStructPassed()
@@ -325,9 +335,19 @@ public:
         return genericFlags.HasFlag(GenericFlags.IsRegStructPassed);
     }
 
+    void setIsRegStructPassed(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.IsRegStructPassed, state);
+    }
+
     bool isByRefLike()
     {
        return genericFlags.HasFlag(GenericFlags.IsByRefLike);
+    }
+
+    void setIsByRefLike(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.IsByRefLike, state);
     }
 
     bool isClass()
@@ -335,9 +355,19 @@ public:
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Class);
     }
 
+    void setIsClass(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Class, state);
+    }
+
     bool isMarshalByRef()
     {
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.MarshalByRef);
+    }
+
+    void setIsMarshalByRef(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.MarshalByRef, state);
     }
 
     bool isContextful()
@@ -345,9 +375,19 @@ public:
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.Contextful);
     }
 
+    void setIsContextful(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.Contextful, state);
+    }
+
     bool isValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.ValueType);
+    }
+
+    void setIsNullable(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.ValueType, state);
     }
 
     bool isNullable()
@@ -355,14 +395,29 @@ public:
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Nullable);
     }
 
+    void setIsNullable(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Nullable, state);
+    }
+
     bool isPrimitiveValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.PrimitiveValueType);
     }
 
+    void setIsPrimitiveValueType(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.PrimitiveValueType, state);
+    }
+
     bool isTruePrimitive()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.TruePrimitive);
+    }
+
+    void setIsTruePrimitive(bool state)
+    {
+        typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.TruePrimitive, state);
     }
 
     bool isArray()
