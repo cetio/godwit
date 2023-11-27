@@ -115,14 +115,59 @@ public:
     RCWRefCache* rcwRefCache; 
     Stage stage;
 
-    CrstExplicitInit getReflectionCrst()
+    extern(C) export CrstExplicitInit getReflectionCrst()
     {
         return reflectionCrst;
     }
 
-    CrstExplicitInit getRefClassFactCrst()
+    extern(C) export CrstExplicitInit setReflectionCrst(CrstExplicitInit val)
+    {
+        reflectionCrst = val;
+    }
+
+    extern(C) export CrstExplicitInit getRefClassFactCrst()
     {
         return refClassFactCrst;
+    }
+
+    extern(C) export CrstExplicitInit setRefClassFactCrst(CrstExplicitInit val)
+    {
+        refClassFactCrst = val;
+    }
+
+    extern(C) export EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) getRefClassFactHash()
+    {
+        return refClassFactHash;
+    }
+
+    extern(C) export DispIDCache* getRefDispIDCache()
+    {
+        return refDispIDCache;
+    }
+
+    extern(C) export ObjectHandle getHNDMissing()
+    {
+        return hndMissing;
+    }
+
+    extern(C) export SString getFriendlyName()
+    {
+        return friendlyName;
+    }
+
+    extern(C) export Assembly* getRootAssembly()
+    {
+        return rootAssembly;
+    }
+
+    extern(C) export ContextFlags getContextFlags()
+    {
+        return contextFlags;
+    }
+
+    extern(C) export int getRefCount()
+    {
+        return refCount;
     }
 }
 
