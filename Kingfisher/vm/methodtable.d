@@ -50,6 +50,26 @@ public struct GuidInfo
 public:
     UUID guid;
     bool generatedFromName;
+
+    extern(C) export UUID getGuid()
+    {
+        return guid;
+    }
+    
+    extern(C) export void setGuid(UUID val)
+    {
+        guid = val;
+    }
+
+    extern(C) export bool isGeneratedFromName()
+    {
+        return generatedFromName;
+    }
+    
+    extern(C) export void setIsGeneratedFromName(bool val)
+    {
+        generatedFromName = val;
+    }
 }
 
 public struct MethodTable
@@ -226,18 +246,60 @@ public:
         // TypeDef token for assemblies with more than 64k types. Never happens in real world.                          \
     //    METHODTABLE_OPTIONAL_MEMBER(TokenOverflow,          TADDR,                          GetTokenOverflowPtr         ) \
 
-    RelatedTypeKind getRelatedTypeKind()
+    extern(C) export RelatedTypeKind getRelatedTypeKind()
     {
         return cast(RelatedTypeKind)(unType & 3);
     }
 
-    bool isIntegerSized()
+    extern(C) export void setRelatedTypeKind(RelatedTypeKind val)
+    {
+        unType &= ~3;
+        unType |= cast(uint)val & 3;
+    }
+
+    extern(C) export TypeFlags getTypeFlags()
+    {
+        return typeFlags;
+    }
+
+    extern(C) export void setTypeFlags(TypeFlags val)
+    {
+        typeFlags = val;
+    }
+
+    extern(C) export ushort getComponentSize()
+    {
+        if (!hasComponentSize())
+            return 0;
+
+        return componentSize;
+    }
+
+    extern(C) export void setComponentSize(ushort val)
+    {
+        if (!hasComponentSize())
+            setHasComponentSize(true);
+
+        componentSize = val;
+    }
+
+    extern(C) export GenericFlags getGenericFlags()
+    {
+        return genericFlags;
+    }
+
+    extern(C) export void setGenericFlags(GenericFlags val)
+    {
+        genericFlags = val;
+    }
+
+    extern(C) export bool isIntegerSized()
     {
         return ((eeClass.layoutInfo.managedSize & 1) == 0 && 
             eeClass.layoutInfo.managedSize <= 8 && eeClass.layoutInfo.managedSize != 6);
     }
 
-    uint getBaseSize()
+    extern(C) export uint getBaseSize()
     {
         if (baseSize <= 0)
             return 1;
@@ -245,362 +307,579 @@ public:
         return baseSize;
     }
 
-    bool hasTokenOverflow()
+    extern(C) export void setBaseSize(uint val)
+    {
+        baseSize = val;
+    }
+
+    extern(C) export InterfaceFlags getInterfaceFlags()
+    {
+        return interfaceFlags;
+    }
+
+    extern(C) export void setInterfaceFlags(InterfaceFlags val)
+    {
+        interfaceFlags = val;
+    }
+
+    extern(C) export HalfMDToken getMDToken()
+    {
+        return mdToken;
+    }
+
+    extern(C) export void setMDToken(HalfMDToken val)
+    {
+        mdToken = val;
+    }
+
+    extern(C) export bool hasTokenOverflow()
     {
         return mdToken == 0xFFFF;
     }
 
-    bool isNonDynamic()
+    extern(C) export ushort getNumVirtuals()
+    {
+        return numVirtuals;
+    }
+
+    extern(C) export void setNumVirtuals(ushort val)
+    {
+        numVirtuals = val;
+    }
+
+    extern(C) export ushort getNumInterfaces()
+    {
+        return numInterfaces;
+    }
+
+    extern(C) export void setNumInterfaces(ushort val)
+    {
+        numInterfaces = val;
+    }
+
+    extern(C) export MethodTable* getParentMethodTable()
+    {
+        return parentMethodTable;
+    }
+
+    extern(C) export void setParentMethodTable(MethodTable* val)
+    {
+        parentMethodTable = val;
+    }
+
+    extern(C) export Module* getCeeModule()
+    {
+        if (!hasComponentSize() && isNonGeneric())
+            return ceemodule;
+
+        return canonMethodTable.getModule();
+    }
+
+    extern(C) export void setCeeModule(Module* val)
+    {
+        ceemodule = val;
+    }
+
+    extern(C) export WriteableData* getWriteableData()
+    {
+        return writeableData;
+    }
+
+    extern(C) export void setWriteableData(WriteableData* val)
+    {
+        writeableData = val;
+    }
+
+    extern(C) export EEClass* getEEClass()
+    {
+        if (getRelatedTypeKind() != RelatedTypeKind.EEClass)
+            return getCanonMethodTable();
+
+        return eeClass;
+    }
+
+    extern(C) export void setEEClass(EEClass* val)
+    {
+        if (getRelatedTypeKind() != RelatedTypeKind.EEClass)
+            setRelatedTypeKind(RelatedTypeKind.EEClass);
+
+        eeClass = val;
+    }
+
+    extern(C) export MethodTable* getCanonMethodTable()
+    {
+        return canonMethodTable;
+    }
+
+    extern(C) export void setCanonMethodTable(MethodTable* val)
+    {
+        if (getRelatedTypeKind() != RelatedTypeKind.CanonMT)
+            setRelatedTypeKind(RelatedTypeKind.CanonMT);
+
+        canonMethodTable = val;
+    }
+
+    extern(C) export PerInstInfo* getPerInstInfo()
+    {
+        return perInstInfo;
+    }
+
+    extern(C) export void setPerInstInfo(PerInstInfo* val)
+    {
+        perInstInfo = val;
+    }
+
+    extern(C) export MethodTable* getElementMethodTable()
+    {
+        return elementMethodTable;
+    }
+
+    extern(C) export void setElementMethodTable(MethodTable* val)
+    {
+        elementMethodTable = val;
+    }
+
+    extern(C) export ubyte* getMultiPurposeSlot1()
+    {
+        return multiPurposeSlot1;
+    }
+
+    extern(C) export void setMultiPurposeSlot1(ubyte* val)
+    {
+        multiPurposeSlot1 = val;
+    }
+
+    extern(C) export MethodTable* getInterfaceMap()
+    {
+        return interfaceMap;
+    }
+
+    extern(C) export void setInterfaceMap(MethodTable* val)
+    {
+        interfaceMap = val;
+    }
+
+    extern(C) export ubyte* getMultiPurposeSlot2()
+    {
+        return multiPurposeSlot2;
+    }
+
+    extern(C) export void setMultiPurposeSlot2(ubyte* val)
+    {
+        multiPurposeSlot2 = val;
+    }
+
+    extern(C) export bool isNonDynamic()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.NonDynamic);
     }
 
-    bool isDynamic()
+    extern(C) export void setIsNonDynamic(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.StaticsMask, GenericFlags.NonDynamic, state);
+    }
+
+    extern(C) export bool isDynamic()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.Dynamic);
     }
 
-    bool hasGenerics()
+    extern(C) export void setIsDynamic(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.StaticsMask, GenericFlags.Dynamic, state);
+    }
+
+    extern(C) export bool hasGenerics()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.Generics);
     }
 
-    bool hasCrossModuleGenerics()
+    extern(C) export void setHasGenerics(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.StaticsMask, GenericFlags.Generics, state);
+    }
+
+    extern(C) export bool hasCrossModuleGenerics()
     {
         return genericFlags.HasFlagMasked(GenericFlags.StaticsMask, GenericFlags.CrossModuleGenerics);
     }
 
-    bool isNotInPZM()
+    extern(C) export void setHasCrossModuleGenerics(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.StaticsMask, GenericFlags.CrossModuleGenerics, state);
+    }
+
+    extern(C) export bool isNotInPZM()
     {
         return genericFlags.HasFlag(GenericFlags.NotInPZM);
     }
 
-    bool isNonGeneric()
+    extern(C) export void setIsNotInPZM(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.NotInPZM, state);
+    }
+
+    extern(C) export bool isNonGeneric()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.NonGeneric);
     }
 
-    bool isGenericInst()
+    extern(C) export void setIsNonGeneric(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.GenericsMask, GenericFlags.NonGeneric, state);
+    }
+
+    extern(C) export bool isGenericInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.GenericInst);
     }
 
-    bool isSharedInst()
+    extern(C) export void setIsGenericInst(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.GenericsMask, GenericFlags.IsGenericInst, state);
+    }
+
+    extern(C) export bool isSharedInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.SharedInst);
     }
 
-    bool isTypicalInst()
+    extern(C) export void setIsSharedInst(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.GenericsMask, GenericFlags.IsSharedInst, state);
+    }
+
+    extern(C) export bool isTypicalInst()
     {
         return genericFlags.HasFlagMasked(GenericFlags.GenericsMask, GenericFlags.TypicalInst);
     }
 
-    bool hasRemotingVtsInfo()
+    extern(C) export void setIsTypicalInst(bool state)
+    {
+        genericFlags.SetFlagMasked(GenericFlags.GenericsMask, GenericFlags.IsTypicalInst, state);
+    }
+
+    extern(C) export bool hasRemotingVtsInfo()
     {
         return genericFlags.HasFlag(GenericFlags.HasRemotingVtsInfo);
     }
 
-    bool hasVariance()
+    extern(C) export void setHasRemotingVtsInfo(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.HasRemotingVtsInfo, state);
+    }
+
+    extern(C) export bool hasVariance()
     {
         return genericFlags.HasFlag(GenericFlags.HasVariance);
     }
 
-    bool hasDefaultCtor()
+    extern(C) export void setHasVariance(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.HasVariance, state);
+    }
+
+    extern(C) export bool hasDefaultCtor()
     {
         return genericFlags.HasFlag(GenericFlags.HasDefaultCtor);
     }
 
-    bool hasPreciseInitCctors()
+    extern(C) export void setHasDefaultCtor(bool state)
+    {
+        genericFlags.SetFlag(GenericFlags.HasDefaultCtor, state);
+    }
+
+    extern(C) export bool hasPreciseInitCctors()
     {
         return genericFlags.HasFlag(GenericFlags.HasPreciseInitCctors);
     }
 
-    void setHasPreciseInitCctors(bool state)
+    extern(C) export void setHasPreciseInitCctors(bool state)
     {
         genericFlags.SetFlag(GenericFlags.HasPreciseInitCctors, state);
     }
 
-    bool isHFA()
+    extern(C) export bool isHFA()
     {
         return genericFlags.HasFlag(GenericFlags.IsHFA);
     }
 
-    void setIsHFA(bool state)
+    extern(C) export void setIsHFA(bool state)
     {
         genericFlags.SetFlag(GenericFlags.IsHFA, state);
     }
 
-    bool isRegStructPassed()
+    extern(C) export bool isRegStructPassed()
     {
         return genericFlags.HasFlag(GenericFlags.IsRegStructPassed);
     }
 
-    void setIsRegStructPassed(bool state)
+    extern(C) export void setIsRegStructPassed(bool state)
     {
         genericFlags.SetFlag(GenericFlags.IsRegStructPassed, state);
     }
 
-    bool isByRefLike()
+    extern(C) export bool isByRefLike()
     {
        return genericFlags.HasFlag(GenericFlags.IsByRefLike);
     }
 
-    void setIsByRefLike(bool state)
+    extern(C) export void setIsByRefLike(bool state)
     {
         genericFlags.SetFlag(GenericFlags.IsByRefLike, state);
     }
 
-    bool isClass()
+    extern(C) export bool isClass()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Class);
     }
 
-    void setIsClass(bool state)
+    extern(C) export void setIsClass(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Class, state);
     }
 
-    bool isMarshalByRef()
+    extern(C) export bool isMarshalByRef()
     {
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.MarshalByRef);
     }
 
-    void setIsMarshalByRef(bool state)
+    extern(C) export void setIsMarshalByRef(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.MarshalByRef, state);
     }
 
-    bool isContextful()
+    extern(C) export bool isContextful()
     {
         return typeFlags.HasFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.Contextful);
     }
 
-    void setIsContextful(bool state)
+    extern(C) export void setIsContextful(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.MarshalByRefMask, TypeFlags.Contextful, state);
     }
 
-    bool isValueType()
+    extern(C) export bool isValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.ValueType);
     }
 
-    void setIsNullable(bool state)
+    extern(C) export void setIsNullable(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.ValueType, state);
     }
 
-    bool isNullable()
+    extern(C) export bool isNullable()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Nullable);
     }
 
-    void setIsNullable(bool state)
+    extern(C) export void setIsNullable(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Nullable, state);
     }
 
-    bool isPrimitiveValueType()
+    extern(C) export bool isPrimitiveValueType()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.PrimitiveValueType);
     }
 
-    void setIsPrimitiveValueType(bool state)
+    extern(C) export void setIsPrimitiveValueType(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.PrimitiveValueType, state);
     }
 
-    bool isTruePrimitive()
+    extern(C) export bool isTruePrimitive()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.TruePrimitive);
     }
 
-    void setIsTruePrimitive(bool state)
+    extern(C) export void setIsTruePrimitive(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.TruePrimitive, state);
     }
 
-    bool isArray()
+    extern(C) export bool isArray()
     {
         return typeFlags.HasFlagMasked(TypeFlags.ArrayMask, TypeFlags.Array);
     }
 
-    void setIsArray(bool state)
+    extern(C) export void setIsArray(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.ArrayMask, TypeFlags.Array, state);
     }
 
-    bool isSzArray()
+    extern(C) export bool isSzArray()
     {
         return typeFlags.HasFlag(TypeFlags.IfArrayThenSzArray);
     }
 
-    void setIsSzArray(bool state)
+    extern(C) export void setIsSzArray(bool state)
     {
         typeFlags.SetFlag(TypeFlags.IfArrayThenSzArray, state);
     }
 
-    bool isInterface()
+    extern(C) export bool isInterface()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.Interface);
     }
 
-    void setIsInterface(bool state)
+    extern(C) export void setIsInterface(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.Interface, state);
     }
 
-    bool isTransparentProxy()
+    extern(C) export bool isTransparentProxy()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.TransparentProxy);
     }
 
-    void setIsTransparentProxy(bool state)
+    extern(C) export void setIsTransparentProxy(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.TransparentProxy, state);
     }
 
-    bool isAsyncPin()
+    extern(C) export bool isAsyncPin()
     {
         return typeFlags.HasFlagMasked(TypeFlags.Mask, TypeFlags.AsyncPin);
     }
 
-    void setIsAsyncPin(bool state)
+    extern(C) export void setIsAsyncPin(bool state)
     {
         typeFlags.SetFlagMasked(TypeFlags.Mask, TypeFlags.AsyncPin, state);
     }
 
-    bool hasFinalizer()
+    extern(C) export bool hasFinalizer()
     {
         return typeFlags.HasFlag(TypeFlags.HasFinalizer);
     }
 
-    void setHasFinalizer(bool state)
+    extern(C) export void setHasFinalizer(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasFinalizer, state);
     }
 
-    bool isMarshalable()
+    extern(C) export bool isMarshalable()
     {
         return typeFlags.HasFlag(TypeFlags.IfNotInterfaceThenMarshalable);
     }
 
-    void setIsMarshalable(bool state)
+    extern(C) export void setIsMarshalable(bool state)
     {
         typeFlags.SetFlag(TypeFlags.IfNotInterfaceThenMarshalable, state);
     }
 
-    bool hasGuidInfo()
+    extern(C) export bool hasGuidInfo()
     {
         return typeFlags.HasFlag(TypeFlags.IfInterfaceThenHasGuidInfo);
     }
 
-    void setHasGuidInfo(bool state)
+    extern(C) export void setHasGuidInfo(bool state)
     {
         typeFlags.SetFlag(TypeFlags.IfInterfaceThenHasGuidInfo, state);
     }
 
-    bool isICastable()
+    extern(C) export bool isICastable()
     {
         return typeFlags.HasFlag(TypeFlags.ICastable);
     }
 
-    void setIsICastable(bool state)
+    extern(C) export void setIsICastable(bool state)
     {
         typeFlags.SetFlag(TypeFlags.ICastable, state);
     }
 
-    bool hasIndirectParent()
+    extern(C) export bool hasIndirectParent()
     {
         return typeFlags.HasFlag(TypeFlags.HasIndirectParent);
     }
 
-    void setHasIndirectParent(bool state)
+    extern(C) export void setHasIndirectParent(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasIndirectParent, state);
     }
 
-    bool containsPointers()
+    extern(C) export bool containsPointers()
     {
         return typeFlags.HasFlag(TypeFlags.ContainsPointers);
     }
 
-    void setContainsPointers(bool state)
+    extern(C) export void setContainsPointers(bool state)
     {
         typeFlags.SetFlag(TypeFlags.ContainsPointers, state);
     }
 
-    bool hasTypeEquivalence()
+    extern(C) export bool hasTypeEquivalence()
     {
         return typeFlags.HasFlag(TypeFlags.HasTypeEquivalence);
     }
 
-    void setHasTypeEquivalence(bool state)
+    extern(C) export void setHasTypeEquivalence(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasTypeEquivalence, state);
     }
 
-    bool hasRCWPerTypeData()
+    extern(C) export bool hasRCWPerTypeData()
     {
         return typeFlags.HasFlag(TypeFlags.HasRCWPerTypeData);
     }
 
-    void setHasRCWPerTypeData(bool state)
+    extern(C) export void setHasRCWPerTypeData(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasRCWPerTypeData, state);
     }
 
-    bool hasCriticalFinalizer()
+    extern(C) export bool hasCriticalFinalizer()
     {
         return typeFlags.HasFlag(TypeFlags.HasCriticalFinalizer);
     }
 
-    void setHasCriticalFinalizer(bool state)
+    extern(C) export void setHasCriticalFinalizer(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasCriticalFinalizer, state);
     }
 
-    bool isCollectible()
+    extern(C) export bool isCollectible()
     {
         return typeFlags.HasFlag(TypeFlags.Collectible);
     }
 
-    void setIsCollectible(bool state)
+    extern(C) export void setIsCollectible(bool state)
     {
         typeFlags.SetFlag(TypeFlags.Collectible, state);
     }
 
-    bool containsGenericVariables()
+    extern(C) export bool containsGenericVariables()
     {
         return typeFlags.HasFlag(TypeFlags.ContainsGenericVariables);
     }
 
-    void setContainsGenericVariables(bool state)
+    extern(C) export void setContainsGenericVariables(bool state)
     {
         typeFlags.SetFlag(TypeFlags.ContainsGenericVariables, state);
     }
 
-    bool isComObject()
+    extern(C) export bool isComObject()
     {
         return typeFlags.HasFlag(TypeFlags.ComObject);
     }
 
-    void setIsComObject(bool state)
+    extern(C) export void setIsComObject(bool state)
     {
         typeFlags.SetFlag(TypeFlags.ComObject, state);
     }
 
-    bool hasComponentSize()
+    extern(C) export bool hasComponentSize()
     {
         return typeFlags.HasFlag(TypeFlags.HasComponentSize);
     }
 
-    void setHasComponentSize(bool state)
+    extern(C) export void setHasComponentSize(bool state)
     {
         typeFlags.SetFlag(TypeFlags.HasComponentSize, state);
     }
 
-    bool isNonTrivialInterfaceCast()
+    extern(C) export bool isNonTrivialInterfaceCast()
     {
         return typeFlags.HasFlag(TypeFlags.NonTrivialInterfaceCast);
     }
@@ -610,27 +889,19 @@ public:
         typeFlags.SetFlag(TypeFlags.NonTrivialInterfaceCast, state);
     }
 
-    bool hasModuleOverride()
+    extern(C) export bool hasModuleOverride()
     {
         return interfaceFlags.HasFlag(InterfaceFlags.HasModuleOverride);
     }
 
-    void setHasModuleOverride(bool state)
+    extern(C) export void setHasModuleOverride(bool state)
     {
         interfaceFlags.SetFlag(InterfaceFlags.HasModuleOverride, state);
     }
 
-    GCDesc* getGCDesc() const
+    extern(C) export GCDesc* getGCDesc() const
         return scope
     {
         return cast(GCDesc*)&this;
-    }
-
-    Module* getModule()
-    {
-        if (!hasComponentSize() && isNonGeneric())
-            return ceemodule;
-
-        return canonMethodTable.getModule();
     }
 }

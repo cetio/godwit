@@ -85,9 +85,9 @@ public:
 
     enum ContextFlags
     {
-        CONTEXT_INITIALIZED =               0x0001,
+        ContextInitialize = 0x0001,
         // AppDomain was created using the APPDOMAIN_IGNORE_UNHANDLED_EXCEPTIONS flag
-        IGNORE_UNHANDLED_EXCEPTIONS =      0x10000, 
+        IgnoreUnhandledExceptions = 0x10000, 
     };
 
     CrstExplicitInit reflectionCrst;
@@ -120,39 +120,59 @@ public:
         return reflectionCrst;
     }
 
-    extern(C) export CrstExplicitInit setReflectionCrst(CrstExplicitInit val)
+    extern(C) export void setReflectionCrst(CrstExplicitInit val)
     {
         reflectionCrst = val;
     }
 
-    extern(C) export CrstExplicitInit getRefClassFactCrst()
+    extern(C) export CrstExplicitInit getRefClassFactCrst()  
     {
         return refClassFactCrst;
     }
 
-    extern(C) export CrstExplicitInit setRefClassFactCrst(CrstExplicitInit val)
-    {
-        refClassFactCrst = val;
+    extern(C) export void setRefClassFactCrst(CrstExplicitInit val)
+    {  
+        refClassFactCrst = val;   
     }
 
-    extern(C) export EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) getRefClassFactHash()
+    extern(C) export EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) getRefClassFactHash()   
     {
         return refClassFactHash;
+    }  
+
+    extern(C) export void setRefClassFactHash(EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) val)
+    {
+        refClassFactHash = val;
     }
 
-    extern(C) export DispIDCache* getRefDispIDCache()
+    extern(C) export DispIDCache* getRefDispIDCache()   
     {
         return refDispIDCache;
     }
 
-    extern(C) export ObjectHandle getHNDMissing()
+    extern(C) export void setRefDispIDCache(DispIDCache* val)  
+    {
+        refDispIDCache = val;
+    }
+
+    extern(C) export ObjectHandle getHndMissing()   
     {
         return hndMissing;
     }
 
-    extern(C) export SString getFriendlyName()
+    extern(C) export void setHndMissing(ObjectHandle val)  
+    {
+        hndMissing = val;   
+    }
+
+    extern(C) export SString getFriendlyName()  
     {
         return friendlyName;
+    }
+
+    extern(C) export void setFriendlyName(SString val)
+    {
+        friendlyName = val;
     }
 
     extern(C) export Assembly* getRootAssembly()
@@ -160,29 +180,102 @@ public:
         return rootAssembly;
     }
 
+    extern(C) export void setRootAssembly(Assembly* val) 
+    {
+        rootAssembly = val;
+    }
+
     extern(C) export ContextFlags getContextFlags()
     {
         return contextFlags;
     }
 
-    extern(C) export int getRefCount()
+    extern(C) export bool isContextInitialize()
     {
-        return refCount;
+        return contextFlags.GetFlag(ContextFlags.ContextInitialize);
+    }
+
+    extern(C) export void setIsContextInitialize(bool state)
+    {
+        contextFlags.SetFlag(ContextFlags.ContextInitialize, state)
+    }
+
+    extern(C) export bool isIgnoreUnhandledExceptions() 
+    {
+        return contextFlags.GetFlag(ContextFlags.IgnoreUnhandledExceptions);
+    }
+
+    extern(C) export void SetIgnoreUnhandledExceptions(bool state)
+    {
+        contextFlags.SetFlag(ContextFlags.IgnoreUnhandledExceptions, state);
+    }
+
+    extern(C) export CrstExplicitInit getNativeImageLoadCrst()
+    {
+        return nativeImageLoadCrst;
+    }
+
+    extern(C) export void setNativeImageLoadCrst(CrstExplicitInit value)  
+    {
+    nativeImageLoadCrst = value;
+    }
+
+    extern(C) export SHash!(char*, NativeImage*) getNativeImageMap() 
+    {
+        return nativeImageMap;
+    }  
+
+    extern(C) export void setNativeImageMap(SHash!(char*, NativeImage*) value)
+    {
+        nativeImageMap = value;
+    }
+
+    extern(C) export RCWRefCache* getRCWCache()  
+    {
+        return rcwCache;
+    }
+
+    extern(C) export void setRCWCache(RCWRefCache* value) 
+    {
+        rcwCache = value;
+    }  
+
+    extern(C) export RCWRefCache* getRCWRefCache()
+    {
+        return rcwRefCache;
+    }
+
+    extern(C) export void setRCWRefCache(RCWRefCache* value)
+    {
+        rcwRefCache = value;
+    }
+
+    extern(C) export Stage getStage()
+    {
+        return stage;  
+    }  
+
+    extern(C) export void setStage(Stage value)  
+    {
+        stage = value;
     }
 }
 
 public struct PinnedHeapHandleBucket
 {
+public:
     PinnedHeapHandleBucket* next;
     int arraySize;
     int currentPos;
     int currentEmbeddedFreePos;
     ObjectHandle hndHandleArray;
     ObjectRef* arrayData;
+
 }
 
 public struct PinnedHeapHandleTable
 {
+public:
     // The buckets of object handles.
     // synchronized by m_Crst
     PinnedHeapHandleBucket* head;
