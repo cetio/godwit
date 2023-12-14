@@ -16,6 +16,26 @@ public struct VTSeriesItem
 {
     half_size_t nptrs;
     half_size_t skip;
+
+    half_size_t getNptrs()
+    {
+        return nptrs;
+    }
+
+    void setNptrs(half_size_t newNptrs)
+    {
+        nptrs = newNptrs;
+    }
+
+    half_size_t getSkip()
+    {
+        return skip;
+    }
+
+    void setSkip(half_size_t newSkip)
+    {
+        skip = newSkip;
+    }
 };
 
 // CGCDescSeries
@@ -25,7 +45,7 @@ public:
     union
     {
         size_t seriesSize;
-        VTSeriesItem[1] vtItems;
+        VTSeriesItem vtItems;
     }
     size_t startOffset;
 
@@ -34,14 +54,29 @@ public:
         return seriesSize;
     }
 
-    VTSeriesItem[] getVTItems()
+    void setSeriesSize(size_t newSeriesSize)
+    {
+        seriesSize = newSeriesSize;
+    }
+
+    VTSeriesItem getVtItems()
     {
         return vtItems;
+    }
+
+    void setVtItems(VTSeriesItem newVtItems)
+    {
+        vtItems = newVtItems;
     }
 
     size_t getStartOffset()
     {
         return startOffset;
+    }
+
+    void setStartOffset(size_t newStartOffset)
+    {
+        startOffset = newStartOffset;
     }
 }
 
@@ -114,12 +149,14 @@ public:
     // Returns lowest series in memory.
     // Cannot be used for valuetype arrays
     GCDescSeries* getLowestSeries()
+        scope return
     {
         return cast(GCDescSeries*)((cast(ubyte*)&this) - computeSize(getNumSeries()));
     }
 
     // Returns highest series in memory.
     GCDescSeries* getHighestSeries()
+        scope return
     {
         return cast(GCDescSeries*)((cast(size_t*)&this) - 1) - 1;
     }
@@ -136,6 +173,7 @@ public:
     }
 
     ubyte* getStartOfGCData()
+        scope return
     {
         return (cast(ubyte*)&this) - getSize();
     }

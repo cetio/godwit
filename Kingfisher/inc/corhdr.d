@@ -37,6 +37,26 @@ public struct ImageDataDirectory
 public:
     uint virtualAddress;
     uint size;
+
+    uint getVirtualAddress()
+    {
+        return virtualAddress;
+    }
+
+    void setVirtualAddress(uint newVirtualAddress)
+    {
+        virtualAddress = newVirtualAddress;
+    }
+
+    uint getSize()
+    {
+        return size;
+    }
+
+    void setSize(uint newSize)
+    {
+        size = newSize;
+    }
 }
 
 public struct RuntimeFunction
@@ -44,6 +64,26 @@ public struct RuntimeFunction
 public:
     uint beginAddress;
     uint unwindData;
+
+    uint getBeginAddress()
+    {
+        return beginAddress;
+    }
+
+    void setBeginAddress(uint newBeginAddress)
+    {
+        beginAddress = newBeginAddress;
+    }
+
+    uint getUnwindData()
+    {
+        return unwindData;
+    }
+
+    void setUnwindData(uint newUnwindData)
+    {
+        unwindData = newUnwindData;
+    }
 }
 
 enum CorTokenType : uint

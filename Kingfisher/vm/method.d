@@ -170,17 +170,17 @@ public:
 
     bool hasNonVtableSlot()
     {
-        return properties.HasFlag(MethodProperties.HasNonVtableSlot);
+        return properties.hasFlag(MethodProperties.HasNonVtableSlot);
     }
 
     bool hasMethodImpl()
     {
-        return properties.HasFlag(MethodProperties.MethodImpl);
+        return properties.hasFlag(MethodProperties.MethodImpl);
     }
 
     bool hasNativeCodeSlot()
     {
-        return properties.HasFlag(MethodProperties.HasNativeCodeSlot);
+        return properties.hasFlag(MethodProperties.HasNativeCodeSlot);
     }
 }
 

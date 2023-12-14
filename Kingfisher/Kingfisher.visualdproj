@@ -1535,12 +1535,10 @@
     <File path="readers\elf\sections.d" />
    </Folder>
    <Folder name="pe">
-    <File path="readers\pe\coff.d" />
-    <File path="readers\pe\datadir.d" />
-    <File path="readers\pe\dos.d" />
-    <File path="readers\pe\windows.d" />
-    <File path="readers\pe\sections.d" />
+    <File path="readers\pe\standard.d" />
+    <File path="readers\pe\optional.d" />
    </Folder>
+   <File path="readers\formats.d" />
    <File path="readers\metadata.d" />
    <File path="readers\packedfields.d" />
    <File path="readers\stream.d" />

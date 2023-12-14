@@ -19,4 +19,14 @@ public:
     {
         return implement;
     }
+
+    void setSlots(uint* newSlots)
+    {
+        slots = newSlots;
+    }
+
+    void setImplement(MethodDesc* newImplement)
+    {
+        implement = newImplement;
+    }
 }

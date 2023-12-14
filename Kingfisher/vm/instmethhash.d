@@ -23,4 +23,13 @@ public:
     Volatile<LONG> m_dwSealCount; // Can more types be added to the table?
 #endif
     */
+    LoaderAllocator* getAllocator()
+    {
+        return allocator;
+    }
+
+    void setAllocator(LoaderAllocator* newAllocator)
+    {
+        allocator = newAllocator;
+    }
 }

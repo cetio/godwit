@@ -35,4 +35,24 @@ public:
     {
         return shrinkHint;
     }
+
+    void setAppDomain(AppDomain* newAppDomain)
+    {
+        appDomain = newAppDomain;
+    }
+
+    void setDepHndList(CQuickArrayList!ObjectHandle newDepHndList)
+    {
+        depHndList = newDepHndList;
+    }
+
+    void setDepHndListFreeIndex(uint newFreeIndex)
+    {
+        depHndListFreeIndex = newFreeIndex;
+    }
+
+    void setShrinkHint(uint newShrinkHint)
+    {
+        shrinkHint = newShrinkHint;
+    }
 }
