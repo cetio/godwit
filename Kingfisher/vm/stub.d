@@ -3,6 +3,7 @@ module vm.stub;
 import vm.method;
 import vm.ceeload;
 import vm.siginfo;
+import flags;
 
 public struct UMThunkMarshInfo
 {
@@ -75,6 +76,41 @@ public:
         return codeFlags;
     }
 
+    bool isMulticastDelegate()
+    {
+        return codeFlags.hasFlag(CodeFlags.MulticastDelegate);
+    }
+
+    bool isExternalEntry()
+    {
+        return codeFlags.hasFlag(CodeFlags.ExternalEntry);
+    }
+
+    bool isLoaderHeap()
+    {
+        return codeFlags.hasFlag(CodeFlags.LoaderHeap);
+    }
+
+    bool isInstantiatingStub()
+    {
+        return codeFlags.hasFlag(CodeFlags.InstantiatingStub);
+    }
+
+    bool isUnwindInfo()
+    {
+        return codeFlags.hasFlag(CodeFlags.UnwindInfo);
+    }
+
+    bool isThunk()
+    {
+        return codeFlags.hasFlag(CodeFlags.Thunk);
+    }
+
+    uint getCodeBytes()
+    {
+        return cast(uint)codeFlags.clearMask(CodeFlags.CodeBytesMask);
+    }
+
     uint getNumCodeBytes()
     {
         return numCodeBytes;
@@ -88,5 +124,65 @@ public:
     MethodDesc* getInstantiatedMethod()
     {
         return instantiatedMethod;
+    }
+
+    void setRefCount(uint newRefCount)
+    {
+        refCount = newRefCount;
+    }
+
+    void setCodeFlags(CodeFlags newCodeFlags)
+    {
+        codeFlags = newCodeFlags;
+    }
+
+    void setIsMulticastDelegate(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.MulticastDelegate, state);
+    }
+
+    void setIsExternalEntry(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.ExternalEntry, state);
+    }
+
+    void setIsLoaderHeap(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.LoaderHeap, state);
+    }
+
+    void setIsInstantiatingStub(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.InstantiatingStub, state);
+    }
+
+    void setIsUnwindInfo(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.UnwindInfo, state);
+    }
+
+    void setIsThunk(bool state)
+    {
+        codeFlags.setFlag(CodeFlags.Thunk, state);
+    }
+
+    void setCodeBytes(uint newBytes)
+    {
+        codeFlags.setFlagMasked(CodeFlags.CodeBytesMask, newBytes);
+    }
+
+    void setNumCodeBytes(uint newNumCodeBytes)
+    {
+        numCodeBytes = newNumCodeBytes;
+    }
+
+    void setPatchOffset(ushort newPatchOffset)
+    {
+        patchOffset = newPatchOffset;
+    }
+
+    void setInstantiatedMethod(MethodDesc* newInstantiatedMethod)
+    {
+        instantiatedMethod = newInstantiatedMethod;
     }
 }

@@ -14,6 +14,11 @@ public:
 
     PCCOR_SIGNATURE[] getEntries()
     {
-        return entries;
+        return entries.dup;
+    }
+
+    void setEntries(PCCOR_SIGNATURE[] newEntries)
+    {
+        entries = newEntries.dup;
     }
 }

@@ -10,10 +10,25 @@ public struct FuncPtrStubs
 public:
     Crst hashTableCrst;
     // To find a existing stub for a method
-    SHash!(Precode*, uint) hashTable;    
-    
+    SHash!(Precode*, uint) hashTable;   
+
     Crst getHashTableCrst()
     {
         return hashTableCrst;
+    }
+
+    void setHashTableCrst(Crst newHashTableCrst)
+    {
+        hashTableCrst = newHashTableCrst;
+    }
+
+    SHash!(Precode*, uint) getHashTable()
+    {
+        return hashTable;
+    }
+
+    void setHashTable(SHash!(Precode*, uint) newHashTable)
+    {
+        hashTable = newHashTable;
     }
 }

@@ -54,19 +54,19 @@ public struct HollowObject
 {
 public:
     ObjHeader getObjHeader()
-        return scope
+        scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).objHeader;
     }
 
     MethodTable* getMethodTable()
-        return scope
+        scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).methodTable;
     }
 
     ubyte getData()
-        return scope
+        scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).data;
     }

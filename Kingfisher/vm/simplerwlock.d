@@ -38,4 +38,19 @@ public:
     {
         return writerWaiting;
     }
+
+    void setRWLock(int newRWLock)
+    {
+        rwLock = newRWLock;
+    }
+
+    void setSpinCount(int newSpinCount)
+    {
+        spinCount = newSpinCount;
+    }
+
+    void setWriterWaiting(bool newWriterWaiting)
+    {
+        writerWaiting = newWriterWaiting;
+    }
 }

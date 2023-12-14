@@ -52,5 +52,5 @@ public struct EEException
     alias clrException this;
 
 public:
-    const uint kind;
+    const(uint) kind;
 }

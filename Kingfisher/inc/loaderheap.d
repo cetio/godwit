@@ -17,9 +17,19 @@ public:
         return next;
     }
 
+    void setNext(LoaderHeapBlock* newNext)
+    {
+        next = newNext;
+    }
+
     void* getVirtualAddress()
     {
         return virtualAddress;
+    }
+
+    void setVirtualAddress(void* newVirtualAddress)
+    {
+        virtualAddress = newVirtualAddress;
     }
 
     size_t getVirtualSize()
@@ -27,9 +37,19 @@ public:
         return virtualSize;
     }
 
-    bool shouldReleaseMem()
+    void setVirtualSize(size_t newVirtualSize)
+    {
+        virtualSize = newVirtualSize;
+    }
+
+    bool getReleaseMem()
     {
         return releaseMem;
+    }
+
+    void setReleaseMem(bool newReleaseMem)
+    {
+        releaseMem = newReleaseMem;
     }
 }
 
@@ -93,66 +113,6 @@ public:
     */
     // Am I a LoaderHeap or an ExplicitControlLoaderHeap?
     bool explicitControl;
-
-    LoaderHeapBlock* getFirstBlock()
-    {
-        return firstBlock;
-    }
-
-    ubyte* getAllocPtr()
-    {
-        return allocPtr;
-    }
-
-    ubyte* getEndCommittedRegion()
-    {
-        return endCommittedRegion;
-    }
-
-    ubyte* getEndReservedRegion()
-    {
-        return endReservedRegion;
-    }
-
-    uint getReservedBlockSize()
-    {
-        return reserveBlockSize;
-    }
-
-    uint getCommitBlockSize()
-    {
-        return commitBlockSize;
-    }
-
-    uint getGranularity()
-    {
-        return granularity;
-    }
-
-    uint* getRangeList()
-    {
-        return rangeList;
-    }
-
-    size_t getTotalAlloc()
-    {
-        return totalAlloc;
-    }
-
-    HeapKind getKind()
-    {
-        return kind;
-    }
-
-    ptrdiff_t* getFirstFreeBlock()
-    {
-        return firstFreeBlock;
-    }
-
-    LoaderHeapBlock getReservedBlock()
-    {
-        return reservedBlock;
-    }
 }
 
 public interface ILoaderHeapBackout
@@ -172,4 +132,14 @@ public struct LoaderHeap
 
 public:
     CritSecCookie critSec;
+
+    CritSecCookie getCritSec()
+    {
+        return critSec;
+    }
+
+    void setCritSec(CritSecCookie newCritSec)
+    {
+        critSec = newCritSec;
+    }
 }

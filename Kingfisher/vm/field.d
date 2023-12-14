@@ -69,24 +69,24 @@ public:
 
     bool isPrivate()
     {
-        return protection.HasFlag(Protection.Private) ||
-            protection.HasFlag(Protection.PrivateProtected);
+        return protection.hasFlag(Protection.Private) ||
+            protection.hasFlag(Protection.PrivateProtected);
     }
 
     bool isInternal()
     {
-        return protection.HasFlag(Protection.Internal);
+        return protection.hasFlag(Protection.Internal);
     }
 
     bool isProtected()
     {
-        return protection.HasFlag(Protection.Protected) ||
-            protection.HasFlag(Protection.ProtectedInternal);
+        return protection.hasFlag(Protection.Protected) ||
+            protection.hasFlag(Protection.ProtectedInternal);
     }
 
     bool isPublic()
     {
-        return protection.HasFlag(Protection.Public);
+        return protection.hasFlag(Protection.Public);
     }
 
     uint getOffset()

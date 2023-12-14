@@ -10,7 +10,47 @@ public:
     size_t size;
     // total bytes allocated in the buffer
     size_t totalAlloc;
-    ulong[64] data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
+    ulong[(511 + ulong.sizeof) / ulong.sizeof] data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
+
+    byte* getBuffer()
+    {
+        return buffer;
+    }
+
+    void setBuffer(byte* newBuffer)
+    {
+        buffer = newBuffer;
+    }
+
+    size_t getSize()
+    {
+        return size;
+    }
+
+    void setSize(size_t newSize)
+    {
+        size = newSize;
+    }
+
+    size_t getTotalAlloc()
+    {
+        return totalAlloc;
+    }
+
+    void setTotalAlloc(size_t newTotalAlloc)
+    {
+        totalAlloc = newTotalAlloc;
+    }
+
+    ulong[(511 + ulong.sizeof) / ulong.sizeof] getData()
+    {
+        return data;
+    }
+
+    void setData(ulong[(511 + ulong.sizeof) / ulong.sizeof] newData)
+    {
+        data = newData.dup;
+    }
 }
 
 public struct CQuickBytesBase
@@ -50,4 +90,14 @@ public struct CQuickArrayList(T)
 
 public:
     size_t curSize;
+
+    size_t getCurSize()
+    {
+        return curSize;
+    }
+
+    void setCurSize(size_t newCurSize)
+    {
+        curSize = newCurSize;
+    }
 }

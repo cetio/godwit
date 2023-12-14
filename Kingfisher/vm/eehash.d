@@ -8,7 +8,48 @@ public:
     EEHashEntry* next;
     uint hashValue;
     void* data;
-    ubyte[1] key; // The key is stored inline
+    // The key is stored inline
+    ubyte key; 
+
+    EEHashEntry* getNext()
+    {
+        return next;
+    }
+
+    void setNext(EEHashEntry* newNext)
+    {
+        next = newNext;
+    }
+
+    uint getHashValue()
+    {
+        return hashValue;
+    }
+
+    void setHashValue(uint newHashValue)
+    {
+        hashValue = newHashValue;
+    }
+
+    void* getData()
+    {
+        return data;
+    }
+
+    void setData(void* newData)
+    {
+        data = newData;
+    }
+
+    ubyte getKey()
+    {
+        return key;
+    }
+
+    void setKey(ubyte newKey)
+    {
+        key = newKey;
+    }
 }
 
 // Double buffer to fix the race condition of growhashtable (the update
@@ -23,6 +64,36 @@ public struct BucketTable
     // #ifdef TARGET_64BIT
     // "Fast Mod" multiplier for "X % m_dwNumBuckets"
     ulong countMul;
+
+    EEHashEntry* getBuckets()
+    {
+        return buckets;
+    }
+
+    void setBuckets(EEHashEntry* newBuckets)
+    {
+        buckets = newBuckets;
+    }
+
+    uint getCount()
+    {
+        return count;
+    }
+
+    void setCount(uint newCount)
+    {
+        count = newCount;
+    }
+
+    ulong getCountMul()
+    {
+        return countMul;
+    }
+
+    void setCountMul(ulong newCountMul)
+    {
+        countMul = newCountMul;
+    }
 }
 
 public struct EEHashTableBase(KEY, HELPER, bool ISDEEPCOPY)
@@ -50,6 +121,45 @@ public:
 
     #endif 
     */
+    BucketTable* getBucketTable()
+    {
+        return bucketTable;
+    }
+
+    void setBucketTable(BucketTable* newBucketTable)
+    {
+        bucketTable = newBucketTable;
+    }
+
+    uint getCount()
+    {
+        return count;
+    }
+
+    void setCount(uint newCount)
+    {
+        count = newCount;
+    }
+
+    void* getHeap()
+    {
+        return heap;
+    }
+
+    void setHeap(void* newHeap)
+    {
+        heap = newHeap;
+    }
+
+    int getGrowing()
+    {
+        return growing;
+    }
+
+    void setGrowing(int newGrowing)
+    {
+        growing = newGrowing;
+    }
 }
 
 public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
@@ -63,6 +173,26 @@ public struct ClassFactoryInfo
 public:
     UUID clsId;
     wchar* srvName;
+
+    UUID getClsId()
+    {
+        return clsId;
+    }
+
+    void setClsId(UUID newClsId)
+    {
+        clsId = newClsId;
+    }
+
+    wchar* getSrvName()
+    {
+        return srvName;
+    }
+
+    void setSrvName(wchar* newSrvName)
+    {
+        srvName = newSrvName;
+    }
 }
 
 public struct EEStringData
@@ -77,6 +207,25 @@ public:
         DWORD           dwDebugCch;
     #endif // _DEBUG
     */  
+    wchar* getString()
+    {
+        return string;
+    }
+
+    void setString(wchar* newString)
+    {
+        string = newString;
+    }
+
+    uint getLength()
+    {
+        return length;
+    }
+
+    void setLength(uint newLength)
+    {
+        length = newLength;
+    }
 }
 
 public class EEClassFactoryInfoHashTableHelper
