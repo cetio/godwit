@@ -41,17 +41,17 @@ public:
         HasInjectedInterfaceDuplicates = 0x80000000,
     }
 
-    WriteableFlags writeableFlags;
-    ptrdiff_t exposedClassObject;
+    WriteableFlags m_writeableFlags;
+    ptrdiff_t m_exposedClassObject;
 
-    WriteableFlags getWriteableFlags()
+    @property WriteableFlags writeableFlags()
     {
-        return writeableFlags;
+        return m_writeableFlags;
     }
 
-    void setWriteableFlags(WriteableFlags flags)
+    @property WriteableFlags writeableFlags(WriteableFlags flags)
     {
-        writeableFlags = flags;
+        return m_writeableFlags = flags;
     }
 
     bool isRemotingConfigChecked()
@@ -59,7 +59,7 @@ public:
         return writeableFlags.hasFlag(WriteableFlags.RemotingConfigChecked);
     }
 
-    bool requiresManagedActivation()
+    bool isRequiresManagedActivation()
     {
         return writeableFlags.hasFlag(WriteableFlags.RequiresManagedActivation);
     }
@@ -144,7 +144,7 @@ public:
         writeableFlags.setFlag(WriteableFlags.RemotingConfigChecked, state);
     }
 
-    void setRequiresManagedActivation(bool state)
+    void setIsRequiresManagedActivation(bool state)
     {
         writeableFlags.setFlag(WriteableFlags.RequiresManagedActivation, state);
     }
@@ -224,41 +224,41 @@ public:
         writeableFlags.setFlag(WriteableFlags.HasInjectedInterfaceDuplicates, state);
     }
 
-    ptrdiff_t getExposedClassObject()
+    @property ptrdiff_t exposedClassObject()
     {
-        return exposedClassObject;
+        return m_exposedClassObject;
     }
 
-    void setExposedClassObject(ptrdiff_t value)
+    @property ptrdiff_t exposedClassObject(ptrdiff_t value)
     {
-        exposedClassObject = value;
+        return m_exposedClassObject = value;
     }
 }
 
 public struct GuidInfo
 {
 public:
-    UUID guid;
-    bool generatedFromName;
+    UUID m_guid;
+    bool m_generatedFromName;
 
-    UUID getGuid()
+    @property UUID guid()
     {
-        return guid;
+        return m_guid;
     }
 
-    void setGuid(UUID newGuid)
+    @property UUID guid(UUID newGuid)
     {
-        guid = newGuid;
+        return m_guid = newGuid;
     }
 
-    bool isGeneratedFromName()
+    @property bool isGeneratedFromName()
     {
-        return generatedFromName;
+        return m_generatedFromName;
     }
 
-    void setGeneratedFromName(bool state)
+    @property bool isGeneratedFromName(bool state)
     {
-        generatedFromName = state;
+        return m_generatedFromName = state;
     }
 }
 
@@ -382,43 +382,43 @@ public:
 
     union
     {
-        TypeFlags typeFlags;
+        TypeFlags m_typeFlags;
         mixin(bitfields!(
-            ushort, "componentSize", 16,
-            GenericFlags, "genericFlags", 16
+            ushort, "m_componentSize", 16,
+            GenericFlags, "m_genericFlags", 16
         ));
     }
     // Base size of instance of this struct when allocated on the heap, including padding
-    uint baseSize;
-    InterfaceFlags interfaceFlags;
+    uint m_baseSize;
+    InterfaceFlags m_interfaceFlags;
     // Class token if it fits into 16-bits. If this is (WORD)-1, the struct token is stored in the TokenOverflow optional member.
-    HalfMDToken mdToken;
-    ushort numVirtuals;
-    ushort numInterfaces;
+    HalfMDToken m_mdToken;
+    ushort m_numVirtuals;
+    ushort m_numInterfaces;
     /*
     #ifdef _DEBUG
     LPCUTF8         debug_m_szClassName;
     #endif //_DEBUG
     */
-    MethodTable* parentMethodTable;
-    Module* ceemodule;
-    WriteableData* writeableData;
+    MethodTable* m_parentMethodTable;
+    Module* m_ceemodule;
+    WriteableData* m_writeableData;
     union
     {
-        ubyte unType;
-        EEClass* eeClass;
-        MethodTable* canonMethodTable;
+        ubyte m_unType;
+        EEClass* m_eeClass;
+        MethodTable* m_canonMethodTable;
     }
     union
     {
-        PerInstInfo* perInstInfo;
-        MethodTable* elementMethodTable;
-        ubyte* multiPurposeSlot1;
+        PerInstInfo* m_perInstInfo;
+        MethodTable* m_elementMethodTable;
+        ubyte* m_multiPurposeSlot1;
     }
     union
     {
-        MethodTable* interfaceMap;
-        ubyte* multiPurposeSlot2;
+        MethodTable* m_interfaceMap;
+        ubyte* m_multiPurposeSlot2;
     }
 
     //                                                OPTIONAL FIELDS
@@ -453,12 +453,16 @@ public:
             eeClass.layoutInfo.managedSize <= 8 && eeClass.layoutInfo.managedSize != 6);
     }
 
-    uint getBaseSize()
+    TypeFlags typeFlags()
     {
-        if (baseSize <= 0)
+        return m_typeFlags;
+    }
+    uint baseSize()
+    {
+        if (m_baseSize <= 0)
             return 1;
 
-        return baseSize;
+        return m_baseSize;
     }
 
     bool hasTokenOverflow()
