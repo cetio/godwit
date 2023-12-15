@@ -229,7 +229,7 @@ public:
         return m_exposedClassObject;
     }
 
-    @property ptrdiff_t exposedClassObject(ptrdiff_t value)
+    @property qptrdiff_t exposedClassObject(ptrdiff_t value)
     {
         return m_exposedClassObject = value;
     }

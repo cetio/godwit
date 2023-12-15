@@ -56,3 +56,23 @@ string toString(T)(T value)
     }
     return __traits(allMembers, T)[0];
 }
+// lazy
+    bool opDispatch(string name, T...)(T args)
+    {
+        static if (!name.startsWith("is"))
+            return false;
+            
+        foreach (string member; FieldNameTuple!(typeof(this)))
+        {
+            static if (is(typeof(__traits(getMember, this, member)) == enum))
+            {
+                foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
+                {
+                    if (name[2..$] == flag.to!string)
+                        return (__traits(getMember, this, member) & flag) != 0;
+                }
+            }
+        }
+        
+        throw new Exception(name ~ " does not exist, you stupid!");
+    }
