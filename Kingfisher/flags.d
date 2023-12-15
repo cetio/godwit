@@ -56,7 +56,11 @@ string toString(T)(T value)
     }
     return __traits(allMembers, T)[0];
 }
-// lazy
+// THESE DO NOT BELONG HERE!
+    // This is bad, should replace with mixins and add setters!
+    // Also add mask support!
+    // Fully implement flags.d!
+    // Generates getters for flags
     bool opDispatch(string name, T...)(T args)
         if (name.startsWith("is"))
     { 
@@ -67,7 +71,7 @@ string toString(T)(T value)
                 static foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
                 {
                     static if (name[2..$] == flag.to!string)
-                        return (__traits(getMember, this, member) & flag) != 0;
+                        return __traits(getMember, this, member).hasFlag(flag);
                 }
             }
         }
@@ -75,7 +79,6 @@ string toString(T)(T value)
         throw new Exception(name ~ " (flag) does not exist!");
     }
     
+    // Generate get/sets for all fields (assumes good practice with m_ prefix)
     static foreach (string member; FieldNameTuple!(typeof(this)))
-    {
-            mixin(fullyQualifiedName!(typeof(__traits(getMember, this, "`member`"))) ~ " " ~ member ~ "() { return __traits(getMember, this, \"" ~ member ~ "\"); }");
-    }
+        mixin("ref " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ " " ~ member[2..$] ~ "() { return " ~ member ~ "; }");
