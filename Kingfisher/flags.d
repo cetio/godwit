@@ -57,28 +57,31 @@ string toString(T)(T value)
     return __traits(allMembers, T)[0];
 }
 // THESE DO NOT BELONG HERE!
-    // This is bad, should replace with mixins and add setters!
-    // Also add mask support!
-    // Fully implement flags.d!
-    // Generates getters for flags
-    bool opDispatch(string name, T...)(T args)
-        if (name.startsWith("is"))
-    { 
-        static foreach (string member; FieldNameTuple!(typeof(this)))
+// Add mask support!
+// Generates gets/sets
+// Assumes standardizes prefixes! (m_ for backing fields, k for masked enum values)
+static foreach (string member; FieldNameTuple!(typeof(this)))
+    {
+    	mixin("ref " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ " " ~ member[2..$] ~ "() { return " ~ member ~ "; }");
+        
+        // Does not support multiple fields with the same enum type!
+        static if (is(typeof(__traits(getMember, this, member)) == enum))
         {
-            static if (is(typeof(__traits(getMember, this, member)) == enum))
+            static foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
             {
-                static foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
+                // ex: Eastern
+                // Masked (k prefix)
+                static if ((flag.to!string).startsWith('k'))
                 {
-                    static if (name[2..$] == flag.to!string)
-                        return __traits(getMember, this, member).hasFlag(flag);
+					pragma(msg, "Unimplemented masked flag set/get " ~ flag.to!string);
+                }
+                else
+                {
+                    // @property bool isEastern()...
+                	mixin("@property bool is" ~ flag.to!string ~ "() { return (" ~ member ~ " & " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ "." ~ flag.to!string ~ ") != 0; }");
+                	// @property bool isEastern(bool state)...
+                	mixin("@property bool is" ~ flag.to!string ~ "(bool state) { return ((" ~ member ~ " = state ? (" ~ member ~ " | " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ "." ~ flag.to!string ~ ") : (" ~ member ~ " & ~" ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ "." ~ flag.to!string ~ ")) & " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ "." ~ flag.to!string ~ ") != 0; }");
                 }
             }
         }
-        
-        throw new Exception(name ~ " (flag) does not exist!");
     }
-    
-    // Generate get/sets for all fields (assumes good practice with m_ prefix)
-    static foreach (string member; FieldNameTuple!(typeof(this)))
-        mixin("ref " ~ fullyQualifiedName!(typeof(__traits(getMember, this, member))) ~ " " ~ member[2..$] ~ "() { return " ~ member ~ "; }");
