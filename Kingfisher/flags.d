@@ -58,21 +58,24 @@ string toString(T)(T value)
 }
 // lazy
     bool opDispatch(string name, T...)(T args)
-    {
-        static if (!name.startsWith("is"))
-            return false;
-            
-        foreach (string member; FieldNameTuple!(typeof(this)))
+        if (name.startsWith("is"))
+    { 
+        static foreach (string member; FieldNameTuple!(typeof(this)))
         {
             static if (is(typeof(__traits(getMember, this, member)) == enum))
             {
-                foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
+                static foreach (flag; EnumMembers!(typeof(__traits(getMember, this, member))))
                 {
-                    if (name[2..$] == flag.to!string)
+                    static if (name[2..$] == flag.to!string)
                         return (__traits(getMember, this, member) & flag) != 0;
                 }
             }
         }
         
-        throw new Exception(name ~ " does not exist, you stupid!");
+        throw new Exception(name ~ " (flag) does not exist!");
+    }
+    
+    static foreach (string member; FieldNameTuple!(typeof(this)))
+    {
+            mixin(fullyQualifiedName!(typeof(__traits(getMember, this, "`member`"))) ~ " " ~ member ~ "() { return __traits(getMember, this, \"" ~ member ~ "\"); }");
     }
