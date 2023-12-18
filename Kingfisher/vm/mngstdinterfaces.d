@@ -1,19 +1,12 @@
 module vm.mngstdinterfaces;
 
 import inc.sbuffer;
+import state;
 
 public struct MngStdInterfacesInfo
 {
 public:
-    SString* friendlyName;
+    SString* m_friendlyName;
 
-    SString* getFriendlyName()
-    {
-        return friendlyName;
-    }
-
-    void setFriendlyName(SString* newFriendlyName)
-    {
-        friendlyName = newFriendlyName;
-    }
+    mixin accessors;
 }

@@ -8,57 +8,61 @@ import vm.appdomain;
 import vm.clsload;
 import inc.arraylist;
 import inc.corhdr;
+import state;
 
 // Equivalent to System.Runtime.Assembly.
 public struct Assembly
 {
 public:
-    BaseDomain* baseDomain;
+    BaseDomain* m_baseDomain;
     // Pointer to the struct loader responsible for loading types from this assembly.
-    ClassLoader* classLoader;
+    ClassLoader* m_classLoader;
     // Pointer to the MethodDesc of the assembly's entrypoint, if available.
     // Entrypoint is the method that is executed first when running the assembly.
-    MethodDesc* entryPoint;
+    MethodDesc* m_entryPoint;
     // Module(s) owned by this assembly.
-    Module* ceemodule;
+    Module* m_ceemodule;
     // PE representation of this assembly.
-    PEAssembly* peAssembly;
+    PEAssembly* m_peAssembly;
     // Friend assemblies, if applicable.
     // Any friend assemblies associated with the assembly are able to access internal members and types.
-    FriendAssemblyDescriptor* friendAssemblyDescriptor;
+    FriendAssemblyDescriptor* m_friendAssemblyDescriptor;
     // Indicates whether this assembly is dynamically generated (e.g., at runtime).
-    bool isDynamic;
+    bool m_isDynamic;
     // Indicates whether or not this assembly can be collected (unloaded) if none of the types are being used.
     //#ifdef FEATURE_COLLECTIBLE_TYPES
-    bool isCollectible;
+    bool m_isCollectible;
     // Pointer to the loader allocator responsible for allocating memory for this assembly.
-    LoaderAllocator* loaderAllocator;
+    LoaderAllocator* m_allocator;
     // If a TypeLib is ever required for this module, cache the pointer here.
     // Interop Type Library
     //#ifdef FEATURE_COMINTEROP
-    ubyte* itypeLib;
-    uint interopAttribStatus;
+    ubyte* m_itypeLib;
+    uint m_interopAttribStatus;
     //
-    DebuggerAssemblyControlFlags debuggerFlags;
+    DebuggerAssemblyControlFlags m_debuggerFlags;
     // Indicates whether this assembly has been terminated or unloaded.
-    bool isTerminated;
+    bool m_isTerminated;
 /*
     enum IsInstrumentedStatus {
         IS_INSTRUMENTED_UNSET = 0,
         IS_INSTRUMENTED_FALSE = 1,
         IS_INSTRUMENTED_TRUE = 2,
-    };
+    }
     IsInstrumentedStatus    m_isInstrumentedStatus;
 #endif // FEATURE_READYTORUN
 */
+    mixin accessors;
 }
 
 public struct FriendAssemblyDescriptor
 {
 public:
     // Friend assemblies which have access to all internals
-    ArrayList fullAccessFriendAssemblies;
+    ArrayList m_fullAccessFriendAssemblies;
     // Subject assemblies which we will not perform access checks against
-    ArrayList subjectAssemblies;
-    int refCount;
+    ArrayList m_subjectAssemblies;
+    int m_refCount;
+
+    mixin accessors;
 }

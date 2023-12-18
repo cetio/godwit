@@ -2,6 +2,7 @@ module vm.peimagelayout;
 
 import vm.peimage;
 import inc.corhdr;
+import state;
 
 public struct PEImageLayout
 {
@@ -11,10 +12,12 @@ public:
         LAYOUT_FLAT   = 2,
         LAYOUT_LOADED = 4,
         LAYOUT_ANY = 0xf
-    };
+    }
 
-    int refCount;
-    PEImage* owner;
+    int m_refCount;
+    PEImage* m_owner;
+
+    mixin accessors;
 }
 
 public struct FlatImageLayout
@@ -23,8 +26,10 @@ public struct FlatImageLayout
     alias peImageLayout this;
 
 public:
-    void** fileView;
-    ptrdiff_t* fileMap;
+    void** m_fileView;
+    ptrdiff_t* m_fileMap;
+
+    mixin accessors;
 }
 
 public struct ConvertedImageLayout
@@ -33,8 +38,10 @@ public struct ConvertedImageLayout
     alias peImageLayout this;
 
 public:
-    RuntimeFunction* exceptionDir;
-    size_t[16] imageParts;
+    RuntimeFunction* m_exceptionDir;
+    size_t[16] m_imageParts;
+
+    mixin accessors;
 }
 
 public struct LoadedImageLayout
@@ -43,6 +50,8 @@ public struct LoadedImageLayout
     alias peImageLayout this;
 
 public:
-    ptrdiff_t* hmodule;
-    void** loadedFile;
+    ptrdiff_t* m_hmodule;
+    void** m_loadedFile;
+
+    mixin accessors;
 }

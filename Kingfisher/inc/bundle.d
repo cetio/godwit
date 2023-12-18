@@ -1,90 +1,25 @@
 module inc.bundle;
 
 import inc.sbuffer;
+import state;
 
 public struct BundleFileLocation
 {
 public:
-    long size;
-    long offset;
-    long uncompressedSize;
+    long m_size;
+    long m_offset;
+    long m_uncompressedSize;
 
-    long getSize()
-    {
-        return size;
-    }
-
-    void setSize(long newSize)
-    {
-        size = newSize;
-    }
-
-    long getOffset()
-    {
-        return offset;
-    }
-
-    void setOffset(long newOffset)
-    {
-        offset = newOffset;
-    }
-
-    long getUncompressedSize()
-    {
-        return uncompressedSize;
-    }
-
-    void setUncompressedSize(long newUncompressedSize)
-    {
-        uncompressedSize = newUncompressedSize;
-    }
+    mixin accessors;
 }
 
 public struct Bundle
 {
 public:
-    SString path;
-    bool function(const char* path, long* offset, long* size, long* compressedSize) probe;
-    SString basePath;
-    uint basePathLen;
+    SString m_path;
+    bool function(const char* path, long* offset, long* size, long* compressedSize) m_probe;
+    SString m_basePath;
+    uint m_basePathLen;
 
-    SString getPath()
-    {
-        return path;
-    }
-
-    void setPath(SString newPath)
-    {
-        path = newPath;
-    }
-
-    bool function(const char* path, long* offset, long* size, long* compressedSize) getProbe()
-    {
-        return probe;
-    }
-
-    void setProbe(bool function(const char* path, long* offset, long* size, long* compressedSize) newProbe)
-    {
-        probe = newProbe;
-    }
-
-    SString getBasePath()
-    {
-        return basePath;
-    }
-
-    void setBasePath(SString newBasePath)
-    {
-        basePath = newBasePath;
-    }
-
-    uint getBasePathLen()
-    {
-        return basePathLen;
-    }
-
-    void setBasePathLen(uint newBasePathLen)
-    {
-        basePathLen = newBasePathLen;
-    }
+    mixin accessors;
 }

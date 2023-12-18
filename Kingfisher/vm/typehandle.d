@@ -2,6 +2,7 @@ module vm.typehandle;
 
 import vm.methodtable;
 import vm.typedesc;
+import state;
 
 /*************************************************************************/
 // A TypeHandle is the FUNDAMENTAL concept of type identity in the CLR.
@@ -13,7 +14,7 @@ import vm.typedesc;
 // At the present time a TypeHandle can point at two possible things
 //
 //      1) A MethodTable    (Arrays, Intrinsics, Classes, Value Types and their instantiations)
-//      2) A TypeDesc       (all other cases: byrefs, pointer types, function pointers, generic type variables)
+//      2) A TypeDesc       (all other cases = byrefs, pointer types, function pointers, generic type variables)
 //
 // or with IL stubs, a third thing:
 //
@@ -28,7 +29,7 @@ import vm.typedesc;
 //    - types for function pointers for verification and reflection
 //    - types for generic parameters for verification and reflection
 //
-// Generic type instantiations (in C# syntax: C<ty_1,...,ty_n>) are represented by
+// Generic type instantiations (in C# syntax = C<ty_1,...,ty_n>) are represented by
 // MethodTables, i.e. a new MethodTable gets allocated for each such instantiation.
 // The entries in these tables (i.e. the code) are, however, often shared.
 // Clients of TypeHandle don't need to know any of this detail; just use the
@@ -40,37 +41,14 @@ public struct TypeHandle
 public:
     union
     {
-        MethodTable* methodTable;
-        TypeDesc* typeDesc;
-        ParamTypeDesc* paramTypeDesc;
-        TypeVarTypeDesc* typeVarTypeDesc;
-        FnPtrTypeDesc* fnPtrTypeDesc;
+        MethodTable* m_methodTable;
+        TypeDesc* m_typeDesc;
+        ParamTypeDesc* m_paramTypeDesc;
+        TypeVarTypeDesc* m_typeVarTypeDesc;
+        FnPtrTypeDesc* m_fnPtrTypeDesc;
     }
 
-    MethodTable* getMethodTable()
-    {
-        return methodTable;
-    }
-
-    TypeDesc* getTypeDesc()
-    {
-        return typeDesc;
-    }
-
-    ParamTypeDesc* getParamTypeDesc()
-    {
-        return paramTypeDesc;
-    }
-
-    TypeVarTypeDesc* getTypeVarTypeDesc()
-    {
-        return typeVarTypeDesc;
-    }
-
-    FnPtrTypeDesc* getFnPtrTypeDesc()
-    {
-        return fnPtrTypeDesc;
-    }
+    mixin accessors;
 }
 
 /*************************************************************************/
@@ -84,6 +62,8 @@ public struct Instantiation
 {
 public:
     // Note that for DAC builds, m_pArgs may be host allocated buffer, not a copy of an object marshalled by DAC.
-    TypeHandle* args;
-    uint numArgs;
+    TypeHandle* m_args;
+    uint m_numArgs;
+
+    mixin accessors;
 }

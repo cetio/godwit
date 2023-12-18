@@ -5,7 +5,7 @@ import readers.stream;
 public class PE
 {
 private:
-    Stream stream;
+    //Stream stream;
 
 public:
 }

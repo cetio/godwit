@@ -6,6 +6,7 @@ import vm.peassembly;
 import vm.ceeload;
 import vm.loaderallocator;
 import vm.exinfo;
+import state;
 
 public struct DomainAssembly
 {
@@ -14,7 +15,7 @@ public:
     {
         // These states are tracked by FileLoadLock
 
-        // Note: This enum must match the static array fileLoadLevelName[]
+        // Note = This enum must match the static array fileLoadLevelName[]
         //       which contains the printable names of the enum values
 
         // Note that semantics here are description is the LAST step done, not what is
@@ -36,20 +37,22 @@ public:
         Loaded,           
         // Fully active (constructors run & security checked)
         Active                   
-    };
+    }
 
-    Assembly* assembly;
-    AppDomain* domain;
-    PEAssembly* peAssembly;
-    Module* ceemodule;
-    bool isfCollectible;
-    DomainAssembly* nextInALC;
-    LoaderAllocator* loaderAllocator;
-    FileLoadLevel fileLoadLevel;
-    bool isfLoading;
-    ptrdiff_t exposedModuleObject;
-    ptrdiff_t exposedAssemblyObject;
-    ExInfo* error;
-    bool disableActivationCheck;
-    bool hostAssemblyPublished;
+    Assembly* m_assembly;
+    AppDomain* m_domain;
+    PEAssembly* m_peAssembly;
+    Module* m_ceemodule;
+    bool m_isfCollectible;
+    DomainAssembly* m_nextInALC;
+    LoaderAllocator* m_allocator;
+    FileLoadLevel m_fileLoadLevel;
+    bool m_isfLoading;
+    ptrdiff_t m_exposedModuleObject;
+    ptrdiff_t m_exposedAssemblyObject;
+    ExInfo* m_error;
+    bool m_disableActivationCheck;
+    bool m_hostAssemblyPublished;
+
+    mixin accessors;
 }

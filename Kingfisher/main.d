@@ -67,7 +67,7 @@ extern (C) export void Initialize()
         return;
     }
 
-    Stream stream = new Stream(filePath);
+    ByteStream stream = new ByteStream(filePath);
 
     auto dosHeader = stream.read!IMAGE_DOS_HEADER();
     if (dosHeader.e_magic != 0x5A4D)
@@ -79,15 +79,15 @@ extern (C) export void Initialize()
         writeln("PE signature not found!");
     auto fileHeader = stream.read!IMAGE_FILE_HEADER();
 
-    writeln("Machine: ", fileHeader.Machine.to!string(16));
-    writeln("Number of Sections: ", fileHeader.NumberOfSections.to!string(16));
-    writeln("Time Date Stamp: ", fileHeader.TimeDateStamp.to!string(16));
-    writeln("Size of Optional Header: ", fileHeader.SizeOfOptionalHeader.to!string(16));
-    writeln("Characteristics: ", fileHeader.Characteristics.to!string(16));
+    writeln("Machine = ", fileHeader.Machine.to!string(16));
+    writeln("Number of Sections = ", fileHeader.NumberOfSections.to!string(16));
+    writeln("Time Date Stamp = ", fileHeader.TimeDateStamp.to!string(16));
+    writeln("Size of Optional Header = ", fileHeader.SizeOfOptionalHeader.to!string(16));
+    writeln("Characteristics = ", fileHeader.Characteristics.to!string(16));
 
     writeln("DOS Header:");
-    writeln("e_magic: ", dosHeader.e_magic.to!string(16));
-    writeln("e_cblp: ", dosHeader.e_cblp.to!string(16));
-    writeln("e_lfanew: ", dosHeader.e_lfanew.to!string(16));
+    writeln("e_magic = ", dosHeader.e_magic.to!string(16));
+    writeln("e_cblp = ", dosHeader.e_cblp.to!string(16));
+    writeln("e_lfanew = ", dosHeader.e_lfanew.to!string(16));
 
 }

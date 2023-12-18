@@ -1,11 +1,12 @@
 module inc.readytorun;
 
 import inc.corhdr;
+import state;
 
 public struct ReadyToRunCoreHeader
 {
 public:
-    enum Flags
+    @flags enum Flags
     {
         // Set if the original IL assembly was platform-neutral
         PlatformNeutralSource = 0x00000001,   
@@ -24,18 +25,21 @@ public:
         UnrelatedR2RCode = 0x00000080,   
     }
 
-    Flags flags;
-    uint numSections;
+    Flags m_flags;
+    uint m_numSections;
+
+    mixin accessors;
 }
 
 public struct ReadyToRunHeader
 {
 public:
-    uint signature;
-    ushort major;
-    ushort minor;
+    uint m_signature;
+    ushort m_major;
+    ushort m_minor;
+    ReadyToRunCoreHeader m_coreHeader;
 
-    ReadyToRunCoreHeader coreHeader;
+    mixin accessors;
 }
 
 public struct ReadyToRunImportSection
@@ -47,26 +51,28 @@ public:
         StubDispatch = 2,
         StringHandle = 3,
         ILBodyFixups = 7,
-    };
+    }
 
-    enum SectionFlags : ushort
+    @flags enum SectionFlags : ushort
     {
         None     = 0x0000,
         // Section at module load time.
         Eager    = 0x0001, 
         // Section contains pointers to code
         PCode    = 0x0004, 
-    };
+    }
 
     // Section containing values to be fixed up
-    ImageDataDirectory section;
+    ImageDataDirectory m_section;
     // One or more of ReadyToRunImportSectionFlags
-    SectionFlags flags;
+    SectionFlags m_flags;
     // One of ReadyToRunImportSectionType
-    SectionType type;
-    ubyte entrySize;
+    SectionType m_type;
+    ubyte m_entrySize;
     // RVA of optional signature descriptors
-    uint signatures;
+    uint m_signatures;
     // RVA of optional auxiliary data (typically GC info)
-    uint auxData;
+    uint m_auxData;
+
+    mixin accessors;
 }

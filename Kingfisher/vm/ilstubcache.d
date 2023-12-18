@@ -5,13 +5,16 @@ import inc.loaderheap;
 import vm.methodtable;
 import vm.method;
 import inc.shash;
+import state;
 
 public struct ILStubHashBlobBase
 {
 public:
     // this is size of entire object!!
-    size_t sizeOfBlob;  
-};
+    size_t m_sizeOfBlob;  
+
+    mixin accessors;
+}
 
 public struct ILStubHashBlob
 {
@@ -19,36 +22,27 @@ public struct ILStubHashBlob
     alias ilStubHashBlobBase this;
 
 public:
-    ubyte[] blobData;
-};
+    ubyte[] m_blobData;
+
+    mixin accessors;
+}
 
 public struct ILStubCache
 {
 public:
-    Crst crst;
-    LoaderHeap* heap;
-    MethodTable* stubMethodTable;
-    SHash!(ILStubCacheEntry, uint) hashMap;
+    Crst m_crst;
+    LoaderHeap* m_heap;
+    MethodTable* m_stubMethodTable;
+    SHash!(ILStubCacheEntry, uint) m_hashMap;
 
-    Crst getCrst()
-    {
-        return crst;
-    }
-
-    LoaderHeap* getHeap()
-    {
-        return heap;
-    }
-
-    MethodTable* getStubMethodTable()
-    {
-        return stubMethodTable;
-    }
+    mixin accessors;
 }
 
 public struct ILStubCacheEntry
 {
 public:
-    MethodDesc* methodDesc;
-    ILStubHashBlob* blob;
-};
+    MethodDesc* m_methodDesc;
+    ILStubHashBlob* m_blob;
+
+    mixin accessors;
+}

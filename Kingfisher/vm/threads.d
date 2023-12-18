@@ -1,19 +1,12 @@
 module vm.threads;
 
 import gc.gcenv;
+import state;
 
 public struct DeadlockAwareLock
 {
 public:
-    Thread* holdingThread;
+    Thread* m_holdingThread;
 
-    Thread* getHoldingThread()
-    {
-        return holdingThread;
-    }
-
-    void setHoldingThread(Thread* newHoldingThread)
-    {
-        holdingThread = newHoldingThread;
-    }
+    mixin accessors;
 }

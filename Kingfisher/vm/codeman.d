@@ -3,13 +3,16 @@ module vm.codeman;
 import inc.loaderheap;
 import vm.crst;
 import vm.loaderallocator;
+import state;
 
 public struct FreeBlock
 {
 public:
-    void* block;
+    void* m_block;
     // Size of this block (includes size of FreeBlock)
-    size_t size;            
+    size_t m_size;      
+
+    mixin accessors;
 }
 
 public struct CodeFragmentHeap
@@ -41,10 +44,12 @@ public:
         ExternalMethodThunk,
         // Placeholdes used by ReadyToRun images
         MethodCallThunk,
-    };
+    }
 
-    LoaderAllocator* loaderAllocator;
-    FreeBlock* freeBlocks;
-    StubBlockKind kind;
-    Crst crst;
+    LoaderAllocator* m_allocator;
+    FreeBlock* m_freeBlocks;
+    StubBlockKind m_kind;
+    Crst m_crst;
+
+    mixin accessors;
 }

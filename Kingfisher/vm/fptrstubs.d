@@ -4,31 +4,14 @@ import vm.crst;
 import vm.method;
 import vm.precode;
 import inc.shash;
+import state;
 
 public struct FuncPtrStubs
 {
 public:
-    Crst hashTableCrst;
+    Crst m_hashTableCrst;
     // To find a existing stub for a method
-    SHash!(Precode*, uint) hashTable;   
+    SHash!(Precode*, uint) m_hashTable;   
 
-    Crst getHashTableCrst()
-    {
-        return hashTableCrst;
-    }
-
-    void setHashTableCrst(Crst newHashTableCrst)
-    {
-        hashTableCrst = newHashTableCrst;
-    }
-
-    SHash!(Precode*, uint) getHashTable()
-    {
-        return hashTable;
-    }
-
-    void setHashTable(SHash!(Precode*, uint) newHashTable)
-    {
-        hashTable = newHashTable;
-    }
+    mixin accessors;
 }

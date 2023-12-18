@@ -3,23 +3,24 @@ module vm.clsload;
 import vm.assembly;
 import vm.crst;
 import vm.pendingload;
+import state;
 
 public struct ClassLoader
 {
 public:
     // Classes for which load is in progress
-    PendingTypeLoadTable* unresolvedClassHash;
-    CrstExplicitInit unresolvedClassLock;
+    PendingTypeLoadTable* m_unresolvedClassHash;
+    CrstExplicitInit m_unresolvedClassLock;
     // Protects addition of elements to module's m_pAvailableClasses.
     // (indeed thus protects addition of elements to any m_pAvailableClasses in any
     // of the modules managed by this loader)
-    CrstExplicitInit availableClassLock;
-    CrstExplicitInit availableTypesLock;
+    CrstExplicitInit m_availableClassLock;
+    CrstExplicitInit m_availableTypesLock;
     // Do we have any modules which need to have their classes added to
     // the available list?
-    int unhashedModules;
+    int m_unhashedModules;
     // Reference to the assembly this belongs to
-    Assembly* assembly;
+    Assembly* m_assembly;
     /*
 #ifdef _DEBUG
     DWORD               m_dwDebugMethods;
@@ -36,4 +37,5 @@ public:
     size_t              m_dwEEClassData;
 #endif
     */
+    mixin accessors;
 }

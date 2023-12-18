@@ -3,6 +3,7 @@ module vm.clrex;
 import vm.method;
 import inc.ex;
 import vm.objects;
+import state;
 
 public struct StackTraceInfo
 {
@@ -11,30 +12,34 @@ public:
     // pointer to stack trace storage
     StackTraceElement*  m_pStackTrace;
     // size of stack trace storage
-    uint stackTrace;     
+    uint m_stackTrace;     
     // current frame in stack trace
-    uint frameCount;      
+    uint m_frameCount;      
     // number of items in the Dynamic Method array
-    uint dynamicMethodItems; 
+    uint m_dynamicMethodItems; 
     // index of the next location where the resolver object will be stored
-    uint currentDynamicIndex; 
+    uint m_currentDynamicIndex; 
+
+    mixin accessors;
 }
 
 public struct StackTraceElement
 {
 public:
-    enum StackTraceElementFlags : int
+    @flags enum StackTraceElementFlags : int
     {
         // Set if this element represents the last frame of the foreign exception stack trace
-        STEF_LAST_FRAME_FROM_FOREIGN_STACK_TRACE = 0x0001,
+        LastFrameFromForeign = 0x0001,
         // Set if the "ip" field has already been adjusted (decremented)
-        STEF_IP_ADJUSTED = 0x0002,
-    };
+        IpAdjusted = 0x0002,
+    }
 
-    uint* ip;
-    uint* sp;
-    MethodDesc* fnptr;
-    StackTraceElementFlags flags;      
+    uint* m_ip;
+    uint* m_sp;
+    MethodDesc* m_fn;
+    StackTraceElementFlags m_flags;    
+
+    mixin accessors;
 }
 
 public struct CLRException
@@ -43,7 +48,9 @@ public struct CLRException
     alias exception this;
 
 public:
-    ObjectHandle throwableHandle;
+    ObjectHandle m_throwableHandle;
+
+    mixin accessors;
 }
 
 public struct EEException
@@ -52,5 +59,7 @@ public struct EEException
     alias clrException this;
 
 public:
-    const(uint) kind;
+    const(uint) m_kind;
+
+    mixin accessors;
 }

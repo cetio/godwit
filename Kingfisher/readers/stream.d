@@ -3,6 +3,7 @@ module readers.stream;
 import std.file;
 import std.conv;
 import std.algorithm.mutation;
+import std.algorithm : canFind;
 import std.traits;
 
 public enum Endianness : ubyte
@@ -19,7 +20,7 @@ public enum Seek
     End
 }
 
-public class Stream
+public class ByteStream
 {
 public:
     ubyte[] data;
@@ -42,7 +43,7 @@ public:
     * Swaps the endianness of the provided value, if applicable.
     *
     * Params:
-    *   - `val`: The value to swap endianness.
+    *   - `val = The value to swap endianness.
     *
     * Returns:
     *   The value with swapped endianness.
@@ -75,7 +76,7 @@ public:
     * Moves the position in the stream by the size of type T.
     *
     * Params:
-    *   - `T`: The size of type to move the position by.
+    *   - `T = The size of type to move the position by.
     */
     @nogc void step(T)()
     {
@@ -87,8 +88,8 @@ public:
     * Does not work like a conventional seek, and will read type T from the stream, using that as the seek offset.
     *
     * Params:
-    *   - `T`: The offset value for seeking.
-    *   - `SEEK`: The direction of the seek operation (Start, Current, or End).
+    *   - `T = The offset value for seeking.
+    *   - `SEEK = The direction of the seek operation (Start, Current, or End).
     */
     @nogc void seek(T, Seek SEEK)()
         if (isIntegral!T)
@@ -111,7 +112,7 @@ public:
     * Reads the next value from the stream of type T.
     *
     * Params:
-    *   - `T`: The type of data to be read.
+    *   - `T = The type of data to be read.
     *
     * Returns:
     *   The value read from the stream.
@@ -126,7 +127,7 @@ public:
     * Peeks at the next value from the stream of type T without advancing the stream position.
     *
     * Params:
-    *   - `T`: The type of data to peek.
+    *   - `T = The type of data to peek.
     *
     * Returns:
     *   The value peeked from the stream.
@@ -144,8 +145,8 @@ public:
     * Writes the provided value to the stream.
     *
     * Params:
-    *   - `T`: The type of data to be written.
-    *   - `val`: The value to be written to the stream.
+    *   - `T = The type of data to be written.
+    *   - `val = The value to be written to the stream.
     */
     @nogc void write(T)(T val)
     {
@@ -157,8 +158,8 @@ public:
     * Writes the provided value to the stream without advancing the stream position.
     *
     * Params:
-    *   - `T`: The type of data to be written.
-    *   - `val`: The value to be written to the stream.
+    *   - `T = The type of data to be written.
+    *   - `val = The value to be written to the stream.
     */
     @nogc void put(T)(T val)
     {
@@ -173,8 +174,8 @@ public:
     * Reads multiple values of type T from the stream.
     *
     * Params:
-    *   - `T`: The type of data to be read.
-    *   - `count`: The number of values to read from the stream.
+    *   - `T = The type of data to be read.
+    *   - `count = The number of values to read from the stream.
     *
     * Returns:
     *   An array of values read from the stream.
@@ -191,8 +192,8 @@ public:
     * Peeks at multiple values of type T from the stream without advancing the stream position.
     *
     * Params:
-    *   - `T`: The type of data to peek.
-    *   - `count`: The number of values to peek from the stream.
+    *   - `T = The type of data to peek.
+    *   - `count = The number of values to peek from the stream.
     *
     * Returns:
     *   An array of values peeked from the stream.
@@ -208,8 +209,8 @@ public:
     * Writes multiple values of type T to the stream.
     *
     * Params:
-    *   - `T`: The type of data to be written.
-    *   - `items`: An array of values to be written to the stream.
+    *   - `T = The type of data to be written.
+    *   - `items = An array of values to be written to the stream.
     */
     @nogc void write(T)(T[] items)
     {
@@ -221,8 +222,8 @@ public:
     * Writes multiple values of type T to the stream without advancing the stream position.
     *
     * Params:
-    *   - `T`: The type of data to be written.
-    *   - `items`: An array of values to be written to the stream.
+    *   - `T = The type of data to be written.
+    *   - `items = An array of values to be written to the stream.
     */
     @nogc void put(T)(T[] items)
     {
@@ -235,8 +236,8 @@ public:
     * Reads a string from the stream considering the character width and prefixing.
     *
     * Params:
-    *   - `CHAR`: The character type used for reading the string (char, wchar, or dchar).
-    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
+    *   - `CHAR = The character type used for reading the string (char, wchar, or dchar).
+    *   - `PREFIXED = Indicates whether the string is prefixed. Default is false.
     *
     * Returns:
     *   The read string from the stream.
@@ -256,8 +257,8 @@ public:
     * Reads a string from the stream considering the character width and prefixing without advancing the stream position.
     *
     * Params:
-    *   - `CHAR`: The character type used for reading the string (char, wchar, or dchar).
-    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
+    *   - `CHAR = The character type used for reading the string (char, wchar, or dchar).
+    *   - `PREFIXED = Indicates whether the string is prefixed. Default is false.
     *
     * Returns:
     *   The read string from the stream.
@@ -280,9 +281,9 @@ public:
     * Writes a string to the stream considering the character width and prefixing.
     *
     * Params:
-    *   - `CHAR`: The character type used for writing the string (char, wchar, or dchar).
-    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
-    *   - `str`: The string to be written to the stream.
+    *   - `CHAR = The character type used for writing the string (char, wchar, or dchar).
+    *   - `PREFIXED = Indicates whether the string is prefixed. Default is false.
+    *   - `str = The string to be written to the stream.
     */
     void writeString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
@@ -303,9 +304,9 @@ public:
     * Writes a string into the stream considering the character width and prefixing without advancing the stream position.
     *
     * Params:
-    *   - `CHAR`: The character type used for writing the string (char, wchar, or dchar).
-    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
-    *   - `str`: The string to be put into the stream.
+    *   - `CHAR = The character type used for writing the string (char, wchar, or dchar).
+    *   - `PREFIXED = Indicates whether the string is prefixed. Default is false.
+    *   - `str = The string to be put into the stream.
     */
     void putString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
@@ -351,7 +352,7 @@ public:
     * Writes an integer value encoded in 7 bits to the stream.
     *
     * Params:
-    *   - `val`: The integer value to be written to the stream.
+    *   - `val = The integer value to be written to the stream.
     */
     @nogc void write7EncodedInt(int val)
     {
@@ -365,5 +366,66 @@ public:
             if (val == 0)
                 return;
         }
+    }
+
+    /**
+    * Reads a type from the stream using optional fields.
+    *
+    * Params:
+    *   - `TO': The type to be read from the stream.
+    *   - `ARGS... = The arguments for optional fields.
+    *
+    * Returns:
+    *   The read type read from the stream.
+    */
+    TO readPlasticized(TO, ARGS...)()
+        if (ARGS % 3 == 0)
+    {
+        TO val = read!(TO)();
+        string field;
+        string conditionalField;
+        foreach (i, ARG; ARGS)
+        {
+            if (i % 3 == 0)
+            {
+                static assert(is(typeof(ARG) : string),
+                          "Field name expected, found " ~ ARG.stringof);
+
+                field = ARG;
+            }
+            else if (i % 3 == 1)
+            {
+                static assert(is(typeof(ARG) : string),
+                          "Conditional field name expected, found " ~ ARG.stringof);
+
+                conditionalField = ARG;
+            }
+            else
+            {
+                if (__traits(getMember, val, conditionalField) != ARG)
+                {
+                    __traits(getMember, val, field) = __traits(getMember, val, field).init;
+                    position -= __traits(getMember, val, field).sizeof;
+                }
+            }
+        }
+    }
+
+    /**
+    * Reads a type from the stream without advancing the stream position and using optional fields.
+    *
+    * Params:
+    *   - `TO': The type to be read from the stream.
+    *   - `ARGS... = The arguments for optional fields.
+    *
+    * Returns:
+    *   The read type read from the stream.
+    */
+    TO peekPlasticized(TO, ARGS...)()
+        if (ARGS % 3 == 0)
+    {
+        ulong _position = position;
+        scope(exit) position = _position;
+        return readPlasticized!(TO, ARGS)();
     }
 }

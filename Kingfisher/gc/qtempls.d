@@ -1,56 +1,19 @@
+/// Represents what should be inc.corhlprpriv
 module gc.qtempls;
 
-// Represents what should be inc.corhlprpriv
+import state;
 
 public struct CQuickMemoryBase
 {
 public:
-    byte* buffer;
+    byte* m_buffer;
     // number of bytes used
-    size_t size;
+    size_t m_size;
     // total bytes allocated in the buffer
-    size_t totalAlloc;
-    ulong[(511 + ulong.sizeof) / ulong.sizeof] data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
+    size_t m_totalAlloc;
+    ulong[(511 + ulong.sizeof) / ulong.sizeof] m_data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
 
-    byte* getBuffer()
-    {
-        return buffer;
-    }
-
-    void setBuffer(byte* newBuffer)
-    {
-        buffer = newBuffer;
-    }
-
-    size_t getSize()
-    {
-        return size;
-    }
-
-    void setSize(size_t newSize)
-    {
-        size = newSize;
-    }
-
-    size_t getTotalAlloc()
-    {
-        return totalAlloc;
-    }
-
-    void setTotalAlloc(size_t newTotalAlloc)
-    {
-        totalAlloc = newTotalAlloc;
-    }
-
-    ulong[(511 + ulong.sizeof) / ulong.sizeof] getData()
-    {
-        return data;
-    }
-
-    void setData(ulong[(511 + ulong.sizeof) / ulong.sizeof] newData)
-    {
-        data = newData.dup;
-    }
+    mixin accessors;
 }
 
 public struct CQuickBytesBase
@@ -89,15 +52,7 @@ public struct CQuickArrayList(T)
     alias cquickArray this;
 
 public:
-    size_t curSize;
+    size_t m_curSize;
 
-    size_t getCurSize()
-    {
-        return curSize;
-    }
-
-    void setCurSize(size_t newCurSize)
-    {
-        curSize = newCurSize;
-    }
+    mixin accessors;
 }

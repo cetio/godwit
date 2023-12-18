@@ -1,5 +1,7 @@
 module vm.hash;
 
+import state;
+
 public struct HashMap
 {
 public:
@@ -21,16 +23,16 @@ public:
     }
 
     // compare object to be used in lookup
-    Compare* compare;
+    Compare* m_compare;
     // current size (index into prime array)
-    size_t primeIndex;
+    size_t m_primeIndex;
     // array of buckets
-    Bucket* buckets;
-    size_t prevSlotsInUse;
+    Bucket* m_buckets;
+    size_t m_prevSlotsInUse;
     // track the number of inserts and deletes
-    size_t inserts;
-    size_t deletes;
-    Mode mode;
+    size_t m_inserts;
+    size_t m_deletes;
+    Mode m_mode;
     /*
 #ifdef _DEBUG
     LPVOID          m_lockData;
@@ -38,137 +40,22 @@ public:
     EEThreadId      m_writerThreadId;
 #endif // _DEBUG
     */
-    Compare* getCompare()
-    {
-        return compare;
-    }
-
-    void setCompare(Compare* newCompare)
-    {
-        compare = newCompare;
-    }
-
-    size_t getPrimeIndex()
-    {
-        return primeIndex;
-    }
-
-    void setPrimeIndex(size_t newPrimeIndex)
-    {
-        primeIndex = newPrimeIndex;
-    }
-
-    Bucket* getBuckets()
-    {
-        return buckets;
-    }
-
-    void setBuckets(Bucket* newBuckets)
-    {
-        buckets = newBuckets;
-    }
-
-    size_t getPrevSlotsInUse()
-    {
-        return prevSlotsInUse;
-    }
-
-    void setPrevSlotsInUse(size_t newPrevSlotsInUse)
-    {
-        prevSlotsInUse = newPrevSlotsInUse;
-    }
-
-    size_t getInserts()
-    {
-        return inserts;
-    }
-
-    void setInserts(size_t newInserts)
-    {
-        inserts = newInserts;
-    }
-
-    size_t getDeletes()
-    {
-        return deletes;
-    }
-
-    void setDeletes(size_t newDeletes)
-    {
-        deletes = newDeletes;
-    }
-
-    Mode getMode()
-    {
-        return mode;
-    }
-
-    void setMode(Mode newMode)
-    {
-        mode = newMode;
-    }
-
-    bool isSynchronous()
-    {
-        return mode == Mode.Synchronous;
-    }
-
-    bool setIsSynchronous(bool state)
-    {
-        return mode = state ? Mode.Synchronous : Mode.SingleUser;
-    }
-
-    bool isSingleUser()
-    {
-        return mode == Mode.SingleUser;
-    }
-
-    bool setIsSingleUser(bool state)
-    {
-        return mode = state ? Mode.SingleUser : Mode.Synchronous;
-    }
+    mixin accessors;
 }
 
 public struct Bucket
 {
 public:
-    uint*[4] keys;
-    uint*[4] values;
+    uint*[4] m_keys;
+    uint*[4] m_values;
 
-    uint*[4] getKeys()
-    {
-        return keys;
-    }
-
-    void setKeys(uint*[4] newKeys)
-    {
-        keys = newKeys;
-    }
-
-    uint*[4] getValues()
-    {
-        return values;
-    }
-
-    void setValues(uint*[4] newValues)
-    {
-        values = newValues;
-    }
-
+    mixin accessors;
 }
 
 public struct Compare
 {
 public:
-    extern(C) bool function(uint*, uint*) fn;
+    extern(C) bool function(uint*, uint*) m_fn;
 
-    bool function(uint*, uint*) getFn()
-    {
-        return fn;
-    }
-
-    void setFn(bool function(uint*, uint*) newFn)
-    {
-        fn = newFn;
-    }
+    mixin accessors;
 }

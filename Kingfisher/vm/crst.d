@@ -1,18 +1,20 @@
 module vm.crst;
 
+import state;
+
 public struct CrstBase
 {
 public:
-    enum ReservedFlags : uint
+    @flags enum ReservedFlags : uint
     {
-        CRST_RESERVED_FLAGS_MASK = 0xC0000000,
-        CRST_INITIALIZED = 0x80000000,
-        CRST_OS_CRIT_SEC = 0x40000000,
+        ReservedFlagsMask = 0xC0000000,
+        kInitialized = 0x80000000,
+        kOSCritSec = 0x40000000,
     }
 
     // ReservedFlags only represents the base required flags,
     // This can contain more than ReservedFlags.
-    ReservedFlags flags;
+    ReservedFlags m_flags;
     /*
 #ifdef _DEBUG
     UINT                m_entercount;       // # of unmatched Enters.
@@ -32,11 +34,7 @@ public:
     void                PreLeave  ();
 #endif //_DEBUG
     */
-
-    ReservedFlags getFlags()
-    {
-        return flags;
-    }
+    mixin accessors;
 }
 
 public struct Crst

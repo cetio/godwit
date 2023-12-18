@@ -1,39 +1,13 @@
 module gc.gcenv;
 
+import state;
+
 public struct Thread
 {
 public:
-    bool preemptiveGCDisabled;
-    uint*[16] allocContext;
-    Thread* next;
+    bool m_preemptiveGCDisabled;
+    uint*[16] m_allocContext;
+    Thread* m_next;
 
-    bool getPreemptiveGCDisabled()
-    {
-        return preemptiveGCDisabled;
-    }
-
-    void setPreemptiveGCDisabled(bool state)
-    {
-        preemptiveGCDisabled = state;
-    }
-
-    uint*[] getAllocContext()
-    {
-        return allocContext;
-    }
-
-    void setAllocContext(uint*[] newAllocContext)
-    {
-        allocContext = newAllocContext.dup;
-    }
-
-    Thread* getNext()
-    {
-        return next;
-    }
-
-    void setNext(Thread* newNext)
-    {
-        next = newNext;
-    }
+    mixin accessors;
 }

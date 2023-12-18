@@ -4,44 +4,47 @@ import vm.objects;
 import inc.pal;
 import vm.clrex;
 import vm.objects;
+import state;
 
 public struct ExInfo
 {
 public:
-    // Note: the debugger assumes that m_pThrowable is a strong
+    // Note = the debugger assumes that m_pThrowable is a strong
     // reference so it can check it for NULL with preemptive GC
     // enabled.
     // thrown exception
-    ObjectHandle hndThrowable;
+    ObjectHandle m_hndThrowable;
     // topmost frame for current managed frame group
-    ushort** searchBoundary;
+    ushort** m_searchBoundary;
     // After a catch of a COM+ exception, pointers/context are trashed.
-    uint exceptionCode;
+    uint m_exceptionCode;
     // most recent EH record registered
-    void* bottomMostHandler;
+    void* m_bottomMostHandler;
     // Reference to the topmost handler we saw during an SO that goes past us
-    void* topMostHandlerDuringSO;
+    void* m_topMostHandlerDuringSO;
     // Esp when  fault occurred, OR esp to restore on endcatch
-    void* esp;
-    StackTraceInfo stackTraceInfo;
+    void* m_esp;
+    StackTraceInfo m_stackTraceInfo;
     // pointer to nested info if are handling nested exception
-    ExInfo* prevNestedInfo;
+    ExInfo* m_prevNestedInfo;
     // Zero this after endcatch
-    size_t* shadowSP;
-    ExceptionRecord* exceptionRecord;
-    ExceptionPointers* exceptionPointers;
-    int* context;
+    size_t* m_shadowSP;
+    ExceptionRecord* m_exceptionRecord;
+    ExceptionPointers* m_exceptionPointers;
+    int* m_context;
     // We have a rare case where (re-entry to the EE from an unmanaged filter) where we
     // need to create a new ExInfo ... but don't have a nested handler for it.  The handlers
     // use stack addresses to figure out their correct lifetimes.  This stack location is
     // used for that.  For most records, it will be the stack address of the ExInfo ... but
     // for some records, it will be a pseudo stack location -- the place where we think
     // the record should have been (except for the re-entry case).
-    void* stackAddress;
+    void* m_stackAddress;
     /*
 #ifndef TARGET_UNIX
     EHWatsonBucketTracker m_WatsonBucketTracker;
 #endif
     */
-    bool deliveredFirstChanceNotification;
+    bool m_deliveredFirstChanceNotification;
+
+    mixin accessors;
 }

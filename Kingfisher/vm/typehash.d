@@ -2,6 +2,7 @@ module vm.typehash;
 
 import vm.dacenumerablehash;
 import vm.loaderallocator;
+import state;
 
 //========================================================================================
 // This hash table is used by class loaders to look up constructed types:
@@ -23,7 +24,9 @@ import vm.loaderallocator;
 public struct EETypeHashEntry
 {
 public:
-    void* data;
+    void* m_data;
+
+    mixin accessors;
 }
 
 public struct EETypeHashTable
@@ -33,10 +36,11 @@ public struct EETypeHashTable
 
 public:
     // This is the domain in which the hash table is allocated
-    LoaderAllocator* allocator;
+    LoaderAllocator* m_allocator;
     /*
 #ifdef _DEBUG
     Volatile<LONG> m_dwSealCount; // Can more types be added to the table?
 #endif
     */
+    mixin accessors;
 }

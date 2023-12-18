@@ -1,55 +1,18 @@
 module vm.eehash;
 
 import std.uuid;
+import state;
 
 public struct EEHashEntry
 {
 public:
-    EEHashEntry* next;
-    uint hashValue;
-    void* data;
+    EEHashEntry* m_next;
+    uint m_hashValue;
+    void* m_data;
     // The key is stored inline
-    ubyte key; 
+    ubyte m_key; 
 
-    EEHashEntry* getNext()
-    {
-        return next;
-    }
-
-    void setNext(EEHashEntry* newNext)
-    {
-        next = newNext;
-    }
-
-    uint getHashValue()
-    {
-        return hashValue;
-    }
-
-    void setHashValue(uint newHashValue)
-    {
-        hashValue = newHashValue;
-    }
-
-    void* getData()
-    {
-        return data;
-    }
-
-    void setData(void* newData)
-    {
-        data = newData;
-    }
-
-    ubyte getKey()
-    {
-        return key;
-    }
-
-    void setKey(ubyte newKey)
-    {
-        key = newKey;
-    }
+    mixin accessors;
 }
 
 // Double buffer to fix the race condition of growhashtable (the update
@@ -59,41 +22,13 @@ public:
 public struct BucketTable
 {
     // Pointer to first entry for each bucket
-    EEHashEntry* buckets;
-    uint count;
+    EEHashEntry* m_buckets;
+    uint m_count;
     // #ifdef TARGET_64BIT
     // "Fast Mod" multiplier for "X % m_dwNumBuckets"
-    ulong countMul;
+    ulong m_countMul;
 
-    EEHashEntry* getBuckets()
-    {
-        return buckets;
-    }
-
-    void setBuckets(EEHashEntry* newBuckets)
-    {
-        buckets = newBuckets;
-    }
-
-    uint getCount()
-    {
-        return count;
-    }
-
-    void setCount(uint newCount)
-    {
-        count = newCount;
-    }
-
-    ulong getCountMul()
-    {
-        return countMul;
-    }
-
-    void setCountMul(ulong newCountMul)
-    {
-        countMul = newCountMul;
-    }
+    mixin accessors;
 }
 
 public struct EEHashTableBase(KEY, HELPER, bool ISDEEPCOPY)
@@ -107,10 +42,10 @@ public:
     // have any problem)
     // BE VERY CAREFUL WITH WHAT YOU DO WITH THIS VARIABLE AS USING IT BADLY CAN CAUSE
     // RACING CONDITIONS
-    BucketTable* bucketTable;
-    uint count;
-    void* heap;
-    int growing;
+    BucketTable* m_bucketTable;
+    uint m_count;
+    void* m_heap;
+    int m_growing;
     /*
     #ifdef _DEBUG
     LPVOID          m_lockData;
@@ -121,45 +56,7 @@ public:
 
     #endif 
     */
-    BucketTable* getBucketTable()
-    {
-        return bucketTable;
-    }
-
-    void setBucketTable(BucketTable* newBucketTable)
-    {
-        bucketTable = newBucketTable;
-    }
-
-    uint getCount()
-    {
-        return count;
-    }
-
-    void setCount(uint newCount)
-    {
-        count = newCount;
-    }
-
-    void* getHeap()
-    {
-        return heap;
-    }
-
-    void setHeap(void* newHeap)
-    {
-        heap = newHeap;
-    }
-
-    int getGrowing()
-    {
-        return growing;
-    }
-
-    void setGrowing(int newGrowing)
-    {
-        growing = newGrowing;
-    }
+    mixin accessors;
 }
 
 public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
@@ -171,61 +68,25 @@ public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
 public struct ClassFactoryInfo
 {
 public:
-    UUID clsId;
-    wchar* srvName;
+    UUID m_clsId;
+    wchar* m_srvName;
 
-    UUID getClsId()
-    {
-        return clsId;
-    }
-
-    void setClsId(UUID newClsId)
-    {
-        clsId = newClsId;
-    }
-
-    wchar* getSrvName()
-    {
-        return srvName;
-    }
-
-    void setSrvName(wchar* newSrvName)
-    {
-        srvName = newSrvName;
-    }
+    mixin accessors;
 }
 
 public struct EEStringData
 {
 public:
     // The string data.
-    wchar* string;
-    uint length;
+    wchar* m_str;
+    uint m_length;
     /*
     #ifdef _DEBUG
         BOOL            bDebugOnlyLowChars;      // Does the string contain only characters less than 0x80?
         DWORD           dwDebugCch;
     #endif // _DEBUG
     */  
-    wchar* getString()
-    {
-        return string;
-    }
-
-    void setString(wchar* newString)
-    {
-        string = newString;
-    }
-
-    uint getLength()
-    {
-        return length;
-    }
-
-    void setLength(uint newLength)
-    {
-        length = newLength;
-    }
+    mixin accessors;
 }
 
 public class EEClassFactoryInfoHashTableHelper

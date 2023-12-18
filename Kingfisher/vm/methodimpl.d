@@ -1,32 +1,15 @@
 module vm.methodimpl;
 
 import vm.method;
+import state;
 
 // Used in cases like virtual methods, where a method can be implemented, derived, and or overriden
 public struct MethodImpl
 {
 public:
-    uint* slots;
+    uint* m_slots;
     // The MethodDesc that this MethodImpl implements
-    MethodDesc* implement;
+    MethodDesc* m_implement;
 
-    uint* getSlots()
-    {
-        return slots;
-    }
-
-    MethodDesc* getImplement()
-    {
-        return implement;
-    }
-
-    void setSlots(uint* newSlots)
-    {
-        slots = newSlots;
-    }
-
-    void setImplement(MethodDesc* newImplement)
-    {
-        implement = newImplement;
-    }
+    mixin accessors;
 }
