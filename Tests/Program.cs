@@ -6,14 +6,14 @@ using System.Text;
 using System.Linq;
 
 #if DEBUG
-[DllImport("C:\\Users\\cet\\source\\repos\\kingfisher\\kingfisher\\x64\\Debug\\kingfisher.dll")]
+[DllImport("C:\\Users\\cet\\source\\repos\\godwit\\godwit\\x64\\Debug\\godwit.dll")]
 #else
-        [DllImport("kingfisher.dll")]
+        [DllImport("godwit.dll")]
 #endif
 static extern unsafe void Initialize(nint pmt, string filePath);
 
-if (!File.Exists("C:\\Users\\cet\\source\\repos\\kingfisher\\kingfisher\\x64\\Debug\\kingfisher.dll"))
-    throw new Exception("Kingfisher.dll not found!");
+if (!File.Exists("C:\\Users\\cet\\source\\repos\\godwit\\godwit\\x64\\Debug\\godwit.dll"))
+    throw new Exception("Godwit.dll not found!");
 
 unsafe
 {
