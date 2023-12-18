@@ -1,109 +1,37 @@
 module inc.memorypool;
 
+import state;
+
 public struct PoolElement
 {
 public:
-    PoolElement* next;
+    PoolElement* m_next;
     /*
 #if _DEBUG
 		int		deadBeef;
 #endif
     */
-    PoolBlock* getNext()
-    {
-        return next;
-    }
-
-    void setNext(PoolBlock* newNext)
-    {
-        next = newNext;
-    }
+    mixin accessors;
 }
 
 public struct PoolBlock
 {
 public:
-    PoolBlock* next;
-    PoolElement* elementsEnd;
+    PoolBlock* m_next;
+    PoolElement* m_elementsEnd;
     // #ifdef _MSC_VER
-    PoolElement[] elements;
+    PoolElement[] m_elements;
 
-    PoolBlock* getNext()
-    {
-        return next;
-    }
-
-    void setNext(PoolBlock* newNext)
-    {
-        next = newNext;
-    }
-
-    PoolElement* getElementsEnd()
-    {
-        return elementsEnd;
-    }
-
-    void setElementsEnd(PoolElement* newElementsEnd)
-    {
-        elementsEnd = newElementsEnd;
-    }
-
-    PoolElement[] getElements()
-    {
-        return elements.dup;
-    }
-
-    void setElements(PoolElement[] newElements)
-    {
-        elements = newElements.dup;
-    }
+    mixin accessors;
 }
 
 public struct MemoryPool
 {
 public:
-    size_t elementSize;
-    size_t growCount;
-    PoolBlock* blocks;
-    PoolElement* freeList;
+    size_t m_elementSize;
+    size_t m_growCount;
+    PoolBlock* m_blocks;
+    PoolElement* m_freeList;
 
-    size_t getElementSize()
-    {
-        return elementSize;
-    }
-
-    void setElementSize(size_t newElementSize)
-    {
-        elementSize = newElementSize;
-    }
-
-    size_t getGrowCount()
-    {
-        return growCount;
-    }
-
-    void setGrowCount(size_t newGrowCount)
-    {
-        growCount = newGrowCount;
-    }
-
-    PoolBlock* getBlocks()
-    {
-        return blocks;
-    }
-
-    void setBlocks(PoolBlock* newBlocks)
-    {
-        blocks = newBlocks;
-    }
-
-    PoolElement* getFreeList()
-    {
-        return freeList;
-    }
-
-    void setFreeList(PoolElement* newFreeList)
-    {
-        freeList = newFreeList;
-    }
+    mixin accessors;
 }

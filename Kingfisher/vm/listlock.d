@@ -3,8 +3,8 @@ module vm.listlock;
 import vm.codeversioning;
 import vm.crst;
 import vm.threads;
-import hresult;
 import vm.loaderallocator;
+import state;
 
 alias ListLock = ListLockBase!uint*;
 alias JitListLock = ListLockBase!NativeCodeVersion;
@@ -12,65 +12,29 @@ alias JitListLock = ListLockBase!NativeCodeVersion;
 public struct ListLockBase(T)
 {
 public:
-    CrstStatic crst;
-    bool isfInit;
+    CrstStatic m_crst;
+    bool m_isfInit;
     // Lock can be broken by a host for deadlock detection
-    bool hostBreakable;
-    ListLockEntryBase!T* head;
+    bool m_hostBreakable;
+    ListLockEntryBase!T* m_head;
 
-    CrstStatic getCrst()
-    {
-        return crst;
-    }
-
-    void setCrst(CrstStatic newCrst)
-    {
-        crst = newCrst;
-    }
-
-    bool getIsfInit()
-    {
-        return isfInit;
-    }
-
-    void setIsfInit(bool newIsfInit)
-    {
-        isfInit = newIsfInit;
-    }
-
-    bool getHostBreakable()
-    {
-        return hostBreakable;
-    }
-
-    void setHostBreakable(bool newHostBreakable)
-    {
-        hostBreakable = newHostBreakable;
-    }
-
-    ListLockEntryBase!T* getHead()
-    {
-        return head;
-    }
-
-    void setHead(ListLockEntryBase!T* newHead)
-    {
-        head = newHead;
-    }
+    mixin accessors;
 }
 
 public struct ListLockEntryBase(T)
 {
 public:
-    DeadlockAwareLock deadlock;
-    ListLockBase!T* list;
-    T data;
-    Crst crst;
-    const(char*) description;
-    ListLockEntryBase!T* next;
-    uint refCount;
-    HResult hresultCode;
+    DeadlockAwareLock m_deadlock;
+    ListLockBase!T* m_list;
+    T m_data;
+    Crst m_crst;
+    const(char*) m_description;
+    ListLockEntryBase!T* m_next;
+    uint m_refCount;
+    HResult m_hresultCode;
     // LOADERHANDLE
-    ptrdiff_t initException;
-    LoaderAllocator* loaderAllocator;
+    ptrdiff_t m_initException;
+    LoaderAllocator* m_allocator;
+
+    mixin accessors;
 }

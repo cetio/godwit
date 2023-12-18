@@ -1,6 +1,7 @@
 module vm.objects;
 
 import vm.methodtable;
+import state;
 
 alias ObjectRef = BaseObject*;
 alias ObjectSoftRef = HollowObject*;
@@ -9,7 +10,7 @@ alias ObjectHandle = uint*;
 public struct ObjHeader
 {
 public:
-    enum SyncBlockFlags : uint
+    @flags enum SyncBlockFlags : uint
     {
         StringHasNoHighChars = 0x80000000,
         AgileInProgress = 0x80000000,
@@ -24,48 +25,37 @@ public:
     }
 
     int padding;
-    SyncBlockFlags flags;
+    SyncBlockFlags m_flags;
+
+    mixin accessors;
 }
 
 public struct BaseObject
 {
 public:
-    ObjHeader objHeader;
-    MethodTable* methodTable;
-    ubyte data;
+    ObjHeader m_objHeader;
+    MethodTable* m_methodTable;
+    ubyte m_data;
 
-    ObjHeader getObjHeader()
-    {
-        return objHeader;
-    }
-
-    MethodTable* getMethodTable()
-    {
-        return methodTable;
-    }
-
-    ubyte getData()
-    {
-        return data;
-    }
+    mixin accessors;
 }
 
 public struct HollowObject
 {
 public:
-    ObjHeader getObjHeader()
+    ObjHeader objHeader()
         scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).objHeader;
     }
 
-    MethodTable* getMethodTable()
+    MethodTable* methodTable()
         scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).methodTable;
     }
 
-    ubyte getData()
+    ubyte data()
         scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).data;

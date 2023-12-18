@@ -1,6 +1,7 @@
 module gc.gcdesc;
 
 import vm.methodtable;
+import state;
 
 version(X86)
 {
@@ -14,29 +15,11 @@ version(X86_64)
 // ValSeriesItem
 public struct VTSeriesItem
 {
-    half_size_t nptrs;
-    half_size_t skip;
+    half_size_t m_nptrs;
+    half_size_t m_skip;
 
-    half_size_t getNptrs()
-    {
-        return nptrs;
-    }
-
-    void setNptrs(half_size_t newNptrs)
-    {
-        nptrs = newNptrs;
-    }
-
-    half_size_t getSkip()
-    {
-        return skip;
-    }
-
-    void setSkip(half_size_t newSkip)
-    {
-        skip = newSkip;
-    }
-};
+    mixin accessors;
+}
 
 // CGCDescSeries
 public struct GCDescSeries
@@ -44,40 +27,12 @@ public struct GCDescSeries
 public:
     union
     {
-        size_t seriesSize;
-        VTSeriesItem vtItems;
+        size_t m_seriesSize;
+        VTSeriesItem m_vtItems;
     }
-    size_t startOffset;
+    size_t m_startOffset;
 
-    size_t getSeriesSize()
-    {
-        return seriesSize;
-    }
-
-    void setSeriesSize(size_t newSeriesSize)
-    {
-        seriesSize = newSeriesSize;
-    }
-
-    VTSeriesItem getVtItems()
-    {
-        return vtItems;
-    }
-
-    void setVtItems(VTSeriesItem newVtItems)
-    {
-        vtItems = newVtItems;
-    }
-
-    size_t getStartOffset()
-    {
-        return startOffset;
-    }
-
-    void setStartOffset(size_t newStartOffset)
-    {
-        startOffset = newStartOffset;
-    }
+    mixin accessors;
 }
 
 // CGCDesc

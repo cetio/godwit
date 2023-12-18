@@ -1,6 +1,7 @@
 module vm.classhash;
 
 import vm.dacenumerablehash;
+import state;
 
 public struct EEClassHashEntry
 {
@@ -12,12 +13,15 @@ public:
     */
     // Either the token (if EECLASSHASH_TYPEHANDLE_DISCR), or the type handle encoded
     // as a relative pointer
-    void* data;
+    void* m_data;
     // If this entry is a for a nested
     // class, this field stores a
     // reference to the enclosing type
+    // reference to the enclosing type
     // (which must be in this same hash).
-    EEClassHashEntry* encloser;
+    EEClassHashEntry* m_encloser;
+
+    mixin accessors;
 }
 
 public struct EEClassHashTable
@@ -26,5 +30,7 @@ public struct EEClassHashTable
     alias dacEnumerableHashTable this;
 
 public:
-    bool caseInsensitive;
+    bool m_caseInsensitive;
+
+    mixin accessors;
 }

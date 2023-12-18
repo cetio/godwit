@@ -3,42 +3,34 @@ module vm.method;
 import std.bitmanip;
 import vm.methodtable;
 import vm.methodimpl;
-import flags;
-
-extern (C) export int GetBaseSize(MethodDesc* pmd)
-{
-    return pmd.getBaseSize();
-}
-
-extern (C) export int GetOptionalSize(MethodDesc* pmd)
-{
-    return pmd.getOptionalSize();
-}
+import state;
 
 public struct MethodDescChunk
 {
 public:
-    enum ChunkFlags : ushort
+    @flags enum ChunkFlags : ushort
     {
         TokenRangeMask = 0x0FFF,
         HasCompactEntryPoints = 0x4000
     }
 
-    MethodTable* declaringMethodTable;
-    MethodDescChunk* nextChunk;
-    ubyte size;
-    ubyte count;
-    ChunkFlags chunkFlags;
+    MethodTable* m_declaringMethodTable;
+    MethodDescChunk* m_nextChunk;
+    ubyte m_size;
+    ubyte m_count;
+    ChunkFlags m_chunkFlags;
     // This is an array of MethodDesc.
     // MethodDescs are aligned to the nearest 8 byte boundary.
-    align(8) MethodDesc methodDesc;
+    align(8) MethodDesc m_methodDesc;
+
+    mixin accessors;
 }
 
 // Equivalent to System.Runtime.MethodInfo.
 public struct MethodDesc
 {
 public:
-    public enum MethodClassification : uint
+    @flags enum MethodClassification : uint
     {
         IL,
         FCall,
@@ -51,7 +43,7 @@ public:
         Count
     }
 
-    public enum MethodProperties : ushort
+    @flags enum MethodProperties : ushort
     {
         HasNonVtableSlot = 0x0008,
         MethodImpl = 0x0010,
@@ -68,7 +60,7 @@ public:
         Intrinsic = 0x8000
     }
 
-    public enum CodeFlags : ushort
+    @flags enum CodeFlags : ushort
     {
         TokenRemainderMask = 0x0FFF,
         HasStableEntryPoint = 0x1000,
@@ -83,105 +75,18 @@ public:
         Coop,
         // (e.g. UnmanagedCallersOnlyAttribute)
         Preemptive    
-    };
+    }
 
-    CodeFlags codeFlags;
-    ubyte chunkIndex;
-    ubyte methodIndex;
-    ushort slotNumber;
+    CodeFlags m_codeFlags;
+    ubyte m_chunkIndex;
+    ubyte m_methodIndex;
+    ushort m_slotNumber;
     mixin(bitfields!(
-        MethodClassification, "classification", 3,
-        MethodProperties, "properties", 13
+        MethodClassification, "m_classification", 3,
+        MethodProperties, "m_properties", 13
     ));
 
-    public int getBaseSize()
-    {
-        if (isIL())
-            return ILMethodDesc.sizeof;
-
-        if (isFCall())
-            return FCallMethodDesc.sizeof;
-
-        if (isNDirect())
-            return NDirectMethodDesc.sizeof;
-
-        if (isEEImpl())
-            return EEImplMethodDesc.sizeof;
-
-        if (isInstantiated())
-            return InstantiatedMethodDesc.sizeof;
-
-        if (isComPlus())
-            return ComPlusCallMethodDesc.sizeof;
-
-        return DynamicMethodDesc.sizeof;
-    }
-
-    public int getOptionalSize()
-    {
-        int size = 0;
-
-        if (hasNonVtableSlot())
-            size += size_t.sizeof;
-
-        if (hasMethodImpl())
-            size += MethodImpl.sizeof;
-
-        if (hasNativeCodeSlot())
-            size += size_t.sizeof;
-
-        return size;
-    }
-
-    bool isIL()
-    {
-        return classification == MethodClassification.IL;
-    }
-
-    bool isFCall()
-    {
-        return classification == MethodClassification.FCall;
-    }
-
-    bool isNDirect()
-    {
-        return classification == MethodClassification.NDirect;
-    }
-
-    bool isEEImpl()
-    {
-        return classification == MethodClassification.EEImpl;
-    }
-
-    bool isInstantiated()
-    {
-        return classification == MethodClassification.Instantiated;
-    }
-
-    bool isComPlus()
-    {
-        return classification == MethodClassification.ComPlus;
-    }
-
-    bool isDynamic()
-    {
-        return classification == MethodClassification.Dynamic;
-    }
-
-    bool hasNonVtableSlot()
-    {
-        return properties.hasFlag(MethodProperties.HasNonVtableSlot);
-    }
-
-    bool hasMethodImpl()
-    {
-        return properties.hasFlag(MethodProperties.MethodImpl);
-    }
-
-    bool hasNativeCodeSlot()
-    {
-        return properties.hasFlag(MethodProperties.HasNativeCodeSlot);
-    }
+    mixin accessors;
 }
 
 public struct ILMethodDesc
@@ -190,9 +95,11 @@ public struct ILMethodDesc
     alias methodDesc this;
 
 public:
-    void* fnptr;
+    void* m_fn;
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }
 
 public struct InstantiatedMethodDesc
@@ -201,25 +108,27 @@ public struct InstantiatedMethodDesc
     alias methodDesc this;
 
 public:
-    enum InstantiationFlags
+    @flags enum InstantiationFlags
     {
         KindMask = 0x07,
         GenericMethodDefinition = 0x01,
         UnsharedMethodInstantiation = 0x02,
         SharedMethodInstantiation = 0x03,
         WrapperStubWithInstantiations = 0x04,
-    };
+    }
 
     union
     {
-        ubyte* dictLayout;
-        MethodDesc* wrappedMethodDesc;
-    };
-    ubyte* perInstInfo;
-    InstantiationFlags instFlags;
-    int genericsCount;
+        ubyte* m_dictLayout;
+        MethodDesc* m_wrappedMethodDesc;
+    }
+    ubyte* m_perInstInfo;
+    InstantiationFlags m_instFlags;
+    int m_genericsCount;
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }
 
 public struct ComPlusCallMethodDesc
@@ -228,7 +137,7 @@ public struct ComPlusCallMethodDesc
     alias methodDesc this;
 
 public:
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
 }
 
 public struct StoredSigMethodDesc
@@ -237,9 +146,11 @@ public struct StoredSigMethodDesc
     alias methodDesc this;
 
 public:
-    void* sig;
-    uint count;
-    uint extendedFlags;
+    void* m_sig;
+    uint m_count;
+    uint m_extendedFlags;
+
+    mixin accessors;
 }
 
 public struct EEImplMethodDesc
@@ -249,7 +160,9 @@ public struct EEImplMethodDesc
 
 public:
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }
 
 public struct FCallMethodDesc
@@ -259,10 +172,12 @@ public struct FCallMethodDesc
     alias methodDesc this;
 
 public:
-    uint ecallId;
+    uint m_ecallId;
     uint padding;
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }
 
 public struct DynamicMethodDesc
@@ -271,7 +186,7 @@ public struct DynamicMethodDesc
     alias storedSigMethodDesc this;
 
 public:
-    enum ILStubType : uint
+    @flags enum ILStubType : uint
     {
         StubNotSet = 0,
         StubCLRToNativeInterop,
@@ -288,9 +203,9 @@ public:
         StubTailCallCallTarget,
         StubVirtualStaticMethodDispatch,
         StubLast
-    };
+    }
 
-    enum Flag : uint
+    @flags enum Flag : uint
     {
         FlagNone = 0x00000000,
         FlagPublic = 0x00000800,
@@ -303,12 +218,14 @@ public:
         FlagMask = 0x0003f800,
         StackArgSizeMask = 0xfffc0000, // native stack arg size for IL stubs
         ILStubTypeMask = ~(FlagMask | StackArgSizeMask)
-    };
+    }
 
-    char* methodName;
-    ubyte* resolver;
+    char* m_methodName;
+    ubyte* m_resolver;
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }
 
 public struct ArrayMethodDesc
@@ -326,7 +243,9 @@ public:
 public struct NDirectWriteableData
 {
 public:
-    void* directTarget;
+    void* m_directTarget;
+
+    mixin accessors;
 }
 
 public struct NDirectMethodDesc
@@ -335,7 +254,7 @@ public struct NDirectMethodDesc
     alias methodDesc this;
 
 public:
-    enum BindingFlags
+    @flags enum BindingFlags
     {
         EarlyBound = 0x0001, // IJW managed->unmanaged thunk. Standard [sysimport] stuff otherwise.
         DefaultDllImportSearchPathsIsCached = 0x0004, // set if we cache attribute value.
@@ -350,18 +269,20 @@ public:
         IsQCall = 0x1000,
         DefaultDllImportSearchPathsStatus = 0x2000, // either method has custom attribute or not.
         NDirectPopulated = 0x8000, // Indicate if the NDirect has been fully populated.
-    };
+    }
 
-    char* entrypointName;
+    char* m_entrypointName;
     union
     {
-        char* libName;
-        uint ecallId;
+        char* m_libName;
+        uint m_ecallId;
     }
-    NDirectWriteableData* writeableData;
-    NDirectImportThunkGlue* importThunkGlue;
-    uint defaultDllSearchAttr;
-    BindingFlags bindingFlags;
+    NDirectWriteableData* m_writeableData;
+    NDirectImportThunkGlue* m_importThunkGlue;
+    uint m_defaultDllSearchAttr;
+    BindingFlags m_bindingFlags;
     // #ifdef FEATURE_COMINTEROP
-    void* comPlusCallInfo;
+    void* m_comPlusCallInfo;
+
+    mixin accessors;
 }

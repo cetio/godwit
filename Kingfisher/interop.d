@@ -10,9 +10,9 @@ extern (C) export ulong InvokeVTEx(ptrdiff_t pfn, void** args, short* series)
         naked;
         even;
 
-        mov R12, RCX; // pfn: Move the function pointer to R12
-        mov R13, RDX; // args: Move the args pointer to R13
-        mov R14, R8;  // series: Move the series pointer to R14
+        mov R12, RCX; // pfn = Move the function pointer to R12
+        mov R13, RDX; // args = Move the args pointer to R13
+        mov R14, R8;  // series = Move the series pointer to R14
 
         // Calculate the space needed on the stack for arguments and local variables
         movsx RDI, [R14 + 0]; // Load series[0] (number of arguments)
@@ -291,9 +291,9 @@ extern (C) export pure @nogc void* InvokeRFEx(ptrdiff_t pfn, void* pobj)
         even;
 
         push RSI;     // Push source index onto the stack
-        mov R12, RCX; // pfn: Move the function pointer to R12
-        mov R13, RDX; // args: Move the args pointer to R13
-        mov R14, R8;  // series: Move the series pointer to R14
+        mov R12, RCX; // pfn = Move the function pointer to R12
+        mov R13, RDX; // args = Move the args pointer to R13
+        mov R14, R8;  // series = Move the series pointer to R14
 
         // Calculate the space needed on the stack for arguments and local variables
         movsx RDI, [R14 + 0]; // Load series[0] (number of arguments)

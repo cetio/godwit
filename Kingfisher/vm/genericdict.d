@@ -4,21 +4,14 @@ import vm.typehandle;
 import vm.method;
 import vm.field;
 import inc.corhdr;
+import state;
 
 alias PerInstInfo = Dictionary;
 
 public struct Dictionary
 {
 public:
-    PCCOR_SIGNATURE[] entries;
+    PCCOR_SIGNATURE[] m_entries;
 
-    PCCOR_SIGNATURE[] getEntries()
-    {
-        return entries.dup;
-    }
-
-    void setEntries(PCCOR_SIGNATURE[] newEntries)
-    {
-        entries = newEntries.dup;
-    }
+    mixin accessors;
 }

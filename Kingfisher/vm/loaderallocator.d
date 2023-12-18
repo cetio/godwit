@@ -6,40 +6,43 @@ import vm.crst;
 import vm.fptrstubs;
 import vm.stringliteralmap;
 import vm.objects;
+import state;
 
 public struct LoaderAllocator
 {
 public:
-    align(8) ubyte* initialReservedMemForLoaderHeaps;
-    ubyte[LoaderHeap.sizeof] lowFreqHeapInstance;
-    ubyte[LoaderHeap.sizeof] highFreqHeapInstance;
-    ubyte[LoaderHeap.sizeof] stubHeapInstance;
-    ubyte[CodeFragmentHeap.sizeof] precodeHeapInstance;
-    ubyte[LoaderHeap.sizeof] fixupPrecodeHeapHeapInstance;
-    ubyte[LoaderHeap.sizeof] newStubPrecodeHeapInstance;
-    LoaderHeap* lowFreqHeap;
-    LoaderHeap* highFreqHeap;
+    align(8) ubyte* m_initialReservedMemForLoaderHeaps;
+    ubyte[LoaderHeap.sizeof] m_lowFreqHeapInstance;
+    ubyte[LoaderHeap.sizeof] m_highFreqHeapInstance;
+    ubyte[LoaderHeap.sizeof] m_stubHeapInstance;
+    ubyte[CodeFragmentHeap.sizeof] m_precodeHeapInstance;
+    ubyte[LoaderHeap.sizeof] m_fixupPrecodeHeapHeapInstance;
+    ubyte[LoaderHeap.sizeof] m_newStubPrecodeHeapInstance;
+    LoaderHeap* m_lowFreqHeap;
+    LoaderHeap* m_highFreqHeap;
     // stubs for PInvoke, remoting, etc
-    LoaderHeap* stubHeap;
-    CodeFragmentHeap* precodeHeap;
-    LoaderHeap* executableHeap;
+    LoaderHeap* m_stubHeap;
+    CodeFragmentHeap* m_precodeHeap;
+    LoaderHeap* m_executableHeap;
     /*
     #ifdef FEATURE_READYTORUN
     PTR_CodeFragmentHeap m_pDynamicHelpersHeap;
     #endif
     */
-    LoaderHeap* fixupPrecodeHeap;
-    LoaderHeap* newStubPrecodeHeap;
-    ObjectHandle loaderAllocatorObjectHandle;
+    LoaderHeap* m_fixupPrecodeHeap;
+    LoaderHeap* m_newStubPrecodeHeap;
+    ObjectHandle m_allocatorObjectHandle;
     // for GetMultiCallableAddrOfCode()
-    FuncPtrStubs* funcPtrStubs;
+    FuncPtrStubs* m_funcPtrStubs;
     // The LoaderAllocator specific string literal map.
-    StringLiteralMap* stringLiteralMap;
-    CrstExplicitInit crstLoaderAllocator;
-    bool gcPressure;
-    bool unloaded;
-    bool terminated;
-    bool marked;
-    int gcCount;
-    bool isCollectible;
+    StringLiteralMap* m_stringLiteralMap;
+    CrstExplicitInit m_crstLoaderAllocator;
+    bool m_gcPressure;
+    bool m_unloaded;
+    bool m_terminated;
+    bool m_marked;
+    int m_gcCount;
+    bool m_isCollectible;
+
+    mixin accessors;
 }

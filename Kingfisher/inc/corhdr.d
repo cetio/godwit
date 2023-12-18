@@ -1,5 +1,7 @@
 module inc.corhdr;
 
+import state;
+
 alias CritSecCookie = void*;
 
 alias RID = uint;
@@ -35,55 +37,19 @@ alias GenericParamConstraint = uint;
 public struct ImageDataDirectory 
 {
 public:
-    uint virtualAddress;
-    uint size;
+    uint m_virtualAddress;
+    uint m_size;
 
-    uint getVirtualAddress()
-    {
-        return virtualAddress;
-    }
-
-    void setVirtualAddress(uint newVirtualAddress)
-    {
-        virtualAddress = newVirtualAddress;
-    }
-
-    uint getSize()
-    {
-        return size;
-    }
-
-    void setSize(uint newSize)
-    {
-        size = newSize;
-    }
+    mixin accessors;
 }
 
 public struct RuntimeFunction
 {
 public:
-    uint beginAddress;
-    uint unwindData;
+    uint m_beginAddress;
+    uint m_unwindData;
 
-    uint getBeginAddress()
-    {
-        return beginAddress;
-    }
-
-    void setBeginAddress(uint newBeginAddress)
-    {
-        beginAddress = newBeginAddress;
-    }
-
-    uint getUnwindData()
-    {
-        return unwindData;
-    }
-
-    void setUnwindData(uint newUnwindData)
-    {
-        unwindData = newUnwindData;
-    }
+    mixin accessors;
 }
 
 enum CorTokenType : uint
@@ -200,4 +166,4 @@ public enum DebuggerAssemblyControlFlags
 
     PDBsCopied = 0x10,
     MiscFlagsMask = 0x10,
-};
+}

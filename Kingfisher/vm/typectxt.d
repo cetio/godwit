@@ -1,32 +1,14 @@
 module vm.typectxt;
 
 import vm.typehandle;
+import state;
 
 public struct SigTypeContext
 {
 public:
     // Store pointers first and DWORDs second to ensure good packing on 64-bit
-    Instantiation classInst;
-    Instantiation methodInst;
+    Instantiation m_classInst;
+    Instantiation m_methodInst;
 
-    Instantiation getClassInst()
-    {
-        return classInst;
-    }
-
-    Instantiation getMethodInst()
-    {
-        return methodInst;
-    }
-
-    void setClassInst(Instantiation newClassInst)
-    {
-        classInst = newClassInst;
-    }
-
-    void setMethodInst(Instantiation newMethodInst)
-    {
-        methodInst = newMethodInst;
-    }
-
+    mixin accessors;
 }

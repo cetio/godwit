@@ -1,116 +1,44 @@
 module inc.arraylist;
 
+import state;
+
 public struct ArrayListBlock
 {
 public:
-    ArrayListBlock* next;
-    uint blockSize;
+    ArrayListBlock* m_next;
+    uint m_blockSize;
     // #ifdef HOST_64BIT
     version (X86_64)
     {
         uint padding;
     }
-    void* array;
+    void* m_array;
 
-    ArrayListBlock* getNext()
-    {
-        return next;
-    }
-
-    void setNext(ArrayListBlock* newNext)
-    {
-        next = newNext;
-    }
-
-    uint getBlockSize()
-    {
-        return blockSize;
-    }
-
-    void setBlockSize(uint newBlockSize)
-    {
-        blockSize = newBlockSize;
-    }
-
-    void* getArray()
-    {
-        return array;
-    }
-
-    void setArray(void* newArray)
-    {
-        array = newArray;
-    }
+    mixin accessors;
 }
 
 public struct FirstArrayListBlock
 {
 public:
-    ArrayListBlock* next;
-    uint blockSize;
+    ArrayListBlock* m_next;
+    uint m_blockSize;
     // #ifdef HOST_64BIT
     version (X86_64)
     {
         uint padding;
     }
-    void*[5] array;
+    void*[5] m_array;
 
-    ArrayListBlock* getNext()
-    {
-        return next;
-    }
-
-    void setNext(ArrayListBlock* newNext)
-    {
-        next = newNext;
-    }
-
-    uint getBlockSize()
-    {
-        return blockSize;
-    }
-
-    void setBlockSize(uint newBlockSize)
-    {
-        blockSize = newBlockSize;
-    }
-
-    void*[] getArray()
-    {
-        return array;
-    }
-
-    void setArray(void*[] newArray)
-    {
-        array = newArray.dup;
-    }
+    mixin accessors;
 }
 
 public struct ArrayListBase
 {
 public:
-    uint count;
-    FirstArrayListBlock firstBlock;
+    uint m_count;
+    FirstArrayListBlock m_firstBlock;
 
-    uint getCount()
-    {
-        return count;
-    }
-
-    void setCount(uint newCount)
-    {
-        count = newCount;
-    }
-
-    FirstArrayListBlock getFirstBlock()
-    {
-        return firstBlock;
-    }
-
-    void setFirstBlock(FirstArrayListBlock newFirstBlock)
-    {
-        firstBlock = newFirstBlock;
-    }
+    mixin accessors;
 }
 
 public struct ArrayList

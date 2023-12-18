@@ -5,33 +5,39 @@ import inc.corhdr;
 import binder.assembly;
 import inc.stringarraylist;
 import inc.shash;
-import hresult;
+import state;
 
 public struct ApplicationContext
 {
 public:
-    int appVersion;
-    SString applicationName;
-    SHash!(BinderSpace*, uint)* executionContext;
-    SHash!(FailureCacheEntry*, uint)* failureCache;
-    CritSecCookie contextCS;
-    StringArrayList platformResourceRoots;
-    StringArrayList appPaths;
-    SHash!(SimpleNameToFileNameMapEntry, uint) trustedPlatformAssemblyMap;
+    int m_appVersion;
+    SString m_applicationName;
+    SHash!(BinderSpace*, uint)* m_executionContext;
+    SHash!(FailureCacheEntry*, uint)* m_failureCache;
+    CritSecCookie m_contextCS;
+    StringArrayList m_platformResourceRoots;
+    StringArrayList m_appPaths;
+    SHash!(SimpleNameToFileNameMapEntry, uint) m_trustedPlatformAssemblyMap;
+
+    mixin accessors;
 }
 
 // Entry in SHash table that maps namespace to list of files
 public struct SimpleNameToFileNameMapEntry
 {
 public:
-    wchar* simpleName;
-    wchar* ilFileName;
-    wchar* niFileName;
-};
+    wchar* m_simpleName;
+    wchar* m_ilFileName;
+    wchar* m_niFileName;
+
+    mixin accessors;
+}
 
 public struct FailureCacheEntry
 {
 public:
-    SString assemblyNameOrPath;
-    HResult bindingResult;
+    SString m_assemblyNameOrPath;
+    HResult m_bindingResult;
+
+    mixin accessors;
 }

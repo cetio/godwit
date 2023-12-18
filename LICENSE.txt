@@ -118,7 +118,7 @@ Contributor:
 (a) for any code that a Contributor has removed from Covered Software;
     or
 
-(b) for infringements caused by: (i) Your and any other third party's
+(b) for infringements caused by = (i) Your and any other third party's
     modifications of Covered Software, or (ii) the combination of its
     Contributions with other software (except as part of its Contributor
     Version); or
@@ -221,7 +221,7 @@ jurisdiction.
 
 If it is impossible for You to comply with any of the terms of this
 License with respect to some or all of the Covered Software due to
-statute, judicial order, or regulation then You must: (a) comply with
+statute, judicial order, or regulation then You must = (a) comply with
 the terms of this License to the maximum extent possible; and (b)
 describe the limitations and the code they affect. Such description must
 be placed in a text file included with all distributions of the Covered

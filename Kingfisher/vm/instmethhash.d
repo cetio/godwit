@@ -3,11 +3,12 @@ module vm.instmethhash;
 import vm.dacenumerablehash;
 import vm.loaderallocator;
 import vm.method;
+import state;
 
 public struct InstMethodHashEntry
 {
 public:
-    MethodDesc* data;
+    MethodDesc* m_data;
 }
 
 public struct InstMethodHashTable
@@ -17,19 +18,11 @@ public struct InstMethodHashTable
 
 public:
     // This is the domain in which the hash table is allocated
-    LoaderAllocator* allocator;
+    LoaderAllocator* m_allocator;
     /*
 #ifdef _DEBUG
     Volatile<LONG> m_dwSealCount; // Can more types be added to the table?
 #endif
     */
-    LoaderAllocator* getAllocator()
-    {
-        return allocator;
-    }
-
-    void setAllocator(LoaderAllocator* newAllocator)
-    {
-        allocator = newAllocator;
-    }
+    mixin accessors;
 }

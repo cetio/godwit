@@ -1,6 +1,7 @@
 module binder.assemblyname;
 
 import binder.assemblyidentity;
+import state;
 
 public struct AssemblyName
 {
@@ -8,6 +9,8 @@ public struct AssemblyName
     alias assemblyIdentity this;
 
 public:
-    int refCount;
-    bool isDefinition;
+    int m_refCount;
+    bool m_isDefinition;
+
+    mixin accessors;
 }

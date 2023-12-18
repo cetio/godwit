@@ -1,7 +1,7 @@
 module inc.cor;
 
 import inc.corhdr;
-import hresult;
+import state;
 
 /*
 This file does not include any compression, only decompression

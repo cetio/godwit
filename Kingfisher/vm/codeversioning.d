@@ -1,6 +1,7 @@
 module vm.codeversioning;
 
 import vm.method;
+import state;
 
 public struct NativeCodeVersion
 {
@@ -15,14 +16,16 @@ public:
         Unknown,
         Explicit,
         Synthetic
-    };
+    }
 
-    StorageKind storageKind;
+    StorageKind m_storageKind;
     union
     {
-        NativeCodeVersionNode* versionNode;
-        MethodDesc* methodDesc;
-    };
+        NativeCodeVersionNode* m_versionNode;
+        MethodDesc* m_methodDesc;
+    }
+
+    mixin accessors;
 }
 
 public struct NativeCodeVersionNode
@@ -37,15 +40,15 @@ public:
         TierOptimized,
         Tier0Instrumented,
         Tier1Instrumented,
-    };
+    }
 
-    void* nativeCode;
-    MethodDesc* methodDesc;
-    long parentId;
-    NativeCodeVersionNode* next;
-    uint nativeCodeVersionId;
+    void* m_nativeCode;
+    MethodDesc* m_methodDesc;
+    long m_parentId;
+    NativeCodeVersionNode* m_next;
+    uint m_nativeCodeVersionId;
     //#ifdef FEATURE_TIERED_COMPILATION
-    OptimizationTier optTier;
+    OptimizationTier m_optTier;
     /*
 #ifdef HAVE_GCCOVER
     PTR_GCCoverageInfo m_gcCover;
@@ -56,4 +59,5 @@ public:
     unsigned m_ilOffset;
 #endif
     */
+    mixin accessors;
 }

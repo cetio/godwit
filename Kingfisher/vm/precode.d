@@ -1,18 +1,11 @@
 module vm.precode;
 
+import state;
+
 public struct Precode
 {
 public:
-    byte[size_t.sizeof * 2] data;
+    byte[size_t.sizeof * 2] m_data;
 
-    byte[] getData()
-        scope return
-    {
-        return data;
-    }
-
-    void setData(byte[] newData)
-    {
-        data = newData.dup;
-    }
+    mixin accessors;
 }

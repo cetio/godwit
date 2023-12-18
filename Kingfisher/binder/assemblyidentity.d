@@ -2,6 +2,7 @@ module binder.assemblyidentity;
 
 import inc.sbuffer;
 import binder.assemblyversion;
+import state;
 
 public struct AssemblyIdentity
 {
@@ -25,7 +26,7 @@ public:
         Invalid	        = 0xffffffff
     }
 
-    enum IdentityFlags
+    @flags enum IdentityFlags
     {
         Empty = 0x000,
         SimpleName = 0x001,
@@ -38,13 +39,15 @@ public:
         PublicKeyTokenNull = 0x100,
         ContentType = 0x800,
         FullName = (SimpleName | Version)
-    };
+    }
 
-    SString simpleName;
-    AssemblyVersion asmVersion;
-    SString cultureOrLanguage;
-    SBuffer publicKeyOrTokenBlob;
-    PEKind cpuArchitecture;
-    AssemblyContentType contentType;
-    IdentityFlags identityFlags;
+    SString m_simpleName;
+    AssemblyVersion m_asmVersion;
+    SString m_cultureOrLanguage;
+    SBuffer m_publicKeyOrTokenBlob;
+    PEKind m_cpuArchitecture;
+    AssemblyContentType m_contentType;
+    IdentityFlags m_identityFlags;
+
+    mixin accessors;
 }

@@ -14,47 +14,58 @@ import inc.corhdr;
 import vm.classhash;
 import vm.typehash;
 import vm.instmethhash;
+import state;
 
 public struct LookupMap(T)
 {
 public:
-    LookupMap* next;
-    T** table;
+    LookupMap* m_next;
+    T** m_table;
     // Number of elements in this node (only RIDs less than this value can be present in this node)
-    uint count;
+    uint m_count;
     // Set of flags that the map supports writing on top of the data value
-    T* supportedFlags;
+    T* m_supportedFlags;
+
+    mixin accessors;
 }
 
 public struct ModuleBase
 {
 public:
     // Linear mapping from TypeRef token to TypeHandle *
-    LookupMap!TypeRef typeRefToMethodTableMap;
+    LookupMap!TypeRef m_typeRefToMethodTableMap;
     // Mapping of AssemblyRef token to Module *
-    LookupMap!Module manifestModuleRefsMap;
+    LookupMap!Module m_manifestModuleRefsMap;
     // mapping from MemberRef token to MethodDesc*, FieldDesc*
-    LookupMap!void memberRefMap;
+    LookupMap!void m_memberRefMap;
     // For protecting additions to the heap
-    CrstExplicitInit lookupTableCrst;
-    LoaderAllocator* loaderAllocator;
+    CrstExplicitInit m_lookupTableCrst;
+    // I don't know why but this throws an error when accessors are getting generated if it isnt exempted
+    // Don't change this
+    @exempt LoaderAllocator* m_allocator;
+
+    mixin accessors;
 }
 
 public struct VASigCookieBlock
 {
 public:
-    VASigCookieBlock* next;
-    uint numCookies;
-    VASigCookie[] cookies;
+    VASigCookieBlock* m_next;
+    uint m_numCookies;
+    VASigCookie[] m_cookies;
+
+    mixin accessors;
 }
 
 public struct VASigCookie
 {
 public:
-    uint sizeOfArgs;
-    ubyte* ndirectILStub;
-    Module* ceemodule;
-    Signature signature;
+    uint m_sizeOfArgs;
+    ubyte* m_ndirectILStub;
+    Module* m_ceemodule;
+    Signature m_signature;
+
+    mixin accessors;
 }
 
 // Equivalent to System.Reflection.Module.
@@ -64,7 +75,7 @@ public struct Module
     alias moduleBase this;
 
 public:
-    enum TransientFlags : uint
+    @flags enum TransientFlags : uint
     {
         // Set once we know for sure the Module will not be freed until the appdomain itself exits
         ModuleIsTenured = 0x00000001,
@@ -93,7 +104,7 @@ public:
         ModuleSaved = 0x80000000,
     }
 
-    enum PersistentFlags : uint
+    @flags enum PersistentFlags : uint
     {
         ComputedGlobalClass = 0x00000002,
         // This flag applies to assembly, but it is stored so it can be cached in ngen image
@@ -114,61 +125,61 @@ public:
     }
 
     // Modules will store their name as a cached string for performance.
-    char* simpleName;
+    char* m_simpleName;
     // Equivalent to assembly.peAssembly.
-    PEAssembly* peAssembly;
+    PEAssembly* m_peAssembly;
     // None of these flags survive a prejit save/restore.
-    TransientFlags transientFlags;
+    TransientFlags m_transientFlags;
     // Will survive a prejit save/restore.
-    PersistentFlags persistentFlags;
-    // Linked list of VASig cookie blocks: protected by m_pStubListCrst
-    VASigCookieBlock* vaSigCookieBlock;
+    PersistentFlags m_persistentFlags;
+    // Linked list of VASig cookie blocks = protected by m_pStubListCrst
+    VASigCookieBlock* m_vaSigCookieBlock;
     // Parent assembly.
-    Assembly* assembly;
-    CrstExplicitInit crst;
-    CrstExplicitInit fixupCrst;
+    Assembly* m_assembly;
+    CrstExplicitInit m_crst;
+    CrstExplicitInit m_fixupCrst;
     // Debugging symbols reader interface. This will only be
     // initialized if needed, either by the debugging subsystem or for
     // an exception.
     // ISymUnmanagedReader
-    void* symUnmanagedReader;
+    void* m_symUnmanagedReader;
     // The reader lock is used to serialize all creation of symbol readers.
     // It does NOT seralize all access to the readers since we freely give
     // out references to the reader outside this struct.  Instead, once a
     // reader object is created, it is entirely read-only and so thread-safe.
-    CrstExplicitInit symUnmanagedReaderCrst;
+    CrstExplicitInit m_symUnmanagedReaderCrst;
     // Storage for the in-memory symbol stream if any
     // Debugger may retrieve this from out-of-process.
     // PTR_CGrowableStream
-    void* streamSym;
+    void* m_streamSym;
     // Linear mapping from TypeDef token to MethodTable *
     // For generic types, IsGenericTypeDefinition() is true i.e. instantiation at formals
-    LookupMap!MethodTable typeDefToMethodTableMap;
+    LookupMap!MethodTable m_typeDefToMethodTableMap;
     // Linear mapping from MethodDef token to MethodDesc *
     // For generic methods, IsGenericTypeDefinition() is true i.e. instantiation at formals
-    LookupMap!MethodDesc methodDefToDescMap;
+    LookupMap!MethodDesc m_methodDefToDescMap;
     // Linear mapping from FieldDef token to FieldDesc*
-    LookupMap!FieldDesc fieldDefToDescMap;
+    LookupMap!FieldDesc m_fieldDefToDescMap;
     // Linear mapping from GenericParam token to TypeVarTypeDesc*
-    LookupMap!TypeVarTypeDesc genericParamToDescMap;
+    LookupMap!TypeVarTypeDesc m_genericParamToDescMap;
     // Linear mapping from TypeDef token to the MethodTable * for its canonical generic instantiation
     // If the type is not generic, the entry is guaranteed to be NULL.  This means we are paying extra
     // space in order to use the LookupMap infrastructure, but what it buys us is IBC support and
     // a compressed format for NGen that makes up for it.
-    LookupMap!MethodTable genericTypeDefToCanonMethodTableMap;
+    LookupMap!MethodTable m_genericTypeDefToCanonMethodTableMap;
     // Mapping from MethodDef token to pointer-sized value encoding property information
-    LookupMap!size_t methodDefToPropertyInfoMap;
+    LookupMap!size_t m_methodDefToPropertyInfoMap;
     // IL stub cache with fabricated MethodTable parented by this module.
-    ILStubCache* ilStubCache;
-    uint defaultDllImportSearchPathsAttributeValue;
+    ILStubCache* m_ilStubCache;
+    uint m_defaultDllImportSearchPathsAttributeValue;
     // Hash of available types by name
-    EEClassHashTable* availableClasses;
+    EEClassHashTable* m_availableClasses;
     // Hashtable of generic type instances
-    EETypeHashTable* availableParamTypes;
+    EETypeHashTable* m_availableParamTypes;
     // For protecting additions to m_pInstMethodHashTable
-    CrstExplicitInit instMethodHashTableCrst;
+    CrstExplicitInit m_instMethodHashTableCrst;
     // Hashtable of instantiated methods and per-instantiation static methods
-    InstMethodHashTable* instMethodHashTable;
+    InstMethodHashTable* m_instMethodHashTable;
     // This is used by the Debugger. We need to store a uint
     // for a count of JMC functions. This is a count, not a pointer.
     // We'll pass the address of this field
@@ -181,7 +192,7 @@ public:
     // 1) we need a module structure that's around even when the debugger
     // isn't attached... so we use the EE's module.
     // 2) Needs to be here for ngen
-    uint debuggerJMCProbeCount;
+    uint m_debuggerJMCProbeCount;
     /*
 #ifdef FEATURE_READYTORUN
     PTR_ReadyToRunInfo      m_pReadyToRunInfo;
@@ -194,4 +205,5 @@ public:
     DWORD                   m_dwCustomAttributeCount;
 #endif // PROFILING_SUPPORTED_DATA
     */
+    mixin accessors;
 }
