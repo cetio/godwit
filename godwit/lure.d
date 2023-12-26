@@ -4,7 +4,7 @@ import std.stdio : writef, write, writeln;
 import std.range : repeat;
 import std.conv : to;
 
-void PrintTable(string[][] data) 
+void printTable(string[][] data) 
 {
     size_t totalWidth = 2;
     size_t[] colWidths;
@@ -37,7 +37,8 @@ void PrintTable(string[][] data)
     writeln("+", '-'.repeat(totalWidth - 3), "+");
 }
 
-string ToBinary(ulong value) {
+string toBinary(ulong value) 
+{
     string binaryString;
     for (int i = 63; i >= 0; i--) 
         binaryString ~= ((value >> i) & 1).to!string;
@@ -45,7 +46,7 @@ string ToBinary(ulong value) {
     return binaryString;
 }
 
-extern (C) export void DumpRegisters()
+extern (C) export void dumpRegisters()
 {
     ulong rax, rbx, rcx, rdx, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15;
     ulong rsp, rbp, rflags;
@@ -90,13 +91,13 @@ extern (C) export void DumpRegisters()
         ["R15", r15.to!string],
         ["RSP", rsp.to!string],
         ["RBP", rbp.to!string],
-        ["RFLAGS", ToBinary(rflags)]
+        ["RFLAGS", rflags.toBinary()]
     ];
 
-    PrintTable(registerData);
+    printTable(registerData);
 }
 
-extern (C) export void DumpStack()
+extern (C) export void dumpStack()
 {
     ulong rsp, rbp;
 
@@ -115,5 +116,5 @@ extern (C) export void DumpStack()
          stackPtr--, offset += 8)
         stackData ~= [offset.to!string, (*stackPtr).to!string];
 
-    PrintTable(stackData);
+    printTable(stackData);
 }

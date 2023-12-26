@@ -1515,10 +1515,10 @@
  <Folder name="godwit">
   <Folder name="binder">
    <File path="binder\applicationcontext.d" />
-   <File path="binder\space.d" />
    <File path="binder\assemblyidentity.d" />
    <File path="binder\assemblyname.d" />
    <File path="binder\assemblyversion.d" />
+   <File path="binder\space.d" />
   </Folder>
   <Folder name="gc">
    <File path="gc\gcdesc.d" />
@@ -1540,20 +1540,23 @@
    <File path="inc\shash.d" />
    <File path="inc\stringarraylist.d" />
   </Folder>
-  <Folder name="readers">
+  <Folder name="misc">
    <Folder name="elf">
-    <File path="readers\elf\header.d" />
-    <File path="readers\elf\program.d" />
-    <File path="readers\elf\sections.d" />
+    <File path="misc\elf\header.d" />
+    <File path="misc\elf\program.d" />
+    <File path="misc\elf\sections.d" />
    </Folder>
    <Folder name="pe">
-    <File path="readers\pe\optional.d" />
-    <File path="readers\pe\standard.d" />
+    <File path="misc\pe\optional.d" />
+    <File path="misc\pe\standard.d" />
    </Folder>
-   <File path="readers\formats.d" />
-   <File path="readers\metadata.d" />
-   <File path="readers\packedfields.d" />
-   <File path="readers\stream.d" />
+   <File path="misc\abi.d" />
+   <File path="misc\cilk.d" />
+   <File path="misc\formats.d" />
+   <File path="misc\metadata.d" />
+   <File path="misc\packedfields.d" />
+   <File path="misc\state.d" />
+   <File path="misc\stream.d" />
   </Folder>
   <Folder name="vm">
    <File path="vm\appdomain.d" />
@@ -1607,15 +1610,12 @@
    <File path="vm\typehash.d" />
    <File path="vm\typekey.d" />
   </Folder>
-  <File path="abi.d" />
   <File path="binder.d" />
   <File path="gc.d" />
   <File path="inc.d" />
-  <File path="interop.d" />
   <File path="lure.d" />
   <File path="main.d" />
   <File path="readers.d" />
-  <File path="state.d" />
   <File path="vm.d" />
  </Folder>
 </DProject>
