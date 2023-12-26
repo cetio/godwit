@@ -2,7 +2,7 @@ module godwit.peassembly;
 
 import godwit.peimage;
 import godwit.assemblybinder;
-import godwit.assembly;
+import godwit.space;
 import godwit.state;
 
 public struct PEAssembly
