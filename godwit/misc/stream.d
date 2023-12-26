@@ -398,7 +398,7 @@ public:
     * Reads a type from the stream using optional fields.
     *
     * Params:
-    *     TO': The type to be read from the stream.
+    *     TO = The type to be read from the stream.
     *     ARGS... = The arguments for optional fields.
     *
     * Returns:
@@ -441,7 +441,7 @@ public:
     * Reads a type from the stream without advancing the stream position and using optional fields.
     *
     * Params:
-    *     TO': The type to be read from the stream.
+    *     TO = The type to be read from the stream.
     *     ARGS... = The arguments for optional fields.
     *
     * Returns:
@@ -456,10 +456,10 @@ public:
     }
 
     /**
-    * Reads a type from the stream using optional fields.
+    * Writes a type to the stream using optional fields.
     *
     * Params:
-    *     TO': The type to be read from the stream.
+    *     TO = The type to be read from the stream.
     *     ARGS... = The arguments for optional fields.
     *
     * Returns:
@@ -498,16 +498,16 @@ public:
     }
 
     /**
-    * Reads a type from the stream using optional fields.
+    * Writes a type to the stream using optional fields and without forwarding the position.
     *
     * Params:
-    *     TO': The type to be read from the stream.
+    *     TO = The type to be read from the stream.
     *     ARGS... = The arguments for optional fields.
     *
     * Returns:
     *   The read type read from the stream.
     */
-    void writePlasticized(FROM, ARGS...)(FROM val)
+    void putPlasticized(FROM, ARGS...)(FROM val)
         if (ARGS % 3 == 0)
     {
         string conditionalField;
