@@ -15,9 +15,11 @@ import godwit.rcwrefcache;
 import godwit.nativeimage;
 import godwit.eehash;
 import godwit.state;
+import godwit.comreflectioncache;
 
 public struct BaseDomain
 {
+public:
     // Protects the list of assemblies in the domain
     ListLock m_fileLoadLock;
     CrstExplicitInit m_domainCrst;

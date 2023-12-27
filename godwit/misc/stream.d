@@ -24,7 +24,7 @@ public class Stream
 {
 protected:
     ubyte[] data;
-    bool filePath;
+    string filePath;
 
 public:
     ulong position;
@@ -38,7 +38,7 @@ public:
 
     this(string filePath, Endianness endianness = Endianness.Native)
     {
-        this.data = cast(ubyte[])file.read(filePath);
+        this.data = cast(ubyte[])std.file.read(filePath);
         this.endianness = endianness;
         this.filePath = filePath;
     }
@@ -542,6 +542,6 @@ public:
     void flush()
     {
         if (filePath != null)
-            file.write(filePath, data);
+            std.file.write(filePath, data);
     }
 }

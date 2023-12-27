@@ -232,7 +232,7 @@ public:
 
     mixin accessors;
 
-    @property RelatedTypeKind relatedTypeKind()
+    /*@property RelatedTypeKind relatedTypeKind()
     {
         return cast(RelatedTypeKind)(m_rawTypeKind & 3);
     }
@@ -332,5 +332,5 @@ public:
     {
         relatedTypeKind = RelatedTypeKind.CanonMT;
         m_canonMethodTable = newCanonMethodTable;
-    }
+    }*/
 }

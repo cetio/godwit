@@ -9,21 +9,21 @@ public struct AssemblyIdentity
 public:
     enum PEKind
     {
-        None      = 0x00000000,
-        MSIL      = 0x00000001,
-        I386      = 0x00000002,
-        IA64      = 0x00000003,
-        AMD64     = 0x00000004,
-        ARM       = 0x00000005,
-        ARM64     = 0x00000006,
-        Invalid   = 0xffffffff
+        None = 0x00000000,
+        MSIL = 0x00000001,
+        I386 = 0x00000002,
+        IA64 = 0x00000003,
+        AMD64 = 0x00000004,
+        ARM = 0x00000005,
+        ARM64 = 0x00000006,
+        Invalid = 0xffffffff
     }
 
     enum AssemblyContentType
     {
-        Default	        = 0,
-        WindowsRuntime  = 0x1,
-        Invalid	        = 0xffffffff
+        Default = 0,
+        WindowsRuntime = 0x1,
+        Invalid = 0xffffffff
     }
 
     @flags enum IdentityFlags

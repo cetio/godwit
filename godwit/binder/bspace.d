@@ -1,4 +1,4 @@
-module godwit.space;
+module godwit.bspace;
 
 import godwit.peimage;
 import godwit.assemblyname;

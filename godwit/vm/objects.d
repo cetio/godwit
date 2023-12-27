@@ -43,7 +43,7 @@ public:
 public struct HollowObject
 {
 public:
-    ObjHeader objHeader()
+    /*ObjHeader objHeader()
         scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).objHeader;
@@ -59,6 +59,6 @@ public:
         scope return
     {
         return (cast(BaseObject*)(cast(ubyte*)&this - 16)).data;
-    }
+    }*/
 }
 

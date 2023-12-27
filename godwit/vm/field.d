@@ -44,8 +44,8 @@ public:
 
     mixin accessors;
 
-    ubyte* getAddress(ubyte* ptr)
+    /*ubyte* getAddress(ubyte* ptr)
     {
         return ptr + offset;
-    }
+    }*/
 }

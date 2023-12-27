@@ -6,6 +6,7 @@ import godwit.assembly;
 import godwit.stringarraylist;
 import godwit.shash;
 import godwit.state;
+import godwit.bspace;
 
 public struct ApplicationContext
 {

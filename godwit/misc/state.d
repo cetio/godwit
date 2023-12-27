@@ -143,44 +143,36 @@ string toString(T)(T value)
 //       Conditional get/sets? (check flag -> return a default) (default attribute?)
 //       Flag get/sets from pre-existing get/sets (see methodtable.d relatedTypeKind)
 //       Auto import types (generics!!)
+//       Allow for indiv. get/sets without needing both declared
+/// Does not support multiple fields with the same enum type!
 public template accessors()
 {
     import std.traits;
     import std.string;
     import std.meta;
-    import std.conv;
 
     static foreach (string member; __traits(allMembers, typeof(this)))
     {
-        static if (member.startsWith("m_") && !member.endsWith("_min") && !member.endsWith("_max") &&
-                   // Bitfields cannot have attributes, should ignore the exemption check
-                   (isFunction!(__traits(getMember, typeof(this), member)) || staticIndexOf!(exempt, __traits(getAttributes, __traits(getMember, typeof(this), member))) == -1))
+        static if (member.startsWith("m_") && !__traits(compiles, { enum _ = mixin(member); }) &&
+            isMutable!(typeof(__traits(getMember, typeof(this), member))) &&
+            (isFunction!(__traits(getMember, typeof(this), member)) || staticIndexOf!(exempt, __traits(getAttributes, __traits(getMember, typeof(this), member))) == -1))
         {
-            // Bitfield support T.T
-            static if (isCallable!(__traits(getMember, typeof(this), member)))
+            static if (!__traits(hasMember, typeof(this), member[2..$]))
             {
-                static if (!__traits(hasMember, typeof(this), member[2..$]))
+            	static if (!__traits(hasMember, typeof(this), member[2..$]))
                 {
-                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
-                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
-                }
-            }
-            else
-            {
-                static if (!__traits(hasMember, typeof(this), member[2..$]))
-                    mixin("ref "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~" "~member[2..$]~"() { return "~member~"; }");
-            }
 
-            // Does not support multiple fields with the same enum type!
-            static if (is(typeof(__traits(getMember, this, member)) == enum) &&
-                       staticIndexOf!(exempt, __traits(getAttributes, typeof(__traits(getMember, this, member)))) == -1)
-            {
-                static foreach (string flag; __traits(allMembers, typeof(__traits(getMember, this, member))))
-                {
-                    // ex = Eastern
-                    // Masked (k prefix)
-                    static if (staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, this, member)))) != -1)
-                    {
+                	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
+                	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
+                }
+
+                // Flags
+                static if (is(typeof(__traits(getMember, typeof(this), member)) == enum) &&
+                    staticIndexOf!(exempt, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) == -1 &&
+                    staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) != -1)
+            	{
+                    static foreach (string flag; __traits(allMembers, typeof(__traits(getMember, this, member))))
+                	{
                         static if (flag.startsWith('k'))
                         {
                             static foreach_reverse (string mask; __traits(allMembers, typeof(__traits(getMember, this, member)))[0..(staticIndexOf!(flag, __traits(allMembers, typeof(__traits(getMember, this, member)))))])
@@ -209,71 +201,21 @@ public template accessors()
                             }
                         }
                     }
-                    else
-                    {
+            	}
+
+                // Non-flags
+                static if (is(typeof(__traits(getMember, typeof(this), member)) == enum) &&
+                    staticIndexOf!(exempt, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) == -1 &&
+                    staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) == -1)
+                {
+                    static foreach (string flag; __traits(allMembers, typeof(__traits(getMember, this, member))))
+                	{
                         static if (!__traits(hasMember, typeof(this), "is"~flag))
                         {
                             // @property bool Eastern()...
                             mixin("@property bool is"~flag~"() { return "~member[2..$]~" == "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~"; }");
                             // @property bool Eastern(bool state)...
                             mixin("@property bool is"~flag~"(bool state) { return ("~member[2..$]~" = "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~") == "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~"; }");
-                        }
-                    }
-                }
-            }
-
-            // Additional comparisons
-            // Useful for if you have 2+ enums that are effectively assigned to the same field, but not in a union
-            static if (__traits(getAttributes, typeof(__traits(getMember, this, member))).length != 0)
-            {
-                static foreach (attr; __traits(getAttributes, typeof(__traits(getMember, this, member))))
-                {
-                    static if (staticIndexOf!(exempt, __traits(getAttributes, typeof(__traits(getMember, this, member)))) == -1)
-                    {
-                        static foreach (string flag; __traits(allMembers, attr))
-                        {
-                            // ex = Eastern
-                            // Masked (k prefix)
-                            static if (staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, this, member)))) != -1)
-                            {
-                                static if (flag.startsWith('k'))
-                                {
-                                    static foreach_reverse (string mask; __traits(allMembers, attr)[0..(staticIndexOf!(flag, __traits(allMembers, attr)))])
-                                    {
-                                        static if (mask.endsWith("Mask") || mask.endsWith("MASK"))
-                                        {
-                                            static if (!__traits(hasMember, typeof(this), "is"~flag[1..$]))
-                                            {
-                                                // @property bool iskEastern()...
-                                                mixin("@property bool is"~flag[1..$]~"() { return ("~member[2..$]~" & "~fullyQualifiedName!attr~"."~mask~") == "~fullyQualifiedName!attr~"."~flag~"; }");
-                                                // @property bool iskEastern(bool state)...
-                                                mixin("@property bool is"~flag[1..$]~"(bool state) { return ("~member[2..$]~" = cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")(state ? ("~member[2..$]~" & "~fullyQualifiedName!attr~"."~mask~") | "~fullyQualifiedName!attr~"."~flag~" : ("~member[2..$]~" & "~fullyQualifiedName!attr~"."~mask~") & ~"~fullyQualifiedName!attr~"."~flag~")) == cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")"~fullyQualifiedName!attr~"."~flag~"; }");
-                                            }
-                                        }
-
-                                    }
-                                }
-                                else
-                                {  
-                                    static if (!__traits(hasMember, typeof(this), "is"~flag))
-                                    {
-                                        // @property bool isEastern()...
-                                        mixin("@property bool is"~flag~"() { return ("~member[2..$]~" & "~fullyQualifiedName!attr~"."~flag~") != 0; }");
-                                        // @property bool isEastern(bool state)...
-                                        mixin("@property bool is"~flag~"(bool state) { return ("~member[2..$]~" = cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")(state ? ("~member[2..$]~" | "~fullyQualifiedName!attr~"."~flag~") : ("~member[2..$]~" & ~"~fullyQualifiedName!attr~"."~flag~"))) != 0; }");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                static if (!__traits(hasMember, typeof(this), "is"~flag))
-                                {
-                                    // @property bool Eastern()...
-                                    mixin("@property bool is"~flag~"() { return "~member[2..$]~" == cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")"~fullyQualifiedName!attr~"."~flag~"; }");
-                                    // @property bool Eastern(bool state)...
-                                    mixin("@property bool is"~flag~"(bool state) { return ("~member[2..$]~" = cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")"~fullyQualifiedName!attr~"."~flag~") == cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")"~fullyQualifiedName!attr~"."~flag~"; }");
-                                }
-                            }
                         }
                     }
                 }
