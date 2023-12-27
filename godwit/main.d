@@ -67,7 +67,7 @@ extern (C) export void Initialize()
         return;
     }
 
-    ByteStream stream = new ByteStream(filePath);
+    Stream stream = new Stream(filePath);
 
     auto dosHeader = stream.read!IMAGE_DOS_HEADER();
     if (dosHeader.e_magic != 0x5A4D)

@@ -15,10 +15,10 @@ public:
 
     mixin accessors;
 
-    bool isCompletelyInited()
+    /*bool isCompletelyInited()
     {
         return ilStub != cast(ubyte*)1;
-    }
+    }*/
 }
 
 public struct Stub

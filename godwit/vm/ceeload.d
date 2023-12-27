@@ -40,9 +40,7 @@ public:
     LookupMap!void m_memberRefMap;
     // For protecting additions to the heap
     CrstExplicitInit m_lookupTableCrst;
-    // I don't know why but this throws an error when accessors are getting generated if it isnt exempted
-    // Don't change this
-    @exempt LoaderAllocator* m_allocator;
+    LoaderAllocator* m_allocator;
 
     mixin accessors;
 }

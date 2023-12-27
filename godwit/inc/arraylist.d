@@ -20,7 +20,7 @@ public:
 public struct FirstArrayListBlock
 {
 public:
-    ArrayListBlock* m_next;
+    ArrayListBlock* next;
     uint m_blockSize;
     // #ifdef HOST_64BIT
     version (X86_64)

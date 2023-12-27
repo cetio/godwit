@@ -78,61 +78,65 @@ const uint xmm13 = 99;
 const uint xmm14 = 101;
 const uint xmm15 = 103;
 
-const string[uint] register = [ 
-    eax: "EAX",
-    ebx: "EBX",
-    ecx: "ECX",
-    edx: "EDX",
-    esi: "ESI",
-    edi: "EDI",
-    ebp: "EBP",
-    esp: "ESP",
-    rax: "RAX",
-    rbx: "RBX",
-    rcx: "RCX",
-    rdx: "RDX",
-    rsi: "RSI",
-    rdi: "RDI",
-    r8: "R8",
-    r9: "R9",
-    r10: "R10",
-    r11: "R11",
-    r12: "R12",
-    r13: "R13",
-    r14: "R14",
-    r15: "R15",
-    xmm0: "XMM0",
-    xmm1: "XMM1",
-    xmm2: "XMM2",
-    xmm3: "XMM3",
-    xmm4: "XMM4",
-    xmm5: "XMM5",
-    xmm6: "XMM6",
-    xmm7: "XMM7",
-    xmm8: "XMM8",
-    xmm9: "XMM9",
-    xmm10: "XMM10",
-    xmm11: "XMM11",
-    xmm12: "XMM12",
-    xmm13: "XMM13",
-    xmm14: "XMM14",
-    xmm15: "XMM15",
-];
+const string[uint] register;
+const string[][uint] pair;
 
-const string[][uint] pair = [
-    eax: ["EAX", "EBX"],
-    ecx: ["ECX", "EDX"],
-    esi: ["ESI", "EDI"],
-    ebp: ["EBP", "ESP"],
-    rax: ["RAX", "RBX"],
-    rcx: ["RCX", "RDX"], 
-    rsi: ["RSI", "RDI"],
-    r8: ["R8", "R9"],
-    r10: ["R10", "R11"], 
-    r12: ["R12", "R13"],
-    r14: ["R14", "R15"],
-];
-
+static this()
+{
+    register = [ 
+        eax: "EAX",
+        ebx: "EBX",
+        ecx: "ECX",
+        edx: "EDX",
+        esi: "ESI",
+        edi: "EDI",
+        ebp: "EBP",
+        esp: "ESP",
+        rax: "RAX",
+        rbx: "RBX",
+        rcx: "RCX",
+        rdx: "RDX",
+        rsi: "RSI",
+        rdi: "RDI",
+        r8: "R8",
+        r9: "R9",
+        r10: "R10",
+        r11: "R11",
+        r12: "R12",
+        r13: "R13",
+        r14: "R14",
+        r15: "R15",
+        xmm0: "XMM0",
+        xmm1: "XMM1",
+        xmm2: "XMM2",
+        xmm3: "XMM3",
+        xmm4: "XMM4",
+        xmm5: "XMM5",
+        xmm6: "XMM6",
+        xmm7: "XMM7",
+        xmm8: "XMM8",
+        xmm9: "XMM9",
+        xmm10: "XMM10",
+        xmm11: "XMM11",
+        xmm12: "XMM12",
+        xmm13: "XMM13",
+        xmm14: "XMM14",
+        xmm15: "XMM15",
+    ];
+    pair = [
+        eax: ["EAX", "EBX"],
+        ecx: ["ECX", "EDX"],
+        esi: ["ESI", "EDI"],
+        ebp: ["EBP", "ESP"],
+        rax: ["RAX", "RBX"],
+        rcx: ["RCX", "RDX"], 
+        rsi: ["RSI", "RDI"],
+        r8: ["R8", "R9"],
+        r10: ["R10", "R11"], 
+        r12: ["R12", "R13"],
+        r14: ["R14", "R15"],
+    ];
+}
 /*const string[][uint] arrayPair = [
 rcx: ["RCX", "RDX"], 
 rdx: ["RDX", "R8"], 
@@ -142,8 +146,8 @@ r8: ["R8", "R9"],
 // MSABI
 version (Windows)
 {
-    alias isFloat(T) = Alias!(isFloatingPoint!T || isSIMDVector!T);
-    alias isNative(T) = Alias!(isScalarType!T || ((is(T == struct) || is(T == union) || is(T == enum)) && (T.sizeof == 1 || T.sizeof == 2 || T.sizeof == 4 || T.sizeof == 8)));
+    alias isFloat(T) = Alias!(__traits(isFloating, T));
+    alias isNative(T) = Alias!(__traits(isScalar, T) || ((is(T == struct) || is(T == union) || is(T == enum)) && (T.sizeof == 1 || T.sizeof == 2 || T.sizeof == 4 || T.sizeof == 8)));
     alias isPair(T) = Alias!false;
     alias isOverflow(T) = Alias!false;
     alias isSplit(T) = Alias!(isFloat!T && T.sizeof > 8);
@@ -151,8 +155,8 @@ version (Windows)
 // SystemV
 else
 {
-    alias isFloat(T) = Alias!(isFloatingPoint!T || isSIMDVector!T || is(T == string) || is(T == char[]));
-    alias isNative(T) = Alias!(isScalarType!T || ((is(T == struct) || is(T == union) || is(T == enum)) && (T.sizeof <= 8)));
+    alias isFloat(T) = Alias!(__traits(isFloating, T) || is(T == string) || is(T == char[]));
+    alias isNative(T) = Alias!(__traits(isScalar, T) || ((is(T == struct) || is(T == union) || is(T == enum)) && (T.sizeof <= 8)));
     alias isPair(T) = Alias!(!isFloat!T && is(T == struct) && T.sizeof > 8 && T.sizeof <= 32);
     alias isOverflow(T) = Alias!(!isFloat!T && T.sizeof > 16 && T.sizeof <= 32);
     alias isSplit(T) = Alias!(isFloat!T && T.sizeof > 8);

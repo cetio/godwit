@@ -284,7 +284,7 @@ public:
 
     mixin accessors;
 
-    public PackedFields* getPackedFields() 
+    /*public PackedFields* getPackedFields() 
         scope return
     {
         return cast(PackedFields*)(cast(byte*)&this + fixedEEClassFields);
@@ -322,5 +322,5 @@ public:
             fieldDescs[i] = fieldDescList + i;
 
         return fieldDescs;
-    }
+    }*/
 }

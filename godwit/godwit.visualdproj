@@ -1518,7 +1518,7 @@
    <File path="binder\assemblyidentity.d" />
    <File path="binder\assemblyname.d" />
    <File path="binder\assemblyversion.d" />
-   <File path="binder\space.d" />
+   <File path="binder\bspace.d" />
   </Folder>
   <Folder name="gc">
    <File path="gc\gcdesc.d" />
@@ -1551,7 +1551,7 @@
     <File path="misc\pe\standard.d" />
    </Folder>
    <File path="misc\abi.d" />
-   <File path="misc\cilk.d" />
+   <File path="misc\cil.d" />
    <File path="misc\formats.d" />
    <File path="misc\metadata.d" />
    <File path="misc\packedfields.d" />
