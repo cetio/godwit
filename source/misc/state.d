@@ -161,7 +161,6 @@ public template accessors()
             {
             	static if (!__traits(hasMember, typeof(this), member[2..$]))
                 {
-
                 	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
                 	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
                 }

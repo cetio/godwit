@@ -1,0 +1,129 @@
+<html><head><meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+</head><body><pre>
+<table width=100% bgcolor=#CFCFE5><tr><td>
+	<font face=arial size=+3>Build Log</font>
+</table>
+<table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Building x64\Debug\Kingfisher.exe
+</font></table>
+<table width=100% bgcolor=#EFEFE5><tr><td><font face=arial size=+1>
+Command Line
+</font></table>
+set PATH=C:\D\ldc2-1.35.0-windows-multilib\bin;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE;C:\Program Files (x86)\Windows Kits\10\bin;%PATH%
+set LIB=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\um\x64
+set VCINSTALLDIR=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\
+set VCTOOLSINSTALLDIR=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\
+set VSINSTALLDIR=C:\Program Files\Microsoft Visual Studio\2022\Community\
+set WindowsSdkDir=C:\Program Files (x86)\Windows Kits\10\
+set WindowsSdkVersion=10.0.22621.0
+set UniversalCRTSdkDir=C:\Program Files (x86)\Windows Kits\10\
+set UCRTVersion=10.0.22621.0
+
+echo binder\applicationcontext.d &gt;x64\Debug\Kingfisher.build.rsp
+echo binder\assembly.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo binder\assemblyidentity.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo binder\assemblyname.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo binder\assemblyversion.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo gc\gcdesc.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo gc\gcenv.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo gc\gcinterface.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo gc\qtempls.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\arraylist.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\bundle.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\cor.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\corhdr.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\ex.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\loaderheap.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\memorypool.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\pal.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\readytorun.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\sbuffer.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\shash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo inc\stringarraylist.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\elf\header.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\elf\program.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\elf\sections.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\pe\optional.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\pe\standard.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\formats.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\metadata.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\packedfields.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo readers\stream.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\appdomain.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\assembly.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\assemblybinder.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\ceeload.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\classhash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\clrex.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\clsload.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\codeman.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\codeversioning.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\contractimpl.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\crst.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\dacenumerablehash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\defaultassemblybinder.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\domainassembly.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\eeclass.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\eehash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\exinfo.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\field.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\fptrstubs.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\genericdict.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\hash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\ilstubcache.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\inlinetracking.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\instmethhash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\listlock.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\loaderallocator.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\method.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\methodimpl.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\methodtable.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\mngstdinterfaces.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\nativeimage.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\objects.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\peassembly.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\peimage.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\peimagelayout.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\pendingload.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\precode.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\rcwrefcache.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\readytoruninfo.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\siginfo.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\simplerwlock.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\stringliteralmap.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\stub.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\threads.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\typectxt.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\typedesc.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\typehandle.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\typehash.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo vm\typekey.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo abi.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo interop.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo lure.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo main.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+echo state.d &gt;&gt;x64\Debug\Kingfisher.build.rsp
+
+&quot;C:\Program Files (x86)\VisualD\pipedmd.exe&quot; -deps x64\Debug\Kingfisher.dep ldc2 -m64 -g -d-debug -boundscheck=safeonly -X -Xf=&quot;x64\Debug\Kingfisher.json&quot; -of=&quot;x64\Debug\Kingfisher.exe&quot; -L/PDB:&quot;x64\Debug\Kingfisher.pdb&quot; -L/SUBSYSTEM:CONSOLE -od=&quot;x64\Debug&quot; @x64\Debug\Kingfisher.build.rsp
+if %errorlevel% neq 0 goto reportError
+if not exist &quot;x64\Debug\Kingfisher.exe&quot; (echo &quot;x64\Debug\Kingfisher.exe&quot; not created! &amp;&amp; goto reportError)
+
+goto noError
+
+:reportError
+set ERR=%ERRORLEVEL%
+set DISPERR=%ERR%
+if %ERR% LSS -65535 set DISPERR=0x%=EXITCODE%
+echo Building x64\Debug\Kingfisher.exe failed (error code %DISPERR%)!
+exit /B %ERR%
+
+:noError
+<table width=100% bgcolor=#EFEFE5><tr><td><font face=arial size=+1>
+Output
+</font></table>
+C:\D\ldc2-1.35.0-windows-multilib\bin\..\import\std\traits.d(658): Error: undefined identifier `parentPrefix`
+C:\D\ldc2-1.35.0-windows-multilib\bin\..\import\std\traits.d(568): Error: template instance `std.traits.fqnSym!(Protection)` error instantiating
+state.d(164):        instantiated from here: `fullyQualifiedName!(Protection)`
+vm\field.d(45): Error: mixin `vm.field.FieldDesc.accessors!()` error instantiating
+Building x64\Debug\Kingfisher.exe failed (error code 1)!
+</body></html>

@@ -9,7 +9,7 @@ import godwit.state;
 public struct TypeDesc
 {
 public:
-    @flags enum Flags
+    @flags enum TypeFlags
     {
         Unrestored = 0x00000400,
         UnrestoredTypeKey = 0x00000800,
@@ -20,7 +20,7 @@ public:
 
     mixin(bitfields!(
         CorElementType, "m_elemType", 8,
-        Flags, "m_typeFlags", 24
+        TypeFlags, "m_typeFlags", 24
     ));
 
     mixin accessors;
