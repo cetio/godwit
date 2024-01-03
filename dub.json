@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"cet"
+	],
+	"copyright": "Copyright © 2024, cet",
+	"description": "D-CoreCLR interop library",
+	"license": "MPL-2.0",
+	"name": "godwit"
+}
