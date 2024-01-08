@@ -80,11 +80,13 @@ public enum Characteristics : ushort
 public struct COFFHeader
 {
 public:
+    uint magic;
     MachineType machine;
     ushort numberOfSections; 
     uint timeDateStamp;
     uint pointerToSymbolTable;
     uint numberOfSymbols;
+    // 0 for objects
     ushort sizeOfOptionalHeader;
     Characteristics characteristics;
 }

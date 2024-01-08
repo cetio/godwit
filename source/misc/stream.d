@@ -3,8 +3,8 @@ module godwit.stream;
 import std.file;
 import std.conv;
 import std.algorithm.mutation;
-import std.algorithm : canFind;
 import std.traits;
+import godwit.crypto.mira;
 
 public enum Endianness : ubyte
 {
@@ -20,19 +20,67 @@ public enum Seek
     End
 }
 
+/**
+* Swaps the endianness of the provided value, if applicable.
+*
+* Params:
+*     val = The value to swap endianness.
+*
+* Returns:
+*   The value with swapped endianness.
+*/
+private static @nogc T makeEndian(T)(T val, Endianness endianness)
+{
+    version (LittleEndian)
+    {
+        if (endianness == Endianness.BigEndian)
+        {
+            ubyte[] bytes = (cast(ubyte*)&val)[0..T.sizeof];
+            bytes = bytes.reverse();
+            val = *cast(T*)&bytes[0];
+        }
+    }
+    else version (BigEndian)
+    {
+        if (endianness == Endianness.LittleEndian)
+        {
+            ubyte[] bytes = (cast(ubyte*)&val)[0..T.sizeof];
+            bytes = bytes.reverse();
+            val = *cast(T*)&bytes[0];
+        }
+    }
+
+    return val;
+}
+
+private template ElementType(T) 
+{
+    static if (is(T == U[], U))
+        alias ElementType = ElementType!U;
+    else
+        alias ElementType = T;
+}
+
 public class Stream
 {
 protected:
-    ubyte[] data;
     string filePath;
 
 public:
+    ubyte[] data;
     ulong position;
     Endianness endianness;
+    string key;
 
     this(ubyte[] data, Endianness endianness = Endianness.Native)
     {
-        this.data = data;
+        this.data = data.dup;
+        this.endianness = endianness;
+    }
+
+    this(byte[] data, Endianness endianness = Endianness.Native)
+    {
+        this.data = cast(ubyte[])data.dup;
         this.endianness = endianness;
     }
 
@@ -53,37 +101,14 @@ public:
         return position + T.sizeof - 1 < data.length;
     }
 
-    /**
-    * Swaps the endianness of the provided value, if applicable.
-    *
-    * Params:
-    *     val = The value to swap endianness.
-    *
-    * Returns:
-    *   The value with swapped endianness.
-    */
-    T makeEndian(T)(T val)
+    void encrypt(string key)
     {
-        version (LittleEndian)
-        {
-            if (endianness == Endianness.BigEndian)
-            {
-                ubyte[] bytes = (cast(ubyte*)&val)[0..T.sizeof];
-                bytes = bytes.reverse();
-                val = *cast(T*)&bytes[0];
-            }
-        }
-        else version (BigEndian)
-        {
-            if (endianness == Endianness.LittleEndian)
-            {
-                ubyte[] bytes = (cast(ubyte*)&val)[0..T.sizeof];
-                bytes = bytes.reverse();
-                val = *cast(T*)&bytes[0];
-            }
-        }
+        data = mira_encrypt!256(data, key);
+    }
 
-        return val;
+    void decrypt(string key)
+    {
+        data = mira_decrypt!256(data, key);
     }
 
     /**
@@ -92,7 +117,7 @@ public:
     * Params:
     *     T = The size of type to move the position by.
     */
-    @nogc void step(T)()
+    void step(T)()
     {
         position += T.sizeof;
     }
@@ -104,7 +129,7 @@ public:
     *     T = The size of type to move the position by.
     *     count = The number of elements.
     */
-    @nogc void step(T)(int count)
+    void step(T)(int count)
     {
         position += T.sizeof * count;
     }
@@ -117,20 +142,20 @@ public:
     *     T = The offset value for seeking.
     *     SEEK = The direction of the seek operation (Start, Current, or End).
     */
-    @nogc void seek(T, Seek SEEK)()
+    void seek(T, Seek SEEK)()
         if (isIntegral!T)
     {
         static if (SEEK == Seek.Start)
         {
-            position = read!T();
+            position = peek!T;
         }
-        else if (SEEK == Seek.Current)
+        else static if (SEEK == Seek.Current)
         {
-            position += read!T();
+            position += peek!T;
         }
         else
         {
-            position = data.length - read!T();
+            position = data.length - peek!T;
         }
     }
 
@@ -143,10 +168,15 @@ public:
     * Returns:
     *   The value read from the stream.
     */
-    @nogc T read(T)()
+    T read(T)()
+        if (!isArray!T)
     {
-        scope(exit) step!T();
-        return peek!T();
+        if (data.length <= position)
+            return T.init;
+
+        scope(exit) step!T;
+        T val = *cast(T*)(&data[position]);
+        return mira_decrypt!256(makeEndian!T(val, endianness), key);
     }
 
     /**
@@ -158,13 +188,49 @@ public:
     * Returns:
     *   The value peeked from the stream.
     */
-    @nogc T peek(T)()
+    T peek(T)()
+        if (!isArray!T)
     {
         if (data.length <= position)
-            return cast(T)0;
+            return T.init;
 
         T val = *cast(T*)(&data[position]);
-        return makeEndian!T(val);
+        return mira_decrypt!256(makeEndian!T(val, endianness), key);
+    }
+
+    /**
+    * Reads an array of type T from the stream.
+    *
+    * Params:
+    *     T = The type of data to be read.
+    *
+    * Returns:
+    *   An array read from the stream.
+    */
+    T read(T)()
+        if (isArray!T)
+    {
+        T items;
+        foreach (ulong i; 0..read7EncodedInt())
+            items ~= read!(ElementType!T);
+        return items;
+    }
+
+    /**
+    * Peeks an array of type T from the stream without advancing the stream position.
+    *
+    * Params:
+    *     T = The type of data to peek.
+    *
+    * Returns:
+    *   An array peeked from the stream.
+    */
+    T peek(T)()
+        if (isArray!T)
+    {
+        ulong _position = position;
+        scope(exit) position = _position;
+        return read!T;
     }
 
     /**
@@ -174,10 +240,13 @@ public:
     *     T = The type of data to be written.
     *     val = The value to be written to the stream.
     */
-    @nogc void write(T)(T val)
+    void write(T)(T val)
     {
-        scope(exit) step!T();
-        put!T(val);
+        if (data.length <= position)
+            return;
+
+        scope(exit) step!T;
+        *cast(T*)(&data[position]) = mira_encrypt!256(makeEndian!T(val, endianness), key);
     }
 
     /**
@@ -187,13 +256,12 @@ public:
     *     T = The type of data to be written.
     *     val = The value to be written to the stream.
     */
-    @nogc void put(T)(T val)
+    void put(T)(T val)
     {
         if (data.length <= position)
             return;
 
-        val = makeEndian!T(val);
-        *cast(T*)(&data[position]) = val;
+        *cast(T*)(&data[position]) = mira_encrypt!256(makeEndian!T(val, endianness), key);
     }
 
     /**
@@ -210,7 +278,7 @@ public:
     {
         T[] items;
         foreach (ulong i; 0..count)
-            items ~= read!T();
+            items ~= read!T;
         return items;
     }
 
@@ -238,10 +306,14 @@ public:
     *     T = The type of data to be written.
     *     items = An array of values to be written to the stream.
     */
-    @nogc void write(T)(T[] items)
+    void write(T, bool NOPREFIX = false)(T[] items)
     {
+        static if (!NOPREFIX)
+            write7EncodedInt(cast(int)items.length);
+
         foreach (ulong i; 0..items.length)
             write!T(items[i]);
+            
     }
 
     /**
@@ -251,11 +323,11 @@ public:
     *     T = The type of data to be written.
     *     items = An array of values to be written to the stream.
     */
-    @nogc void put(T)(T[] items)
+    void put(T, bool NOPREFIX = false)(T[] items)
     {
         ulong _position = position;
         scope(exit) position = _position;
-        write!T(items);
+        write!(T, NOPREFIX)(items);
     }
 
     /**
@@ -272,11 +344,16 @@ public:
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
     {
         static if (PREFIXED)
-            return read!CHAR(read7EncodedInt()).to!string;
+        {
+            import std.stdio;
+            return read!(CHAR[]).to!string;
+        }
+            
 
-        string str = (cast(CHAR*)(&data[position])).to!string;
-        position += str.length * CHAR.sizeof;
-        return makeEndian!string(str);
+        char[] chars;
+        while (peek!CHAR != '\0')
+            chars ~= read!CHAR;
+        return makeEndian!string(chars.to!string, endianness);
     }
 
     /**
@@ -292,15 +369,9 @@ public:
     string peekString(CHAR, bool PREFIXED = false)()
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
     {
-        static if (PREFIXED)
-        {
-            ulong _position = position;
-            scope(exit) position = _position;
-            return readString!(CHAR, PREFIXED)();
-        }
-        
-        string str = (cast(CHAR*)(&data[position])).to!string;
-        return makeEndian!string(str);
+        ulong _position = position;
+        scope(exit) position = _position;
+        return readString!(CHAR, PREFIXED);
     }
 
     /**
@@ -314,16 +385,10 @@ public:
     void writeString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
     {
-        static if (PREFIXED)
-        {
-            write7EncodedInt(cast(int)str.length);
-        }
-        else if (str.length > 0 && str[$ - 1] != '\0')
-        {
+        if (!PREFIXED && str.length > 0 && str[$-1] != '\0')
             str ~= '\0';
-        }
 
-        write!CHAR(str.dup.to!(CHAR[]));
+        write!(CHAR, !PREFIXED)(str.dup.to!(CHAR[]));
     }
 
     /**
@@ -337,18 +402,10 @@ public:
     void putString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
     {
-        static if (PREFIXED)
-        {
-            ulong _position = position;
-            scope(exit) position = _position;
-            write7EncodedInt(cast(int)str.length);
-        }
-        else if (str.length > 0 && str[$ - 1] != '\0')
-        {
+        if (!PREFIXED && str.length > 0 && str[$-1] != '\0')
             str ~= '\0';
-        }
-           
-        put!CHAR(str.dup.to!(CHAR[]));
+        
+        put!(CHAR, !PREFIXED)(str.dup.to!(CHAR[]));
     }
 
     /**
@@ -357,7 +414,7 @@ public:
     * Returns:
     *   The integer value read from the stream.
     */
-    @nogc int read7EncodedInt()
+    int read7EncodedInt()
     {
         int result = 0;
         int shift = 0;
@@ -380,7 +437,7 @@ public:
     * Params:
     *     val = The integer value to be written to the stream.
     */
-    @nogc void write7EncodedInt(int val)
+    void write7EncodedInt(int val)
     {
         foreach (int i; 0..5)
         {
@@ -398,150 +455,52 @@ public:
     * Reads a type from the stream using optional fields.
     *
     * Params:
-    *     TO = The type to be read from the stream.
+    *     T = The type to be read from the stream.
     *     ARGS... = The arguments for optional fields.
     *
     * Returns:
     *   The read type read from the stream.
     */
-    TO readPlasticized(TO, ARGS...)()
-        if (ARGS % 3 == 0)
+    T readPlasticized(T, ARGS...)()
+        if (ARGS.length % 3 == 0)
     {
-        TO val = read!(TO)();
-        string field;
-        string conditionalField;
-        foreach (i, ARG; ARGS)
+        T val;
+        foreach (string field; FieldNameTuple!T)
         {
-            if (i % 3 == 0)
-            {
-                static assert(is(typeof(ARG) : string),
-                          "Field name expected, found " ~ ARG.stringof);
-
-                field = ARG;
-            }
-            else if (i % 3 == 1)
-            {
-                static assert(is(typeof(ARG) : string),
-                          "Conditional field name expected, found " ~ ARG.stringof);
-
-                conditionalField = ARG;
-            }
-            else
-            {
-                if (__traits(getMember, val, conditionalField) != ARG)
-                {
-                    __traits(getMember, val, field) = __traits(getMember, val, field).init;
-                    position -= __traits(getMember, val, field).sizeof;
-                }
-            }
-        }
-    }
-
-    /**
-    * Reads a type from the stream without advancing the stream position and using optional fields.
-    *
-    * Params:
-    *     TO = The type to be read from the stream.
-    *     ARGS... = The arguments for optional fields.
-    *
-    * Returns:
-    *   The read type read from the stream.
-    */
-    TO peekPlasticized(TO, ARGS...)()
-        if (ARGS % 3 == 0)
-    {
-        ulong _position = position;
-        scope(exit) position = _position;
-        return readPlasticized!(TO, ARGS)();
-    }
-
-    /**
-    * Writes a type to the stream using optional fields.
-    *
-    * Params:
-    *     TO = The type to be read from the stream.
-    *     ARGS... = The arguments for optional fields.
-    *
-    * Returns:
-    *   The read type read from the stream.
-    */
-    void writePlasticized(FROM, ARGS...)(FROM val)
-        if (ARGS % 3 == 0)
-    {
-        string conditionalField;
-        foreach (string field; FieldNameTuple!FROM)
-        {
+            bool cread = true;
             foreach (i, ARG; ARGS)
             {
-                if (i % 3 == 0)
+                static if (i % 3 == 0)
                 {
-                    static assert(is(typeof(ARG) : string),
-                        "Field name expected, found " ~ ARG.stringof);
-
-                    if (ARG != field)
-                        continue;
+                    static assert(is(typeof(ARG) == string),
+                        "Field name expected, found " ~ ARG.stringof);  
                 }
-                else if (i % 3 == 1)
+                else static if (i % 3 == 1)
                 {
-                    static assert(is(typeof(ARG) : string),
+                    static assert(is(typeof(ARG) == string),
                         "Conditional field name expected, found " ~ ARG.stringof);
-
-                    conditionalField = ARG;
                 }
                 else
                 {
-                    if (__traits(getMember, val, conditionalField) == ARG)
-                        write!(typeof(__traits(getMember, val, field)))(__traits(getMember, val, field));
+                    if (field == ARGS[i - 2] && __traits(getMember, val, ARGS[i - 1]) != ARG)
+                        cread = false;
                 }
             }
+            if (cread)
+                __traits(getMember, val, field) = read!(typeof(__traits(getMember, val, field)));
         }
+        return val;
     }
 
-    /**
-    * Writes a type to the stream using optional fields and without forwarding the position.
-    *
-    * Params:
-    *     TO = The type to be read from the stream.
-    *     ARGS... = The arguments for optional fields.
-    *
-    * Returns:
-    *   The read type read from the stream.
-    */
-    void putPlasticized(FROM, ARGS...)(FROM val)
-        if (ARGS % 3 == 0)
+    void flush(string filePath)
     {
-        string conditionalField;
-        foreach (string field; FieldNameTuple!FROM)
-        {
-            foreach (i, ARG; ARGS)
-            {
-                if (i % 3 == 0)
-                {
-                    static assert(is(typeof(ARG) : string),
-                                  "Field name expected, found " ~ ARG.stringof);
-
-                    if (ARG != field)
-                        continue;
-                }
-                else if (i % 3 == 1)
-                {
-                    static assert(is(typeof(ARG) : string),
-                                  "Conditional field name expected, found " ~ ARG.stringof);
-
-                    conditionalField = ARG;
-                }
-                else
-                {
-                    if (__traits(getMember, val, conditionalField) == ARG)
-                        put!(typeof(__traits(getMember, val, field)))(__traits(getMember, val, field));
-                }
-            }
-        }
+        if (filePath != null)
+            std.file.write(filePath, data);
     }
 
     void flush()
     {
-        if (filePath != null)
-            std.file.write(filePath, data);
+        if (this.filePath != null)
+            std.file.write(this.filePath, data);
     }
 }
