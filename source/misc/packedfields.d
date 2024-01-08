@@ -11,7 +11,7 @@ public:
     * Unpacked fields are individual fields within the bit vector.
     * 
     * Params:
-    *   dwFieldIndex = The index of the field to retrieve.
+    *   - `dwFieldIndex`: The index of the field to retrieve.
     * 
     * Returns:
     *   The value of the unpacked field at the specified index.
@@ -27,7 +27,7 @@ public:
     * Packed fields are stored as consecutive bits in the bit vector.
     * 
     * Params:
-    *  dwFieldIndex = The index of the field to retrieve.
+    *  `dwFieldIndex`: The index of the field to retrieve.
     * 
     * Returns:
     *   The value of the packed field at the specified index.
@@ -52,7 +52,7 @@ private:
     * The offset is the position within the bit vector where the field starts.
     * 
     * Params:
-    *   dwFieldIndex = The index of the field to calculate the offset for.
+    *   - `dwFieldIndex`: The index of the field to calculate the offset for.
     * 
     * Returns:
     *   The offset of the specified field within the bit vector.
@@ -72,8 +72,8 @@ private:
     * This function extracts and returns the value of a specific portion of the bit vector.
     * 
     * Params:
-    *   dwOffset = The starting offset within the bit vector.
-    *   dwLength = The length of the portion to extract.
+    *   - `dwOffset`: The starting offset within the bit vector.
+    *   - `dwLength`: The length of the portion to extract.
     * 
     * Returns:
     *   The extracted value from the bit vector.

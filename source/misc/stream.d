@@ -4,7 +4,6 @@ import std.file;
 import std.conv;
 import std.algorithm.mutation;
 import std.traits;
-import godwit.crypto.mira;
 
 public enum Endianness : ubyte
 {
@@ -101,21 +100,11 @@ public:
         return position + T.sizeof - 1 < data.length;
     }
 
-    void encrypt(string key)
-    {
-        data = mira_encrypt!256(data, key);
-    }
-
-    void decrypt(string key)
-    {
-        data = mira_decrypt!256(data, key);
-    }
-
     /**
     * Moves the position in the stream by the size of type T.
     *
     * Params:
-    *     T = The size of type to move the position by.
+    *   - `T`: The size of type to move the position by.
     */
     void step(T)()
     {
@@ -126,8 +115,8 @@ public:
     * Moves the position in the stream by the size of type T * elements.
     *
     * Params:
-    *     T = The size of type to move the position by.
-    *     count = The number of elements.
+    *   - `T`: The size of type to move the position by.
+    *   - `count`: The number of elements.
     */
     void step(T)(int count)
     {
@@ -139,8 +128,8 @@ public:
     * Does not work like a conventional seek, and will read type T from the stream, using that as the seek offset.
     *
     * Params:
-    *     T = The offset value for seeking.
-    *     SEEK = The direction of the seek operation (Start, Current, or End).
+    *   - `T`: The offset value for seeking.
+    *   - `SEEK`: The direction of the seek operation (Start, Current, or End).
     */
     void seek(T, Seek SEEK)()
         if (isIntegral!T)
@@ -163,7 +152,7 @@ public:
     * Reads the next value from the stream of type T.
     *
     * Params:
-    *     T = The type of data to be read.
+    *   - `T`: The type of data to be read.
     *
     * Returns:
     *   The value read from the stream.
@@ -176,14 +165,14 @@ public:
 
         scope(exit) step!T;
         T val = *cast(T*)(&data[position]);
-        return mira_decrypt!256(makeEndian!T(val, endianness), key);
+        return makeEndian!T(val, endianness), key;
     }
 
     /**
     * Peeks at the next value from the stream of type T without advancing the stream position.
     *
     * Params:
-    *     T = The type of data to peek.
+    *   - `T`: The type of data to peek.
     *
     * Returns:
     *   The value peeked from the stream.
@@ -195,14 +184,14 @@ public:
             return T.init;
 
         T val = *cast(T*)(&data[position]);
-        return mira_decrypt!256(makeEndian!T(val, endianness), key);
+        return makeEndian!T(val, endianness), key;
     }
 
     /**
     * Reads an array of type T from the stream.
     *
     * Params:
-    *     T = The type of data to be read.
+    *   - `T`: The type of data to be read.
     *
     * Returns:
     *   An array read from the stream.
@@ -220,7 +209,7 @@ public:
     * Peeks an array of type T from the stream without advancing the stream position.
     *
     * Params:
-    *     T = The type of data to peek.
+    *   - `T`: The type of data to peek.
     *
     * Returns:
     *   An array peeked from the stream.
@@ -237,8 +226,8 @@ public:
     * Writes the provided value to the stream.
     *
     * Params:
-    *     T = The type of data to be written.
-    *     val = The value to be written to the stream.
+    *   - `T`: The type of data to be written.
+    *   - `val`: The value to be written to the stream.
     */
     void write(T)(T val)
     {
@@ -246,30 +235,30 @@ public:
             return;
 
         scope(exit) step!T;
-        *cast(T*)(&data[position]) = mira_encrypt!256(makeEndian!T(val, endianness), key);
+        *cast(T*)(&data[position]) = makeEndian!T(val, endianness), key;
     }
 
     /**
     * Writes the provided value to the stream without advancing the stream position.
     *
     * Params:
-    *     T = The type of data to be written.
-    *     val = The value to be written to the stream.
+    *   - `T`: The type of data to be written.
+    *   - `val`: The value to be written to the stream.
     */
     void put(T)(T val)
     {
         if (data.length <= position)
             return;
 
-        *cast(T*)(&data[position]) = mira_encrypt!256(makeEndian!T(val, endianness), key);
+        *cast(T*)(&data[position]) = makeEndian!T(val, endianness), key;
     }
 
     /**
     * Reads multiple values of type T from the stream.
     *
     * Params:
-    *     T = The type of data to be read.
-    *     count = The number of values to read from the stream.
+    *   - `T`: The type of data to be read.
+    *   - `count`: The number of values to read from the stream.
     *
     * Returns:
     *   An array of values read from the stream.
@@ -286,8 +275,8 @@ public:
     * Peeks at multiple values of type T from the stream without advancing the stream position.
     *
     * Params:
-    *     T = The type of data to peek.
-    *     count = The number of values to peek from the stream.
+    *   - `T`: The type of data to peek.
+    *   - `count`: The number of values to peek from the stream.
     *
     * Returns:
     *   An array of values peeked from the stream.
@@ -303,8 +292,8 @@ public:
     * Writes multiple values of type T to the stream.
     *
     * Params:
-    *     T = The type of data to be written.
-    *     items = An array of values to be written to the stream.
+    *   - `T`: The type of data to be written.
+    *   - `items`: An array of values to be written to the stream.
     */
     void write(T, bool NOPREFIX = false)(T[] items)
     {
@@ -320,8 +309,8 @@ public:
     * Writes multiple values of type T to the stream without advancing the stream position.
     *
     * Params:
-    *     T = The type of data to be written.
-    *     items = An array of values to be written to the stream.
+    *   - `T`: The type of data to be written.
+    *   - `items`: An array of values to be written to the stream.
     */
     void put(T, bool NOPREFIX = false)(T[] items)
     {
@@ -334,8 +323,8 @@ public:
     * Reads a string from the stream considering the character width and prefixing.
     *
     * Params:
-    *     CHAR = The character type used for reading the string (char, wchar, or dchar).
-    *     PREFIXED = Indicates whether the string is prefixed. Default is false.
+    *   - `CHAR`: The character type used for reading the string (char, wchar, or dchar).
+    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
     *
     * Returns:
     *   The read string from the stream.
@@ -360,8 +349,8 @@ public:
     * Reads a string from the stream considering the character width and prefixing without advancing the stream position.
     *
     * Params:
-    *     CHAR = The character type used for reading the string (char, wchar, or dchar).
-    *     PREFIXED = Indicates whether the string is prefixed. Default is false.
+    *   - `CHAR`: The character type used for reading the string (char, wchar, or dchar).
+    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
     *
     * Returns:
     *   The read string from the stream.
@@ -378,9 +367,9 @@ public:
     * Writes a string to the stream considering the character width and prefixing.
     *
     * Params:
-    *     CHAR = The character type used for writing the string (char, wchar, or dchar).
-    *     PREFIXED = Indicates whether the string is prefixed. Default is false.
-    *     str = The string to be written to the stream.
+    *   - `CHAR`: The character type used for writing the string (char, wchar, or dchar).
+    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
+    *   - `str`: The string to be written to the stream.
     */
     void writeString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
@@ -395,9 +384,9 @@ public:
     * Writes a string into the stream considering the character width and prefixing without advancing the stream position.
     *
     * Params:
-    *     CHAR = The character type used for writing the string (char, wchar, or dchar).
-    *     PREFIXED = Indicates whether the string is prefixed. Default is false.
-    *     str = The string to be put into the stream.
+    *   - `CHAR`: The character type used for writing the string (char, wchar, or dchar).
+    *   - `PREFIXED`: Indicates whether the string is prefixed. Default is false.
+    *   - `str`: The string to be put into the stream.
     */
     void putString(CHAR, bool PREFIXED = false)(string str)
         if (is(CHAR == char) || is(CHAR == dchar) || is(CHAR == wchar))
@@ -435,7 +424,7 @@ public:
     * Writes an integer value encoded in 7 bits to the stream.
     *
     * Params:
-    *     val = The integer value to be written to the stream.
+    *   - `val`: The integer value to be written to the stream.
     */
     void write7EncodedInt(int val)
     {
@@ -455,8 +444,8 @@ public:
     * Reads a type from the stream using optional fields.
     *
     * Params:
-    *     T = The type to be read from the stream.
-    *     ARGS... = The arguments for optional fields.
+    *   - `T`: The type to be read from the stream.
+    *   - `ARGS...`: The arguments for optional fields.
     *
     * Returns:
     *   The read type read from the stream.

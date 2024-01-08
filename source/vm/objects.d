@@ -1,3 +1,4 @@
+/// Provides interface for C#/CLR objects & references
 module godwit.objects;
 
 import godwit.methodtable;
@@ -7,6 +8,7 @@ alias ObjectRef = BaseObject*;
 alias ObjectSoftRef = HollowObject*;
 alias ObjectHandle = uint*;
 
+/// Syncblock index & flags
 public struct ObjHeader
 {
 public:
@@ -30,16 +32,20 @@ public:
     mixin accessors;
 }
 
+/// Represents a C# Object
+/// Directly contains type info and syncblock index
 public struct BaseObject
 {
 public:
     ObjHeader m_objHeader;
     MethodTable* m_methodTable;
+    /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
     ubyte m_data;
 
     mixin accessors;
 }
 
+/// Arbitrary reference to object, namely used for interop
 public struct HollowObject
 {
 public:
