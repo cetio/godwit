@@ -76,4 +76,4 @@ Structures that don't accurately represent the original are okay, so long as it 
 
 ## License
 
-Godwit is released under the MPL-2 license.
+[MPL-2](/LICENSE.txt) 🎅🎅🎅
