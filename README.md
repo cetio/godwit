@@ -30,9 +30,9 @@ However, until Godwit is near completion, implementation flags will not be fully
 | `ConstructorInfo` | `godwit.method.*MethodDesc` |
 | `PropertyInfo` | `godwit.method.*MethodDesc` |
 | `RuntimeMethodHandle` | `godwit.method.*MethodDesc` |
-| `Delegate` | `godwit.stub.Stub` (TBD) |
-| `Action<T..>` | `godwit.stub.Stub` (TBD) |
-| `Func<T..>` | `godwit.stub.Stub` (TBD) |
+| `Delegate` | `godwit.stub.Stub` TBD |
+| `Action<T..>` | `godwit.stub.Stub` TBD |
+| `Func<T..>` | `godwit.stub.Stub` TBD |
 | `FieldInfo` | `godwit.field.FieldDesc` |
 | `RuntimeFieldHandle` | `godwit.field.FieldDesc` |
 | `Object` | `godwit.objects.BaseObject` |
