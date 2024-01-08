@@ -16,18 +16,30 @@ However, until Godwit is near completion, implementation flags will not be fully
 -----|--------|
 | `AppDomain` | `godwit.appdomain.AppDomain` |
 | `Assembly` | `godwit.assembly.Assembly` |
+| `AssemblyName` | `godwit.assemblyidentity.AssemblyIdentity` |
 | `Module` | `godwit.ceeload.Module` |
 | `Type` | `godwit.methodtable.MethodTable` |
+| `TypeInfo` | `godwit.methodtable.MethodTable` |
 | `TypeHandle` | `godwit.typehandle.TypeHandle` |
+| `MemberInfo` | TBD |
+| `ParameterInfo` | TBD |
+| `EventInfo` | TBD |
 | `MethodBase` | `godwit.method.*MethodDesc` |
+| `MethodBody` | `godwit.method.*MethodDesc` |
 | `MethodInfo` | `godwit.method.*MethodDesc` |
 | `ConstructorInfo` | `godwit.method.*MethodDesc` |
+| `PropertyInfo` | `godwit.method.*MethodDesc` |
 | `RuntimeMethodHandle` | `godwit.method.*MethodDesc` |
+| `Delegate` | `godwit.stub.Stub` (TBD) |
+| `Action<T..>` | `godwit.stub.Stub` (TBD) |
+| `Func<T..>` | `godwit.stub.Stub` (TBD) |
 | `FieldInfo` | `godwit.field.FieldDesc` |
 | `RuntimeFieldHandle` | `godwit.field.FieldDesc` |
 | `Object` | `godwit.objects.BaseObject` |
 | `Object*` | `godwit.objects.ObjectHandle` TBD |
+| `ObjectHandle->Missing` | `godwit.appdomain.AppDomain.hndMissing` |
 | `Exception` | `godwit.clrex.EXException` |
+| `ILGenerator` | `godwit.cil` |
 | `IL↑` | `godwit.corhdr` `godwit.cor` |
 | `IL↓` | `godwit.cil` |
 
