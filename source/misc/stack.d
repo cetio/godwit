@@ -4,8 +4,8 @@ module godwit.stack;
     Last In First Out
 
     ```d
-    [] -> push(1) push(2) -> [1, 2]
-    [1, 2] -> pop() -> [1]
+    [] -> push(1) push(2) -> [1, 2] // Order doesn't change between LIFO vs FILO
+    [1, 2] -> pop() -> [1] // Value pushed last gets popped
     ```
 */
 enum LIFO;
@@ -13,8 +13,8 @@ enum LIFO;
     First In Last Out
 
     ```d
-    [] -> push(1) push(2) -> [1, 2]
-    [1, 2] -> pop() -> [2]
+    [] -> push(1) push(2) -> [1, 2] // Order doesn't change between LIFO vs FILO
+    [1, 2] -> pop() -> [2] // Value pushed first gets popped
     ```
 */
 enum FILO;

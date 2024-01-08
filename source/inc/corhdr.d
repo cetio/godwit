@@ -1,39 +1,50 @@
+/// Provides interface to low level runtime type/token data.
 module godwit.corhdr;
 
 import godwit.state;
 
+/// ??? Runtime data.
 alias CritSecCookie = void*;
 
+/// Row ID, assigned to `uint`
 alias RID = uint;
+/// Base token, assigned to `uint`
 alias MDToken = uint;
+/// Half of an `MDToken`, contains the same data, used for types.
 alias HalfMDToken = ushort;
+/// Signature containing compressed data, usually.
 alias PCCOR_SIGNATURE = ubyte*;
 
+/// See `CorTokenType`
+/// 
+/// Base token, assigned to `uint`
 alias ModuleDef = uint;
-alias TypeRef = uint;
-alias TypeDef = uint;
-alias FieldDef = uint;
-alias MethodDef = uint;
-alias ParamDef = uint;
-alias InterfaceImpl = uint;
-alias CustomAttribute = uint;
-alias Permission = uint;
-alias SignatureDef = uint;
-alias Event = uint;
-alias Property = uint;
-alias MethodImpl = uint;
-alias ModuleRef = uint;
-alias TypeSpec = uint;
-alias AssemblyDef = uint;
-alias AssemblyRef = uint;
-alias File = uint;
-alias ExportedType = uint;
-alias ManifestResource = uint;
-alias NestedClass = uint;
-alias GenericParam = uint;
-alias MethodSpec = uint;
-alias GenericParamConstraint = uint;
+alias TypeRef = uint; /// ditto
+alias TypeDef = uint; /// ditto
+alias FieldDef = uint; /// ditto
+alias MethodDef = uint; /// ditto
+alias ParamDef = uint; /// ditto
+alias InterfaceImpl = uint; /// ditto
+alias CustomAttribute = uint; /// ditto
+alias Permission = uint; /// ditto
+alias SignatureDef = uint; /// ditto
+alias Event = uint; /// ditto
+alias Property = uint; /// ditto
+alias MethodImpl = uint; /// ditto
+alias ModuleRef = uint; /// ditto
+alias TypeSpec = uint; /// ditto
+alias AssemblyDef = uint; /// ditto
+alias AssemblyRef = uint; /// ditto
+alias File = uint; /// ditto
+alias ExportedType = uint; /// ditto
+alias ManifestResource = uint; /// ditto
+alias NestedClass = uint; /// ditto
+alias GenericParam = uint; /// ditto
+alias MethodSpec = uint; /// ditto
+alias GenericParamConstraint = uint; /// ditto
 
+/// ???
+/// Possibly for identifying CoreCLR PE data directory?
 public struct ImageDataDirectory 
 {
 public:
@@ -43,6 +54,7 @@ public:
     mixin accessors;
 }
 
+/// ???
 public struct RuntimeFunction
 {
 public:
@@ -52,6 +64,7 @@ public:
     mixin accessors;
 }
 
+/// Base tokens, used by the runtime for identifying stored structures
 enum CorTokenType : uint
 {
     ModuleDef = 0x00000000,
@@ -86,6 +99,7 @@ enum CorTokenType : uint
     BaseType             = 0x72000000
 }
 
+/// Base interface types, I'm not sure what these mean.
 enum CorInterfaceType : uint
 {
     Dual,
@@ -97,6 +111,7 @@ enum CorInterfaceType : uint
     IMarshal
 }
 
+/// SIMD/Vector object/type info used for all floating points.
 enum CorInfoHFAElemType : uint
 {
     None,
@@ -108,6 +123,7 @@ enum CorInfoHFAElemType : uint
     Unknown
 }
 
+/// Base types for all objects and types.
 enum CorElementType : ubyte
 {
     End = 0x0,
@@ -149,10 +165,8 @@ enum CorElementType : ubyte
 }
 
 // corbpriv.h
-//
-// Flags used to control the debuggable state of modules and
-// assemblies.
-//
+/// Flags used to control the debuggable state of modules and
+/// assemblies.
 public enum DebuggerAssemblyControlFlags
 {
     None = 0x00,

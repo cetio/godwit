@@ -1,3 +1,6 @@
+/// Provides functions for working with signatures and their data.
+///
+/// Very confusing, so some documentation may not be very helpful.
 module godwit.cor;
 
 import godwit.corhdr;
@@ -15,36 +18,101 @@ You can see the omitted functions at https://github.com/dotnet/runtime/blob/main
 
 public:
 static:
+/**
+    Converts a RID (Row IDentifier) to a token.
+
+    Params:
+    - `rid`: Row IDentifier.
+    - `tkType`: Type of the token.
+
+    Returns:
+        Token corresponding to the given RID and token type.
+*/
 RID RidToToken(RID rid, CorTokenType tkType)
 {
     return rid |= tkType;
 }
 
+/**
+    Constructs a token from a RID (Row IDentifier) and token type.
+
+    Params:
+    - `rid`: Row IDentifier.
+    - `tkType`: Type of the token.
+
+    Returns:
+        Token constructed from the given RID and token type.
+*/
 MDToken TokenFromRid(RID rid, CorTokenType tkType)
 {
     return rid | tkType;
 }
 
+/**
+    Extracts RID (Row IDentifier) from a token.
+
+    Params:
+    - `tk`: Token.
+
+    Returns:
+        Extracted RID from the given token.
+*/
 RID RidFromToken(MDToken tk)
 {
     return tk & 0x00ffffff;
 }
 
+/**
+    Retrieves the type portion from a token.
+
+    Params:
+    - `tk`: Token.
+
+    Returns:
+        Type portion from the given token.
+*/
 uint TypeFromToken(MDToken tk)
 {
     return tk & 0xff000000;
 }
 
+/**
+    Checks if a token is nil.
+
+    Params:
+    - `tk`: Token.
+
+    Returns:
+        True if the token is nil; otherwise, false.
+*/
 bool IsNilToken(MDToken tk)
 {
     return RidFromToken(tk) == 0;
 }
 
+/**
+    Checks if a `CorElementType` is a primitive type.
+
+    Params:
+    - `elemType`: `CorElementType` to be checked.
+
+    Returns:
+        True if `elemType` is a primitive type, otherwise, false.
+*/
 bool CorIsPrimitiveType(CorElementType elemType)
 {
     return elemType < CorElementType.Ptr || elemType == CorElementType.NInt || elemType == CorElementType.NUInt;
 }
 
+/**
+    Checks if a `CorElementType` is a modified element type
+
+    Params:
+    - `elemType`: `CorElementType` to be checked.
+
+    Returns:
+        True if `elementType` is a pointer, byref, or has any modifier set, otherwise, false.
+*/
 public bool CorIsModifierElementType(CorElementType elemType)
 {
     if (elemType == CorElementType.Ptr || elemType == CorElementType.ByRef)
@@ -53,6 +121,15 @@ public bool CorIsModifierElementType(CorElementType elemType)
     return (elemType & CorElementType.Modifier) != 0;
 }
 
+/**
+    Decompresses the size of the data of a signature.
+
+    Params:
+    - `pData`: Signature to have decompressed.
+
+    Returns:
+        Data size of `pData`.
+*/
 public uint CorSigUncompressedDataSize(PCCOR_SIGNATURE pData)
 {
     if ((pData[0] & 0x80) == 0)
@@ -64,6 +141,15 @@ public uint CorSigUncompressedDataSize(PCCOR_SIGNATURE pData)
     return 4;
 }
 
+/**
+    Decompresses big data from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+
+    Returns:
+        Decompressed big data from the signature.
+*/
 uint CorSigUncompressBigData(ref PCCOR_SIGNATURE pData)
 {
     uint res;
@@ -85,6 +171,15 @@ uint CorSigUncompressBigData(ref PCCOR_SIGNATURE pData)
     return res;
 }
 
+/**
+    Decompresses the data of a signature. (??)
+
+    Params:
+    - `pData`: Signature to have decompressed.
+
+    Returns:
+        4 byte data of `pData`.
+*/
 uint CorSigUncompressData(ref PCCOR_SIGNATURE pData)
 {
     // Handle smallest data inline.
@@ -94,6 +189,18 @@ uint CorSigUncompressData(ref PCCOR_SIGNATURE pData)
     return CorSigUncompressBigData(pData);
 }
 
+/**
+    Tries to decompress a signature entirely.
+
+    Params:
+    - `pData`: Signature to have decompressed.
+    - `len`: Length of `pData`.
+    - `dataOut`: Data out.
+    - `dataLen`: Data length??
+
+    Returns:
+        HResult for the success state of decompression.
+*/
 HResult CorSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, out uint dataLen)
 {
     const(ubyte)* pBytes = cast(const(ubyte)*)pData;
@@ -210,6 +317,16 @@ HResult CorSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, 
     }
 }
 
+/**
+    Decompresses the data of a signature.
+
+    Params:
+    - `pData`: Signature to have decompressed.
+    - `dataOut`: Data out.
+
+    Returns:
+        Length of `pData`.
+*/
 uint CorSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
 {
     uint dataLen = 0;
@@ -223,6 +340,15 @@ uint CorSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
     return dataLen;
 }
 
+/**
+    Decodes an encoded token and returns the token type.
+
+    Params:
+    - `encoded`: Encoded token.
+
+    Returns:
+        Token type of `encoded`.
+*/
 CorTokenType CorSigDecodeTokenType(int encoded)
 {
     if (encoded == 0)
@@ -237,6 +363,15 @@ CorTokenType CorSigDecodeTokenType(int encoded)
     return CorTokenType.BaseType;
 }
 
+/**
+   Decompresses a signature and returns the extracted token.
+
+    Params:
+    - `pData`: Signature to have decompressed.
+
+    Returns:
+        MDToken decompressed from `pData`.
+*/
 MDToken CorSigUncompressToken(ref PCCOR_SIGNATURE pData)
 {
     MDToken tk = CorSigUncompressData(pData);
@@ -245,6 +380,16 @@ MDToken CorSigUncompressToken(ref PCCOR_SIGNATURE pData)
     return TokenFromRid(tk >> 2, tkType);
 }
 
+/**
+    Decompresses a signature and returns the extracted token.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `tk`: MDToken output.
+
+    Returns:
+        Length of `pData`.
+*/
 uint CorSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
 {
     uint size = CorSigUncompressData(pData, tk);
@@ -254,6 +399,18 @@ uint CorSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
     return size;
 }
 
+/**
+    Tries to decompress a token from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `len`: Length of `pData`.
+    - `tk`: MDToken output.
+    - `tkLen`: Token length.
+
+    Returns:
+        HResult indicating the success state of decompression.
+*/
 HResult CorSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, out uint tkLen)
 {
     HResult hr = CorSigUncompressData(pData, len, tk, tkLen);
@@ -271,11 +428,31 @@ HResult CorSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, o
     return hr;
 }
 
+/**
+    Decompresses the calling convention of a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+
+    Returns:
+        Calling convention extracted from the signature.
+*/
 uint CorSigUncompressCallingConv(ref PCCOR_SIGNATURE pData)
 {
     return *pData++;
 }
 
+/**
+    Decompresses the calling convention of a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `dwLen`: Length of `pData`.
+    - `data`: Data output.
+
+    Returns:
+        HResult indicating the success state of decompression.
+*/
 HResult CorSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint data)
 {
     if (dwLen <= 0)
@@ -287,6 +464,16 @@ HResult CorSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint 
     return HResult.S_OK;
 }
 
+/**
+    Decompresses a signed integer from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `value`: Integer output.
+
+    Returns:
+        Length of `pData`.
+*/
 uint CorSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
 {
     uint data = 0;
@@ -315,17 +502,46 @@ uint CorSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
     return size;
 }
 
+/**
+    Decompresses an element type from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+
+    Returns:
+        Decompressed element type from the signature.
+*/
 CorElementType CorSigUncompressElementType(ref PCCOR_SIGNATURE pData)
 {
     return cast(CorElementType)*pData++;
 }
 
+/**
+    Decompresses an element type from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `elemType`: Element type output.
+
+    Returns:
+        Length of `pData`.
+*/
 uint CorSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType elemType)
 {
     elemType = cast(CorElementType)(*pData & 0x7f);
     return 1;
 }
 
+/**
+    Decompresses a pointer from a signature.
+
+    Params:
+    - `pData`: Signature to be decompressed.
+    - `ptr`: Pointer output.
+
+    Returns:
+        Length of `pData`.
+*/
 uint CorSigUncompressPointer(PCCOR_SIGNATURE pData, out void* ptr)
 {
     ptr = *cast(void**)pData;
