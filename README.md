@@ -1,5 +1,8 @@
 # Godwit
 
+[![License](https://img.shields.io/badge/License-MPL--2-blue)](#license)
+[![Build - Intangible](https://img.shields.io/badge/Build-Intangible-informational)](https://)
+
 D-CoreCLR interop library, intended to allow D and other bound languages to interact with C# programs without any explicit back and forth between the languages. This is achieved by directly translating CoreCLR structures and code into D.
 
 As of present, the interacting language must be initialized by C#, due to the constraint of not knowing where the `AppDomain` is located in memory.
@@ -50,6 +53,8 @@ TBD
 ## Documentation
 
 TBD
+
+Some functions have had ddocs documentation made for them, but not nearly close to completion.
 
 ## Contributions
 
