@@ -1,3 +1,4 @@
+/// Provides interface to ABI specific assembly templates & easy assembly templates
 module godwit.abi;
 
 import std.conv;

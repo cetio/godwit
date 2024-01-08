@@ -1,3 +1,4 @@
+/// Provides interface for coreclr.binder
 module godwit.binder;
 
 public import godwit.applicationcontext;

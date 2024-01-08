@@ -1,3 +1,4 @@
+/// Provides interface for coreclr.inc
 module godwit.inc;
 
 public import godwit.arraylist;

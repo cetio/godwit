@@ -1,3 +1,4 @@
+/// Provides interface for coreclr.gc
 module godwit.gc;
 
 public import godwit.gcdesc;

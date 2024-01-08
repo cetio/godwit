@@ -1,3 +1,4 @@
+/// Provides interface for coreclr.vm
 module godwit.vm;
 
 public import godwit.appdomain;

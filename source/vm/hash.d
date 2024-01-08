@@ -22,14 +22,14 @@ public:
         SingleUser
     }
 
-    // compare object to be used in lookup
+    /// Compare object to be used in lookup
     Compare* m_compare;
-    // current size (index into prime array)
+    /// Current size (index into prime array)
     size_t m_primeIndex;
-    // array of buckets
+    /// Array of buckets
     Bucket* m_buckets;
     size_t m_prevSlotsInUse;
-    // track the number of inserts and deletes
+    /// Track the number of inserts and deletes
     size_t m_inserts;
     size_t m_deletes;
     Mode m_mode;
@@ -43,18 +43,25 @@ public:
     mixin accessors;
 }
 
+/// Bucket acting as a dictionary with keys and values
+///
+/// Arbitrarily sized, but must be at least length 4
 public struct Bucket
 {
 public:
+    /// Bucket keys
     uint*[4] m_keys;
+    /// Bucket values
     uint*[4] m_values;
 
     mixin accessors;
 }
 
+/// Wrapper for comparisons, contains a function pointer to a comparer
 public struct Compare
 {
 public:
+    /// Comparer function, to compare 2 objects (may be changed with op_x?)
     extern(C) bool function(uint*, uint*) m_fn;
 
     mixin accessors;

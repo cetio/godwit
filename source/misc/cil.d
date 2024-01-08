@@ -1,3 +1,5 @@
+/// CIL/IL assembly, diassembly, and execution support
+// TODO: execution support
 module godwit.cil;
 
 import std.stdio;
@@ -7,8 +9,12 @@ import std.string;
 import std.format;
 import godwit.stream;
 
+/**
+ * A map that holds CIL instructions as strings and their corresponding bytecode representations as arrays of bytes.
+ */
 const ubyte[][string] instructions;
 
+// Initializes instructions
 static this()
 {
     instructions = [
@@ -241,6 +247,15 @@ static this()
     ];
 }
 
+/**
+ * Assembles a string of CIL instructions into their corresponding bytecode representation.
+ *
+ * Params:
+ *   - `str`: The string containing CIL instructions to be assembled.
+ *
+ * Returns:
+ *   An array of bytes representing the assembled bytecode.
+ */
 ubyte[] assemble(string str)
 {
     ubyte[] assembly;
@@ -416,6 +431,15 @@ ubyte[] assemble(string str)
     return assembly;
 }
 
+/**
+ * Disassembles an array of bytes representing CIL bytecode into a human-readable string of CIL instructions.
+ *
+ * Params:
+ *   - `bytes`: An array of bytes representing the CIL bytecode.
+ *
+ * Returns:
+ *   A string containing the disassembled CIL instructions.
+ */
 string disassemble(ubyte[] bytes)
 {
     string disassembly;

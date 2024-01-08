@@ -6,6 +6,16 @@ import godwit.corhdr;
 import godwit.ceeload;
 import godwit.state;
 
+/**
+   TypeDesc is a discriminated union of all types that can not be directly
+   represented by a simple MethodTable*.   The discrimintor of the union at the present
+   time is the CorElementType numeration.  The subclass of TypeDesc are
+   the possible variants of the union.
+
+
+   ParamTypeDescs only include byref, array and pointer types.  They do NOT
+   include instantiations of generic types, which are represented by MethodTables.
+*/
 public struct TypeDesc
 {
 public:
@@ -26,6 +36,11 @@ public:
     mixin accessors;
 }
 
+/** 
+    This variant is used for parameterized types that have exactly one argument type. 
+ 
+    This includes arrays, byrefs, pointers.
+ */
 public struct ParamTypeDesc
 {
     TypeDesc typeDesc;
@@ -38,6 +53,14 @@ public:
     mixin accessors;
 }
 
+/** 
+ * These are for verification of generic code and reflection over generic code.
+ * 
+ * Each TypeVarTypeDesc represents a class or method type variable, as specified by a GenericParam entry.
+ * 
+ * The type variables are tied back to the class or method that *defines* them.
+ * This is done through typedef or methoddef tokens.
+ */
 public struct TypeVarTypeDesc
 {
     TypeDesc typeDesc;
@@ -55,15 +78,21 @@ public:
     mixin accessors;
 }
 
+/** 
+ * Represents a function pointer type, such as a delegate
+ */
 public struct FnPtrTypeDesc
 {
     TypeDesc typeDesc;
     alias typeDesc this;
 
 public:
+    /// Number of arguments
     uint m_numArgs;
+    /// Calling convention
     uint m_callingConv;
-    TypeHandle[] m_types;
+    /// Types of the function pointer
+    TypeHandle[] m_types; 
 
     mixin accessors;
 }
