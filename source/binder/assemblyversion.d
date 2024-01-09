@@ -1,6 +1,6 @@
 module godwit.assemblyversion;
 
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct AssemblyVersion
 {

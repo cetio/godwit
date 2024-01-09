@@ -3,7 +3,7 @@ module godwit.rcwrefcache;
 import godwit.appdomain;
 import godwit.qtempls;
 import godwit.objects;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct RCWRefCache
 {

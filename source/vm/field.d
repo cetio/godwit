@@ -2,7 +2,7 @@ module godwit.field;
 
 import std.bitmanip;
 import godwit.corhdr;
-import godwit.collections.state;
+import godwit.mem.state;
 
 /// Field descriptor, equivalent to `System.Runtime.FieldInfo`
 /// 

@@ -3,7 +3,7 @@ module godwit.peassembly;
 import godwit.peimage;
 import godwit.assemblybinder;
 import godwit.bspace;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct PEAssembly
 {

@@ -1,7 +1,7 @@
 module godwit.typectxt;
 
 import godwit.typehandle;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct SigTypeContext
 {

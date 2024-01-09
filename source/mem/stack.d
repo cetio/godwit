@@ -1,5 +1,5 @@
 /// Wrapper for stack arrays & interface for popping/pushing on arrays with support for LIFO and FILO
-module godwit.collections.stack;
+module godwit.mem.stack;
 
 /**
     Last In First Out

@@ -5,7 +5,7 @@ import godwit.sbuffer;
 import godwit.peimagelayout;
 import godwit.bundle;
 import godwit.simplerwlock;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct PEImage
 {

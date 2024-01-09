@@ -5,7 +5,7 @@ import godwit.loaderheap;
 import godwit.methodtable;
 import godwit.method;
 import godwit.shash;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct ILStubHashBlobBase
 {

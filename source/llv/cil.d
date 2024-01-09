@@ -5,7 +5,7 @@ module godwit.llv.cil;
 import std.conv;
 import std.string;
 import std.format;
-import godwit.collections;
+import godwit.mem;
 import std.algorithm;
 
 public class CILGen
