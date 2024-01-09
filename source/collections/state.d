@@ -117,7 +117,7 @@ T clearMask(T)(T value, T mask)
 * Returns:
 *     A string representing the flag members set in the value.
 */
-string toString(T)(T value)
+string toString(T)(T value) const
 {
     foreach (string member; __traits(allMembers, T))
     {

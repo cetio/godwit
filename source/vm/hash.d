@@ -62,7 +62,7 @@ public struct Compare
 {
 public:
     /// Comparer function, to compare 2 objects (may be changed with op_x?)
-    extern(C) bool function(uint*, uint*) m_fn;
+    bool function(uint*, uint*) m_fn;
 
-    //mixin accessors;
+    mixin accessors;
 }
