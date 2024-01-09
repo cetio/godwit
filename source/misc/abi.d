@@ -82,7 +82,7 @@ const uint xmm15 = 103;
 const string[uint] register;
 const string[][uint] pair;
 
-static this()
+shared static this()
 {
     register = [ 
         eax: "EAX",
@@ -185,7 +185,7 @@ public template mov(uint ID, alias VAR, AS = void, bool REUSE = false)
         alias T = AS;
 
     static if (ID >= eax)
-        const string mov()
+        string mov()
         {
             static if (isFloat!T)
             {
