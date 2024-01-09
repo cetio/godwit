@@ -7,8 +7,8 @@ import godwit.stub;
 import godwit.typehandle;
 import godwit.corhdr;
 import godwit.objects;
-import godwit.packedfields;
-import godwit.state;
+import godwit.formats.packedfields;
+import godwit.collections.state;
 
 public struct CCWTemplate
 {

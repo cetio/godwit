@@ -8,7 +8,7 @@ import godwit.peimagelayout;
 import godwit.corhdr;
 import godwit.crst;
 import godwit.shash;
-import godwit.state;
+import godwit.collections.state;
 
 public struct NativeImage
 {

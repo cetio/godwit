@@ -1,6 +1,6 @@
 module godwit.memorypool;
 
-import godwit.state;
+import godwit.collections.state;
 
 public struct PoolElement
 {

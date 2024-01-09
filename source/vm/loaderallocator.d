@@ -6,7 +6,7 @@ import godwit.crst;
 import godwit.fptrstubs;
 import godwit.stringliteralmap;
 import godwit.objects;
-import godwit.state;
+import godwit.collections.state;
 
 public struct LoaderAllocator
 {

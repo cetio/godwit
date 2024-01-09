@@ -1,7 +1,7 @@
 module godwit.mngstdinterfaces;
 
 import godwit.sbuffer;
-import godwit.state;
+import godwit.collections.state;
 
 public struct MngStdInterfacesInfo
 {

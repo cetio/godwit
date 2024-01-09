@@ -1,6 +1,6 @@
 module godwit.crst;
 
-import godwit.state;
+import godwit.collections.state;
 
 public struct CrstBase
 {

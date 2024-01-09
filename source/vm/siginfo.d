@@ -3,7 +3,7 @@ module godwit.siginfo;
 import godwit.corhdr;
 import godwit.typectxt;
 import godwit.ceeload;
-import godwit.state;
+import godwit.collections.state;
 
 public struct Signature
 {

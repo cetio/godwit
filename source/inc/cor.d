@@ -4,7 +4,7 @@
 module godwit.cor;
 
 import godwit.corhdr;
-import godwit.state;
+import godwit.collections.state;
 
 /*
 This file does not include any compression, only decompression

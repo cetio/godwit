@@ -1,7 +1,7 @@
 module godwit.inlinetracking;
 
 import godwit.ceeload;
-import godwit.state;
+import godwit.collections.state;
 
 public struct PersistentInlineTrackingMapR2R
 {

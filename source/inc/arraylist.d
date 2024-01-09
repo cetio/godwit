@@ -1,6 +1,6 @@
 module godwit.arraylist;
 
-import godwit.state;
+import godwit.collections.state;
 
 public struct ArrayListBlock
 {

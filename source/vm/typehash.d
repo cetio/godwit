@@ -3,7 +3,7 @@ module godwit.typehash;
 
 import godwit.dacenumerablehash;
 import godwit.loaderallocator;
-import godwit.state;
+import godwit.collections.state;
 
 /**
  * Represents an entry within the EETypeHash, chaining together (hash, data) pairs.

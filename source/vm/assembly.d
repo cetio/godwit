@@ -8,7 +8,7 @@ import godwit.appdomain;
 import godwit.clsload;
 import godwit.arraylist;
 import godwit.corhdr;
-import godwit.state;
+import godwit.collections.state;
 
 // Equivalent to System.Runtime.Assembly.
 public struct Assembly

@@ -3,7 +3,7 @@ module godwit.codeman;
 import godwit.loaderheap;
 import godwit.crst;
 import godwit.loaderallocator;
-import godwit.state;
+import godwit.collections.state;
 
 public struct FreeBlock
 {

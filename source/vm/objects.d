@@ -2,7 +2,7 @@
 module godwit.objects;
 
 import godwit.methodtable;
-import godwit.state;
+import godwit.collections.state;
 
 alias ObjectRef = BaseObject*;
 alias ObjectSoftRef = HollowObject*;

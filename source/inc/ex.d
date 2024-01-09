@@ -1,6 +1,6 @@
 module godwit.ex;
 
-import godwit.state;
+import godwit.collections.state;
 
 public struct EXException
 {

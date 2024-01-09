@@ -2,7 +2,7 @@ module godwit.peimagelayout;
 
 import godwit.peimage;
 import godwit.corhdr;
-import godwit.state;
+import godwit.collections.state;
 
 public struct PEImageLayout
 {

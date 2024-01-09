@@ -1,7 +1,7 @@
 module godwit.readytorun;
 
 import godwit.corhdr;
-import godwit.state;
+import godwit.collections.state;
 
 public struct ReadyToRunCoreHeader
 {
