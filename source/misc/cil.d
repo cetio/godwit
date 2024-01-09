@@ -2,12 +2,39 @@
 // TODO: execution support
 module godwit.cil;
 
-import std.stdio;
-import std.algorithm;
 import std.conv;
 import std.string;
 import std.format;
 import godwit.stream;
+import godwit.stack;
+import std.algorithm;
+
+public class CILGen
+{
+private:
+    Stack!ptrdiff_t stack = new Stack!ptrdiff_t();
+    ubyte[] code;
+
+public:
+    void emit(string str)
+    {
+        code ~= assemble(str);
+    }
+
+    void reset()
+    {
+        code = null;
+    }
+
+    ptrdiff_t run()
+    {
+        foreach (b; code)
+        {
+            
+        }
+        return -1;
+    }
+}
 
 /**
  * A map that holds CIL instructions as strings and their corresponding bytecode representations as arrays of bytes.
@@ -15,7 +42,7 @@ import godwit.stream;
 const ubyte[][string] instructions;
 
 // Initializes instructions
-static this()
+shared static this()
 {
     instructions = [
         "add": [0x58],
@@ -256,7 +283,7 @@ static this()
  * Returns:
  *   An array of bytes representing the assembled bytecode.
  */
-ubyte[] assemble(string str)
+@trusted ubyte[] assemble(string str)
 {
     ubyte[] assembly;
     const string[string] prefixes = [
@@ -440,7 +467,7 @@ ubyte[] assemble(string str)
  * Returns:
  *   A string containing the disassembled CIL instructions.
  */
-string disassemble(ubyte[] bytes)
+@trusted string disassemble(ubyte[] bytes)
 {
     string disassembly;
     string prefix;

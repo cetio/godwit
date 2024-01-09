@@ -33,7 +33,7 @@ public:
         TypeFlags, "m_typeFlags", 24
     ));
 
-    mixin accessors;
+    //mixin accessors;
 }
 
 /** 

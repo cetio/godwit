@@ -1,3 +1,4 @@
+/// Wrapper for stack arrays & interface for popping/pushing on arrays with support for LIFO and FILO
 module godwit.stack;
 
 /**
@@ -71,8 +72,7 @@ static:
 pure @nogc @trusted U pop(O = LIFO, T : U[], U)(ref T arr)
     if (is(O == LIFO) || is(O == FILO))
 {
-    if (arr.empty)
-        throw new RangeError("Cannot pop from an empty stack");
+    assert(arr.length == 0, "Cannot pop from an empty stack");
 
     static if (is(O == LIFO))
     {

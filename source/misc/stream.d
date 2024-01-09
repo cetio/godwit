@@ -69,7 +69,6 @@ public:
     ubyte[] data;
     ulong position;
     Endianness endianness;
-    string key;
 
     this(ubyte[] data, Endianness endianness = Endianness.Native)
     {
@@ -165,7 +164,7 @@ public:
 
         scope(exit) step!T;
         T val = *cast(T*)(&data[position]);
-        return makeEndian!T(val, endianness), key;
+        return makeEndian!T(val, endianness);
     }
 
     /**
@@ -184,7 +183,7 @@ public:
             return T.init;
 
         T val = *cast(T*)(&data[position]);
-        return makeEndian!T(val, endianness), key;
+        return makeEndian!T(val, endianness);
     }
 
     /**
@@ -235,7 +234,7 @@ public:
             return;
 
         scope(exit) step!T;
-        *cast(T*)(&data[position]) = makeEndian!T(val, endianness), key;
+        *cast(T*)(&data[position]) = makeEndian!T(val, endianness);
     }
 
     /**
