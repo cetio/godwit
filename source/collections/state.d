@@ -139,7 +139,7 @@ string toString(T)(T value) const
 /// Assumes standardized prefixes! (m_ for backing fields, k for masked enum values)
 /// Assumes standardized postfixes! (MASK or Mask for masks)
 // TODO: Overloads (allow devs to write specifically a get/set and have the counterpart auto generated)
-//       Bitfield exemption?
+//       ~Bitfield exemption?~
 //       Conditional get/sets? (check flag -> return a default) (default attribute?)
 //       Flag get/sets from pre-existing get/sets (see methodtable.d relatedTypeKind)
 //       Auto import types (generics!!)
@@ -180,9 +180,9 @@ public template accessors()
                                 {
                                     static if (!__traits(hasMember, typeof(this), "is"~flag[1..$]))
                                     {
-                                        // @property bool iskEastern()...
+                                        // @property bool isEastern()...
                                         mixin("@property bool is"~flag[1..$]~"() { return ("~member[2..$]~" & "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~mask~") == "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~"; }");
-                                        // @property bool iskEastern(bool state)...
+                                        // @property bool isEastern(bool state)...
                                         mixin("@property bool is"~flag[1..$]~"(bool state) { return ("~member[2..$]~" = cast("~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~")(state ? ("~member[2..$]~" & "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~mask~") | "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~" : ("~member[2..$]~" & "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~mask~") & ~"~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~")) == "~fullyQualifiedName!(typeof(__traits(getMember, this, member)))~"."~flag~"; }");
                                     }
                                 }
