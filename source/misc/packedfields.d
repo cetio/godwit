@@ -18,7 +18,7 @@ public:
     * Returns:
     *   The value of the unpacked field at the specified index.
     */
-    uint GetUnpackedField(uint dwFieldIndex)
+    uint getUnpackedField(uint dwFieldIndex)
     {
         return (cast(uint*)&this)[dwFieldIndex];
     }
@@ -34,19 +34,19 @@ public:
     * Returns:
     *   The value of the packed field at the specified index.
     */
-    uint GetPackedField(uint dwFieldIndex)
+    uint getPackedField(uint dwFieldIndex)
     {
         // Calculate the offset and length of the packed field.
-        uint dwOffset = CalculateOffset(dwFieldIndex);
-        uint dwFieldLength = BitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
+        uint dwOffset = calculateOffset(dwFieldIndex);
+        uint dwFieldLength = bitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
 
         // Extract and return the packed field value.
-        return BitVectorGet(dwOffset + MAX_LENGTH_BITS, dwFieldLength);
+        return bitVectorGet(dwOffset + MAX_LENGTH_BITS, dwFieldLength);
     }
 
 private:
     const int MAX_LENGTH_BITS = 5;
-    const int BITS_PER_uint = 32;
+    const int BITS_PER_UINT = 32;
 
     /**
     * Calculate the offset of a field within the bit vector.
@@ -59,11 +59,11 @@ private:
     * Returns:
     *   The offset of the specified field within the bit vector.
     */
-    private uint CalculateOffset(uint dwFieldIndex)
+    uint calculateOffset(uint dwFieldIndex)
     {
         uint dwOffset = 0;
         for (uint i = 0; i < dwFieldIndex; i++)
-            dwOffset += MAX_LENGTH_BITS + BitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
+            dwOffset += MAX_LENGTH_BITS + bitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
 
         return dwOffset;
     }
@@ -80,11 +80,11 @@ private:
     * Returns:
     *   The extracted value from the bit vector.
     */
-    private uint BitVectorGet(uint dwOffset, uint dwLength)
+    uint bitVectorGet(uint dwOffset, uint dwLength)
     {
-        uint dwValueShift = dwOffset % BITS_PER_uint;
+        uint dwValueShift = dwOffset % BITS_PER_UINT;
         uint dwValueMask = (1 << dwLength) - 1 << dwValueShift;
 
-        return ((cast(uint*)&this)[dwOffset / BITS_PER_uint] & dwValueMask) >> dwValueShift;
+        return ((cast(uint*)&this)[dwOffset / BITS_PER_UINT] & dwValueMask) >> dwValueShift;
     }
 }
