@@ -74,6 +74,8 @@ I've labeled all files and classes according to how they were named in the CoreC
 
 Structures that don't accurately represent the original are okay, so long as it doesn't have any detriment, but I personally prefer to keep things as close to the original as possible.
 
+NO DEPENDENCIES
+
 ## License
 
 [MPL-2](/LICENSE.txt) 🎅🎅🎅
