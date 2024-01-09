@@ -179,9 +179,9 @@ pure @trusted void swap(O = LIFO, T : U[], U)(ref T arr)
 
     static if (is(O == LIFO))
     {
-        arr[$ - 1] = arr[$ - 1] ^ arr[$ - 2];
-        arr[$ - 2] = arr[$ - 1] ^ arr[$ - 2];
-        arr[$ - 1] = arr[$ - 1] ^ arr[$ - 2];
+        arr[$-1] = arr[$-1] ^ arr[$-2];
+        arr[$-2] = arr[$-1] ^ arr[$-2];
+        arr[$-1] = arr[$-1] ^ arr[$-2];
     }
     else
     {
@@ -207,7 +207,6 @@ pure nothrow @trusted void push(T : U[], U)(ref T arr, U val)
 unittest 
 {
     {
-        // Explicit stack (LIFO)
         Stack!int stack;
         stack.push(7);
         stack.push(13);
@@ -216,7 +215,6 @@ unittest
     }
 
     {
-        // Explicit stack (FILO)
         Stack!(int, FILO) stack;
         stack.push(7);
         stack.push(13);
@@ -225,7 +223,6 @@ unittest
     }
 
     {
-        // Implicit stack (array)
         int[] arr;
         arr ~= 1;
         arr ~= 2;
@@ -235,5 +232,18 @@ unittest
         assert(arr.pop!FILO() == 2);
         assert(arr.pop() == 4);
         assert(arr.pop!LIFO() == 3);
+    }
+
+    {
+        Stack!int stack;
+        stack.push(5);
+        stack.push(10);
+        assert(stack.length() == 2);
+
+        assert(stack.dup() == 10);
+
+        stack.swap();
+        assert(stack.pop() == 5);
+        assert(stack.pop() == 10);
     }
 }

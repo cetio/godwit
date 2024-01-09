@@ -4,7 +4,7 @@ import core.sys.windows.windows;
 import core.sys.windows.windef : HINSTANCE, BOOL, DWORD, LPVOID;
 import core.sys.windows.dll;
 import godwit.vm;
-import godwit.collections.stack;
+import godwit.collections;
 import std.stdio;
 
 static AppDomain* appDomain;
@@ -14,7 +14,6 @@ extern(Windows)
 BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
 {
     onInitialize = &test;
-    
     import core.sys.windows.winnt;
     import core.sys.windows.dll :
         dll_process_attach, dll_process_detach,

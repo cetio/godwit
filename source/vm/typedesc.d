@@ -28,12 +28,13 @@ public:
         HasTypeEquivalence = 0x00004000
     }
 
+    // For whatever reason, we can't generate accessors for typeFlags
     mixin(bitfields!(
         CorElementType, "m_elemType", 8,
-        TypeFlags, "m_typeFlags", 24
+        uint, "typeFlags", 24
     ));
 
-    //mixin accessors;
+    mixin accessors;
 }
 
 /** 

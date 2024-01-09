@@ -1,3 +1,5 @@
+/* 
+Not sure what will happen with this, it'd be horribly annoying to implement (maybe?)
 module godwit.lure;
 
 import std.stdio : writef, write, writeln;
@@ -117,4 +119,4 @@ extern (C) export void dumpStack()
         stackData ~= [offset.to!string, (*stackPtr).to!string];
 
     printTable(stackData);
-}
+} */
