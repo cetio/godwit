@@ -4,7 +4,7 @@ import godwit.crst;
 import godwit.typehandle;
 import godwit.ex;
 import godwit.typekey;
-import godwit.state;
+import godwit.collections.state;
 
 public struct PendingTypeLoadEntry
 {

@@ -3,7 +3,7 @@ module godwit.stringliteralmap;
 import godwit.memorypool;
 import godwit.appdomain;
 import godwit.eehash;
-import godwit.state;
+import godwit.collections.state;
 
 public struct StringLiteralMap
 {

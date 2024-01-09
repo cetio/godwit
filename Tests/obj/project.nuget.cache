@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4BvJJU2hf5L4TJYGzlUuQzKQbsp9xe4wGiGdrbGWiOdQ2SsM7I8QWv6aEEBGkRfhDmm1znEYcUTZyPJ3XClqfA==",
+  "dgSpecHash": "y/pfE4nDFi2UdNquW8PyZLYSyMByTkAwPBzQq8SxrucPgaQSNycxCShDCYOqVHOtFE7AaH+yfOoY7KqDpuOX9Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\stake\\.nuget\\packages\\dllexport\\1.7.4\\dllexport.1.7.4.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

@@ -3,7 +3,7 @@ module godwit.instmethhash;
 import godwit.dacenumerablehash;
 import godwit.loaderallocator;
 import godwit.method;
-import godwit.state;
+import godwit.collections.state;
 
 public struct InstMethodHashEntry
 {

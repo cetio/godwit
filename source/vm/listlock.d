@@ -4,7 +4,7 @@ import godwit.codeversioning;
 import godwit.crst;
 import godwit.threads;
 import godwit.loaderallocator;
-import godwit.state;
+import godwit.collections.state;
 
 alias ListLock = ListLockBase!uint*;
 alias JitListLock = ListLockBase!NativeCodeVersion;

@@ -3,7 +3,7 @@ module godwit.stub;
 import godwit.method;
 import godwit.ceeload;
 import godwit.siginfo;
-import godwit.state;
+import godwit.collections.state;
 
 public struct UMThunkMarshInfo
 {

@@ -1,105 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
-      "DllExport/1.7.4": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard1.1/_._": {}
-        },
-        "runtime": {
-          "lib/netstandard1.1/_._": {}
-        }
-      },
-      "Prawn/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "DllExport": "1.7.4"
-        },
-        "compile": {
-          "bin/placeholder/Prawn.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Prawn.dll": {}
-        }
-      }
-    }
+    "net6.0": {}
   },
-  "libraries": {
-    "DllExport/1.7.4": {
-      "sha512": "Uw00IwE/UoJV1faJCasNXpnR3DVa/0dbKjLNS1zNinu4FehQP3y88akvoky1pAjcU6b06cu1BkG9E1IFiV+6xA==",
-      "type": "package",
-      "path": "dllexport/1.7.4",
-      "hasTools": true,
-      "files": [
-        ".gitattributes",
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "3rd-party.txt",
-        "DllExport.bat",
-        "License.txt",
-        "Readme.md",
-        "build_info.txt",
-        "changelog.txt",
-        "dllexport.1.7.4.nupkg.sha512",
-        "dllexport.nuspec",
-        "hMSBuild.bat",
-        "lib/net20/_._",
-        "lib/netstandard1.1/_._",
-        "tools/Conari.dll",
-        "tools/Conari.xml",
-        "tools/Microsoft.Build.Framework.dll",
-        "tools/Microsoft.Build.Utilities.v4.0.dll",
-        "tools/Microsoft.Build.dll",
-        "tools/Mono.Cecil.dll",
-        "tools/Mono.Cecil.pdb",
-        "tools/MvsSln.dll",
-        "tools/MvsSln.pdb",
-        "tools/MvsSln.xml",
-        "tools/NSBin.dll",
-        "tools/NSBin.pdb",
-        "tools/PeViewer.exe",
-        "tools/PeViewer.pdb",
-        "tools/RGiesecke.DllExport.MSBuild.dll",
-        "tools/RGiesecke.DllExport.MSBuild.pdb",
-        "tools/RGiesecke.DllExport.dll",
-        "tools/RGiesecke.DllExport.pdb",
-        "tools/coreclr/.version.txt",
-        "tools/coreclr/LICENSE.TXT",
-        "tools/coreclr/PATENTS.TXT",
-        "tools/coreclr/README.md",
-        "tools/coreclr/changelog.txt",
-        "tools/coreclr/clrgc.dll",
-        "tools/coreclr/coreclr.dll",
-        "tools/coreclr/ilasm.exe",
-        "tools/coreclr/ildasm.exe",
-        "tools/coreclr/ildasmrc.dll",
-        "tools/coreclr/mscordaccore.dll",
-        "tools/coreclr/mscordbi.dll",
-        "tools/gnt.bat",
-        "tools/hMSBuild.bat",
-        "tools/init.ps1",
-        "tools/net.r_eg.DllExport.Wizard.dll",
-        "tools/net.r_eg.DllExport.Wizard.pdb",
-        "tools/net.r_eg.DllExport.Wizard.targets",
-        "tools/net.r_eg.DllExport.targets",
-        "tools/raw/lib/net20/DllExport.dll",
-        "tools/raw/lib/net20/DllExport.xml",
-        "tools/raw/lib/netstd/DllExport.dll",
-        "tools/raw/lib/netstd/DllExport.xml"
-      ]
-    },
-    "Prawn/1.0.0": {
-      "type": "project",
-      "path": "../Prawn/Prawn.csproj",
-      "msbuildProject": "../Prawn/Prawn.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net7.0": [
-      "Prawn >= 1.0.0"
-    ]
+    "net6.0": []
   },
   "packageFolders": {
     "C:\\Users\\stake\\.nuget\\packages\\": {}
@@ -114,24 +20,18 @@
       "outputPath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\stake\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\stake\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "projectReferences": {
-            "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Prawn\\Prawn.csproj": {
-              "projectPath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Prawn\\Prawn.csproj"
-            }
-          }
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -141,8 +41,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "imports": [
           "net461",
           "net462",
@@ -159,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
       }
     }
   }

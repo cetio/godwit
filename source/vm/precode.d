@@ -1,7 +1,7 @@
 /// Represents precode/prologue data for methods
 module godwit.precode;
 
-import godwit.state;
+import godwit.collections.state;
 
 /// Method prologue data structure, effectively just a byte array
 public struct Precode

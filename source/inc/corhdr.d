@@ -1,7 +1,7 @@
 /// Provides interface to low level runtime type/token data.
 module godwit.corhdr;
 
-import godwit.state;
+import godwit.collections.state;
 
 /// ??? Runtime data.
 alias CritSecCookie = void*;

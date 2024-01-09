@@ -2,7 +2,7 @@ module godwit.typehandle;
 
 import godwit.methodtable;
 import godwit.typedesc;
-import godwit.state;
+import godwit.collections.state;
 
 /**
  * A TypeHandle is the FUNDAMENTAL concept of type identity in the CLR.

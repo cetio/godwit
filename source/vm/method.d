@@ -3,7 +3,7 @@ module godwit.method;
 import std.bitmanip;
 import godwit.methodtable;
 import godwit.methodimpl;
-import godwit.state;
+import godwit.collections.state;
 
 public struct MethodDescChunk
 {

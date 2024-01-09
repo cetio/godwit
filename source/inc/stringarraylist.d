@@ -1,7 +1,7 @@
 module godwit.stringarraylist;
 
 import godwit.arraylist;
-import godwit.state;
+import godwit.collections.state;
 
 public struct StringArrayList
 {

@@ -1,24 +1,17 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Text;
-using System.Linq;
 
 #if DEBUG
-[DllImport("C:\\Users\\cet\\source\\repos\\godwit\\godwit\\x64\\Debug\\godwit.dll")]
+[DllImport(@"C:\Users\stake\Documents\source\repos\godwit\godwit.dll")]
 #else
-        [DllImport("godwit.dll")]
+[DllImport("godwit.dll")]
 #endif
-static extern unsafe void Initialize(nint pmt, string filePath);
-
-if (!File.Exists("C:\\Users\\cet\\source\\repos\\godwit\\godwit\\x64\\Debug\\godwit.dll"))
-    throw new Exception("Godwit.dll not found!");
+static extern unsafe void initialize(nint pDOM);
 
 unsafe
 {
     var handle = typeof(TestStructure).Module.ModuleHandle;
-    Initialize(*(nint*)Unsafe.AsPointer(ref handle), AppDomain.CurrentDomain.BaseDirectory + "\\tests.dll");
+    initialize(*(nint*)Unsafe.AsPointer(ref handle));
     /*int a = 1;
     float b = 3.1415f;
     TestStructure c = new TestStructure(1, 2, 3, 4, 5, 6);

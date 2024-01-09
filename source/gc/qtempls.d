@@ -1,7 +1,7 @@
 /// Represents what should be godwit.corhlprpriv
 module godwit.qtempls;
 
-import godwit.state;
+import godwit.collections.state;
 
 public struct CQuickMemoryBase
 {
