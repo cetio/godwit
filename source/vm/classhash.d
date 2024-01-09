@@ -1,7 +1,7 @@
 module godwit.classhash;
 
 import godwit.dacenumerablehash;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct EEClassHashEntry
 {

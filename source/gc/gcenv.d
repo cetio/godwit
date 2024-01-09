@@ -1,6 +1,6 @@
 module godwit.gcenv;
 
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct Thread
 {

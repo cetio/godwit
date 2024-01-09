@@ -8,7 +8,7 @@ import godwit.typehandle;
 import godwit.method;
 import godwit.field;
 import godwit.corhdr;
-import godwit.collections.state;
+import godwit.mem.state;
 
 alias PerInstInfo = Dictionary;
 

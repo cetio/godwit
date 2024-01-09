@@ -7,7 +7,7 @@ import godwit.ceeload;
 import godwit.genericdict;
 import godwit.corhdr;
 import godwit.gcdesc;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct WriteableData
 {

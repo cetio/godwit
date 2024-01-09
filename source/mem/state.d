@@ -1,5 +1,5 @@
 /// Provides interface for enums, properties, and hresult
-module godwit.collections.state;
+module godwit.mem.state;
 
 import std.traits;
 

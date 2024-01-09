@@ -1,7 +1,7 @@
 module godwit.methodimpl;
 
 import godwit.method;
-import godwit.collections.state;
+import godwit.mem.state;
 
 // Used in cases like virtual methods, where a method can be implemented, derived, and or overriden
 public struct MethodImpl

@@ -2,7 +2,7 @@
 // TODO: ELF
 module godwit.formats.exec;
 
-import godwit.collections.stream;
+import godwit.mem.stream;
 import godwit.formats;
 
 /**

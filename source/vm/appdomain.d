@@ -14,7 +14,7 @@ import godwit.shash;
 import godwit.rcwrefcache;
 import godwit.nativeimage;
 import godwit.eehash;
-import godwit.collections.state;
+import godwit.mem.state;
 import godwit.comreflectioncache;
 
 public struct BaseDomain

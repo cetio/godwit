@@ -1,4 +1,4 @@
-module godwit.collections.stream;
+module godwit.mem.stream;
 
 import std.file;
 import std.conv;

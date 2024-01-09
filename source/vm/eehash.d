@@ -1,7 +1,7 @@
 module godwit.eehash;
 
 import std.uuid;
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct EEHashEntry
 {

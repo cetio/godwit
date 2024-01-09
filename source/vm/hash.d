@@ -1,6 +1,6 @@
 module godwit.hash;
 
-import godwit.collections.state;
+import godwit.mem.state;
 
 public struct HashMap
 {
