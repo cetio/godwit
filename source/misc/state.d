@@ -159,19 +159,19 @@ public template accessors()
         {
             static if (!__traits(hasMember, typeof(this), member[2..$]))
             {
-            	static if (!__traits(hasMember, typeof(this), member[2..$]))
+                static if (!__traits(hasMember, typeof(this), member[2..$]))
                 {
-                	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
-                	mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
+                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
+                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
                 }
 
                 // Flags
                 static if (is(typeof(__traits(getMember, typeof(this), member)) == enum) &&
                     staticIndexOf!(exempt, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) == -1 &&
                     staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) != -1)
-            	{
+                {
                     static foreach (string flag; __traits(allMembers, typeof(__traits(getMember, this, member))))
-                	{
+                    {
                         static if (flag.startsWith('k'))
                         {
                             static foreach_reverse (string mask; __traits(allMembers, typeof(__traits(getMember, this, member)))[0..(staticIndexOf!(flag, __traits(allMembers, typeof(__traits(getMember, this, member)))))])
@@ -200,7 +200,7 @@ public template accessors()
                             }
                         }
                     }
-            	}
+                }
 
                 // Non-flags
                 static if (is(typeof(__traits(getMember, typeof(this), member)) == enum) &&
@@ -208,7 +208,7 @@ public template accessors()
                     staticIndexOf!(flags, __traits(getAttributes, typeof(__traits(getMember, typeof(this), member)))) == -1)
                 {
                     static foreach (string flag; __traits(allMembers, typeof(__traits(getMember, this, member))))
-                	{
+                    {
                         static if (!__traits(hasMember, typeof(this), "is"~flag))
                         {
                             // @property bool Eastern()...
