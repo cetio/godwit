@@ -47,6 +47,15 @@ extern (C) export void initialize(Module* pMOD)
     //appDomain = pDOM;
     writeln("Initialized! ", pMOD);
 
+    auto pAS = pMOD.peAssembly;
+
+    import std.traits;
+    foreach (field; FieldNameTuple!PEAssembly)
+    {
+        import std.conv;
+        writeln(field, " ", __traits(getMember, pAS, field).to!string);
+    }
+
     if (onInitialize != null)
         onInitialize();
 }
