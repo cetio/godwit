@@ -15,6 +15,8 @@ However, until Godwit is near completion, implementation flags will not be fully
 
 ### Equivalence
 
+`PropertyInfo` are effectively `MethodBase`, `EventInfo` appear to be effectively `FieldInfo`, `ParameterInfo` & return info are part of signatures (`PCCOR_SIGNATURE`) 
+
 | C# | Godwit |
 -----|--------|
 | `AppDomain` | `godwit.appdomain.AppDomain` |
@@ -46,6 +48,16 @@ However, until Godwit is near completion, implementation flags will not be fully
 | `IL↑` | `godwit.corhdr` `godwit.cor` |
 | `IL↓` | `godwit.cil` |
 
+| Godwit | C# |
+|--------|----|
+| `AppDomain*` | TBD (impossible?) |
+| `Assembly*` | `*(nint*)&RuntimeAssembly` |
+| `Module*` | `**(nint**)&Module.MethodHandle` |
+| `MethodTable*` | `Type.TypeHandle.Value` |
+| `MethodDesc*` | `MethodBase.MethodHandle.Value` |
+| `FieldDesc*` | `FieldInfo.FieldHandle.Value` |
+| `PCCOR_SIGNATURE` | `Signature.m_sig` |
+
 ## Usage
 
 TBD
@@ -54,7 +66,7 @@ TBD
 
 TBD
 
-Some functions have had ddocs documentation made for them, but not nearly close to completion.
+Some files, namely those which are not translated from CoreCLR, have had ddocs documentation made for them, but full documentation is not nearly close to completion.
 
 ## Contributions
 
