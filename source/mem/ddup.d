@@ -2,6 +2,7 @@
 module godwit.mem.ddup;
 
 import std.traits;
+import std.meta;
 
 private struct A
 {
@@ -21,6 +22,11 @@ private class C
 
 public:
 static:
+/// True if `T` is a type allocated on the stack, otherwise, false.
+alias isStack(T) = Alias!(!isHeap!T);
+/// True if `T` is a type allocated on the heap, otherwise, false.
+alias isHeap(T) = Alias!(!isStaticArray!T && !isPointer!T && hasIndirections!T);
+
 /**
     Shallow clones a value.
 
@@ -90,19 +96,22 @@ unittest
         B b = a.ddup();
         ```
 */
-pure @trusted T ddup(T)(const T val)
+pure @trusted T ddup(T)(T val)
     if (!isArray!T && !isAssociativeArray!T)
 {
     static if (!hasIndirections!T)
         return val;
     else
     {
-        T ret = new T();
+        static if (isPointer!T)
+            T ret = val;
+        else
+            T ret = new T();
         static foreach (field; FieldNameTuple!T)
         {
-            static if (!hasIndirections!T)
+            static if (field != "" && !hasIndirections!(typeof(__traits(getMember, T, field))))
                 __traits(getMember, ret, field) = __traits(getMember, val, field);
-            else
+            else static if (field != "")
                 __traits(getMember, ret, field) = __traits(getMember, val, field).ddup();
         }
         return ret;
