@@ -1,7 +1,7 @@
 module godwit.codeversioning;
 
 import godwit.method;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct NativeCodeVersion
 {

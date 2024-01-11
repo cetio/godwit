@@ -5,7 +5,7 @@ import godwit.crst;
 import godwit.method;
 import godwit.precode;
 import godwit.shash;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 /**
 Contains stubs that is used by GetMultiCallableAddrOfCode() if

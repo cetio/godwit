@@ -3,7 +3,7 @@ module godwit.clrex;
 import godwit.method;
 import godwit.ex;
 import godwit.objects;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct StackTraceInfo
 {

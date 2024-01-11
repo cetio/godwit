@@ -4,7 +4,7 @@ import godwit.objects;
 import godwit.pal;
 import godwit.clrex;
 import godwit.objects;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct ExInfo
 {

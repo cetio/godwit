@@ -8,7 +8,7 @@ import godwit.typehandle;
 import godwit.corhdr;
 import godwit.objects;
 import godwit.formats.packedfields;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct CCWTemplate
 {
@@ -284,40 +284,40 @@ public:
 
     mixin accessors;
 
-    public PackedFields* packedFields() 
+    PackedFields* packedFields() 
         scope return
     {
         return cast(PackedFields*)(cast(byte*)&this + fixedEEClassFields);
     }
 
-    public uint packedField(EEClassFieldId fieldId)
+    uint packedField(EEClassFieldId fieldId)
     {
         return fieldsArePacked 
-            ? getPackedFields().GetPackedField(fieldId) 
-            : getPackedFields().GetUnpackedField(fieldId);
+            ? packedFields().getPackedField(fieldId) 
+            : packedFields().getUnpackedField(fieldId);
     }
 
-    pragma(mangle, "EEClass_numTotalFields_get")
-    extern (C) export public uint numTotalFields()
+    pragma(mangle, "EEClass_numTotalFields_get_uint")
+    extern (C) export uint numTotalFields()
     {
         return packedField(EEClassFieldId.NumInstanceFields) 
             + packedField(EEClassFieldId.NumStaticFields);
     }
 
-    pragma(mangle, "EEClass_numInstanceFields_get")
-    extern (C) export public uint numInstanceFields()
+    pragma(mangle, "EEClass_numInstanceFields_get_uint")
+    extern (C) export uint numInstanceFields()
     {
-        return getPackedField(EEClassFieldId.NumInstanceFields);
+        return packedField(EEClassFieldId.NumInstanceFields);
     }
 
-    pragma(mangle, "EEClass_numStaticFields_get")
-    extern (C) export public uint numStaticFields()
+    pragma(mangle, "EEClass_numStaticFields_get_uint")
+    extern (C) export uint numStaticFields()
     {
-        return getPackedField(EEClassFieldId.NumStaticFields);
+        return packedField(EEClassFieldId.NumStaticFields);
     }
 
-    pragma(mangle, "EEClass_fields_get")
-    extern (C) export public FieldDesc*[] fields()
+    pragma(mangle, "EEClass_fields_get_FieldDescPTR[]")
+    extern (C) export FieldDesc*[] fields()
     {
         int length = numTotalFields();
         FieldDesc*[] fieldDescs = new FieldDesc*[length];

@@ -1,6 +1,6 @@
 module godwit.crst;
 
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct CrstBase
 {

@@ -1,6 +1,6 @@
 module godwit.sbuffer;
 
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct SBuffer
 {

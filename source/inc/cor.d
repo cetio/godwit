@@ -4,6 +4,7 @@
 module godwit.cor;
 
 import godwit.corhdr;
+import godwit.llv.traits;
 import godwit.mem.state;
 
 /*

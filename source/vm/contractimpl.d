@@ -2,7 +2,7 @@ module godwit.contractimpl;
 
 import godwit.hash;
 import godwit.crst;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct TypeIDMap
 {

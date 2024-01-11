@@ -8,7 +8,7 @@ import godwit.ceeload;
 import godwit.nativeimage;
 import godwit.hash;
 import godwit.inlinetracking;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct ReadyToRunCoreInfo
 {

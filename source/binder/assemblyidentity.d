@@ -2,7 +2,7 @@ module godwit.assemblyidentity;
 
 import godwit.sbuffer;
 import godwit.assemblyversion;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct AssemblyIdentity
 {

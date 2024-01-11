@@ -1,7 +1,7 @@
 module godwit.assemblyname;
 
 import godwit.assemblyidentity;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct AssemblyName
 {

@@ -4,6 +4,7 @@ import std.file;
 import std.conv;
 import std.algorithm.mutation;
 import std.traits;
+import godwit.llv.traits;
 
 public enum Endianness : ubyte
 {
@@ -50,14 +51,6 @@ private static @nogc T makeEndian(T)(T val, Endianness endianness)
     }
 
     return val;
-}
-
-private template ElementType(T) 
-{
-    static if (is(T == U[], U))
-        alias ElementType = ElementType!U;
-    else
-        alias ElementType = T;
 }
 
 public class Stream

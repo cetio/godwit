@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ZIFyayUdlOua6F0QTYK+jCb0jfR74/K0OSucmdVcepNhUt5xLrGSuHJ4berCs3N8AI/TJB5PWoy48758C5d6+Q==",
+  "dgSpecHash": "x6IpIki8YFLIZuUIahV6gzkltRRePk0UxJVWZcNsLYDiR6fYincBqkM3cRR8yWcWslqknqaLEKLOJRFrrM5g+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\stake\\.nuget\\packages\\penet\\4.0.2\\penet.4.0.2.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\penet.asn1\\2.0.1\\penet.asn1.2.0.1.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\system.formats.asn1\\7.0.0\\system.formats.asn1.7.0.0.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\system.security.cryptography.pkcs\\7.0.3\\system.security.cryptography.pkcs.7.0.3.nupkg.sha512",
     "C:\\Users\\stake\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
     "C:\\Users\\stake\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
     "C:\\Users\\stake\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",

@@ -5,8 +5,9 @@ import godwit.corhdr;
 import godwit.assembly;
 import godwit.stringarraylist;
 import godwit.shash;
-import godwit.mem.state;
+import godwit.llv.traits;
 import godwit.bspace;
+import godwit.mem.state;
 
 public struct ApplicationContext
 {

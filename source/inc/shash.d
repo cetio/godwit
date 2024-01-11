@@ -1,6 +1,6 @@
 module godwit.shash;
 
-import godwit.mem.state;
+import godwit.llv.traits;
 import godwit.nativeimage;
 import godwit.assembly;
 import godwit.applicationcontext;

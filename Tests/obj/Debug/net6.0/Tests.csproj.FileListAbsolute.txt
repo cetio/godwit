@@ -13,3 +13,10 @@ C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\Tests.pdb
 C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\Tests.genruntimeconfig.cache
 C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\ref\Tests.dll
 C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\Tests.sourcelink.json
+C:\Users\stake\documents\source\repos\godwit\tests\bin\Debug\net6.0\PeNet.dll
+C:\Users\stake\documents\source\repos\godwit\tests\bin\Debug\net6.0\PeNet.Asn1.dll
+C:\Users\stake\documents\source\repos\godwit\tests\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\stake\documents\source\repos\godwit\tests\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\stake\documents\source\repos\godwit\tests\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\Tests.csproj.AssemblyReference.cache
+C:\Users\stake\documents\source\repos\godwit\tests\obj\Debug\net6.0\Tests.csproj.CopyComplete

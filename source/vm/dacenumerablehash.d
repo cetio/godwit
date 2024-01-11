@@ -2,7 +2,7 @@ module godwit.dacenumerablehash;
 
 import godwit.ceeload;
 import godwit.loaderheap;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 struct VolatileEntry(T)
 {

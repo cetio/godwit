@@ -1,20 +1,13 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Godwit;
 
 #if DEBUG
 [DllImport(@"C:\Users\stake\Documents\source\repos\godwit\godwit.dll")]
 #else
 [DllImport("godwit.dll")]
 #endif
-static extern unsafe void initialize(nint pMT);
-
-#if DEBUG
-[DllImport(@"C:\Users\stake\Documents\source\repos\godwit\godwit.dll", EntryPoint = "Module_peAssembly_set")]
-#else
-[DllImport("godwit.dll", EntryPoint = "Module_peAssembly_get")]
-#endif
-static extern unsafe nint peAssembly(nint pMOD, nint val);
+static extern unsafe void initialize(nint pMOD);
 
 // MethodTable*
 // Type.TypeHandle.Value
@@ -32,10 +25,11 @@ static extern unsafe nint peAssembly(nint pMOD, nint val);
 unsafe
 {
     //var handle = typeof(TestStructure).TypeHandle.Value;
-    var handle = typeof(TestStructure).Module.ModuleHandle;
-    var handle2 = **(nint**)Unsafe.AsPointer(ref handle);
-    initialize(handle2);
-    Console.WriteLine(peAssembly(handle2, 0).ToString("X"));
+    var h = typeof(TestStructure).Module.ModuleHandle;
+    var pMod = **(nint**)Unsafe.AsPointer(ref h);
+    initialize(pMod);
+    //Module mod = pMod.To<Module>();
+    //Console.WriteLine(mod.peAssembly.ToString("X"));
     /*int a = 1;
     float b = 3.1415f;
     TestStructure c = new TestStructure(1, 2, 3, 4, 5, 6);

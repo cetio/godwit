@@ -4,7 +4,7 @@ import godwit.peimage;
 import godwit.assemblyname;
 import godwit.assemblybinder;
 import godwit.domainassembly;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct BinderSpace
 {
