@@ -199,7 +199,7 @@ public:
     WriteableData* m_writeableData;
     union
     {
-        ubyte m_rawTypeKind;
+        @exempt ubyte m_rawTypeKind;
         EEClass* m_eeClass;
         MethodTable* m_canonMethodTable;
     }
@@ -232,17 +232,20 @@ public:
 
     mixin accessors;
 
-    @property RelatedTypeKind relatedTypeKind()
+    pragma(mangle, "MethodTable_relatedTypeKind_get")
+    extern (C) export @property RelatedTypeKind relatedTypeKind()
     {
         return cast(RelatedTypeKind)(m_rawTypeKind & 3);
     }
 
-    @property RelatedTypeKind relatedTypeKind(RelatedTypeKind val)
+    pragma(mangle, "MethodTable_relatedTypeKind_set")
+    extern (C) export @property RelatedTypeKind relatedTypeKind(RelatedTypeKind val)
     {
         return cast(RelatedTypeKind)(m_rawTypeKind = (m_rawTypeKind & ~3) | cast(ubyte)val);
     }
 
-    @property ushort componentSize()
+    pragma(mangle, "MethodTable_componentSize_get")
+    extern (C) export @property ushort componentSize()
     {
         if (!isHasComponentSize())
             return 0;
@@ -250,7 +253,8 @@ public:
         return m_componentSize;
     }
 
-    @property ushort componentSize(ushort val)
+    pragma(mangle, "MethodTable_componentSize_set")
+    extern (C) export @property ushort componentSize(ushort val)
     {
         m_componentSize = val;
         return m_componentSize;
@@ -267,13 +271,15 @@ public:
         return mdToken == 0xFFFF;
     }
 
-    GCDesc* gcDesc() const
+    pragma(mangle, "MethodTable_gcDesc_get")
+    extern (C) export GCDesc* gcDesc() const
         scope return
     {
         return cast(GCDesc*)&this;
     }
 
-    @property Module* ceemodule()
+    pragma(mangle, "MethodTable_ceemodule_get")
+    extern (C) export @property Module* ceemodule()
     {
         if (!isHasComponentSize && isNonGeneric)
             return m_ceemodule;
@@ -281,7 +287,8 @@ public:
         return canonMethodTable.ceemodule;
     }
 
-    @property Module* ceemodule(Module* val)
+    pragma(mangle, "MethodTable_ceemodule_set")
+    extern (C) export @property Module* ceemodule(Module* val)
     {
         if (!isHasComponentSize && isNonGeneric)
             return m_ceemodule = val;
@@ -289,7 +296,8 @@ public:
         return canonMethodTable.ceemodule = val;
     }
 
-    @property EEClass* eeClass()
+    pragma(mangle, "MethodTable_eeClass_get")
+    extern (C) export @property EEClass* eeClass()
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
             return canonMethodTable.eeClass;
@@ -297,7 +305,8 @@ public:
         return m_eeClass;
     }
 
-    @property MethodTable* canonMethodTable()
+    pragma(mangle, "MethodTable_canonMethodTable_get")
+    extern (C) export @property MethodTable* canonMethodTable()
         scope return
     {
         if (relatedTypeKind != RelatedTypeKind.CanonMT)
@@ -306,7 +315,8 @@ public:
         return m_canonMethodTable;
     }
 
-    @property EEClass* eeClass(EEClass* val)
+    pragma(mangle, "MethodTable_eeClass_set")
+    extern (C) export @property EEClass* eeClass(EEClass* val)
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
             return canonMethodTable().eeClass = val;
@@ -314,7 +324,8 @@ public:
         return m_eeClass = val;
     }
 
-    @property MethodTable* canonMethodTable(MethodTable* val)
+    pragma(mangle, "MethodTable_canonMethodTable_set")
+    extern (C) export @property MethodTable* canonMethodTable(MethodTable* val)
     {
         if (relatedTypeKind == RelatedTypeKind.CanonMT)
             return m_canonMethodTable = val;

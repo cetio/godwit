@@ -42,13 +42,13 @@ void test()
 }
 
 //extern (C) export void initialize(AppDomain* pDOM)
-extern (C) export void initialize(Module* pMOD)
+extern (C) export bool initialize(Module* pMOD)
 {
     //appDomain = pDOM;
     writeln("Initialized! ", pMOD);
 
     auto pAS = pMOD.peAssembly;
-
+    pAS.writeln;
     import std.traits;
     foreach (field; FieldNameTuple!PEAssembly)
     {

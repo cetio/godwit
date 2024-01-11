@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj": {}
+    "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj": {
+    "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj",
+        "projectUniqueName": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj",
+        "projectPath": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj",
         "packagesPath": "C:\\Users\\stake\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\obj\\",
+        "outputPath": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\stake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\stake\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -48,12 +50,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.26, 6.0.26]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.26, 6.0.26]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.26, 6.0.26]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.26, 6.0.26]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

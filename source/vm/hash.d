@@ -62,7 +62,8 @@ public struct Compare
 {
 public:
     /// Comparer function, to compare 2 objects (may be changed with op_x?)
-    bool function(uint*, uint*) m_fn;
+    // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
+    bool function(uint*, uint*) fn;
 
     mixin accessors;
 }
