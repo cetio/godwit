@@ -6,7 +6,7 @@ import godwit.peassembly;
 import godwit.ceeload;
 import godwit.loaderallocator;
 import godwit.exinfo;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct DomainAssembly
 {

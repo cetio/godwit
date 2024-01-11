@@ -5,7 +5,7 @@ import godwit.applicationcontext;
 import godwit.shash;
 import godwit.sbuffer;
 import godwit.assembly;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct AssemblyBinder
 {

@@ -1,7 +1,7 @@
 module godwit.loaderheap;
 
 import godwit.corhdr;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct LoaderHeapBlock
 {

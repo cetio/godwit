@@ -1,6 +1,6 @@
 module godwit.pal;
 
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct ExceptionRecord
 {

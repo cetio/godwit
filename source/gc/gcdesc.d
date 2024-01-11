@@ -1,7 +1,7 @@
 module godwit.gcdesc;
 
 import godwit.methodtable;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 version(X86)
 {

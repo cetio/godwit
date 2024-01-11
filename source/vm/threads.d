@@ -2,7 +2,7 @@
 module godwit.threads;
 
 import godwit.gcenv;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 /// DeadlockAwareLock is a base for building deadlock-aware locks.
 /// Used for atomic thread operations (TBD)

@@ -3,7 +3,7 @@ module godwit.clsload;
 import godwit.assembly;
 import godwit.crst;
 import godwit.pendingload;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct ClassLoader
 {

@@ -6,5 +6,11 @@
     "description": "D-CoreCLR interop library",
     "license": "MPL-2.0",
     "name": "godwit",
-    "targetType": "dynamicLibrary"
+    "targetType": "dynamicLibrary",
+    "configurations": [
+        {
+            "name": "library",
+            "dflags": ["-J=C:\\Users\\stake\\Documents\\source\\repos\\godwit\\source\\"]
+        }
+    ]
 }

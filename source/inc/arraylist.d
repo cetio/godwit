@@ -1,6 +1,6 @@
 module godwit.arraylist;
 
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct ArrayListBlock
 {

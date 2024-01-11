@@ -5,15 +5,16 @@ import core.sys.windows.windef : HINSTANCE, BOOL, DWORD, LPVOID;
 import core.sys.windows.dll;
 import godwit.vm;
 import godwit.mem;
+import godwit.llv;
 import std.stdio;
+import std.conv;
 
 static AppDomain* appDomain;
-public static void function() onInitialize;
+public static bool function() onInitialize;
 
 extern(Windows)
 BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
 {
-    onInitialize = &test;
     import core.sys.windows.winnt;
     import core.sys.windows.dll :
         dll_process_attach, dll_process_detach,
@@ -36,26 +37,23 @@ BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
     }
 }
 
-void test()
-{
-    writeln("This is a hook!");
-}
-
-//extern (C) export void initialize(AppDomain* pDOM)
-extern (C) export bool initialize(Module* pMOD)
+//extern (C) export void initialize(AppDomain* pDom)
+extern (C) export bool initialize(Module* pMod)
 {
     //appDomain = pDOM;
-    writeln("Initialized! ", pMOD);
-
-    auto pAS = pMOD.peAssembly;
-    pAS.writeln;
+    writeln("Initialized! ", pMod);
+    import godwit.make;
+    makeCs();
+    auto pAsm = pMod.peAssembly;
+    pAsm.writeln;
     import std.traits;
     foreach (field; FieldNameTuple!PEAssembly)
     {
         import std.conv;
-        writeln(field, " ", __traits(getMember, pAS, field).to!string);
+        writeln(field, " ", __traits(getMember, pAsm, field).to!string);
     }
 
     if (onInitialize != null)
-        onInitialize();
+        return onInitialize();
+    return true;
 }

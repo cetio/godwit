@@ -7,8 +7,59 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "Tests/1.0.0": {
+        "dependencies": {
+          "PeNet": "4.0.2",
+          "PeNet.Asn1": "2.0.1"
+        },
         "runtime": {
           "Tests.dll": {}
+        }
+      },
+      "PeNet/4.0.2": {
+        "dependencies": {
+          "PeNet.Asn1": "2.0.1",
+          "System.Security.Cryptography.Pkcs": "7.0.3"
+        },
+        "runtime": {
+          "lib/net6.0/PeNet.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.0.2.0"
+          }
+        }
+      },
+      "PeNet.Asn1/2.0.1": {
+        "runtime": {
+          "lib/net6.0/PeNet.Asn1.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "System.Formats.Asn1/7.0.0": {
+        "runtime": {
+          "lib/net6.0/System.Formats.Asn1.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
+      "System.Security.Cryptography.Pkcs/7.0.3": {
+        "dependencies": {
+          "System.Formats.Asn1": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/System.Security.Cryptography.Pkcs.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.823.31807"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.823.31807"
+          }
         }
       }
     }
@@ -18,6 +69,34 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "PeNet/4.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oDXf4Haiod3R8lXPCbniLqOejQwbOh0+D0Nl4XI645IFoc47DSfl9aR31YZJXcYlFuAjYRkrXrZBfByiHgW+9Q==",
+      "path": "penet/4.0.2",
+      "hashPath": "penet.4.0.2.nupkg.sha512"
+    },
+    "PeNet.Asn1/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YR2O2YokSAYB+7CXkCDN3bd6/p0K3/AicCPkOJHKUz500v1D/hulCuVlggguqNc3M0LgSfOZKGvVYg2ud1GA9A==",
+      "path": "penet.asn1/2.0.1",
+      "hashPath": "penet.asn1.2.0.1.nupkg.sha512"
+    },
+    "System.Formats.Asn1/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+nfpV0afLmvJW8+pLlHxRjz3oZJw4fkyU9MMEaMhCsHi/SN9bGF9q79ROubDiwTiCHezmK0uCWkPP7tGFP/4yg==",
+      "path": "system.formats.asn1/7.0.0",
+      "hashPath": "system.formats.asn1.7.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Pkcs/7.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yhwEHH5Gzl/VoADrXtt5XC95OFoSjNSWLHNutE7GwdOgefZVRvEXRSooSpL8HHm3qmdd9epqzsWg28UJemt22w==",
+      "path": "system.security.cryptography.pkcs/7.0.3",
+      "hashPath": "system.security.cryptography.pkcs.7.0.3.nupkg.sha512"
     }
   }
 }

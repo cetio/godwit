@@ -14,7 +14,7 @@ import godwit.corhdr;
 import godwit.classhash;
 import godwit.typehash;
 import godwit.instmethhash;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 public struct LookupMap(T)
 {

@@ -4,7 +4,7 @@ import std.bitmanip;
 import godwit.typehandle;
 import godwit.corhdr;
 import godwit.ceeload;
-import godwit.mem.state;
+import godwit.llv.traits;
 
 /**
    TypeDesc is a discriminated union of all types that can not be directly

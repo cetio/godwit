@@ -4,6 +4,7 @@ import godwit.codeversioning;
 import godwit.crst;
 import godwit.threads;
 import godwit.loaderallocator;
+import godwit.llv.traits;
 import godwit.mem.state;
 
 alias ListLock = ListLockBase!uint*;

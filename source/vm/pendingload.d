@@ -4,6 +4,7 @@ import godwit.crst;
 import godwit.typehandle;
 import godwit.ex;
 import godwit.typekey;
+import godwit.llv.traits;
 import godwit.mem.state;
 
 public struct PendingTypeLoadEntry
