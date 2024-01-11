@@ -135,6 +135,16 @@ string toString(T)(T value) const
     return __traits(allMembers, T)[0];
 }
 
+pure string pragmatize(string str) 
+{
+    // holy import, is there a better way?
+    import std.algorithm;
+    import std.ascii;
+    import std.array;
+    import std.conv;
+    return str.filter!(c => isAlphaNum(c) || c == '_').array.to!string;
+}
+
 /// Template mixin for auto-generating properties.
 /// Assumes standardized prefixes! (m_ for backing fields, k for masked enum values)
 /// Assumes standardized postfixes! (MASK or Mask for masks)
@@ -161,8 +171,8 @@ public template accessors()
             {
                 static if (!__traits(hasMember, typeof(this), member[2..$]))
                 {
-                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
-                    mixin("@property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
+                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_get\") extern (C) export @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
+                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_set\") extern (C) export @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
                 }
 
                 // Flags

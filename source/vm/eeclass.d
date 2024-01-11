@@ -284,36 +284,40 @@ public:
 
     mixin accessors;
 
-    /*public PackedFields* getPackedFields() 
+    public PackedFields* packedFields() 
         scope return
     {
         return cast(PackedFields*)(cast(byte*)&this + fixedEEClassFields);
     }
 
-    public uint getPackedField(EEClassFieldId fieldId)
+    public uint packedField(EEClassFieldId fieldId)
     {
         return fieldsArePacked 
             ? getPackedFields().GetPackedField(fieldId) 
             : getPackedFields().GetUnpackedField(fieldId);
     }
 
-    public uint numTotalFields()
+    pragma(mangle, "EEClass_numTotalFields_get")
+    extern (C) export public uint numTotalFields()
     {
-        return getPackedField(EEClassFieldId.NumInstanceFields) 
-            + getPackedField(EEClassFieldId.NumStaticFields);
+        return packedField(EEClassFieldId.NumInstanceFields) 
+            + packedField(EEClassFieldId.NumStaticFields);
     }
 
-    public uint numInstanceFields()
+    pragma(mangle, "EEClass_numInstanceFields_get")
+    extern (C) export public uint numInstanceFields()
     {
         return getPackedField(EEClassFieldId.NumInstanceFields);
     }
 
-    public uint numStaticFields()
+    pragma(mangle, "EEClass_numStaticFields_get")
+    extern (C) export public uint numStaticFields()
     {
         return getPackedField(EEClassFieldId.NumStaticFields);
     }
 
-    public FieldDesc*[] getFields()
+    pragma(mangle, "EEClass_fields_get")
+    extern (C) export public FieldDesc*[] fields()
     {
         int length = numTotalFields();
         FieldDesc*[] fieldDescs = new FieldDesc*[length];
@@ -322,5 +326,7 @@ public:
             fieldDescs[i] = fieldDescList + i;
 
         return fieldDescs;
-    }*/
+    }
+
+    // TODO: Implement sets
 }

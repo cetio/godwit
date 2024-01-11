@@ -31,6 +31,7 @@ public:
     // For whatever reason, we can't generate accessors for typeFlags
     mixin(bitfields!(
         CorElementType, "m_elemType", 8,
+    // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
         uint, "typeFlags", 24
     ));
 

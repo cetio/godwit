@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "399lqNWfrAwtqQ0aL1xJuvKnTjUR9hBaP2GaSUciFAqKii+HrHQPSNQpUtYiTm7wJ6JOpPA3eVT6Rk4mpJZ6sA==",
+  "dgSpecHash": "ZIFyayUdlOua6F0QTYK+jCb0jfR74/K0OSucmdVcepNhUt5xLrGSuHJ4berCs3N8AI/TJB5PWoy48758C5d6+Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\stake\\Documents\\source\\repos\\godwit\\Tests\\Tests.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\stake\\documents\\source\\repos\\godwit\\tests\\Tests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\stake\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\stake\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
+  ],
   "logs": []
 }
