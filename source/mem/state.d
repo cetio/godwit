@@ -176,217 +176,217 @@ public @exempt enum HResult
 }
 
 /// Checks HResult
-bool OK(HResult hr)
+pure bool OK(HResult hr)
 {
     return hr == HResult.S_OK;
 }
 
 /// ditto
-bool NOTOK(HResult hr)
+pure bool NOTOK(HResult hr)
 {
     return hr != HResult.S_OK;
 }
 
 /// ditto
-bool FALSE(HResult hr)
+pure bool FALSE(HResult hr)
 {
     return hr == HResult.S_FALSE;
 }
 
 /// ditto
-bool ABORT(HResult hr)
+pure bool ABORT(HResult hr)
 {
     return hr == HResult.E_ABORT;
 }
 
 /// ditto
-bool FAIL(HResult hr)
+pure bool FAIL(HResult hr)
 {
     return hr == HResult.E_FAIL;
 }
 
 /// ditto
-bool NOINTERFACE(HResult hr)
+pure bool NOINTERFACE(HResult hr)
 {
     return hr == HResult.E_NOINTERFACE;
 }
 
 /// ditto
-bool NOTIMPL(HResult hr)
+pure bool NOTIMPL(HResult hr)
 {
     return hr == HResult.E_NOTIMPL;
 }
 
 /// ditto
-bool POINTER(HResult hr)
+pure bool POINTER(HResult hr)
 {
     return hr == HResult.E_POINTER;
 }
 
 /// ditto
-bool UNEXPECTED(HResult hr)
+pure bool UNEXPECTED(HResult hr)
 {
     return hr == HResult.E_UNEXPECTED;
 }
 
 /// ditto
-bool ACCESSDENIED(HResult hr)
+pure bool ACCESSDENIED(HResult hr)
 {
     return hr == HResult.E_ACCESSDENIED;
 }
 
 /// ditto
-bool HANDLE(HResult hr)
+pure bool HANDLE(HResult hr)
 {
     return hr == HResult.E_HANDLE;
 }
 
 /// ditto
-bool INVALIDARG(HResult hr)
+pure bool INVALIDARG(HResult hr)
 {
     return hr == HResult.E_INVALIDARG;
 }
 
 /// ditto
-bool OUTOFMEMORY(HResult hr)
+pure bool OUTOFMEMORY(HResult hr)
 {
     return hr == HResult.E_OUTOFMEMORY;
 }
 
 /// ditto
-bool BADIMAGEFORMAT(HResult hr)
+pure bool BADIMAGEFORMAT(HResult hr)
 {
     return hr == HResult.E_BADIMAGEFORMAT;
 }
 
 /// ditto
-bool BOUNDS(HResult hr)
+pure bool BOUNDS(HResult hr)
 {
     return hr == HResult.E_BOUNDS;
 }
 
 /// ditto
-bool PENDING(HResult hr)
+pure bool PENDING(HResult hr)
 {
     return hr == HResult.E_PENDING;
 }
 
 /// ditto
-bool NOT_SET(HResult hr)
+pure bool NOT_SET(HResult hr)
 {
     return hr == HResult.E_NOT_SET;
 }
 
 /// ditto
-bool NOTINITIALIZED(HResult hr)
+pure bool NOTINITIALIZED(HResult hr)
 {
     return hr == HResult.CO_E_NOTINITIALIZED;
 }
 
 /// ditto
-bool ALREADYINITIALIZED(HResult hr)
+pure bool ALREADYINITIALIZED(HResult hr)
 {
     return hr == HResult.CO_E_ALREADYINITIALIZED;
 }
 
 /// ditto
-bool NOTSUPPORTED(HResult hr)
+pure bool NOTSUPPORTED(HResult hr)
 {
     return hr == HResult.CO_E_NOTSUPPORTED;
 }
 
 /// ditto
-bool CLASSSTRING(HResult hr)
+pure bool CLASSSTRING(HResult hr)
 {
     return hr == HResult.CO_E_CLASSSTRING;
 }
 
 /// ditto
-bool APPNOTFOUND(HResult hr)
+pure bool APPNOTFOUND(HResult hr)
 {
     return hr == HResult.CO_E_APPNOTFOUND;
 }
 
 /// ditto
-bool OBJECTNOTCONNECTED(HResult hr)
+pure bool OBJECTNOTCONNECTED(HResult hr)
 {
     return hr == HResult.CO_E_OBJECTNOTCONNECTED;
 }
 
 /// ditto
-bool BADINDEX(HResult hr)
+pure bool BADINDEX(HResult hr)
 {
     return hr == HResult.DISP_E_BADINDEX;
 }
 
 /// ditto
-bool OVERFLOW(HResult hr)
+pure bool OVERFLOW(HResult hr)
 {
     return hr == HResult.DISP_E_OVERFLOW;
 }
 
 /// ditto
-bool TYPEMISMATCH(HResult hr)
+pure bool TYPEMISMATCH(HResult hr)
 {
     return hr == HResult.DISP_E_TYPEMISMATCH;
 }
 
 /// ditto
-bool PARAMNOTFOUND(HResult hr)
+pure bool PARAMNOTFOUND(HResult hr)
 {
     return hr == HResult.DISP_E_PARAMNOTFOUND;
 }
 
 /// ditto
-bool UNKNOWNINTERFACE(HResult hr)
+pure bool UNKNOWNINTERFACE(HResult hr)
 {
     return hr == HResult.DISP_E_UNKNOWNINTERFACE;
 }
 
 /// ditto
-bool CHANGEDMODE(HResult hr)
+pure bool CHANGEDMODE(HResult hr)
 {
     return hr == HResult.RPC_E_CHANGED_MODE;
 }
 
 /// ditto
-bool TOOLATE(HResult hr)
+pure bool TOOLATE(HResult hr)
 {
     return hr == HResult.RPC_E_TOO_LATE;
 }
 
 /// ditto
-bool INVALIDMETHOD(HResult hr)
+pure bool INVALIDMETHOD(HResult hr)
 {
     return hr == HResult.RPC_E_INVALIDMETHOD;
 }
 
 /// ditto
-bool DISCONNECTED(HResult hr)
+pure bool DISCONNECTED(HResult hr)
 {
     return hr == HResult.RPC_E_DISCONNECTED;
 }
 
 /// ditto
-bool SERVERFAULT(HResult hr)
+pure bool SERVERFAULT(HResult hr)
 {
     return hr == HResult.RPC_E_SERVERFAULT;
 }
 
 /// ditto
-bool TIMEOUT(HResult hr)
+pure bool TIMEOUT(HResult hr)
 {
     return hr == HResult.RPC_E_TIMEOUT;
 }
 
 /// ditto
-bool NOTREGISTERED(HResult hr)
+pure bool NOTREGISTERED(HResult hr)
 {
     return hr == HResult.RPC_E_NOT_REGISTERED;
 }
 
 /// ditto
-bool DUPLICATENAME(HResult hr)
+pure bool DUPLICATENAME(HResult hr)
 {
     return hr == HResult.RPC_E_DUPLICATE_NAME;
 }

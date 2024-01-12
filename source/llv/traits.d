@@ -78,7 +78,11 @@ public static pure string pragmatize(string str)
     size_t idx = str.lastIndexOf('.');
     if (idx != -1)
         str = str[(idx + 1)..$];
-    str = str.replace("*", "PTR");
+    str = str.replace("*", "PTR")
+        .replace("[", "OPBRK")
+        .replace("]", "CLBRK")
+        .replace(",", "COMMA")
+        .replace("!", "EXCLM");
     return str.filter!(c => isAlphaNum(c) || c == '_').array.to!string;
 }
 
