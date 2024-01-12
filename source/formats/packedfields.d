@@ -61,7 +61,7 @@ private:
     * Returns:
     *   The offset of the specified field within the bit vector.
     */
-    pure @nogc uint calculateOffset(uint dwFieldIndex)
+    @nogc uint calculateOffset(uint dwFieldIndex)
     {
         uint dwOffset = 0;
         for (uint i = 0; i < dwFieldIndex; i++)
