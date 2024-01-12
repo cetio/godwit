@@ -4,7 +4,7 @@ import godwit.ceeload;
 import godwit.loaderheap;
 import godwit.llv.traits;
 
-struct VolatileEntry(T)
+public struct VolatileEntry(T)
 {
 public:
     // The derived-class format of an entry

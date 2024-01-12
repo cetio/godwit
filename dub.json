@@ -6,7 +6,7 @@
     "description": "D-CoreCLR interop library",
     "license": "MPL-2.0",
     "name": "godwit",
-    "targetType": "dynamicLibrary",
+    "targetType": "executable",
     "configurations": [
         {
             "name": "library",

@@ -12,7 +12,7 @@ import std.conv;
 static AppDomain* appDomain;
 public static bool function() onInitialize;
 
-extern(Windows)
+/* extern(Windows)
 BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
 {
     import core.sys.windows.winnt;
@@ -35,6 +35,11 @@ BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
         case DLL_THREAD_DETACH:
             return dll_thread_detach( true, true );
     }
+} */
+
+void main()
+{
+    initialize(null);
 }
 
 //extern (C) export void initialize(AppDomain* pDom)
@@ -43,13 +48,15 @@ extern (C) export bool initialize(Module* pMod)
     //appDomain = pDOM;
     writeln("Initialized! ", pMod);
     import godwit.make;
-    makeCs();
+    make!(godwit.vm, "C:\\Users\\stake\\Documents").csharp("ICLR");
+    make!(godwit.inc, "C:\\Users\\stake\\Documents").csharp("ICLR");
+    make!(godwit.gc, "C:\\Users\\stake\\Documents").csharp("ICLR");
+    make!(godwit.binder, "C:\\Users\\stake\\Documents").csharp("ICLR");
     auto pAsm = pMod.peAssembly;
     pAsm.writeln;
     import std.traits;
     foreach (field; FieldNameTuple!PEAssembly)
     {
-        import std.conv;
         writeln(field, " ", __traits(getMember, pAsm, field).to!string);
     }
 
