@@ -12,6 +12,7 @@ import godwit.formats;
 public class PE
 {
 private:
+final:
     /// The stream used for reading the PE file.
     Stream stream;
 

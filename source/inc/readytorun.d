@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct ReadyToRunCoreHeader
 {
 public:
+final:
     @flags enum Flags
     {
         // Set if the original IL assembly was platform-neutral
@@ -34,6 +35,7 @@ public:
 public struct ReadyToRunHeader
 {
 public:
+final:
     uint m_signature;
     ushort m_major;
     ushort m_minor;
@@ -45,6 +47,7 @@ public:
 public struct ReadyToRunImportSection
 {
 public:
+final:
     enum SectionType : ubyte
     {
         Unknown      = 0,

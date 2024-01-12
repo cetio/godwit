@@ -7,6 +7,7 @@ import godwit.llv.traits;
 public struct TypeIDMap
 {
 public:
+final:
     HashMap m_idMap;
     HashMap m_mtMap;
     Crst m_lock;
@@ -19,9 +20,10 @@ public:
 public struct TypeIDProvider
 {
 public:
-    uint nextID;
+final:
+    uint m_nextID;
     // #ifdef FAT_DISPATCH_TOKENS
-    uint nextFatID;
+    uint m_nextFatID;
 
     mixin accessors;
 }

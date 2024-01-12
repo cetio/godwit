@@ -56,6 +56,7 @@ private static @nogc T makeEndian(T)(T val, Endianness endianness)
 public class Stream
 {
 protected:
+final:
     string filePath;
 
 public:

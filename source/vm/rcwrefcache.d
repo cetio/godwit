@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct RCWRefCache
 {
 public:
+final:
     AppDomain* m_appDomain;
     // Internal DependentHandle cache
     // non-NULL dependent handles followed by NULL slots

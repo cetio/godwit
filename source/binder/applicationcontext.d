@@ -12,6 +12,7 @@ import godwit.mem.state;
 public struct ApplicationContext
 {
 public:
+final:
     int m_appVersion;
     SString m_applicationName;
     SHash!(BinderSpace*, uint)* m_executionContext;
@@ -28,6 +29,7 @@ public:
 public struct SimpleNameToFileNameMapEntry
 {
 public:
+final:
     wchar* m_simpleName;
     wchar* m_ilFileName;
     wchar* m_niFileName;
@@ -38,6 +40,7 @@ public:
 public struct FailureCacheEntry
 {
 public:
+final:
     SString m_assemblyNameOrPath;
     HResult m_bindingResult;
 

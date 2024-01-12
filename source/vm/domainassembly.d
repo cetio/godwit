@@ -11,6 +11,7 @@ import godwit.llv.traits;
 public struct DomainAssembly
 {
 public:
+final:
     enum FileLoadLevel : uint
     {
         // These states are tracked by FileLoadLock

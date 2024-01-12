@@ -7,6 +7,7 @@ module godwit.formats.packedfields;
 public immutable struct PackedFields
 {
 public:
+final:
     /**
     * Get an unpacked field value at the specified field index.
     * 
@@ -18,7 +19,8 @@ public:
     * Returns:
     *   The value of the unpacked field at the specified index.
     */
-    uint getUnpackedField(uint dwFieldIndex)
+    @nogc uint getUnpackedField(uint dwFieldIndex)
+        scope return
     {
         return (cast(uint*)&this)[dwFieldIndex];
     }
@@ -34,7 +36,7 @@ public:
     * Returns:
     *   The value of the packed field at the specified index.
     */
-    uint getPackedField(uint dwFieldIndex)
+    @nogc uint getPackedField(uint dwFieldIndex)
     {
         // Calculate the offset and length of the packed field.
         uint dwOffset = calculateOffset(dwFieldIndex);
@@ -59,7 +61,7 @@ private:
     * Returns:
     *   The offset of the specified field within the bit vector.
     */
-    uint calculateOffset(uint dwFieldIndex)
+    pure @nogc uint calculateOffset(uint dwFieldIndex)
     {
         uint dwOffset = 0;
         for (uint i = 0; i < dwFieldIndex; i++)
@@ -80,7 +82,8 @@ private:
     * Returns:
     *   The extracted value from the bit vector.
     */
-    uint bitVectorGet(uint dwOffset, uint dwLength)
+    @nogc uint bitVectorGet(uint dwOffset, uint dwLength)
+        scope return
     {
         uint dwValueShift = dwOffset % BITS_PER_UINT;
         uint dwValueMask = (1 << dwLength) - 1 << dwValueShift;

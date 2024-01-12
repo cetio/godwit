@@ -11,6 +11,7 @@ import std.algorithm;
 public class CILGen
 {
 private:
+final:
     Stack!ptrdiff_t stack;
     ubyte[] code;
 

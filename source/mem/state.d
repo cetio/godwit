@@ -16,7 +16,7 @@ static:
 * Returns:
 *     A boolean indicating whether the flag is set in the value.
 */
-bool hasFlag(T)(T value, T flag)
+@nogc bool hasFlag(T)(T value, T flag)
 {
     return (value & flag) != 0;
 }
@@ -32,7 +32,7 @@ bool hasFlag(T)(T value, T flag)
 * Returns:
 *     A boolean indicating whether the flag matches the masked value.
 */
-bool hasFlagMasked(T)(T value, T mask, T flag)
+@nogc bool hasFlagMasked(T)(T value, T mask, T flag)
 {
     return (value & mask) == flag;
 }
@@ -45,7 +45,7 @@ bool hasFlagMasked(T)(T value, T mask, T flag)
 *   - `flag`: The flag to set or clear.
 *   - `state`: A boolean indicating whether to set or clear the flag.
 */
-void setFlag(T)(ref T value, T flag, bool state)
+@nogc void setFlag(T)(ref T value, T flag, bool state)
 {
     value = cast(T)(state ? (value | flag) : (value & ~flag));
 }
@@ -57,7 +57,7 @@ void setFlag(T)(ref T value, T flag, bool state)
 *   - `value`: Reference to the value where the flag will be toggled.
 *   - `flag`: The flag to toggle.
 */
-void toggleFlag(T)(ref T value, T flag)
+@nogc void toggleFlag(T)(ref T value, T flag)
 {
     value = cast(T)(value ^ flag);
 }
@@ -71,7 +71,7 @@ void toggleFlag(T)(ref T value, T flag)
 *   - `flag`: The flag to set or clear.
 *   - `state`: A boolean indicating whether to set or clear the flag.
 */
-void setFlagMasked(T)(ref T value, T mask, T flag, bool state)
+@nogc void setFlagMasked(T)(ref T value, T mask, T flag, bool state)
 {
     value = cast(T)(state ? (value & mask) | flag : (value & mask) & ~flag);
 }
@@ -84,7 +84,7 @@ void setFlagMasked(T)(ref T value, T mask, T flag, bool state)
 *   - `mask`: The mask to apply to the value.
 *   - `flag`: The flag to toggle within the masked value.
 */
-void toggleFlagMasked(T)(ref T value, T mask, T flag)
+@nogc void toggleFlagMasked(T)(ref T value, T mask, T flag)
 {
     value = cast(T)((value & mask) ^ flag);
 }
@@ -99,7 +99,7 @@ void toggleFlagMasked(T)(ref T value, T mask, T flag)
 * Returns:
 *     The value after clearing the specified mask.
 */
-T clearMask(T)(T value, T mask)
+@nogc T clearMask(T)(T value, T mask)
 {
     return cast(T)(value & ~mask);
 }
@@ -113,7 +113,7 @@ T clearMask(T)(T value, T mask)
 * Returns:
 *     A string representing the flag members set in the value.
 */
-string toString(T)(T value) const
+pure string toString(T)(T value) const
 {
     foreach (string member; __traits(allMembers, T))
     {

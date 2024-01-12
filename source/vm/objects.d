@@ -12,6 +12,7 @@ alias ObjectHandle = uint*;
 public struct ObjHeader
 {
 public:
+final:
     @flags enum SyncBlockFlags : uint
     {
         StringHasNoHighChars = 0x80000000,
@@ -37,6 +38,7 @@ public:
 public struct BaseObject
 {
 public:
+final:
     ObjHeader m_objHeader;
     MethodTable* m_methodTable;
     /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
@@ -49,6 +51,7 @@ public:
 public struct HollowObject
 {
 public:
+final:
     /*ObjHeader objHeader()
         scope return
     {

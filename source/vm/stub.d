@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct UMThunkMarshInfo
 {
 public:
+final:
     ubyte* m_ilStub;
     MethodDesc* m_methodDesc;
     Module* m_ceemodule;
@@ -24,6 +25,7 @@ public:
 public struct Stub
 {
 public:
+final:
     @flags enum CodeFlags : uint
     {
         // is a MulticastDelegate

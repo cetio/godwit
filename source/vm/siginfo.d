@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct Signature
 {
 public:
+final:
     PCCOR_SIGNATURE m_sig;
     uint m_len;
 
@@ -17,6 +18,7 @@ public:
 public struct MetaSig
 {
 public:
+final:
     @flags enum Flags : ubyte
     {
         SigRetTypeInited = 0x01,

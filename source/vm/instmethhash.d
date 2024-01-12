@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct InstMethodHashEntry
 {
 public:
+final:
     MethodDesc* m_data;
 }
 
@@ -17,6 +18,7 @@ public struct InstMethodHashTable
     alias dacEnumerableHashTable this;
 
 public:
+final:
     // This is the domain in which the hash table is allocated
     LoaderAllocator* m_allocator;
     /*

@@ -10,15 +10,15 @@ import std.traits;
 import std.conv;
 import std.meta;
 
-private pure string toPascalCase(string input) 
+private static pure string toPascalCase(string input) 
 {
     auto words = input.split(".");
     auto result = appender!string;
 
-    foreach (word; words) {
-        if (!word.empty) {
+    foreach (word; words) 
+    {
+        if (!word.empty)
             result.put(toUpper(word[0]).to!string~word[1..$]~".");
-        }
     }
 
     return result.data[0..$-1];
@@ -36,7 +36,8 @@ public template make(alias root, string dest)
 {
     // TODO: Generic instantiations
     //       Inherits (actual inherits & subtypes [alias this])
-    public void csharp(string[] inherits...) 
+    //       Fixed size arrays
+    final pure void csharp(string[] inherits...) 
     {
         const cs = dest~"\\csharp\\"~fullyQualifiedName!root;
         foreach (mod; imports!root)

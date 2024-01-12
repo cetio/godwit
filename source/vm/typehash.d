@@ -11,6 +11,7 @@ import godwit.llv.traits;
 public struct EETypeHashEntry
 {
 public:
+final:
     /// Pointer to the data associated with the hash entry
     void* m_data;
 
@@ -27,6 +28,7 @@ public struct EETypeHashTable
     alias dacEnumerableHashTable this;
 
 public:
+final:
     /// This is the domain in which the hash table is allocated
     LoaderAllocator* m_allocator;
     /*

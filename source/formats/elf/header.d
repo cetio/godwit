@@ -37,6 +37,7 @@ public enum ABI : ubyte
 public struct ELFHeader
 {
 public:
+final:
     int e_magic;
     Architecture e_class;
     Endian e_data;

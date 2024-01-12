@@ -13,6 +13,7 @@ alias JitListLock = ListLockBase!NativeCodeVersion;
 public struct ListLockBase(T)
 {
 public:
+final:
     CrstStatic m_crst;
     bool m_isfInit;
     // Lock can be broken by a host for deadlock detection
@@ -25,6 +26,7 @@ public:
 public struct ListLockEntryBase(T)
 {
 public:
+final:
     DeadlockAwareLock m_deadlock;
     ListLockBase!T* m_list;
     T m_data;

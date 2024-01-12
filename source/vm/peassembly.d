@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct PEAssembly
 {
 public:
+final:
     // IL image, NULL if dynamic
     PEImage* m_peImage;
     // This flag is not updated atomically with m_pMDImport. Its fine for debugger usage

@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct PersistentInlineTrackingMapR2R
 {
 public:
+final:
     Module* m_ceemodule;
     ZapInlineeRecord* m_inlineeIndex;
     uint m_inlineeIndexSize;
@@ -18,6 +19,7 @@ public:
 public struct ZapInlineeRecord
 {
 public:
+final:
     uint m_key;
     uint m_offset;
 

@@ -7,6 +7,7 @@ import godwit.llv.traits;
 public struct PEImageLayout
 {
 public:
+final:
     enum ImageKind
     {
         LAYOUT_FLAT   = 2,
@@ -26,6 +27,7 @@ public struct FlatImageLayout
     alias peImageLayout this;
 
 public:
+final:
     void** m_fileView;
     ptrdiff_t* m_fileMap;
 
@@ -38,6 +40,7 @@ public struct ConvertedImageLayout
     alias peImageLayout this;
 
 public:
+final:
     RuntimeFunction* m_exceptionDir;
     size_t[16] m_imageParts;
 
@@ -50,6 +53,7 @@ public struct LoadedImageLayout
     alias peImageLayout this;
 
 public:
+final:
     ptrdiff_t* m_hmodule;
     void** m_loadedFile;
 

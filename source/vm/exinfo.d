@@ -9,6 +9,7 @@ import godwit.llv.traits;
 public struct ExInfo
 {
 public:
+final:
     // Note = the debugger assumes that m_pThrowable is a strong
     // reference so it can check it for NULL with preemptive GC
     // enabled.

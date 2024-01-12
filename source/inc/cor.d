@@ -29,7 +29,7 @@ static:
     Returns:
         Token corresponding to the given RID and token type.
 */
-RID ridToToken(RID rid, CorTokenType tkType)
+pure RID ridToToken(RID rid, CorTokenType tkType)
 {
     return rid |= tkType;
 }
@@ -44,7 +44,7 @@ RID ridToToken(RID rid, CorTokenType tkType)
     Returns:
         Token constructed from the given RID and token type.
 */
-MDToken tokenFromRid(RID rid, CorTokenType tkType)
+pure MDToken tokenFromRid(RID rid, CorTokenType tkType)
 {
     return rid | tkType;
 }
@@ -58,7 +58,7 @@ MDToken tokenFromRid(RID rid, CorTokenType tkType)
     Returns:
         Extracted RID from the given token.
 */
-RID ridFromToken(MDToken tk)
+pure RID ridFromToken(MDToken tk)
 {
     return tk & 0x00ffffff;
 }
@@ -72,7 +72,7 @@ RID ridFromToken(MDToken tk)
     Returns:
         Type portion from the given token.
 */
-uint typeFromToken(MDToken tk)
+pure uint typeFromToken(MDToken tk)
 {
     return tk & 0xff000000;
 }
@@ -86,7 +86,7 @@ uint typeFromToken(MDToken tk)
     Returns:
         True if the token is nil; otherwise, false.
 */
-bool isNilToken(MDToken tk)
+pure bool isNilToken(MDToken tk)
 {
     return ridFromToken(tk) == 0;
 }
@@ -100,7 +100,7 @@ bool isNilToken(MDToken tk)
     Returns:
         True if `elemType` is a primitive type, otherwise, false.
 */
-bool corIsPrimitiveType(CorElementType elemType)
+pure bool corIsPrimitiveType(CorElementType elemType)
 {
     return elemType < CorElementType.Ptr || elemType == CorElementType.NInt || elemType == CorElementType.NUInt;
 }
@@ -114,7 +114,7 @@ bool corIsPrimitiveType(CorElementType elemType)
     Returns:
         True if `elementType` is a pointer, byref, or has any modifier set, otherwise, false.
 */
-public bool corIsModifierElementType(CorElementType elemType)
+pure bool corIsModifierElementType(CorElementType elemType)
 {
     if (elemType == CorElementType.Ptr || elemType == CorElementType.ByRef)
         return true;
@@ -131,7 +131,7 @@ public bool corIsModifierElementType(CorElementType elemType)
     Returns:
         Data size of `pData`.
 */
-public uint corSigUncompressedDataSize(PCCOR_SIGNATURE pData)
+pure uint corSigUncompressedDataSize(PCCOR_SIGNATURE pData)
 {
     if ((pData[0] & 0x80) == 0)
         return 1;
@@ -151,7 +151,7 @@ public uint corSigUncompressedDataSize(PCCOR_SIGNATURE pData)
     Returns:
         Decompressed big data from the signature.
 */
-uint corSigUncompressBigData(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressBigData(ref PCCOR_SIGNATURE pData)
 {
     uint res;
 
@@ -181,7 +181,7 @@ uint corSigUncompressBigData(ref PCCOR_SIGNATURE pData)
     Returns:
         4 byte data of `pData`.
 */
-uint corSigUncompressData(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressData(ref PCCOR_SIGNATURE pData)
 {
     // Handle smallest data inline.
     if ((*pData & 0x80) == 0x00)        // 0??? ????
@@ -202,7 +202,7 @@ uint corSigUncompressData(ref PCCOR_SIGNATURE pData)
     Returns:
         HResult for the success state of decompression.
 */
-HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, out uint dataLen)
+pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, out uint dataLen)
 {
     const(ubyte)* pBytes = cast(const(ubyte)*)pData;
 
@@ -328,7 +328,7 @@ HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, 
     Returns:
         Length of `pData`.
 */
-uint corSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
+pure uint corSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
 {
     uint dataLen = 0;
 
@@ -350,7 +350,7 @@ uint corSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
     Returns:
         Token type of `encoded`.
 */
-CorTokenType corSigDecodeTokenType(int encoded)
+pure CorTokenType corSigDecodeTokenType(int encoded)
 {
     if (encoded == 0)
         return CorTokenType.TypeDef;
@@ -373,7 +373,7 @@ CorTokenType corSigDecodeTokenType(int encoded)
     Returns:
         MDToken decompressed from `pData`.
 */
-MDToken corSigUncompressToken(ref PCCOR_SIGNATURE pData)
+pure MDToken corSigUncompressToken(ref PCCOR_SIGNATURE pData)
 {
     MDToken tk = corSigUncompressData(pData);
     CorTokenType tkType = corSigDecodeTokenType(tk & 0x3);
@@ -391,7 +391,7 @@ MDToken corSigUncompressToken(ref PCCOR_SIGNATURE pData)
     Returns:
         Length of `pData`.
 */
-uint corSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
+pure uint corSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
 {
     uint size = corSigUncompressData(pData, tk);
     CorTokenType tkType = corSigDecodeTokenType(tk & 0x3);
@@ -412,7 +412,7 @@ uint corSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
     Returns:
         HResult indicating the success state of decompression.
 */
-HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, out uint tkLen)
+pure HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, out uint tkLen)
 {
     HResult hr = corSigUncompressData(pData, len, tk, tkLen);
 
@@ -438,7 +438,7 @@ HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, o
     Returns:
         Calling convention extracted from the signature.
 */
-uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE pData)
 {
     return *pData++;
 }
@@ -454,7 +454,7 @@ uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE pData)
     Returns:
         HResult indicating the success state of decompression.
 */
-HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint data)
+pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint data)
 {
     if (dwLen <= 0)
     {
@@ -475,7 +475,7 @@ HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint 
     Returns:
         Length of `pData`.
 */
-uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
+pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
 {
     uint data = 0;
     uint size = corSigUncompressData(pData, data);
@@ -512,7 +512,7 @@ uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
     Returns:
         Decompressed element type from the signature.
 */
-CorElementType corSigUncompressElementType(ref PCCOR_SIGNATURE pData)
+pure CorElementType corSigUncompressElementType(ref PCCOR_SIGNATURE pData)
 {
     return cast(CorElementType)*pData++;
 }
@@ -527,7 +527,7 @@ CorElementType corSigUncompressElementType(ref PCCOR_SIGNATURE pData)
     Returns:
         Length of `pData`.
 */
-uint corSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType elemType)
+pure uint corSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType elemType)
 {
     elemType = cast(CorElementType)(*pData & 0x7f);
     return 1;
@@ -543,7 +543,7 @@ uint corSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType elemT
     Returns:
         Length of `pData`.
 */
-uint corSigUncompressPointer(PCCOR_SIGNATURE pData, out void* ptr)
+pure uint corSigUncompressPointer(PCCOR_SIGNATURE pData, out void* ptr)
 {
     ptr = *cast(void**)pData;
     return ptrdiff_t.sizeof;

@@ -13,6 +13,7 @@ import godwit.llv.traits;
 public struct CCWTemplate
 {
 public:
+final:
     ubyte* m_vtable;
     MethodTable* m_wrappedMethodTable;
     MethodDesc* m_wrappedMethodDesc;
@@ -29,6 +30,7 @@ public:
 public struct SparseVTableEntry
 {
 public:
+final:
     ushort m_mtStart;
     ushort m_count;
     ushort m_vtStart;
@@ -39,6 +41,7 @@ public:
 public struct SparseVTableMap
 {
 public:
+final:
     SparseVTableEntry* m_entryMapList;
     ushort m_numMapEntries;
     ushort m_numAllocated;
@@ -52,6 +55,7 @@ public:
 public struct LayoutInfo
 {
 public:
+final:
     @flags enum LayoutFlags : ubyte
     {
         // TRUE if the GC layout of the struct is bit-for-bit identical
@@ -87,6 +91,7 @@ public:
 public struct NativeLayoutInfo
 {
 public:
+final:
     ubyte m_alignmentReq;
     bool m_isMarshalable;
     ushort m_size;
@@ -99,6 +104,7 @@ public:
 public struct NativeFieldDescriptor
 {
 public:
+final:
     enum NativeFieldCategory : short
     {
         Float,
@@ -131,6 +137,7 @@ public:
 public struct OptionalFields
 {
 public:
+final:
     ubyte* m_dictLayout;
     ubyte* m_varianceInfo;
     SparseVTableMap* m_sparseVTableMap;
@@ -144,6 +151,7 @@ public:
 public struct EEClass
 {
 public:
+final:
     @flags enum TypeAttributes : uint
     {
         VisibilityMask = 0x00000007,

@@ -3,6 +3,7 @@ module godwit.formats.pe.directories;
 public struct ExportTable
 {
 public:
+final:
     uint flags;
     uint timeStamp;
     ushort majorVersion;
@@ -19,6 +20,7 @@ public:
 public struct ImportTable
 {
 public:
+final:
     uint importLookupTableRVA;
     uint timeStamp;
     uint forwarderChain;
@@ -28,6 +30,8 @@ public:
 
 public struct ResourceTable
 {
+public:
+final:
     ushort characteristics;
     ushort timeDateStamp;
     ushort majorVersion;
@@ -38,6 +42,8 @@ public struct ResourceTable
 
 public struct AttributeCertificateEntry 
 {
+public:
+final:
     uint dwLength;
     ushort wRevision;
     ushort wCertificateType;
@@ -46,12 +52,16 @@ public struct AttributeCertificateEntry
 
 public struct RelocEntry
 {
+public:
+final:
     ushort type;
     ushort offset;
 }
 
 public struct RelocTable 
 {
+public:
+final:
     uint pageRVA;
     RelocEntry[] entries;
 }

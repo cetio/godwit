@@ -20,6 +20,7 @@ import godwit.comreflectioncache;
 public struct BaseDomain
 {
 public:
+final:
     // Protects the list of assemblies in the domain
     ListLock m_fileLoadLock;
     CrstExplicitInit m_domainCrst;
@@ -66,6 +67,7 @@ public struct AppDomain
     alias baseDomain this;
 
 public:
+final:
     enum Stage 
     {
         Creating,
@@ -125,6 +127,7 @@ public:
 public struct PinnedHeapHandleBucket
 {
 public:
+final:
     PinnedHeapHandleBucket* m_next;
     int m_arraySize;
     int m_currentPos;
@@ -138,6 +141,7 @@ public:
 public struct PinnedHeapHandleTable
 {
 public:
+final:
     // The buckets of object handles.
     // synchronized by m_Crst
     PinnedHeapHandleBucket* m_head;

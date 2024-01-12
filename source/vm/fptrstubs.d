@@ -8,16 +8,16 @@ import godwit.shash;
 import godwit.llv.traits;
 
 /**
-Contains stubs that is used by GetMultiCallableAddrOfCode() if
-the function has not been jitted. 
+    Contains stubs that is used by GetMultiCallableAddrOfCode() if
+    the function has not been jitted.
 
-Using a stub decouples ldftn from the prestub, so prestub does not need to be backpatched.
-
-This stub is also used in other places which need a function pointer
+    Using a stub decouples ldftn from the prestub, so prestub does not need to be backpatched. \
+    This stub is also used in other places which need a function pointer.
 */
 public struct FuncPtrStubs
 {
 public:
+final:
     Crst m_hashTableCrst;
     /// To find a existing stub for a method
     SHash!(Precode*, uint) m_hashTable;   

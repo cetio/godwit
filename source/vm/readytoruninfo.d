@@ -13,6 +13,7 @@ import godwit.llv.traits;
 public struct ReadyToRunCoreInfo
 {
 public:
+final:
     PEImageLayout* m_layout;
     ReadyToRunCoreHeader* m_coreHeader;
     bool m_forbidLoadILBodyFixups;
@@ -23,6 +24,7 @@ public:
 public struct ReadyToRunInfo
 {
 public:
+final:
     Module* m_ceemodule;
     ModuleBase* m_nativeManifestModule;
     ReadyToRunHeader* m_header;

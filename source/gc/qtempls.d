@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct CQuickMemoryBase
 {
 public:
+final:
     byte* m_buffer;
     // number of bytes used
     size_t m_size;
@@ -52,6 +53,7 @@ public struct CQuickArrayList(T)
     alias cquickArray this;
 
 public:
+final:
     size_t m_curSize;
 
     mixin accessors;

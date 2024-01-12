@@ -9,6 +9,8 @@ import godwit.llv.traits;
 
 public struct PEImage
 {
+public:
+final:
     enum
     {
         IMAGE_FLAT,

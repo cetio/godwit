@@ -48,6 +48,7 @@ alias GenericParamConstraint = uint; /// ditto
 public struct ImageDataDirectory 
 {
 public:
+final:
     uint m_virtualAddress;
     uint m_size;
 
@@ -58,6 +59,7 @@ public:
 public struct RuntimeFunction
 {
 public:
+final:
     uint m_beginAddress;
     uint m_unwindData;
 

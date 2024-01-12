@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct ClassLoader
 {
 public:
+final:
     // Classes for which load is in progress
     PendingTypeLoadTable* m_unresolvedClassHash;
     CrstExplicitInit m_unresolvedClassLock;

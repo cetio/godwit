@@ -10,6 +10,7 @@ import godwit.mem.state;
 public struct PendingTypeLoadEntry
 {
 public:
+final:
     Crst m_crst;
     // Result of loading; this is first created in the CREATE stage of class loading
     TypeHandle m_typeHandle;
@@ -28,6 +29,7 @@ public:
 public struct TableEntry
 {
 public:
+final:
     TableEntry* m_next;
     uint m_hashValue;
     PendingTypeLoadEntry* m_data;
@@ -38,6 +40,7 @@ public:
 public struct PendingTypeLoadTable
 {
 public:
+final:
     // Pointer to first entry for each bucket
     TableEntry** m_buckets;    
     uint m_numBuckets;

@@ -4,12 +4,12 @@ import std.bitmanip;
 import godwit.corhdr;
 import godwit.llv.traits;
 
-/// Field descriptor, equivalent to `System.Runtime.FieldInfo`
-/// 
+/// Field descriptor, equivalent to `System.Runtime.FieldInfo` \
 /// Field descriptors for fields in instantiated types may be shared between compatible instantiations
 public struct FieldDesc
 {
 public:
+final:
     @flags enum Protection
     {
         Unknown = 0,

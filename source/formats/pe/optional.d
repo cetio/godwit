@@ -46,6 +46,7 @@ public enum DllCharacteristics : ushort
 public struct OptionalImage
 {
 public:
+final:
     // All unset if sizeOfOptionalHeader == 0!
     // magic
     ImageType type;
@@ -86,6 +87,7 @@ public:
 public struct ROMImage
 {
 public:
+final:
     // magic
     ImageType type;
     ubyte majorLinkerVersion;
@@ -100,6 +102,7 @@ public:
 public struct PE32Image
 {
 public:
+final:
     // magic
     ImageType type;
     ubyte majorLinkerVersion;
@@ -137,6 +140,7 @@ public:
 public struct PE64Image
 {
 public:
+final:
     // magic
     ImageType type;
     ubyte majorLinkerVersion;
@@ -174,6 +178,7 @@ public:
 public struct DataDirectory
 {
 public:
+final:
     uint rva;
     uint size;
 }

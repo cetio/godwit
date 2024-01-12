@@ -10,6 +10,7 @@ import godwit.llv.traits;
 public struct AssemblyBinder
 {
 public:
+final:
     // #ifdef FEATURE_READYTORUN
     SHash!(SimpleNameToMVIDAndAssembly, uint) m_assemblySimpleNameMvidCheckHash;
     ApplicationContext m_appContext;
@@ -24,6 +25,7 @@ public:
 public struct SimpleNameToMVIDAndAssembly
 {
 public:
+final:
     char* m_simpleName;
     // When an assembly is loaded, this Mvid value will be set to the mvid of the assembly. If there are multiple assemblies
     // with different mvid's loaded with the same simple name, then the Mvid value will be set to all zeroes.
