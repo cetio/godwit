@@ -22,11 +22,6 @@ private class C
 
 public:
 static:
-/// True if `T` is a type allocated on the stack, otherwise, false.
-alias isStack(T) = Alias!(!isHeap!T);
-/// True if `T` is a type allocated on the heap, otherwise, false.
-alias isHeap(T) = Alias!(!isStaticArray!T && !isPointer!T && hasIndirections!T);
-
 /**
     Shallow clones a value.
 

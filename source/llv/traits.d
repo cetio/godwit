@@ -12,12 +12,24 @@ enum exempt;
 
 public:
 static:
-private template ElementType(T) 
+/// True if `T` is a type allocated on the stack, otherwise, false.
+alias isStack(T) = Alias!(!isHeap!T);
+/// True if `T` is a type allocated on the heap, otherwise, false.
+alias isHeap(T) = Alias!(!isStaticArray!T && !isPointer!T && hasIndirections!T);
+
+/// Gets the element type of T, if applicable.
+public template ElementType(T) 
 {
     static if (is(T == U[], U))
         alias ElementType = ElementType!U;
     else
         alias ElementType = T;
+}
+
+/// True if `func` is exported, otherwise, false.
+public template isExport(alias func) 
+{
+    enum isExport = __traits(getVisibility, func) == "export";
 }
 
 /**
@@ -28,6 +40,9 @@ private template ElementType(T)
 
     Returns:
         An AliasSeq of all modules publicly imported by `mod`
+
+    Remarks:
+        Requires that the path in which the module is contained, is added as a -J argument.
 */
 public template imports(alias mod)
 {
@@ -36,10 +51,10 @@ public template imports(alias mod)
         string[] ret;
         foreach (line; import((__traits(identifier, mod)).replace("godwit.", "") ~ ".d").splitter('\n'))
         {
-            int ii = line.indexOf("public import ");
+            long ii = line.indexOf("public import ");
             if (ii != -1)
             {
-                int si = line.indexOf(";", ii + 13);
+                long si = line.indexOf(";", ii + 13);
                 if (si != -1)
                     ret ~= line[(ii + 13).. si].strip;
             }
@@ -67,9 +82,9 @@ pure string pragmatize(string str)
     return str.filter!(c => isAlphaNum(c) || c == '_').array.to!string;
 }
 
-/// Template mixin for auto-generating properties.
-/// Assumes standardized prefixes! (m_ for backing fields, k for masked enum values)
-/// Assumes standardized postfixes! (MASK or Mask for masks)
+/// Template mixin for auto-generating properties.\
+/// Assumes standardized prefixes! (m_ for backing fields, k for masked enum values) \
+/// Assumes standardized postfixes! (MASK or Mask for masks) \
 // TODO: Overloads (allow devs to write specifically a get/set and have the counterpart auto generated)
 //       ~Bitfield exemption?~
 //       Conditional get/sets? (check flag -> return a default) (default attribute?)
