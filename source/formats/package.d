@@ -9,3 +9,4 @@ public import godwit.formats.pe.standard;
 public import godwit.formats.elf.header;
 public import godwit.formats.elf.program;
 public import godwit.formats.elf.sections;
+public import godwit.formats.make;

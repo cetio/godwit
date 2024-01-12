@@ -47,7 +47,7 @@ extern (C) export bool initialize(Module* pMod)
 {
     //appDomain = pDOM;
     writeln("Initialized! ", pMod);
-    import godwit.make;
+    import godwit.formats.make;
     make!(godwit.vm, "C:\\Users\\stake\\Documents").csharp("ICLR");
     make!(godwit.inc, "C:\\Users\\stake\\Documents").csharp("ICLR");
     make!(godwit.gc, "C:\\Users\\stake\\Documents").csharp("ICLR");
