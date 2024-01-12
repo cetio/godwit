@@ -5,6 +5,7 @@ import godwit.llv.traits;
 public struct CrstBase
 {
 public:
+final:
     @flags enum ReservedFlags : uint
     {
         ReservedFlagsMask = 0xC0000000,

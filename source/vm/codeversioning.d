@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct NativeCodeVersion
 {
 public:
+final:
     /*
 #ifndef FEATURE_CODE_VERSIONING
     PTR_MethodDesc m_pMethodDesc;

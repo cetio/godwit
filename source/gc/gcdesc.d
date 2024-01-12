@@ -15,6 +15,8 @@ version(X86_64)
 // ValSeriesItem
 public struct VTSeriesItem
 {
+public:
+final:
     half_size_t m_nptrs;
     half_size_t m_skip;
 
@@ -25,6 +27,7 @@ public struct VTSeriesItem
 public struct GCDescSeries
 {
 public:
+final:
     union
     {
         size_t m_seriesSize;
@@ -39,13 +42,14 @@ public:
 public struct GCDesc
 {
 public:
-    static size_t computeSize(size_t numSeries)
+final:
+    pure static size_t computeSize(size_t numSeries)
     {
         return size_t.sizeof + numSeries * GCDescSeries.sizeof;
     }
 
     // For value type array
-    static size_t computeSizeRepeating(size_t numSeries)
+    pure static size_t computeSizeRepeating(size_t numSeries)
     {
         return size_t.sizeof + GCDescSeries.sizeof +
                (numSeries - 1) * VTSeriesItem.sizeof;

@@ -8,6 +8,7 @@ import godwit.applicationcontext;
 public struct SHash(ELEM, COUNT)
 {
 public:
+final:
     ELEM* m_table;
     COUNT m_size;
     COUNT m_count;

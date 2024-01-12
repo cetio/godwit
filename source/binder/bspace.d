@@ -9,6 +9,7 @@ import godwit.llv.traits;
 public struct BinderSpace
 {
 public:
+final:
     int m_refCount;
     PEImage* m_peImage;
     AssemblyName* m_assemblyName;

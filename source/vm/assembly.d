@@ -14,6 +14,7 @@ import godwit.llv.traits;
 public struct Assembly
 {
 public:
+final:
     BaseDomain* m_baseDomain;
     // Pointer to the struct loader responsible for loading types from this assembly.
     ClassLoader* m_classLoader;
@@ -58,6 +59,7 @@ public:
 public struct FriendAssemblyDescriptor
 {
 public:
+final:
     // Friend assemblies which have access to all internals
     ArrayList m_fullAccessFriendAssemblies;
     // Subject assemblies which we will not perform access checks against

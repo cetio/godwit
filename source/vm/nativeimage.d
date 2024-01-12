@@ -13,6 +13,7 @@ import godwit.llv.traits;
 public struct NativeImage
 {
 public:
+final:
     // Points to the OwnerCompositeExecutable section content within the component MSIL module
     char* m_fileName;
     AssemblyBinder* m_assemblyBinder;
@@ -35,6 +36,7 @@ public:
 public struct AssemblyNameIndex
 {
 public:
+final:
     char* m_name;
     int m_index;
 

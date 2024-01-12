@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct FreeBlock
 {
 public:
+final:
     void* m_block;
     // Size of this block (includes size of FreeBlock)
     size_t m_size;      
@@ -21,6 +22,7 @@ public struct CodeFragmentHeap
     alias iLoaderHeapBackout this;
 
 public:
+final:
     enum StubBlockKind
     {
         Unknown,

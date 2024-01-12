@@ -11,6 +11,7 @@ import godwit.llv.traits;
 public struct LoaderAllocator
 {
 public:
+final:
     align(8) ubyte* m_initialReservedMemForLoaderHeaps;
     ubyte[LoaderHeap.sizeof] m_lowFreqHeapInstance;
     ubyte[LoaderHeap.sizeof] m_highFreqHeapInstance;

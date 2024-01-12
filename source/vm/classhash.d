@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct EEClassHashEntry
 {
 public:
+final:
     /*
 #ifdef _DEBUG
     PTR_CUTF8                               DebugKey[2];    // Name of the type
@@ -30,6 +31,7 @@ public struct EEClassHashTable
     alias dacEnumerableHashTable this;
 
 public:
+final:
     bool m_caseInsensitive;
 
     mixin accessors;

@@ -38,6 +38,7 @@ import godwit.llv.traits;
 public struct TypeHandle
 {
 public:
+final:
     // TypeHandle may represent any of the following:
     union
     {
@@ -62,6 +63,7 @@ public:
 public struct Instantiation
 {
 public:
+final:
     /// Note that for DAC builds, m_pArgs may be host allocated buffer, not a copy of an object marshalled by DAC.
     /// Pointer to TypeHandles for the instantiation
     TypeHandle* m_args;

@@ -5,6 +5,7 @@ import godwit.llv.traits;
 public struct HashMap
 {
 public:
+final:
     /*
 #ifdef HASHTABLE_PROFILE
     unsigned    m_cbRehash;    // number of times rehashed
@@ -49,6 +50,7 @@ public:
 public struct Bucket
 {
 public:
+final:
     /// Bucket keys
     uint*[4] m_keys;
     /// Bucket values
@@ -61,6 +63,7 @@ public:
 public struct Compare
 {
 public:
+final:
     /// Comparer function, to compare 2 objects (may be changed with op_x?)
     // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
     bool function(uint*, uint*) fn;

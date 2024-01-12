@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct EEHashEntry
 {
 public:
+final:
     EEHashEntry* m_next;
     uint m_hashValue;
     void* m_data;
@@ -21,6 +22,8 @@ public:
 // atomically. The union is in order to not change the SOS macros.
 public struct BucketTable
 {
+public:
+final:
     // Pointer to first entry for each bucket
     EEHashEntry* m_buckets;
     uint m_count;
@@ -68,6 +71,7 @@ public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
 public struct ClassFactoryInfo
 {
 public:
+final:
     UUID m_clsId;
     wchar* m_srvName;
 
@@ -77,6 +81,7 @@ public:
 public struct EEStringData
 {
 public:
+final:
     // The string data.
     wchar* m_str;
     uint m_length;

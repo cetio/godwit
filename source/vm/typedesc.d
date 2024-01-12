@@ -19,6 +19,7 @@ import godwit.llv.traits;
 public struct TypeDesc
 {
 public:
+final:
     @flags enum TypeFlags
     {
         Unrestored = 0x00000400,
@@ -49,6 +50,7 @@ public struct ParamTypeDesc
     alias typeDesc this;
 
 public:
+final:
     TypeHandle m_arg;
     ptrdiff_t m_exposedClassObject;
 
@@ -69,6 +71,7 @@ public struct TypeVarTypeDesc
     alias typeDesc this;
 
 public:
+final:
     Module* m_ceemodule;
     MDToken m_mdToken;
     uint m_numConstraints;
@@ -89,6 +92,7 @@ public struct FnPtrTypeDesc
     alias typeDesc this;
 
 public:
+final:
     /// Number of arguments
     uint m_numArgs;
     /// Calling convention

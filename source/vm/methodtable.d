@@ -12,6 +12,7 @@ import godwit.llv.traits;
 public struct WriteableData
 {
 public:
+final:
     @flags enum WriteableFlags : uint
     {
         RemotingConfigChecked     = 0x00000001,
@@ -50,6 +51,7 @@ public:
 public struct GuidInfo
 {
 public:
+final:
     UUID m_guid;
     bool m_generatedFromName;
 
@@ -59,6 +61,7 @@ public:
 public struct MethodTable
 {
 public:
+final:
     @flags enum GenericFlags : ushort
     {
         // Statics

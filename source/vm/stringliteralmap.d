@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct StringLiteralMap
 {
 public:
+final:
     // Hash tables that maps a Unicode string to a COM+ string handle.
     EEUnicodeStringLiteralHashTable* m_stringToEntryHashTable;
     // The memorypool for hash entries for this hash table.

@@ -5,6 +5,7 @@ import godwit.llv.traits;
 public struct SimpleRWLock
 {
 public:
+final:
     // lock used for R/W synchronization
     int m_rwLock;
     // Does this lock require to be taken in PreemptiveGC mode?

@@ -9,6 +9,7 @@ public struct AssemblyName
     alias assemblyIdentity this;
 
 public:
+final:
     int m_refCount;
     bool m_isDefinition;
 

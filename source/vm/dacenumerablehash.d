@@ -7,6 +7,7 @@ import godwit.llv.traits;
 public struct VolatileEntry(T)
 {
 public:
+final:
     // The derived-class format of an entry
     T m_value;           
     // Pointer to the next entry in the bucket chain (or NULL)
@@ -20,6 +21,7 @@ public:
 public struct DacEnumerableHashTable(FINAL, VALUE, int SCALE)
 {
 public:
+final:
     Module* m_ceemodule;
     LoaderHeap* m_heap;
     VolatileEntry!VALUE* m_buckets;

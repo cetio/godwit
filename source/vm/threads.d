@@ -9,6 +9,7 @@ import godwit.llv.traits;
 public struct DeadlockAwareLock
 {
 public:
+final:
     /// Volatile
     /// The thread that this lock is maintaining
     Thread* m_holdingThread;

@@ -5,6 +5,7 @@ import godwit.llv.traits;
 public struct ExceptionRecord
 {
 public:
+final:
     uint m_exceptionCode;
     uint m_exceptionFlags;
     ExceptionRecord* m_exceptionRecord;
@@ -18,6 +19,7 @@ public:
 public struct ExceptionPointers
 {
 public:
+final:
     ExceptionRecord* m_exceptionRecord;
     Context* m_context;
 
@@ -27,6 +29,7 @@ public:
 public struct FloatingSaveArea
 {
 public:
+final:
     uint m_control;
     uint m_status;
     uint m_tag;
@@ -43,6 +46,7 @@ public:
 public struct Context
 {
 public:
+final:
     uint m_contextFlags;
     uint m_dr0PAL;
     uint m_dr1PAL;

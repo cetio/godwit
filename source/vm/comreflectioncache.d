@@ -2,6 +2,7 @@ module godwit.comreflectioncache;
 
 import godwit.simplerwlock;
 import godwit.methodtable;
+import godwit.llv.traits;
 
 public struct ReflectionCache(ELEM, TYPE, int SIZE)
 {
@@ -9,18 +10,24 @@ public struct ReflectionCache(ELEM, TYPE, int SIZE)
     alias simpleRWLock this;
 
 public:
-    int index;
-    int stamp;
+final:
+    int m_index;
+    int m_stamp;
+
+    mixin accessors;
 }
 
 public struct DispIDCacheElement
 {
 public:
-    MethodTable* methodTable;
-    int nameLength;
-    uint lcId;
-    int dispId;
-    wchar[24] name;
+final:
+    MethodTable* m_methodTable;
+    int m_nameLength;
+    uint m_lcId;
+    int m_dispId;
+    wchar[24] m_name;
+
+    mixin accessors;
 }
 
 alias DispIDCache = ReflectionCache!(DispIDCacheElement, int, 128);

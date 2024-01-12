@@ -19,6 +19,7 @@ import godwit.llv.traits;
 public struct LookupMap(T)
 {
 public:
+final:
     LookupMap* m_next;
     T** m_table;
     // Number of elements in this node (only RIDs less than this value can be present in this node)
@@ -32,6 +33,7 @@ public:
 public struct ModuleBase
 {
 public:
+final:
     // Linear mapping from TypeRef token to TypeHandle *
     LookupMap!TypeRef m_typeRefToMethodTableMap;
     // Mapping of AssemblyRef token to Module *
@@ -58,6 +60,7 @@ public:
 public struct VASigCookie
 {
 public:
+final:
     uint m_sizeOfArgs;
     ubyte* m_ndirectILStub;
     Module* m_ceemodule;
@@ -73,6 +76,7 @@ public struct Module
     alias moduleBase this;
 
 public:
+final:
     @flags enum TransientFlags : uint
     {
         // Set once we know for sure the Module will not be freed until the appdomain itself exits

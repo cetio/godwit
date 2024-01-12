@@ -10,6 +10,7 @@ import godwit.llv.traits;
 public struct ILStubHashBlobBase
 {
 public:
+final:
     // this is size of entire object!!
     size_t m_sizeOfBlob;  
 
@@ -22,6 +23,7 @@ public struct ILStubHashBlob
     alias ilStubHashBlobBase this;
 
 public:
+final:
     ubyte[] m_blobData;
 
     mixin accessors;
@@ -30,6 +32,7 @@ public:
 public struct ILStubCache
 {
 public:
+final:
     Crst m_crst;
     LoaderHeap* m_heap;
     MethodTable* m_stubMethodTable;
@@ -41,6 +44,7 @@ public:
 public struct ILStubCacheEntry
 {
 public:
+final:
     MethodDesc* m_methodDesc;
     ILStubHashBlob* m_blob;
 

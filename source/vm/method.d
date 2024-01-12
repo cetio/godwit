@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct MethodDescChunk
 {
 public:
+final:
     @flags enum ChunkFlags : ushort
     {
         TokenRangeMask = 0x0FFF,
@@ -30,6 +31,7 @@ public:
 public struct MethodDesc
 {
 public:
+final:
     @flags enum MethodClassification : uint
     {
         IL,
@@ -95,6 +97,7 @@ public struct ILMethodDesc
     alias methodDesc this;
 
 public:
+final:
     void* m_fn;
     // #ifdef FEATURE_COMINTEROP
     void* m_comPlusCallInfo;
@@ -108,6 +111,7 @@ public struct InstantiatedMethodDesc
     alias methodDesc this;
 
 public:
+final:
     @flags enum InstantiationFlags
     {
         KindMask = 0x07,
@@ -137,6 +141,7 @@ public struct ComPlusCallMethodDesc
     alias methodDesc this;
 
 public:
+final:
     void* m_comPlusCallInfo;
 }
 
@@ -146,6 +151,7 @@ public struct StoredSigMethodDesc
     alias methodDesc this;
 
 public:
+final:
     void* m_sig;
     uint m_count;
     uint m_extendedFlags;
@@ -159,6 +165,7 @@ public struct EEImplMethodDesc
     alias storedSigMethodDesc this;
 
 public:
+final:
     // #ifdef FEATURE_COMINTEROP
     void* m_comPlusCallInfo;
 
@@ -172,6 +179,7 @@ public struct FCallMethodDesc
     alias methodDesc this;
 
 public:
+final:
     uint m_ecallId;
     uint padding;
     // #ifdef FEATURE_COMINTEROP
@@ -186,6 +194,7 @@ public struct DynamicMethodDesc
     alias storedSigMethodDesc this;
 
 public:
+final:
     @flags enum ILStubType : uint
     {
         StubNotSet = 0,
@@ -237,12 +246,14 @@ public struct ArrayMethodDesc
 public struct NDirectImportThunkGlue
 {
 public:
+final:
     void* padding;
 }
 
 public struct NDirectWriteableData
 {
 public:
+final:
     void* m_directTarget;
 
     mixin accessors;
@@ -254,6 +265,7 @@ public struct NDirectMethodDesc
     alias methodDesc this;
 
 public:
+final:
     @flags enum BindingFlags
     {
         EarlyBound = 0x0001, // IJW managed->unmanaged thunk. Standard [sysimport] stuff otherwise.

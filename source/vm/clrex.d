@@ -8,6 +8,7 @@ import godwit.llv.traits;
 public struct StackTraceInfo
 {
 public:
+final:
     // for building stack trace info
     // pointer to stack trace storage
     StackTraceElement*  m_pStackTrace;
@@ -26,6 +27,7 @@ public:
 public struct StackTraceElement
 {
 public:
+final:
     @flags enum StackTraceElementFlags : int
     {
         // Set if this element represents the last frame of the foreign exception stack trace
@@ -48,6 +50,7 @@ public struct CLRException
     alias exception this;
 
 public:
+final:
     ObjectHandle m_throwableHandle;
 
     mixin accessors;
@@ -59,6 +62,7 @@ public struct EEException
     alias clrException this;
 
 public:
+final:
     const(uint) m_kind;
 
     mixin accessors;

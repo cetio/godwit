@@ -5,6 +5,7 @@ import godwit.llv.traits;
 public struct SBuffer
 {
 public:
+final:
     @flags enum Representation {
         Empty = 0x00,
         Unicode = 0x04,
@@ -50,6 +51,7 @@ public struct SString
 public struct SArray(T)
 {
 public:
+final:
     SBuffer buffer;
 
     mixin accessors;

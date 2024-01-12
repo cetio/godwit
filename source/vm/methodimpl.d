@@ -7,6 +7,7 @@ import godwit.llv.traits;
 public struct MethodImpl
 {
 public:
+final:
     uint* m_slots;
     // The MethodDesc that this MethodImpl implements
     MethodDesc* m_implement;

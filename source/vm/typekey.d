@@ -19,6 +19,7 @@ import godwit.typehandle;
 public struct TypeKey
 {
 public:
+final:
     /**
      * Enumeration defining different types of elements for the TypeKey.
      * Possible values:
@@ -34,7 +35,7 @@ public:
         /**
          * Struct for elements identified as classes (`ELEMENT_TYPE_CLASS`).
          */
-        struct asClass
+        struct AsClass
         {
             Module* ceemodule;
             MDToken typeDef;
@@ -48,7 +49,7 @@ public:
         /**
          * Struct for elements identified as parameters (`ARRAY`, `SZARRAY`, `PTR`, or `BYREF`).
          */
-        struct asParam
+        struct AsParam
         {
             /// Element type
             TypeHandle paramType;
@@ -58,7 +59,7 @@ public:
         /**
          * Struct for elements identified as function pointers (`FNPTR`).
          */
-        struct asFnPtr
+        struct AsFnPtr
         {
             /// Calling convention of the function pointer
             ubyte callConv;

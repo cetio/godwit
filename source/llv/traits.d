@@ -46,7 +46,7 @@ public template isExport(alias func)
 */
 public template imports(alias mod)
 {
-    public pure string[] _imports()
+    pure string[] _imports()
     {
         string[] ret;
         foreach (line; import((__traits(identifier, mod)).replace("godwit.", "") ~ ".d").splitter('\n'))
@@ -67,7 +67,7 @@ public template imports(alias mod)
     ");");
 }
 
-pure string pragmatize(string str) 
+public static pure string pragmatize(string str) 
 {
     // holy import, is there a better way?
     import std.algorithm;
@@ -108,8 +108,8 @@ public template accessors()
             {
                 static if (!__traits(hasMember, typeof(this), member[2..$]))
                 {
-                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_get\") extern (C) export @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
-                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_set\") extern (C) export @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
+                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_get\") extern (C) export final @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"() { return "~member~"; }");
+                    mixin("pragma(mangle, \""~__traits(identifier, typeof(this)).pragmatize()~"_"~member[2..$]~"_set\") extern (C) export final @property "~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" "~member[2..$]~"("~fullyQualifiedName!(typeof(__traits(getMember, typeof(this), member)))~" val) { "~member~" = val; return "~member~"; }");
                 }
 
                 // Flags

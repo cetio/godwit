@@ -27,6 +27,7 @@ enum FILO;
 public struct Stack(T, O = LIFO)
 {
 private:
+final:
     T[] arr;
     
 public:
@@ -48,7 +49,7 @@ public:
         Throws:
         `assert`: If array is empty.
     */
-    @trusted T pop()
+    T pop()
     {
         return arr.pop!O();
     }
@@ -62,9 +63,9 @@ public:
         Throws:
         `assert`: If array is empty.
     */
-    @trusted T dup()
+    T peek()
     {
-        return arr.dup!O();
+        return arr.peek!O();
     }
 
     /** 
@@ -73,7 +74,7 @@ public:
         Throws:
         `assert`: If array has less than 2 elements.
     */
-    @trusted void swap()
+    void swap()
     {
         return arr.swap!O();
     }
@@ -84,7 +85,7 @@ public:
         Params:
         - `val`: The value to push onto the stack.
     */
-    nothrow @trusted push(T val)
+    final push(T val)
     {
         return arr.push(val);
     }
@@ -143,7 +144,7 @@ pure @trusted U pop(O = LIFO, T : U[], U)(ref T arr)
     Throws:
     - `assert`: If array is empty.
 */
-pure @trusted U dup(O, T : U[], U)(ref T arr)
+pure @trusted U peek(O, T : U[], U)(ref T arr)
     if (is(O == LIFO) || is(O == FILO))
 {
     assert(arr.length != 0, "Cannot dup from an empty collection!");

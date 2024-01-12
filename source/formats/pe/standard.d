@@ -3,6 +3,7 @@ module godwit.formats.pe.standard;
 public struct DOSHeader 
 {
 public:
+final:
     ushort e_magic;
     ushort e_cblp;
     ushort e_cp;
@@ -80,6 +81,7 @@ public enum Characteristics : ushort
 public struct COFFHeader
 {
 public:
+final:
     uint magic;
     MachineType machine;
     ushort numberOfSections; 

@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct BundleFileLocation
 {
 public:
+final:
     long m_size;
     long m_offset;
     long m_uncompressedSize;
@@ -16,6 +17,7 @@ public:
 public struct Bundle
 {
 public:
+final:
     SString m_path;
     // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
     bool function(const char* path, long* offset, long* size, long* compressedSize) probe;

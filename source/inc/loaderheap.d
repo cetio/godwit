@@ -6,6 +6,7 @@ import godwit.llv.traits;
 public struct LoaderHeapBlock
 {
 public:
+final:
     LoaderHeapBlock* m_next;
     // The virtual address where this LoaderHeapBlock resides.
     void* m_virtualAddress;
@@ -19,6 +20,7 @@ public:
 public struct UnlockedLoaderHeap
 {
 public:
+final:
     enum HeapKind
     {
         Data,
@@ -96,6 +98,7 @@ public struct LoaderHeap
     //alias iLoaderHeapBackout this;
 
 public:
+final:
     CritSecCookie m_critSec;
 
     mixin accessors;

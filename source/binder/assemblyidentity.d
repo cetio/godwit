@@ -7,6 +7,7 @@ import godwit.llv.traits;
 public struct AssemblyIdentity
 {
 public:
+final:
     enum PEKind
     {
         None = 0x00000000,
