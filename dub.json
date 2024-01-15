@@ -7,10 +7,13 @@
     "license": "MPL-2.0",
     "name": "godwit",
     "targetType": "executable",
+    "importPaths": [
+        "source"
+    ],
     "configurations": [
         {
-            "name": "library",
-            "dflags": ["-J=C:\\Users\\stake\\Documents\\source\\repos\\godwit\\source\\"]
+            "name": "executable",
+            "dflags": ["-J=source\\"]
         }
     ]
 }
