@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/License-MPL--2-blue)](#license)
 [![Build - Intangible](https://img.shields.io/badge/Build-Intangible-informational)](https://)
 
+[![Caiman](https://img.shields.io/badge/Caiman-blueviolet?style=for-the-badge&logo=github)](https://)
+
 [Trello](https://trello.com/b/e5HQc6nz/godwit)
 
 D-CoreCLR interop library, intended to allow D and other bound languages to interact with C# programs without any explicit back and forth between the languages. This is achieved by directly translating CoreCLR structures and code into D.
