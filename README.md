@@ -12,9 +12,12 @@ As of present, the interacting language must be initialized by C#, due to the co
 
 ## Support
 
+Primary support is for Windows, **MacOS does not, and will never have support**, and Linux will have support albeit slightly less up-to-code than Windows potentially.
+
 Godwit is intended to have support for all of the things that `System.Reflection` in C# supports, including PE/metadata reading, assembly, disassembly, and execution of IL code.
 
-However, until Godwit is near completion, implementation flags will not be fully supported, meaning that Godwit is incredibly volatile unless you can absolutely guarantee there is no mismatch.
+Implementation flags are very important for Godwit to support, and Godwit does have support for CoreCLR implementation flags, but there is no built in way to know how your CoreCLR host was built.
+You may need to tinker or make your own build of CoreCLR, but the defaults should usually work.
 
 ### Equivalence
 
