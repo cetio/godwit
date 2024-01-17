@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="/godwit.png" alt="AAAGGGGHHH" width="300">
-</p>
-
 # Godwit
 
 [![License](https://img.shields.io/badge/License-MPL--2-blue)](#license)
