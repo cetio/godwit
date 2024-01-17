@@ -5,30 +5,44 @@ import godwit.pal;
 import godwit.clrex;
 import godwit.objects;
 import caiman.traits;
+import godwit.exstatecommon;
+
+public struct EHContext
+{
+public:
+final:
+    uint m_eax;
+    uint m_ebx;
+    uint m_ecx;
+    uint m_edx;
+    uint m_esi;
+    uint m_edi;
+    uint m_ebp;
+    uint m_esp;
+    uint m_eip;
+
+    mixin accessors;
+}
 
 public struct ExInfo
 {
 public:
 final:
-    // Note = the debugger assumes that m_pThrowable is a strong
-    // reference so it can check it for NULL with preemptive GC
-    // enabled.
-    // thrown exception
     ObjectHandle m_hndThrowable;
-    // topmost frame for current managed frame group
+    /// Topmost frame for current managed frame group
     ushort** m_searchBoundary;
-    // After a catch of a COM+ exception, pointers/context are trashed.
+    /// After a catch of a COM+ exception, pointers/context are trashed.
     uint m_exceptionCode;
-    // most recent EH record registered
+    /// Most recent EH record registered
     void* m_bottomMostHandler;
-    // Reference to the topmost handler we saw during an SO that goes past us
+    /// Reference to the topmost handler we saw during an SO that goes past us
     void* m_topMostHandlerDuringSO;
-    // Esp when  fault occurred, OR esp to restore on endcatch
+    /// Esp when fault occurred, OR esp to restore on endcatch
     void* m_esp;
     StackTraceInfo m_stackTraceInfo;
-    // pointer to nested info if are handling nested exception
+    /// Pointer to nested info if are handling nested exception
     ExInfo* m_prevNestedInfo;
-    // Zero this after endcatch
+    /// Zero this after endcatch
     size_t* m_shadowSP;
     ExceptionRecord* m_exceptionRecord;
     ExceptionPointers* m_exceptionPointers;
@@ -40,12 +54,22 @@ final:
     // for some records, it will be a pseudo stack location -- the place where we think
     // the record should have been (except for the re-entry case).
     void* m_stackAddress;
-    /*
-#ifndef TARGET_UNIX
-    EHWatsonBucketTracker m_WatsonBucketTracker;
-#endif
-    */
+    version (Windows)
+    {
+        EHWatsonBucketTracker m_WatsonBucketTracker;
+    }
     bool m_deliveredFirstChanceNotification;
+    DebuggerExState m_debuggerExState;
+    EHClauseInfo m_ehClauseInfo;
+    ExceptionFlags m_exceptionFlags;
+    version (X86)
+    {
+        static if (DEBUGGING_SUPPORTED)
+        {
+            EHContext m_interceptionContext;
+            bool m_validInterceptionContext;
+        }
+    }
 
     mixin accessors;
 }

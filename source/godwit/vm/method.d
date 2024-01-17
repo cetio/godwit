@@ -4,6 +4,8 @@ import std.bitmanip;
 import godwit.methodtable;
 import godwit.methodimpl;
 import caiman.traits;
+import godwit.impl;
+import godwit.genericdict;
 
 public struct MethodDescChunk
 {
@@ -79,6 +81,15 @@ final:
         Preemptive    
     }
 
+    static if (DEBUG)
+    {
+        const(char*) m_debugMethodName;
+        const(char*) m_debugClassName;
+        const(char*) m_debugMethodSignature;
+        MethodTable* m_debugMethodTable;
+        // ----> GCCoverageInfo <----
+        uint* m_gcCover;
+    }
     CodeFlags m_codeFlags;
     ubyte m_chunkIndex;
     ubyte m_methodIndex;
@@ -87,20 +98,6 @@ final:
         MethodClassification, "m_classification", 3,
         MethodProperties, "m_properties", 13
     ));
-
-    mixin accessors;
-}
-
-public struct ILMethodDesc
-{
-    MethodDesc methodDesc;
-    alias methodDesc this;
-
-public:
-final:
-    void* m_fn;
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
 
     mixin accessors;
 }
@@ -123,14 +120,13 @@ final:
 
     union
     {
+        // ----> DictionaryLayout <----
         ubyte* m_dictLayout;
         MethodDesc* m_wrappedMethodDesc;
     }
-    ubyte* m_perInstInfo;
+    Dictionary* m_perInstInfo;
     InstantiationFlags m_instFlags;
     int m_genericsCount;
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
 
     mixin accessors;
 }
@@ -142,7 +138,6 @@ public struct ComPlusCallMethodDesc
 
 public:
 final:
-    void* m_comPlusCallInfo;
 }
 
 public struct StoredSigMethodDesc
@@ -166,8 +161,6 @@ public struct EEImplMethodDesc
 
 public:
 final:
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
 
     mixin accessors;
 }
@@ -182,8 +175,6 @@ public:
 final:
     uint m_ecallId;
     uint padding;
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
 
     mixin accessors;
 }
@@ -229,10 +220,9 @@ final:
         ILStubTypeMask = ~(FlagMask | StackArgSizeMask)
     }
 
-    char* m_methodName;
+    const(char*) m_methodName;
+    // ----> DynamicResolver <----
     ubyte* m_resolver;
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
 
     mixin accessors;
 }
@@ -241,13 +231,6 @@ public struct ArrayMethodDesc
 {
     StoredSigMethodDesc storedSigMethodDesc;
     alias storedSigMethodDesc this;
-}
-
-public struct NDirectImportThunkGlue
-{
-public:
-final:
-    void* padding;
 }
 
 public struct NDirectWriteableData
@@ -283,18 +266,53 @@ final:
         NDirectPopulated = 0x8000, // Indicate if the NDirect has been fully populated.
     }
 
-    char* m_entrypointName;
+    const(char*) m_entrypointName;
     union
     {
-        char* m_libName;
+        const(char*) m_libName;
+        /// ECallID for QCalls
         uint m_ecallId;
     }
+    /// The JIT generates an indirect call through this location in some cases.
+    /// Initialized to NDirectImportThunkGlue. Patched to the true target or
+    /// host interceptor stub or alignment thunk after linking.
     NDirectWriteableData* m_writeableData;
-    NDirectImportThunkGlue* m_importThunkGlue;
+    // Defining a struct for this is useless, as it has an ifdef but always has a size of 8
+    // and is just a padding field (for whatever reason?)
+    // NDirectImportThunkGlue
+    void* m_importThunkGlue;
     uint m_defaultDllSearchAttr;
     BindingFlags m_bindingFlags;
-    // #ifdef FEATURE_COMINTEROP
-    void* m_comPlusCallInfo;
+    static if (TARGET_x64)
+    {
+        /// Size of outgoing arguments (on stack). Note that in order to get the @n stdcall name decoration,
+        short m_numStackArgSize;
+    }
+
+    mixin accessors;
+}
+
+public struct ComPlusCallInfo
+{
+public:
+final:
+    union
+    {
+        // IL stub for CLR to COM call
+        uint* m_ilStub;
+        // MethodDesc of the COM event provider to forward the call to (COM event interfaces)
+        MethodDesc* m_methodDesc;
+    }
+    MethodTable* m_interfaceMethodTable;
+    bool m_requiresArgWrapping;
+    short m_cachedComSlot;
+    version (X86)
+    {
+        // Size of outgoing arguments (on stack). This is currently used only
+        // on x86 when we have an InlinedCallFrame representing a CLR->COM call.
+        short m_numStackArgSize;
+        void* m_retThunk;
+    }
 
     mixin accessors;
 }

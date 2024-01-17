@@ -5,8 +5,65 @@ import godwit.ceeload;
 import godwit.siginfo;
 import caiman.traits;
 import godwit.impl;
+import godwit.shash;
+import godwit.appdomain;
+import godwit.crst;
+import godwit.objects;
 
-// dll something something .h
+// dllimportcallback.h
+
+public struct UMEntryThunkCache
+{
+public:
+final:
+    SHash!(CacheElement, uint) m_hash;
+    Crst m_crst;
+    AppDomain* m_domain;
+    
+    mixin accessors;
+}
+
+public struct CacheElement
+{
+public:
+final:
+    MethodDesc* m_methodDesc;
+    UMEntryThunk* m_thunk;
+
+    mixin accessors;
+}
+
+public struct UMEntryThunk
+{
+public:
+final:
+    uint* m_managedTarget;
+    MethodDesc* m_methodDesc;
+    ObjectHandle m_objectHandle;
+    union
+    {
+        UMThunkMarshInfo* m_umThunkMarshInfo;
+        UMEntryThunk* m_next;
+    }
+    static if (DEBUG)
+    {
+        uint m_state;
+    }
+    // UMEntryThunkCode
+    // padding                  // CC CC CC CC
+    // mov r10, pUMEntryThunk   // 49 ba xx xx xx xx xx xx xx xx    // METHODDESC_REGISTER
+    // mov rax, pJmpDest        // 48 b8 xx xx xx xx xx xx xx xx    // need to ensure this imm64 is qword aligned
+    // TAILJMP_RAX              // 48 FF E0
+    ubyte[4] m_padding;
+    ubyte[2] m_movR10;
+    void* m_start;
+    ubyte[2] m_movRAX;
+    align(8) const ubyte* m_execStub;
+    ubyte[3] m_jmpRAX;
+    ubyte[5] m_padding2;
+
+    mixin accessors;
+}
 
 public struct UMThunkMarshInfo
 {
@@ -63,9 +120,9 @@ final:
         static if (HOST_x64)
         {
             /// Ensure code after the Stub struct align to 16-bytes.
-            uint pad1;
-            uint pad2;
-            uint pad3;
+            uint padding1;
+            uint padding2;
+            uint padding3;
         }
     }
 

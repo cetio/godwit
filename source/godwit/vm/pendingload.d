@@ -6,21 +6,22 @@ import godwit.ex;
 import godwit.typekey;
 import caiman.traits;
 import caiman.state;
+import godwit.impl;
 
 public struct PendingTypeLoadEntry
 {
 public:
 final:
     Crst m_crst;
-    // Result of loading; this is first created in the CREATE stage of class loading
+    /// Result of loading; this is first created in the CREATE stage of class loading
     TypeHandle m_typeHandle;
     TypeKey m_typeKey;
-    // Number of threads waiting for this type
+    /// Number of threads waiting for this type
     int m_waitCount;
-    // Error result, propagated to all threads loading this class
+    /// Error result, propagated to all threads loading this class
     HResult m_hresult;
     EXException* m_exception;
-    // m_Crst was acquired
+    /// m_Crst was acquired
     bool m_lockAcquired;
 
     mixin accessors;
@@ -41,13 +42,13 @@ public struct PendingTypeLoadTable
 {
 public:
 final:
-    // Pointer to first entry for each bucket
+    /// Pointer to first entry for each bucket
     TableEntry** m_buckets;    
     uint m_numBuckets;
-/*
-#ifdef _DEBUG
-    DWORD           m_dwDebugMemory;
-#endif
-*/
+    static if (DEBUG)
+    {
+        uint m_numDebugMemory;
+    }
+    
     mixin accessors;
 }

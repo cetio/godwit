@@ -42,6 +42,7 @@ public struct ConvertedImageLayout
 public:
 final:
     RuntimeFunction* m_exceptionDir;
+    // MAX_PARTS
     size_t[16] m_imageParts;
 
     mixin accessors;
@@ -54,8 +55,14 @@ public struct LoadedImageLayout
 
 public:
 final:
-    ptrdiff_t* m_hmodule;
-    void** m_loadedFile;
+    version (Windows)
+    {
+        ptrdiff_t* m_hmodule;
+    }
+    else
+    {
+        void** m_loadedFile;
+    }
 
     mixin accessors;
 }

@@ -4,6 +4,7 @@ import godwit.assembly;
 import godwit.crst;
 import godwit.pendingload;
 import caiman.traits;
+import godwit.impl;
 
 public struct ClassLoader
 {
@@ -22,21 +23,21 @@ final:
     int m_unhashedModules;
     // Reference to the assembly this belongs to
     Assembly* m_assembly;
-    /*
-#ifdef _DEBUG
-    DWORD               m_dwDebugMethods;
-    DWORD               m_dwDebugFieldDescs; // Doesn't include anything we don't allocate a FieldDesc for
-    DWORD               m_dwDebugClasses;
-    DWORD               m_dwDebugDuplicateInterfaceSlots;
-    DWORD               m_dwGCSize;
-    DWORD               m_dwInterfaceMapSize;
-    DWORD               m_dwMethodTableSize;
-    DWORD               m_dwVtableData;
-    DWORD               m_dwStaticFieldData;
-    DWORD               m_dwFieldDescData;
-    DWORD               m_dwMethodDescData;
-    size_t              m_dwEEClassData;
-#endif
-    */
+    static if (DEBUG)
+    {
+        uint m_numDebugMethods;
+        uint m_numDebugFieldDescs;
+        uint m_numDebugClasses;
+        uint m_numDebugDuplicateInterfaceSlots;
+        uint m_numGCSize;
+        uint m_numInterfaceMapSize;
+        uint m_numMethodTableSize;
+        uint m_numVtableData;
+        uint m_numStaticFieldData;
+        uint m_numFieldDescData;
+        uint m_numMethodDescData;
+        size_t m_numEEClassData;
+    }
+    
     mixin accessors;
 }

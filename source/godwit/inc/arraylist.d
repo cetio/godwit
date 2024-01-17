@@ -1,6 +1,7 @@
 module godwit.arraylist;
 
 import caiman.traits;
+import godwit.impl;
 
 public struct ArrayListBlock
 {
@@ -8,8 +9,7 @@ public:
 final:
     ArrayListBlock* m_next;
     uint m_blockSize;
-    // #ifdef HOST_64BIT
-    version (X86_64)
+    static if (HOST_x64)
     {
         uint padding;
     }
@@ -24,8 +24,7 @@ public:
 final:
     ArrayListBlock* next;
     uint m_blockSize;
-    // #ifdef HOST_64BIT
-    version (X86_64)
+    static if (HOST_x64)
     {
         uint padding;
     }

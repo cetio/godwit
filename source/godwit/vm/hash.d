@@ -1,28 +1,29 @@
 module godwit.hash;
 
 import caiman.traits;
+import godwit.impl;
 
 public struct HashMap
 {
 public:
 final:
-    /*
-#ifdef HASHTABLE_PROFILE
-    unsigned    m_cbRehash;    // number of times rehashed
-    unsigned    m_cbRehashSlots; // number of slots that were rehashed
-    unsigned    m_cbObsoleteTables;
-    unsigned    m_cbTotalBuckets;
-    unsigned    m_cbInsertProbesGt8; // inserts that needed more than 8 probes
-    LONG        m_rgLookupProbes[HASHTABLE_LOOKUP_PROBES_DATA]; // lookup probes
-    UPTR        maxFailureProbe; // cost of failed lookup
-#endif // HASHTABLE_PROFILE
-    */
     enum Mode : bool
     {
         Synchronous,
         SingleUser
     }
 
+    static if (HASHTABLE_PROFILE)
+    {
+        uint m_numRehash;
+        uint m_numRehashSlots;
+        uint m_numObsoleteTables;
+        uint m_numTotalBuckets;
+        uint m_numInsertProbesGT8;
+        // HASHTABLE_LOOKUP_PROBES_DATA
+        int[20] m_lookupProbes;
+        uint* maxFailureProbe;
+    }
     /// Compare object to be used in lookup
     Compare* m_compare;
     /// Current size (index into prime array)
@@ -34,18 +35,17 @@ final:
     size_t m_inserts;
     size_t m_deletes;
     Mode m_mode;
-    /*
-#ifdef _DEBUG
-    LPVOID          m_lockData;
-    FnLockOwner     m_pfnLockOwner;
-    EEThreadId      m_writerThreadId;
-#endif // _DEBUG
-    */
+    static if (DEBUG)
+    {
+        void* m_lockData;
+        FnLockOwner m_lockOwner;
+        EEThreadId m_writerThreadId;
+    }
+
     mixin accessors;
 }
 
-/// Bucket acting as a dictionary with keys and values
-///
+/// Bucket acting as a dictionary with keys and values \
 /// Arbitrarily sized, but must be at least length 4
 public struct Bucket
 {
@@ -65,8 +65,7 @@ public struct Compare
 public:
 final:
     /// Comparer function, to compare 2 objects (may be changed with op_x?)
-    // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
-    bool function(uint*, uint*) fn;
+    @exempt bool function(uint*, uint*) fn;
 
     mixin accessors;
 }

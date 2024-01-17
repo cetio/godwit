@@ -2,6 +2,8 @@ module godwit.loaderheap;
 
 import godwit.corhdr;
 import caiman.traits;
+import godwit.impl;
+import godwit.utilcode;
 
 public struct LoaderHeapBlock
 {
@@ -28,23 +30,30 @@ final:
         Interleaved
     }
 
-    // Linked list of ClrVirtualAlloc'd pages
+    @flags enum LoaderHeapDebugFlags : uint
+    {
+        /// Keep a permanent log of all callers
+        CallTracing    = 0x00000001, 
+        /// One time flag to record that an OOM interrupted call tracing  
+        EncounteredOOM = 0x80000000,   
+    }
+
+    /// Linked list of ClrVirtualAlloc'd pages
     LoaderHeapBlock* m_firstBlock;
-    // Allocation pointer in current block
+    /// Allocation pointer in current block
     ubyte* m_allocPtr;
-    // Points to the end of the committed region in the current block
+    /// Points to the end of the committed region in the current block
     ubyte* m_endCommittedRegion;
     ubyte* m_endReservedRegion;
-    // When we need to ClrVirtualAlloc() MEM_RESERVE a new set of pages, number of bytes to reserve
+    /// When we need to ClrVirtualAlloc() MEM_RESERVE a new set of pages, number of bytes to reserve
     uint m_reserveBlockSize;
-    // When we need to commit pages from our reserved list, number of bytes to commit at a time
+    /// When we need to commit pages from our reserved list, number of bytes to commit at a time
     uint m_commitBlockSize;
-    // For interleaved heap (RX pages interleaved with RW ones), this specifies the allocation granularity,
-    // which is the individual code block size
+    /// For interleaved heap (RX pages interleaved with RW ones), this specifies the allocation granularity,
+    /// which is the individual code block size.
     uint m_granularity;
-    // Range list to record memory ranges in
-    // This should be a RangeList
-    uint* m_rangeList;
+    /// Range list to record memory ranges in
+    RangeList* m_rangeList;
     size_t m_totalAlloc;
     HeapKind m_kind;
     // This can't be right
@@ -54,37 +63,53 @@ final:
     // that requires comitting the first page of the reserved block, and for
     // startup working set reasons we want to delay that as long as possible.
     LoaderHeapBlock m_reservedBlock;
-    /*
-#ifdef _DEBUG
-    enum
+    static if (DEBUG)
     {
-        kCallTracing    = 0x00000001,   // Keep a permanent log of all callers
-
-        kEncounteredOOM = 0x80000000,   // One time flag to record that an OOM interrupted call tracing
+        LoaderHeapDebugFlags m_debugFlags;
+        LoaderHeapEvent* m_eventList;
+        size_t m_numDebugWastedBytes;
+        // Stubs allocated from a LoaderHeap will have unwind info registered with NT.
+        // The info must be unregistered when the heap is destroyed.
+        bool m_permitStubsWithUnwindInfo;
+        bool m_stubUnwindInfoUnregistered;
     }
-    LoaderHeapDebugFlags;
-
-    DWORD               m_dwDebugFlags;
-
-    LoaderHeapEvent    *m_pEventList;   // Linked list of events (in reverse time order)
-    
-    size_t              m_dwDebugWastedBytes;
-    static DWORD        s_dwNumInstancesOfLoaderHeaps;
-    // Stubs allocated from a LoaderHeap will have unwind info registered with NT.
-    // The info must be unregistered when the heap is destroyed.
-    BOOL                m_fPermitStubsWithUnwindInfo;
-    BOOL                m_fStubUnwindInfoUnregistered;
-#endif
-    */
-    // Am I a LoaderHeap or an ExplicitControlLoaderHeap?
+    /// Am I a LoaderHeap or an ExplicitControlLoaderHeap?
     bool m_explicitControl;
+    @exempt void function(ubyte* pageBase, ubyte* pageBaseRX, size_t size) codePageGenerator;
 
     mixin accessors;
+}
+
+public struct LoaderHeapEvent
+{
+public:
+final:
+    enum AllocationType
+    {
+        AllocMem = 1,
+        FreedMem = 4,
+    }
+
+    LoaderHeapEvent* m_next;
+    AllocationType m_allocationType;
+    const(char*) m_file;
+    int m_lineNum;
+    const(char*) m_allocFile;
+    int m_allocLineNum;
+    void* m_mem;
+    size_t m_requestedSize;
+    size_t m_size;
 }
 
 public interface ILoaderHeapBackout
 {
     
+}
+
+public struct ExplicitControlLoaderHeap
+{
+    UnlockedLoaderHeap unlockedLoaderHeap;
+    alias unlockedLoaderHeap this;
 }
 
 public struct LoaderHeap 

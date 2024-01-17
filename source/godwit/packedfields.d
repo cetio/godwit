@@ -1,8 +1,7 @@
 /// Provides interface for reading EEClass field data
 module godwit.packedfields;
 
-/// Reader for EEClass packed (and unpacked) fields
-///
+/// Reader for EEClass packed (and unpacked) fields \
 /// Credit to: https://github.com/Decimation for the structure (NeoCore iirc)
 public immutable struct PackedFields
 {

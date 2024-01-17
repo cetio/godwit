@@ -6,6 +6,7 @@ import godwit.methodtable;
 import godwit.method;
 import godwit.shash;
 import caiman.traits;
+import godwit.loaderallocator;
 
 public struct ILStubHashBlobBase
 {
@@ -34,7 +35,7 @@ public struct ILStubCache
 public:
 final:
     Crst m_crst;
-    LoaderHeap* m_heap;
+    LoaderAllocator* m_allocator;
     MethodTable* m_stubMethodTable;
     SHash!(ILStubCacheEntry, uint) m_hashMap;
 

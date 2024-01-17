@@ -1,13 +1,14 @@
 module godwit.listlock;
 
-import godwit.codeversioning;
+import godwit.codeversion;
 import godwit.crst;
 import godwit.threads;
 import godwit.loaderallocator;
 import caiman.traits;
 import caiman.state;
 
-alias ListLock = ListLockBase!uint*;
+alias ListLock = ListLockBase!(void*);
+alias ListLockEntry = ListLockEntryBase!(void*);
 alias JitListLock = ListLockBase!NativeCodeVersion;
 
 public struct ListLockBase(T)
@@ -16,7 +17,7 @@ public:
 final:
     CrstStatic m_crst;
     bool m_isfInit;
-    // Lock can be broken by a host for deadlock detection
+    /// Lock can be broken by a host for deadlock detection
     bool m_hostBreakable;
     ListLockEntryBase!T* m_head;
 

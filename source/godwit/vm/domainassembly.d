@@ -7,6 +7,8 @@ import godwit.ceeload;
 import godwit.loaderallocator;
 import godwit.exinfo;
 import caiman.traits;
+import godwit.corhdr;
+import godwit.dynamicmethod;
 
 public struct DomainAssembly
 {
@@ -48,12 +50,20 @@ final:
     DomainAssembly* m_nextInALC;
     LoaderAllocator* m_allocator;
     FileLoadLevel m_fileLoadLevel;
-    bool m_isfLoading;
+    bool m_isLoading;
+
     ptrdiff_t m_exposedModuleObject;
     ptrdiff_t m_exposedAssemblyObject;
     ExInfo* m_error;
     bool m_disableActivationCheck;
     bool m_hostAssemblyPublished;
+    // m_pDynamicMethodTable is used by the light code generation to allow method
+    // generation on the fly. They are lazily created when/if a dynamic method is requested
+    // for this specific module
+    DynamicMethodTable* m_dynamicMethodTable;
+    DebuggerAssemblyControlFlags m_debuggerFlags;
+    uint m_notifyflags;
+    bool m_debuggerUnloadStarted;
 
     mixin accessors;
 }

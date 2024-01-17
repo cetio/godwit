@@ -1,17 +1,13 @@
-module godwit.codeversioning;
+module godwit.codeversion;
 
 import godwit.method;
 import caiman.traits;
+import godwit.impl;
 
 public struct NativeCodeVersion
 {
 public:
 final:
-    /*
-#ifndef FEATURE_CODE_VERSIONING
-    PTR_MethodDesc m_pMethodDesc;
-#else // FEATURE_CODE_VERSIONING
-    */
     enum StorageKind
     {
         Unknown,
@@ -19,11 +15,15 @@ final:
         Synthetic
     }
 
+    static if (CODE_VERSIONING)
+    {
+        MethodDesc* m_methodDesc;
+    }
     StorageKind m_storageKind;
     union
     {
         NativeCodeVersionNode* m_versionNode;
-        MethodDesc* m_methodDesc;
+        MethodDesc* m_syntheticMethodDesc;
     }
 
     mixin accessors;
@@ -48,17 +48,22 @@ public:
     long m_parentId;
     NativeCodeVersionNode* m_next;
     uint m_nativeCodeVersionId;
-    //#ifdef FEATURE_TIERED_COMPILATION
-    OptimizationTier m_optTier;
-    /*
-#ifdef HAVE_GCCOVER
-    PTR_GCCoverageInfo m_gcCover;
-#endif
+    static if (TIERED_COMPILATION)
+    {
+        OptimizationTier m_optTier;
+    }
+    static if (GCCOVER)
+    {
+        // ----> GCCoverageInfo <----
+        uint* m_gcCover;
+    }
+    static if (ON_STACK_REPLACEMENT)
+    {
+        // ----> PatchpointInfo <----
+        uint* m_patchpointInfo;
+        uint m_ilOffset;
+    }
+    uint m_isActiveChild;
 
-#ifdef FEATURE_ON_STACK_REPLACEMENT
-    PTR_PatchpointInfo m_patchpointInfo;
-    unsigned m_ilOffset;
-#endif
-    */
     mixin accessors;
 }

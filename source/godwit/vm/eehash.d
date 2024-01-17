@@ -2,6 +2,7 @@ module godwit.eehash;
 
 import std.uuid;
 import caiman.traits;
+import godwit.impl;
 
 public struct EEHashEntry
 {
@@ -10,7 +11,7 @@ final:
     EEHashEntry* m_next;
     uint m_hashValue;
     void* m_data;
-    // The key is stored inline
+    /// The key is stored inline
     ubyte m_key; 
 
     mixin accessors;
@@ -24,12 +25,14 @@ public struct BucketTable
 {
 public:
 final:
-    // Pointer to first entry for each bucket
+    /// Pointer to first entry for each bucket
     EEHashEntry* m_buckets;
     uint m_count;
-    // #ifdef TARGET_64BIT
-    // "Fast Mod" multiplier for "X % m_dwNumBuckets"
-    ulong m_countMul;
+    static if (TARGET_x64)
+    {
+        /// "Fast Mod" multiplier for "X % m_dwNumBuckets"
+        ulong m_countMul;
+    }
 
     mixin accessors;
 }
@@ -49,16 +52,14 @@ public:
     uint m_count;
     void* m_heap;
     int m_growing;
-    /*
-    #ifdef _DEBUG
-    LPVOID          m_lockData;
-    FnLockOwner     m_pfnLockOwner;
+    static if (DEBUG)
+    {
+        void* m_lockData;
+        FnLockOwner m_lockOwner;
+        EEThreadId m_writerThreadId;
+        bool m_checkThreadSafety;
+    }
 
-    EEThreadId      m_writerThreadId;
-    BOOL            m_CheckThreadSafety;
-
-    #endif 
-    */
     mixin accessors;
 }
 
@@ -82,15 +83,15 @@ public struct EEStringData
 {
 public:
 final:
-    // The string data.
+    /// The string data.
     wchar* m_str;
     uint m_length;
-    /*
-    #ifdef _DEBUG
-        BOOL            bDebugOnlyLowChars;      // Does the string contain only characters less than 0x80?
-        DWORD           dwDebugCch;
-    #endif // _DEBUG
-    */  
+    static if (DEBUG)
+    {
+        bool m_debugOnlyLowChars;
+        uint m_debugCch;
+    }
+
     mixin accessors;
 }
 

@@ -1,5 +1,4 @@
-/// Provides functions for working with signatures and their data.
-///
+/// Provides functions for working with signatures and their data. \
 /// Very confusing, so some documentation may not be very helpful.
 module godwit.cor;
 

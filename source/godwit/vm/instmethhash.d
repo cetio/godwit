@@ -4,6 +4,7 @@ import godwit.dacenumerablehash;
 import godwit.loaderallocator;
 import godwit.method;
 import caiman.traits;
+import godwit.impl;
 
 public struct InstMethodHashEntry
 {
@@ -19,12 +20,13 @@ public struct InstMethodHashTable
 
 public:
 final:
-    // This is the domain in which the hash table is allocated
+    /// This is the domain in which the hash table is allocated
     LoaderAllocator* m_allocator;
-    /*
-#ifdef _DEBUG
-    Volatile<LONG> m_dwSealCount; // Can more types be added to the table?
-#endif
-    */
+    static if (DEBUG)
+    {
+        /// Can more types be added to the table?
+        int m_sealCount;
+    }
+
     mixin accessors;
 }

@@ -1,17 +1,18 @@
 module caiman.memorypool;
 
 import caiman.traits;
+import godwit.impl;
 
 public struct PoolElement
 {
 public:
 final:
     PoolElement* m_next;
-    /*
-#if _DEBUG
-		int		deadBeef;
-#endif
-    */
+    static if (DEBUG)
+    {
+        int deadBeef;
+    }
+
     mixin accessors;
 }
 
@@ -21,8 +22,7 @@ public:
 final:
     PoolBlock* m_next;
     PoolElement* m_elementsEnd;
-    // #ifdef _MSC_VER
-    PoolElement[] m_elements;
+    PoolElement* m_elements;
 
     mixin accessors;
 }

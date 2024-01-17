@@ -8,12 +8,13 @@ import godwit.genericdict;
 import godwit.corhdr;
 import godwit.gcdesc;
 import caiman.traits;
+import godwit.impl;
 
-public struct WriteableData
+public struct AuxillaryData
 {
 public:
 final:
-    @flags enum WriteableFlags : uint
+    @flags enum AuxillaryFlags : uint
     {
         RemotingConfigChecked     = 0x00000001,
         RequiresManagedActivation = 0x00000002,
@@ -42,8 +43,27 @@ final:
         HasInjectedInterfaceDuplicates = 0x80000000,
     }
 
-    WriteableFlags m_writeableFlags;
-    ptrdiff_t m_exposedClassObject;
+    union
+    {
+        AuxillaryFlags m_flags;
+        struct
+        {
+            ushort m_loFlags;
+            short m_offsetToNonVirtualSlots;
+        }
+    }
+    Module* m_ceemodule;
+    /// Non-unloadable context: internal RuntimeType object handle
+    /// Unloadable context: slot index in LoaderAllocator's pinned table
+    uint* m_exposedClassObject;
+    static if (DEBUG)
+    {
+        uint m_dwLastVerifedGCCnt;
+        static if (HOST_x64)
+        {
+            uint padding;
+        }
+    }
 
     mixin accessors;
 }
@@ -185,21 +205,20 @@ final:
             GenericFlags, "m_genericFlags", 16
         ));
     }
-    // Base size of instance of this struct when allocated on the heap, including padding
+    /// Base size of instance of this struct when allocated on the heap, including padding
     uint m_baseSize;
     InterfaceFlags m_interfaceFlags;
-    // Class token if it fits into 16-bits. If this is (WORD)-1, the struct token is stored in the TokenOverflow optional member.
+    /// Class token if it fits into 16-bits. If this is (WORD)-1, the struct token is stored in the TokenOverflow optional member.
     HalfMDToken m_mdToken;
     ushort m_numVirtuals;
     ushort m_numInterfaces;
-    /*
-    #ifdef _DEBUG
-    LPCUTF8         debug_m_szClassName;
-    #endif //_DEBUG
-    */
+    static if (DEBUG)
+    {
+        const(char*) m_className;
+    }
     MethodTable* m_parentMethodTable;
     Module* m_ceemodule;
-    WriteableData* m_writeableData;
+    AuxillaryData* m_auxillaryData;
     union
     {
         @exempt ubyte m_rawTypeKind;
@@ -208,15 +227,10 @@ final:
     }
     union
     {
-        PerInstInfo* m_perInstInfo;
-        MethodTable* m_elementMethodTable;
-        ubyte* m_multiPurposeSlot1;
+        Dictionary* m_perInstInfo;
+        uint* m_elementTypeHnd;
     }
-    union
-    {
-        MethodTable* m_interfaceMap;
-        ubyte* m_multiPurposeSlot2;
-    }
+    MethodTable* m_interfaceMap;
 
     //                                                OPTIONAL FIELDS
 
@@ -235,19 +249,19 @@ final:
 
     mixin accessors;
 
-    pragma(mangle, "MethodTable_relatedTypeKind_get_RelatedTypeKind")
+    pragma(mangle, "MethodTable_relatedTypeKind_get")
     extern (C) export @property RelatedTypeKind relatedTypeKind()
     {
         return cast(RelatedTypeKind)(m_rawTypeKind & 3);
     }
 
-    pragma(mangle, "MethodTable_relatedTypeKind_set_RelatedTypeKind")
+    pragma(mangle, "MethodTable_relatedTypeKind_set")
     extern (C) export @property RelatedTypeKind relatedTypeKind(RelatedTypeKind val)
     {
         return cast(RelatedTypeKind)(m_rawTypeKind = (m_rawTypeKind & ~3) | cast(ubyte)val);
     }
 
-    pragma(mangle, "MethodTable_componentSize_get_ushort")
+    pragma(mangle, "MethodTable_componentSize_get")
     extern (C) export @property ushort componentSize()
     {
         if (!isHasComponentSize())
@@ -256,7 +270,7 @@ final:
         return m_componentSize;
     }
 
-    pragma(mangle, "MethodTable_componentSize_set_ushort")
+    pragma(mangle, "MethodTable_componentSize_set")
     extern (C) export @property ushort componentSize(ushort val)
     {
         m_componentSize = val;
@@ -274,14 +288,14 @@ final:
         return mdToken == 0xFFFF;
     }
 
-    pragma(mangle, "MethodTable_gcDesc_get_GCDescPTR")
+    pragma(mangle, "MethodTable_gcDesc_get")
     extern (C) export GCDesc* gcDesc() const
         scope return
     {
         return cast(GCDesc*)&this;
     }
 
-    pragma(mangle, "MethodTable_ceemodule_get_GCDescPTR")
+    /* pragma(mangle, "MethodTable_ceemodule_get")
     extern (C) export @property Module* ceemodule()
     {
         if (!isHasComponentSize && isNonGeneric)
@@ -290,16 +304,16 @@ final:
         return canonMethodTable.ceemodule;
     }
 
-    pragma(mangle, "MethodTable_ceemodule_set_ModulePTR")
+    pragma(mangle, "MethodTable_ceemodule_set")
     extern (C) export @property Module* ceemodule(Module* val)
     {
         if (!isHasComponentSize && isNonGeneric)
             return m_ceemodule = val;
 
         return canonMethodTable.ceemodule = val;
-    }
+    } */
 
-    pragma(mangle, "MethodTable_eeClass_get_EEClassPTR")
+    pragma(mangle, "MethodTable_eeClass_get")
     extern (C) export @property EEClass* eeClass()
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
@@ -308,7 +322,7 @@ final:
         return m_eeClass;
     }
 
-    pragma(mangle, "MethodTable_canonMethodTable_get_MethodTablePTR")
+    pragma(mangle, "MethodTable_canonMethodTable_get")
     extern (C) export @property MethodTable* canonMethodTable()
         scope return
     {
@@ -318,7 +332,7 @@ final:
         return m_canonMethodTable;
     }
 
-    pragma(mangle, "MethodTable_eeClass_set_EEClassPTR")
+    pragma(mangle, "MethodTable_eeClass_set")
     extern (C) export @property EEClass* eeClass(EEClass* val)
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
@@ -327,7 +341,7 @@ final:
         return m_eeClass = val;
     }
 
-    pragma(mangle, "MethodTable_canonMethodTable_set_MethodTablePTR")
+    pragma(mangle, "MethodTable_canonMethodTable_set")
     extern (C) export @property MethodTable* canonMethodTable(MethodTable* val)
     {
         if (relatedTypeKind == RelatedTypeKind.CanonMT)
