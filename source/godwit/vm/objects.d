@@ -3,6 +3,7 @@ module godwit.objects;
 
 import godwit.methodtable;
 import caiman.traits;
+import godwit.impl;
 
 alias ObjectRef = BaseObject*;
 alias ObjectSoftRef = HollowObject*;
@@ -27,7 +28,10 @@ final:
         IsHashcode = 0x04000000
     }
 
-    int padding;
+    static if (HOST_x64)
+    {
+        uint padding;
+    }
     SyncBlockFlags m_flags;
 
     mixin accessors;

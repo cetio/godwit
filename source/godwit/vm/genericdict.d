@@ -10,10 +10,7 @@ import godwit.field;
 import godwit.corhdr;
 import caiman.traits;
 
-alias PerInstInfo = Dictionary;
-
-/// Generic dictionary, for instantiated types and methods (TBD)
-///
+/// Generic dictionary, for instantiated types and methods (TBD) \
 /// This is just an abstraction around an open-ended array
 public struct Dictionary
 {

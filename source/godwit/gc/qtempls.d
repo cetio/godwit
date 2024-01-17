@@ -8,9 +8,9 @@ public struct CQuickMemoryBase
 public:
 final:
     byte* m_buffer;
-    // number of bytes used
+    /// Number of bytes used
     size_t m_size;
-    // total bytes allocated in the buffer
+    /// Total bytes allocated in the buffer
     size_t m_totalAlloc;
     ulong[(511 + ulong.sizeof) / ulong.sizeof] m_data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
 

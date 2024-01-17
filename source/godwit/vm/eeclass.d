@@ -9,6 +9,8 @@ import godwit.corhdr;
 import godwit.objects;
 import godwit.packedfields;
 import caiman.traits;
+import godwit.corinfo;
+import godwit.impl;
 
 public struct CCWTemplate
 {
@@ -88,11 +90,20 @@ final:
     mixin accessors;
 }
 
+// fieldmarshaler.h
 public struct NativeLayoutInfo
 {
 public:
 final:
     ubyte m_alignmentReq;
+    version (Posix)
+    {
+        bool m_passInRegisters;
+    }
+    static if (HFA)
+    {
+        CorInfoHFAElemType m_hfaType;
+    }
     bool m_isMarshalable;
     ushort m_size;
     uint m_numFields;
@@ -101,6 +112,7 @@ final:
     mixin accessors;
 }
 
+// fieldmarshaler.h
 public struct NativeFieldDescriptor
 {
 public:
@@ -127,9 +139,8 @@ final:
             uint m_numFieldElements;
         }
     }
-    // layout is totally wrong from here onwards, I simply don't care enough
-    uint m_offset; // offset 8
-    NativeFieldCategory m_category; // offset 12
+    uint m_offset;
+    NativeFieldCategory m_category;
 
     mixin accessors;
 }
@@ -138,10 +149,30 @@ public struct OptionalFields
 {
 public:
 final:
+    /// If IsSharedByGenericInstantiations(), layout of handle dictionary for generic type
+    /// (the last dictionary pointed to from PerInstInfo). Otherwise NULL.
     ubyte* m_dictLayout;
+    /// Variance info for each type parameter (gpNonVariant, gpCovariant, or gpContravariant)
+    // If NULL, this type has no type parameters that are co/contravariant
     ubyte* m_varianceInfo;
-    SparseVTableMap* m_sparseVTableMap;
-    TypeHandle m_coClass;
+    static if (COM_INTEROP)
+    {
+        SparseVTableMap* m_sparseVTableMap;
+        TypeHandle m_coClass;
+        static if (COM_INTEROP_UNMANAGED_ACTIVATION)
+        {
+            /// Points to activation information if the type is an activatable COM class.
+            MethodTable** m_classFactory;
+        }
+    }
+    version (Posix)
+    {
+        /// Number of eightBytes in the following arrays
+        int m_numberEightBytes;
+        // CLR_SYSTEMV_MAX_EIGHTBYTES_COUNT_TO_PASS_IN_REGISTERS
+        SystemVClassification[2] m_eightByteClassifications;
+        uint[2] m_eightByteSizes;
+    }
     uint m_moduleDynamicID;
     ubyte m_requiredFieldAlignment;
 
@@ -198,6 +229,7 @@ final:
         LayoutDependsOnOtherModules = 0x00000001,
         // This EEClass represents a DelegateClass.
         Delegate = 0x00000002,
+        ENCStaticFields = 0x00000004,
         FixedAddressVtStatics = 0x00000020,
         HasLayout = 0x00000040,
 
@@ -250,45 +282,66 @@ final:
     }
 
     GuidInfo* m_guidInfo;
+    static if (DEBUG)
+    {
+        const(char*) m_debugClassName;
+        bool m_debuggingClass;
+    }
     OptionalFields* m_optionalFields;
     MethodTable* m_methodTable;
     FieldDesc* m_fieldDescList;
     MethodDescChunk* m_methodDescChunk;
-    union
+    static if (COM_INTEROP)
     {
-        ObjectHandle m_delegateObjectHandle;
-        CorInterfaceType m_corInterfaceType;
+        union
+        {
+            ObjectHandle m_delegateObjectHandle;
+            CorInterfaceType m_corInterfaceType;
+        }
+        CCWTemplate* m_ccwTemplate;
     }
-    CCWTemplate* m_ccwTemplate;
     TypeAttributes m_typeAttributes;
     VMFlags m_vmFlags;
+    static if (DEBUG)
+    {
+        /// This is never used.
+        ushort m_auxFlags;
+    }
     CorElementType m_corElementType;
     bool m_fieldsArePacked;
     ubyte m_fixedEEClassFields;
     ubyte m_baseSizePadding;
     union
     {
-       struct
+        struct asArray
         {
-            uint m_rank;
+            ubyte m_rank;
             CorElementType m_elemType;
         }
 
-        Stub* m_staticCallStub;
-        LayoutInfo m_layoutInfo;
+        struct asDelegate
+        {
+            Stub* m_staticCallStub;
+            Stub* m_instRetBuffCallStub;
+            MethodDesc* m_invokeMethod;
+            Stub* m_multiCastInvokeStub;
+            Stub* m_wrapperDelegateInvokeStub;
+            UMThunkMarshInfo* m_umThunkMarshInfo;
+            MethodDesc* m_beginInvokeMethod;
+            MethodDesc* m_endInvokeMethod;
+            ubyte* m_marshalStub;
+            static if (COM_INTEROP)
+            {
+                ComPlusCallInfo* m_pComPlusCallInfo;
+            }
+        }
+
+        struct
+        {
+            LayoutInfo m_layoutInfo;
+            NativeLayoutInfo* m_nativeLayoutInfo;
+        }
     }
-    union
-    {
-        Stub* m_instRetBuffCallStub;
-        NativeLayoutInfo* m_nativeLayoutInfo;
-    }
-    MethodDesc* m_invokeMethod;
-    Stub* m_multiCastInvokeStub;
-    Stub* m_wrapperDelegateInvokeStub;
-    UMThunkMarshInfo* m_umThunkMarshInfo;
-    MethodDesc* m_beginInvokeMethod;
-    MethodDesc* m_endInvokeMethod;
-    ubyte* m_marshalStub;
 
     mixin accessors;
 
@@ -305,26 +358,26 @@ final:
             : packedFields().getUnpackedField(fieldId);
     }
 
-    pragma(mangle, "EEClass_numTotalFields_get_uint")
+    pragma(mangle, "EEClass_numTotalFields_get")
     extern (C) export uint numTotalFields()
     {
         return packedField(EEClassFieldId.NumInstanceFields) 
             + packedField(EEClassFieldId.NumStaticFields);
     }
 
-    pragma(mangle, "EEClass_numInstanceFields_get_uint")
+    pragma(mangle, "EEClass_numInstanceFields_get")
     extern (C) export uint numInstanceFields()
     {
         return packedField(EEClassFieldId.NumInstanceFields);
     }
 
-    pragma(mangle, "EEClass_numStaticFields_get_uint")
+    pragma(mangle, "EEClass_numStaticFields_get")
     extern (C) export uint numStaticFields()
     {
         return packedField(EEClassFieldId.NumStaticFields);
     }
 
-    pragma(mangle, "EEClass_fields_get_FieldDescPTR[]")
+    pragma(mangle, "EEClass_fields_get")
     extern (C) export FieldDesc*[] fields()
     {
         int length = numTotalFields();
@@ -335,6 +388,4 @@ final:
 
         return fieldDescs;
     }
-
-    // TODO: Implement sets
 }

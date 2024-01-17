@@ -16,7 +16,7 @@ final:
     Thread* m_holdingThread;
     static if (DEBUG)
     {
-        const char* m_description;
+        const(char*) m_description;
     }
 
     mixin accessors;

@@ -7,7 +7,7 @@ public struct SimpleRWLock
 {
 public:
 final:
-    public enum GC_MODE 
+    enum GC_MODE 
     {
         COOPERATIVE,
         PREEMPTIVE,

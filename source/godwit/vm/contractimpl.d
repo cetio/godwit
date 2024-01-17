@@ -3,6 +3,7 @@ module godwit.contractimpl;
 import godwit.hash;
 import godwit.crst;
 import caiman.traits;
+import godwit.impl;
 
 public struct TypeIDMap
 {
@@ -22,8 +23,18 @@ public struct TypeIDProvider
 public:
 final:
     uint m_nextID;
-    // #ifdef FAT_DISPATCH_TOKENS
-    uint m_nextFatID;
+    static if (FAT_DISPATCH_TOKENS)
+    {
+        uint m_nextFatID;
+    }
 
     mixin accessors;
+}
+
+public struct DispatchTokenFat
+{
+public:
+final:
+    uint m_typeId;
+    uint m_slotNum;
 }

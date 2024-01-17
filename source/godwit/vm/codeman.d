@@ -16,6 +16,31 @@ final:
     mixin accessors;
 }
 
+public enum StubBlockKind
+{
+    Unknown,
+    JumpStub,
+    Precode,
+    DynamicHelper,
+    StubPrecode,
+    FixupPrecode,
+    VSDDispatchStub,
+    VSDResolveStub,
+    VSDLookupStub,
+    VSDVTableStub,
+    // Last valid value. Note that the definition is duplicated in debug\daccess\fntableaccess.cpp
+    Last = 0xF,
+    // Placeholders returned by code:GetStubCodeBlockKind
+    NoCode,
+    Managed,
+    StubLink,
+    // Placeholders used by NGen images
+    VirtualMethodThunk,
+    ExternalMethodThunk,
+    // Placeholders used by ReadyToRun images
+    MethodCallThunk
+}
+
 public struct CodeFragmentHeap
 {
     ILoaderHeapBackout iLoaderHeapBackout;
@@ -23,30 +48,7 @@ public struct CodeFragmentHeap
 
 public:
 final:
-    enum StubBlockKind
-    {
-        Unknown,
-        JumpStub,
-        Precode,
-        DynamicHelper,
-        StubPrecode,
-        FixupPrecode,
-        VSDDispatchStub,
-        VSDResolveStub,
-        VSDLookupStub,
-        VSDVTableStub,
-        // Last valid value. Note that the definition is duplicated in debug\daccess\fntableaccess.cpp
-        Last = 0xF,
-        // Placeholders returned by code:GetStubCodeBlockKind
-        NoCode,
-        Managed,
-        StubLink,
-        // Placeholdes used by NGen images
-        VirtualMethodThunk,
-        ExternalMethodThunk,
-        // Placeholdes used by ReadyToRun images
-        MethodCallThunk,
-    }
+    
 
     LoaderAllocator* m_allocator;
     FreeBlock* m_freeBlocks;

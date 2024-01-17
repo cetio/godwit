@@ -1,9 +1,12 @@
+![..](/godwit.png)
+
 # Godwit
 
 [![License](https://img.shields.io/badge/License-MPL--2-blue)](#license)
 [![Build - Intangible](https://img.shields.io/badge/Build-Intangible-informational)](https://)
 
-[Trello](https://trello.com/b/e5HQc6nz/godwit)
+[![Caiman](https://img.shields.io/badge/Caiman-blueviolet?style=for-the-badge&logo=github)](https://github.com/cetio/caiman)
+[![Trello](https://img.shields.io/badge/Trello-blue?style=for-the-badge&logo=Trello)](https://trello.com/b/e5HQc6nz/godwit)
 
 D-CoreCLR interop library, intended to allow D and other bound languages to interact with C# programs without any explicit back and forth between the languages. This is achieved by directly translating CoreCLR structures and code into D.
 
@@ -17,7 +20,7 @@ However, until Godwit is near completion, implementation flags will not be fully
 
 ### Equivalence
 
-`PropertyInfo` are effectively `MethodBase`, `EventInfo` appear to be effectively `FieldInfo`, `ParameterInfo` & return info are part of signatures (`PCCOR_SIGNATURE`) 
+`PropertyInfo` are effectively `MethodBase`, `EventInfo` appear to be effectively `FieldInfo`, `ParameterInfo` & return info are part of signatures (`PCCOR_SIGNATURE`)
 
 | C# | Godwit |
 -----|--------|

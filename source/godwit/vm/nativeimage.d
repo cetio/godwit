@@ -14,10 +14,11 @@ public struct NativeImage
 {
 public:
 final:
-    // Points to the OwnerCompositeExecutable section content within the component MSIL module
-    char* m_fileName;
+    /// Points to the OwnerCompositeExecutable section content within the component MSIL module
+    const(char*) m_fileName;
     AssemblyBinder* m_assemblyBinder;
     ReadyToRunInfo* m_readyToRunInfo;
+    // ----> IMDInternalImport <----
     void* m_manifestMetadata;
     PEImageLayout* m_imageLayout;
     Assembly** m_nativeMetadataAssemblyRefMap;
@@ -25,7 +26,7 @@ final:
     ImageDataDirectory* m_componentAssemblies;
     uint m_componentAssemblyCount;
     uint m_manifestAssemblyCount;
-    SHash!(AssemblyNameIndex, uint) m_assemblySimpleNameToIndexMap;
+    //SHash!(AssemblyNameIndexHashTraits, uint) m_assemblySimpleNameToIndexMap;
     Crst m_eagerFixupsLock;
     bool m_eagerFixupsHaveRun;
     bool m_readyToRunCodeDisabled;
@@ -33,12 +34,11 @@ final:
     mixin accessors;
 }
 
-public struct AssemblyNameIndex
+/* public struct AssemblyNameIndexHashTraits
 {
 public:
 final:
-    char* m_name;
-    int m_index;
+    static const bool m_noThrow
 
     mixin accessors;
-}
+} */

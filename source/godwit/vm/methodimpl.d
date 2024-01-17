@@ -8,9 +8,10 @@ public struct MethodImpl
 {
 public:
 final:
+    /// Maintains the slots and tokens in sorted order, the first entry is the size
     uint* m_slots;
-    // The MethodDesc that this MethodImpl implements
-    MethodDesc* m_implement;
+    /// The MethodDesc(s) that this MethodImpl implements
+    MethodDesc** m_implement;
 
     mixin accessors;
 }

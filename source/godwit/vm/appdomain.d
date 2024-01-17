@@ -16,6 +16,10 @@ import godwit.nativeimage;
 import godwit.eehash;
 import caiman.traits;
 import godwit.comreflectioncache;
+import godwit.impl;
+import godwit.arraylist;
+import godwit.assemblyspec;
+import godwit.typeequivalencehash;
 
 public struct BaseDomain
 {
@@ -99,11 +103,13 @@ final:
     CrstExplicitInit m_reflectionCrst;
     CrstExplicitInit m_refClassFactCrst;
     // Hash table that maps a class factory info to a COM comp.
-    // #ifdef FEATURE_COMINTEROP
     EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) m_refClassFactHash;
-    DispIDCache* m_refDispIDCache;
-    // Handle points to Missing.Value Object which is used for [Optional] arg scenario during IDispatch CCW Call
-    ObjectHandle m_hndMissing;
+    static if (COM_INTEROP)
+    {
+        DispIDCache* m_refDispIDCache;
+        // Handle points to Missing.Value Object which is used for [Optional] arg scenario during IDispatch CCW Call
+        ObjectHandle m_hndMissing;
+    }
     SString m_friendlyName;
     Assembly* m_rootAssembly;
     ContextFlags m_contextFlags;
@@ -112,14 +118,40 @@ final:
     int m_refCount;
     // Map of loaded composite native images indexed by base load addresses
     CrstExplicitInit m_nativeImageLoadCrst;
+    // Wrong?
     SHash!(char*, NativeImage*) m_nativeImageMap;
-    // #ifdef FEATURE_COMINTEROP
-    // this cache stores the RCWs in this domain
-    RCWRefCache* m_rcwCache;
-    // #ifdef FEATURE_COMWRAPPERS
-    // this cache stores the RCW -> CCW references in this domain
-    RCWRefCache* m_rcwRefCache; 
+    static if (COM_INTEROP)
+    {
+        /// This cache stores the RCWs in this domain
+        RCWRefCache* m_rcwCache;
+    }
+    static if (COM_WRAPPERS)
+    {
+        /// This cache stores the RCW -> CCW references in this domain
+        RCWRefCache* m_rcwRefCache; 
+    }
     Stage m_stage;
+
+    ArrayList m_failedAssemblies;
+    AssemblySpecBindingCache m_assemblyCache;
+    size_t m_memoryPressure;
+    ArrayList m_nativeDllSearchDirectories;
+    bool m_forceTrivialWaitOperations;
+    SHash!(UnmanagedImageCacheEntry, uint) m_unmanagedCache;
+    static if (TYPE_EQUIVALENCE)
+    {
+        TypeEquivalenceHashTable m_typeEquivalenceTable;
+        CrstExplicitInit m_typeEquivalenceCrst;
+    }
+    // I can't see how these could be useful, so I'm not adding them
+    /* static if (MULTICORE_JIT)
+    {
+        MulticoreJitManager m_multicoreJitManager;
+    }
+    static if (TIERED_COMPILATION)
+    {
+        TieredCompilationManager m_tieredCompilationManager;
+    } */
 
     mixin accessors;
 }
@@ -155,6 +187,16 @@ final:
     PinnedHeapHandleBucket* m_freeSearchHint;
     uint m_numEmbeddedFree;
     CrstExplicitInit m_crst;
+
+    mixin accessors;
+}
+
+public struct UnmanagedImageCacheEntry
+{
+public:
+final:
+    wchar* m_name;
+    ptrdiff_t m_handle;
 
     mixin accessors;
 }

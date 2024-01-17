@@ -9,7 +9,7 @@ public import godwit.classhash;
 public import godwit.clrex;
 public import godwit.clsload;
 public import godwit.codeman;
-public import godwit.codeversioning;
+public import godwit.codeversion;
 public import godwit.comreflectioncache;
 public import godwit.contractimpl;
 public import godwit.crst;

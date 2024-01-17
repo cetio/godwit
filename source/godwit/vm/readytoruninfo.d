@@ -41,6 +41,7 @@ final:
     ReadyToRunImportSection* m_importSections;
     uint m_numImportSections;
     bool m_readyToRunCodeDisabled;
+    /// ----> MISSING STUFF <----
     Crst m_crst;
     HashMap* m_entrypointToMethodDescMap;
     PersistentInlineTrackingMapR2R* m_persistentInlineTrackingMap;

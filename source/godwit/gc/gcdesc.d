@@ -2,12 +2,13 @@ module godwit.gcdesc;
 
 import godwit.methodtable;
 import caiman.traits;
+import godwit.impl;
 
-version(X86)
+static if (size_t.sizeof == 4)
 {
     alias half_size_t = ushort;
 }
-version(X86_64)
+else
 {
     alias half_size_t = uint;
 }
@@ -59,7 +60,7 @@ final:
     // pointers enumerated by go_through_object_cl macro. The implementation shape has intentional
     // similarity with the go_through_object family of macros.
     // size is only used if you have an array of value types.
-//#ifndef DACCESS_COMPILE
+    static if (!DACCESS_COMPILE)
     static int getNumPointers(MethodTable* pmt, uint size, uint numComps)
     {
         /+if (!pmt.containsPointers)
