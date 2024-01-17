@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/godwit.png" alt="Your Image Alt Text">
+  <img src="/godwit.png" alt="AAAGGGGHHH" width="300">
 </p>
 
 # Godwit
