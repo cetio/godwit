@@ -1,7 +1,7 @@
 /// Provides interface for coreclr.gc
-module godwit.gc;
+module godwit.backend.gc;
 
-public import godwit.gcdesc;
-public import godwit.gcenv;
-public import godwit.gcinterface;
-public import godwit.qtempls;
+public import godwit.backend.gcdesc;
+public import godwit.backend.gcenv;
+public import godwit.backend.gcinterface;
+public import godwit.backend.qtempls;
