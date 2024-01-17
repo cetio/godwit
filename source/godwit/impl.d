@@ -57,3 +57,5 @@ enum HFA = true;
 enum METADATA_UPDATER = false;
 /// Default `true`.
 enum COLLECTIBLE_TYPES = true;
+/// Default `true`.
+enum DEBUGGING_SUPPORTED = true;
