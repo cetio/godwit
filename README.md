@@ -1,4 +1,6 @@
-![..](/godwit.png)
+<p align="center">
+  <img src="/godwit.png" alt="Your Image Alt Text">
+</p>
 
 # Godwit
 
