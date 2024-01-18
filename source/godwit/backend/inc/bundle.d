@@ -19,7 +19,7 @@ public struct Bundle
 public:
 final:
     SString m_path;
-    @exempt bool function(const(char*) path, long* offset, long* size, long* compressedSize) probe;
+    @exempt bool function(const(char)* path, long* offset, long* size, long* compressedSize) probe;
     SString m_basePath;
     uint m_basePathLen;
 

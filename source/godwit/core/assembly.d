@@ -1,6 +1,6 @@
-module godwit.assembly;
+module godwit.core.assembly;
 
-public class Assembly
+public struct Assembly
 {
 public:
 final:

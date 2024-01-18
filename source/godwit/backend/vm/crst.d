@@ -145,7 +145,7 @@ final:
     {
         uint m_numEnters;
         CrstType m_crstType;
-        const(char*) m_tag;
+        const(char)* m_tag;
         int m_crstLevel;
         EEThreadId m_holderThreadId;
         CrstBase* m_next;

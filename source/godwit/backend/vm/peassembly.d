@@ -12,7 +12,7 @@ public:
 final:
     static if (LOGGING)
     {
-        const(char*) m_rawDebugName;
+        const(char)* m_rawDebugName;
         SString m_debugName;
     }
     /// IL image, NULL if dynamic

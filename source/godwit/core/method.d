@@ -1,17 +1,12 @@
-module godwit.method;
+module godwit.core.method;
 
 import godwit.backend.vm.method;
 
-public class Method
+public struct Method
 {
 package:
 final:
     MethodDesc* methodDesc;
-
-    this(MethodDesc* methodDesc)
-    {
-        this.methodDesc = methodDesc;
-    }
 
 public:
 

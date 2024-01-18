@@ -35,7 +35,7 @@ unsafe
     //var handle = typeof(TestStructure).TypeHandle.Value;
     var h = typeof(TestStructure).Module.ModuleHandle;
     var pMod = **(nint**)Unsafe.AsPointer(ref h);
-    //Console.WriteLine(initialize(typeof(TestStructure).TypeHandle.Value));
+    Console.WriteLine(initialize(typeof(TestStructure).TypeHandle.Value));
     //Module mod = pMod.To<Module>();
     //Console.WriteLine(mod.peAssembly.ToString("X"));
     /*int a = 1;
@@ -46,11 +46,6 @@ unsafe
     int f = -2;
     ulong ret = InvokeVTEx(typeof(Program).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)[2].MethodHandle.GetFunctionPointer(), pargs, pseries);
     Console.WriteLine(Unsafe.As<ulong, int>(ref ret));*/
-}
-
-class GodwitType
-{
-    public nint pMT;
 }
 
 struct TestStructure
