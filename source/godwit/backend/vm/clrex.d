@@ -1,8 +1,8 @@
-module godwit.backend.clrex;
+module godwit.backend.vm.clrex;
 
-import godwit.backend.method;
-import godwit.backend.ex;
-import godwit.backend.object;
+import godwit.backend.vm.method;
+import godwit.backend.inc.ex;
+import godwit.backend.vm.object;
 import caiman.traits;
 
 public struct StackTraceInfo

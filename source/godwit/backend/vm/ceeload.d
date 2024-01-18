@@ -1,22 +1,22 @@
-module godwit.backend.ceeload;
+module godwit.backend.vm.ceeload;
 
 import godwit.backend.siginfo;
-import godwit.backend.crst;
-import godwit.backend.assembly;
-import godwit.backend.peassembly;
-import godwit.backend.loaderallocator;
-import godwit.backend.methodtable;
-import godwit.backend.ilstubcache;
-import godwit.backend.method;
-import godwit.backend.field;
-import godwit.backend.typedesc;
-import godwit.backend.corhdr;
-import godwit.backend.classhash;
-import godwit.backend.typehash;
-import godwit.backend.instmethhash;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.assembly;
+import godwit.backend.vm.peassembly;
+import godwit.backend.vm.loaderallocator;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.ilstubcache;
+import godwit.backend.vm.method;
+import godwit.backend.vm.field;
+import godwit.backend.vm.typedesc;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.classhash;
+import godwit.backend.vm.typehash;
+import godwit.backend.vm.instmethhash;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.loaderheap;
+import godwit.backend.inc.loaderheap;
 
 public struct LookupMap(T)
 {

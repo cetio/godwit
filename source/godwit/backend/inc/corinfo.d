@@ -1,4 +1,4 @@
-module godwit.backend.corinfo;
+module godwit.backend.inc.corinfo;
 
 //                            ...Type
 public enum SystemVClassification : ubyte

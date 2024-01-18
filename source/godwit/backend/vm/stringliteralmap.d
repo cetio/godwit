@@ -1,8 +1,8 @@
-module godwit.backend.stringliteralmap;
+module godwit.backend.vm.stringliteralmap;
 
-import godwit.backend.memorypool;
-import godwit.backend.appdomain;
-import godwit.backend.eehash;
+import godwit.backend.inc.memorypool;
+import godwit.backend.vm.appdomain;
+import godwit.backend.vm.eehash;
 import caiman.traits;
 
 public struct StringLiteralMap

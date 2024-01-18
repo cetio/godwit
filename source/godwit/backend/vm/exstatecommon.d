@@ -1,7 +1,7 @@
-module godwit.backend.exstatecommon;
+module godwit.backend.vm.exstatecommon;
 
 import caiman.traits;
-import godwit.backend.method;
+import godwit.backend.vm.method;
 import godwit.impl;
 
 public @flags enum ExceptionFlags

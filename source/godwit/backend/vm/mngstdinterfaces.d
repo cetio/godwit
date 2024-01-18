@@ -1,6 +1,6 @@
-module godwit.backend.mngstdinterfaces;
+module godwit.backend.vm.mngstdinterfaces;
 
-import godwit.backend.sbuffer;
+import godwit.backend.inc.sbuffer;
 import caiman.traits;
 
 public struct MngStdInterfacesInfo

@@ -1,8 +1,8 @@
-module godwit.backend.typeequivalencehash;
+module godwit.backend.vm.typeequivalencehash;
 
-import godwit.backend.dacenumerablehash;
-import godwit.backend.crst;
-import godwit.backend.typehandle;
+import godwit.backend.vm.dacenumerablehash;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.typehandle;
 import caiman.traits;
 
 public struct TypeEquivalenceEntry

@@ -1,6 +1,6 @@
-module godwit.backend.inlinetracking;
+module godwit.backend.vm.inlinetracking;
 
-import godwit.backend.ceeload;
+import godwit.backend.vm.ceeload;
 import caiman.traits;
 
 public struct PersistentInlineTrackingMapR2R

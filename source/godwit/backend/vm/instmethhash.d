@@ -1,8 +1,8 @@
-module godwit.backend.instmethhash;
+module godwit.backend.vm.instmethhash;
 
-import godwit.backend.dacenumerablehash;
-import godwit.backend.loaderallocator;
-import godwit.backend.method;
+import godwit.backend.vm.dacenumerablehash;
+import godwit.backend.vm.loaderallocator;
+import godwit.backend.vm.method;
 import caiman.traits;
 import godwit.impl;
 

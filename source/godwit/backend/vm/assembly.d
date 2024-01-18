@@ -1,13 +1,13 @@
-module godwit.backend.assembly;
+module godwit.backend.vm.assembly;
 
-import godwit.backend.ceeload;
-import godwit.backend.method;
-import godwit.backend.peassembly;
-import godwit.backend.loaderallocator;
-import godwit.backend.appdomain;
-import godwit.backend.clsload;
-import godwit.backend.arraylist;
-import godwit.backend.corhdr;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.method;
+import godwit.backend.vm.peassembly;
+import godwit.backend.vm.loaderallocator;
+import godwit.backend.vm.appdomain;
+import godwit.backend.vm.clsload;
+import godwit.backend.inc.arraylist;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 import godwit.impl;
 

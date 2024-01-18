@@ -1,4 +1,4 @@
-module godwit.backend.pal;
+module godwit.backend.inc.pal;
 
 import caiman.traits;
 

@@ -1,6 +1,6 @@
-module godwit.backend.stringarraylist;
+module godwit.backend.inc.stringarraylist;
 
-import godwit.backend.arraylist;
+import godwit.backend.inc.arraylist;
 import caiman.traits;
 
 public struct StringArrayList

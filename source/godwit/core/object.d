@@ -1,3 +1,3 @@
 module godwit.object;
 
-public import godwit.backend.object;
+public import godwit.backend.vm.object;

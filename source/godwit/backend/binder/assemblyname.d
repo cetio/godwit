@@ -1,6 +1,6 @@
-module godwit.backend.assemblyname;
+module godwit.backend.binder.assemblyname;
 
-import godwit.backend.assemblyidentity;
+import godwit.backend.binder.assemblyidentity;
 import caiman.traits;
 
 public struct AssemblyName

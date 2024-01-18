@@ -1,7 +1,7 @@
-module godwit.backend.field;
+module godwit.backend.vm.field;
 
 import std.bitmanip;
-import godwit.backend.corhdr;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 
 /// Field descriptor, equivalent to `System.Runtime.FieldInfo` \

@@ -1,14 +1,14 @@
-module godwit.backend.stub;
+module godwit.backend.vm.stub;
 
-import godwit.backend.method;
-import godwit.backend.ceeload;
+import godwit.backend.vm.method;
+import godwit.backend.vm.ceeload;
 import godwit.backend.siginfo;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.shash;
-import godwit.backend.appdomain;
-import godwit.backend.crst;
-import godwit.backend.object;
+import godwit.backend.inc.shash;
+import godwit.backend.vm.appdomain;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.object;
 
 // dllimportcallback.h
 

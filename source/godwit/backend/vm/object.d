@@ -1,7 +1,7 @@
 /// Provides interface for C#/CLR objects & references
-module godwit.backend.object;
+module godwit.backend.vm.object;
 
-import godwit.backend.methodtable;
+import godwit.backend.vm.methodtable;
 import caiman.traits;
 import godwit.impl;
 

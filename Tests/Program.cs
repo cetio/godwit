@@ -1,13 +1,21 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Godwit;
 
 #if DEBUG
-[DllImport(@"C:\Users\stake\Documents\source\repos\godwit\godwit.dll")]
+[DllImport(@"C:\Users\stake\source\repos\godwit\godwit.dll")]
 #else
 [DllImport("godwit.dll")]
 #endif
-static extern unsafe void initialize(nint pMOD);
+static extern unsafe bool initialize(nint pMT);
+
+#if DEBUG
+[DllImport(@"C:\Users\stake\source\repos\godwit\godwit.dll")]
+#else
+[DllImport("godwit.dll")]
+#endif
+static extern unsafe void fields(nint pMT);
 
 // MethodTable*
 // Type.TypeHandle.Value
@@ -27,7 +35,7 @@ unsafe
     //var handle = typeof(TestStructure).TypeHandle.Value;
     var h = typeof(TestStructure).Module.ModuleHandle;
     var pMod = **(nint**)Unsafe.AsPointer(ref h);
-    initialize(pMod);
+    //Console.WriteLine(initialize(typeof(TestStructure).TypeHandle.Value));
     //Module mod = pMod.To<Module>();
     //Console.WriteLine(mod.peAssembly.ToString("X"));
     /*int a = 1;
@@ -40,13 +48,12 @@ unsafe
     Console.WriteLine(Unsafe.As<ulong, int>(ref ret));*/
 }
 
-static unsafe int Testw(int a, float b, TestStructure c, int d, int e, int f)
+class GodwitType
 {
-    Console.WriteLine($"wahoo! {a} {b} {c} {d} {e} {f}");
-    return 33;
+    public nint pMT;
 }
 
 struct TestStructure
 {
-    static long a;
+    int a;
 }

@@ -8,10 +8,9 @@ import caiman.make;
 import std.stdio;
 import std.conv;
 
-static AppDomain* appDomain;
 public static bool function() onInitialize;
 
-/* extern(Windows)
+extern(Windows)
 BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
 {
     import core.sys.windows.winnt;
@@ -34,15 +33,15 @@ BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
         case DLL_THREAD_DETACH:
             return dll_thread_detach( true, true );
     }
-} */
-
-void main()
-{
-    initialize(null);
 }
 
+/* void main()
+{
+    initialize(null);
+} */
+
 //extern (C) export void initialize(AppDomain* pDom)
-extern (C) export bool initialize(Module* pMod)
+extern (C) export bool initialize(MethodTable* pMT)
 {
     /* appDomain = pDOM;
     writeln("Initialized! ", pMod);
@@ -58,8 +57,11 @@ extern (C) export bool initialize(Module* pMod)
     {
         writeln(field, " ", __traits(getMember, pAsm, field).to!string);
     } */
-    make!(godwit.vm, r"C:\Users\stake\Documents\").csharp("ICLR");
-
+    /* make!(godwit.backend.vm, r"C:\Users\stake\Documents\").csharp("ICLR");
+    make!(godwit.backend.inc, r"C:\Users\stake\Documents\").csharp("ICLR");
+    make!(godwit.backend.gc, r"C:\Users\stake\Documents\").csharp("ICLR");
+    make!(godwit.backend.binder, r"C:\Users\stake\Documents\").csharp("ICLR"); */
+    writeln(*pMT.eeClass);
     if (onInitialize != null)
         return onInitialize();
     return true;

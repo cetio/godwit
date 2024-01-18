@@ -1,8 +1,8 @@
-module godwit.backend.codeman;
+module godwit.backend.vm.codeman;
 
-import godwit.backend.loaderheap;
-import godwit.backend.crst;
-import godwit.backend.loaderallocator;
+import godwit.backend.inc.loaderheap;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.loaderallocator;
 import caiman.traits;
 
 public struct FreeBlock

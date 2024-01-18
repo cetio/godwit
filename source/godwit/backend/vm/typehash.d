@@ -1,8 +1,8 @@
 /// Hash lookups utilized by class loaders for storing constructed types.
-module godwit.backend.typehash;
+module godwit.backend.vm.typehash;
 
-import godwit.backend.dacenumerablehash;
-import godwit.backend.loaderallocator;
+import godwit.backend.vm.dacenumerablehash;
+import godwit.backend.vm.loaderallocator;
 import caiman.traits;
 import godwit.impl;
 

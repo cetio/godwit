@@ -1,7 +1,7 @@
-module godwit.backend.comreflectioncache;
+module godwit.backend.vm.comreflectioncache;
 
 import godwit.backend.simplerwlock;
-import godwit.backend.methodtable;
+import godwit.backend.vm.methodtable;
 import caiman.traits;
 
 public struct ReflectionCache(ELEM, TYPE, int SIZE)

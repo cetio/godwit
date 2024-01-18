@@ -1,8 +1,8 @@
 module godwit.backend.siginfo;
 
-import godwit.backend.corhdr;
-import godwit.backend.typectxt;
-import godwit.backend.ceeload;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.typectxt;
+import godwit.backend.vm.ceeload;
 import caiman.traits;
 
 public struct Signature

@@ -1,9 +1,9 @@
-module godwit.backend.pendingload;
+module godwit.backend.vm.pendingload;
 
-import godwit.backend.crst;
-import godwit.backend.typehandle;
-import godwit.backend.ex;
-import godwit.backend.typekey;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.typehandle;
+import godwit.backend.inc.ex;
+import godwit.backend.vm.typekey;
 import caiman.traits;
 import caiman.state;
 import godwit.impl;

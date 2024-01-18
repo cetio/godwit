@@ -1,12 +1,12 @@
-module godwit.backend.applicationcontext;
+module godwit.backend.binder.applicationcontext;
 
-import godwit.backend.sbuffer;
-import godwit.backend.corhdr;
-import godwit.backend.assembly;
-import godwit.backend.stringarraylist;
-import godwit.backend.shash;
+import godwit.backend.inc.sbuffer;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.assembly;
+import godwit.backend.inc.stringarraylist;
+import godwit.backend.inc.shash;
 import caiman.traits;
-import godwit.backend.bspace;
+import godwit.backend.binder.bspace;
 import caiman.state;
 
 public struct ApplicationContext
@@ -22,7 +22,7 @@ final:
     StringArrayList m_appPaths;
     SHash!(SimpleNameToFileNameMapEntry, uint) m_trustedPlatformAssemblyMap;
 
-    mixin accessors;
+    //mixin accessors;
 }
 
 // Entry in SHash table that maps namespace to list of files

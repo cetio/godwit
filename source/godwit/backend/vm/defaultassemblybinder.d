@@ -1,6 +1,6 @@
-module godwit.backend.defaultassemblybinder;
+module godwit.backend.vm.defaultassemblybinder;
 
-import godwit.backend.assemblybinder;
+import godwit.backend.vm.assemblybinder;
 
 public struct DefaultAssemblyBinder
 {

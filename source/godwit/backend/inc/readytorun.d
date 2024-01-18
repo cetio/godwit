@@ -1,6 +1,6 @@
-module godwit.backend.readytorun;
+module godwit.backend.inc.readytorun;
 
-import godwit.backend.corhdr;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 
 public struct ReadyToRunCoreHeader

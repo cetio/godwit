@@ -1,14 +1,16 @@
-module godwit.backend.methodtable;
+module godwit.backend.vm.methodtable;
 
 import std.uuid;
 import std.bitmanip;
-import godwit.backend.eeclass;
-import godwit.backend.ceeload;
-import godwit.backend.genericdict;
-import godwit.backend.corhdr;
-import godwit.backend.gcdesc;
+import godwit.backend.vm.eeclass;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.genericdict;
+import godwit.backend.inc.corhdr;
+import godwit.backend.gc.gcdesc;
 import caiman.traits;
 import godwit.impl;
+import godwit.backend.vm.typehandle;
+
 
 public struct AuxillaryData
 {
@@ -228,7 +230,7 @@ final:
     union
     {
         Dictionary* m_perInstInfo;
-        uint* m_elementTypeHnd;
+        TypeHandle m_elementTypeHnd;
     }
     MethodTable* m_interfaceMap;
 

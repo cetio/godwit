@@ -1,5 +1,5 @@
 /// Represents what should be godwit.corhlprpriv
-module godwit.backend.qtempls;
+module godwit.backend.gc.qtempls;
 
 import caiman.traits;
 

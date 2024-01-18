@@ -1,10 +1,10 @@
 /// Represents function pointer stubs & their precode
-module godwit.backend.fptrstubs;
+module godwit.backend.vm.fptrstubs;
 
-import godwit.backend.crst;
-import godwit.backend.method;
-import godwit.backend.precode;
-import godwit.backend.shash;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.method;
+import godwit.backend.vm.precode;
+import godwit.backend.inc.shash;
 import caiman.traits;
 
 /**
