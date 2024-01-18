@@ -1,13 +1,13 @@
-module godwit.backend.nativeimage;
+module godwit.backend.vm.nativeimage;
 
-import godwit.backend.assemblybinder;
-import godwit.backend.readytoruninfo;
-import godwit.backend.ceeload;
-import godwit.backend.assembly;
-import godwit.backend.peimagelayout;
-import godwit.backend.corhdr;
-import godwit.backend.crst;
-import godwit.backend.shash;
+import godwit.backend.vm.assemblybinder;
+import godwit.backend.vm.readytoruninfo;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.assembly;
+import godwit.backend.vm.peimagelayout;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.crst;
+import godwit.backend.inc.shash;
 import caiman.traits;
 
 public struct NativeImage

@@ -1,6 +1,6 @@
-module godwit.backend.methodimpl;
+module godwit.backend.vm.methodimpl;
 
-import godwit.backend.method;
+import godwit.backend.vm.method;
 import caiman.traits;
 
 // Used in cases like virtual methods, where a method can be implemented, derived, and or overriden

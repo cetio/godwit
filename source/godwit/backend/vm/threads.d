@@ -1,7 +1,7 @@
 /// Threads & locks for atomic/async operations
-module godwit.backend.threads;
+module godwit.backend.vm.threads;
 
-import godwit.backend.gcenv;
+import godwit.backend.gc.gcenv;
 import caiman.traits;
 import godwit.impl;
 

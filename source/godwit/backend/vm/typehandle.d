@@ -1,7 +1,7 @@
-module godwit.backend.typehandle;
+module godwit.backend.vm.typehandle;
 
-import godwit.backend.methodtable;
-import godwit.backend.typedesc;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.typedesc;
 import caiman.traits;
 import godwit.impl;
 

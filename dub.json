@@ -6,12 +6,20 @@
     "description": "D-CoreCLR interop library",
     "license": "MPL-2.0",
     "name": "godwit",
-    "targetType": "executable",
+    "targetType": "dynamicLibrary",
     "buildRequirements": ["silenceDeprecations"],
     "configurations": [
         {
             "name": "executable",
-            "dflags": ["-J=source\\"]
+            "dflags": ["-J=source\\godwit"]
+        },
+        {
+            "name": "application",
+            "dflags": ["-J=source\\godwit"]
+        },
+        {
+            "name": "dynamicLibrary",
+            "dflags": ["-J=source\\godwit"]
         }
     ]
 }

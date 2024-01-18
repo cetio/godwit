@@ -1,25 +1,25 @@
-module godwit.backend.appdomain;
+module godwit.backend.vm.appdomain;
 
-import godwit.backend.crst;
-import godwit.backend.assembly;
-import godwit.backend.object;
-import godwit.backend.listlock;
-import godwit.backend.defaultassemblybinder;
-import godwit.backend.gcinterface;
-import godwit.backend.contractimpl;
-import godwit.backend.sbuffer;
-import godwit.backend.object;
-import godwit.backend.mngstdinterfaces;
-import godwit.backend.shash;
-import godwit.backend.rcwrefcache;
-import godwit.backend.nativeimage;
-import godwit.backend.eehash;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.assembly;
+import godwit.backend.vm.object;
+import godwit.backend.vm.listlock;
+import godwit.backend.vm.defaultassemblybinder;
+import godwit.backend.gc.gcinterface;
+import godwit.backend.vm.contractimpl;
+import godwit.backend.inc.sbuffer;
+import godwit.backend.vm.object;
+import godwit.backend.vm.mngstdinterfaces;
+import godwit.backend.inc.shash;
+import godwit.backend.vm.rcwrefcache;
+import godwit.backend.vm.nativeimage;
+import godwit.backend.vm.eehash;
 import caiman.traits;
-import godwit.backend.comreflectioncache;
+import godwit.backend.vm.comreflectioncache;
 import godwit.impl;
-import godwit.backend.arraylist;
-import godwit.backend.assemblyspec;
-import godwit.backend.typeequivalencehash;
+import godwit.backend.inc.arraylist;
+import godwit.backend.vm.assemblyspec;
+import godwit.backend.vm.typeequivalencehash;
 
 public struct BaseDomain
 {

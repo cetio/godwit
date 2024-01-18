@@ -1,10 +1,10 @@
-module godwit.backend.assemblybinder;
+module godwit.backend.vm.assemblybinder;
 
 import std.uuid;
-import godwit.backend.applicationcontext;
-import godwit.backend.shash;
-import godwit.backend.sbuffer;
-import godwit.backend.assembly;
+import godwit.backend.binder.applicationcontext;
+import godwit.backend.inc.shash;
+import godwit.backend.inc.sbuffer;
+import godwit.backend.vm.assembly;
 import caiman.traits;
 import godwit.impl;
 

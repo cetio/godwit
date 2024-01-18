@@ -1,4 +1,4 @@
-module godwit.backend.slist;
+module godwit.backend.inc.slist;
 
 import caiman.traits;
 

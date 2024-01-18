@@ -1,8 +1,8 @@
 /// Provides functions for working with signatures and their data. \
 /// Very confusing, so some documentation may not be very helpful.
-module godwit.backend.cor;
+module godwit.backend.inc.cor;
 
-import godwit.backend.corhdr;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 import caiman.state;
 

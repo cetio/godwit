@@ -1,8 +1,8 @@
-module godwit.backend.clsload;
+module godwit.backend.vm.clsload;
 
-import godwit.backend.assembly;
-import godwit.backend.crst;
-import godwit.backend.pendingload;
+import godwit.backend.vm.assembly;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.pendingload;
 import caiman.traits;
 import godwit.impl;
 

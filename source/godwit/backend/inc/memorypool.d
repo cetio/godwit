@@ -1,4 +1,4 @@
-module godwit.backend.memorypool;
+module godwit.backend.inc.memorypool;
 
 import caiman.traits;
 import godwit.impl;

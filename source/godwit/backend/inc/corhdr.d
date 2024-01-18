@@ -1,5 +1,5 @@
 /// Provides interface to low level runtime type/token data.
-module godwit.backend.corhdr;
+module godwit.backend.inc.corhdr;
 
 import caiman.traits;
 

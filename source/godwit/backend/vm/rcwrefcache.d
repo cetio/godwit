@@ -1,8 +1,8 @@
-module godwit.backend.rcwrefcache;
+module godwit.backend.vm.rcwrefcache;
 
-import godwit.backend.appdomain;
-import godwit.backend.qtempls;
-import godwit.backend.object;
+import godwit.backend.vm.appdomain;
+import godwit.backend.gc.qtempls;
+import godwit.backend.vm.object;
 import caiman.traits;
 
 public struct RCWRefCache

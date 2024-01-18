@@ -1,9 +1,9 @@
-module godwit.backend.shash;
+module godwit.backend.inc.shash;
 
 import caiman.traits;
-import godwit.backend.nativeimage;
-import godwit.backend.assembly;
-import godwit.backend.applicationcontext;
+import godwit.backend.vm.nativeimage;
+import godwit.backend.vm.assembly;
+import godwit.backend.binder.applicationcontext;
 
 public struct SHash(ELEM, COUNT)
 {
@@ -15,5 +15,5 @@ final:
     COUNT m_occupied;
     COUNT m_max;
 
-    mixin accessors;
+    //mixin accessors;
 }

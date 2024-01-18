@@ -1,6 +1,6 @@
-module godwit.backend.codeversion;
+module godwit.backend.vm.codeversion;
 
-import godwit.backend.method;
+import godwit.backend.vm.method;
 import caiman.traits;
 import godwit.impl;
 

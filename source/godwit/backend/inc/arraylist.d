@@ -1,4 +1,4 @@
-module godwit.backend.arraylist;
+module godwit.backend.inc.arraylist;
 
 import caiman.traits;
 import godwit.impl;

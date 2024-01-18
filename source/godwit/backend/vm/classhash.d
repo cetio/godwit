@@ -1,6 +1,6 @@
-module godwit.backend.classhash;
+module godwit.backend.vm.classhash;
 
-import godwit.backend.dacenumerablehash;
+import godwit.backend.vm.dacenumerablehash;
 import caiman.traits;
 import godwit.impl;
 

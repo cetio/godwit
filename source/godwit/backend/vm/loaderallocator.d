@@ -1,25 +1,25 @@
-module godwit.backend.loaderallocator;
+module godwit.backend.vm.loaderallocator;
 
-import godwit.backend.loaderheap;
-import godwit.backend.codeman;
-import godwit.backend.crst;
-import godwit.backend.fptrstubs;
-import godwit.backend.stringliteralmap;
-import godwit.backend.object;
+import godwit.backend.inc.loaderheap;
+import godwit.backend.vm.codeman;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.fptrstubs;
+import godwit.backend.vm.stringliteralmap;
+import godwit.backend.vm.object;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.appdomain;
+import godwit.backend.vm.appdomain;
 import godwit.backend.simplerwlock;
-import godwit.backend.contractimpl;
-import godwit.backend.domainassembly;
-import godwit.backend.slist;
-import godwit.backend.codeman;
-import godwit.backend.stub;
-import godwit.backend.listlock;
-import godwit.backend.sbuffer;
-import godwit.backend.utilcode;
-import godwit.backend.shash;
-import godwit.backend.hash;
+import godwit.backend.vm.contractimpl;
+import godwit.backend.vm.domainassembly;
+import godwit.backend.inc.slist;
+import godwit.backend.vm.codeman;
+import godwit.backend.vm.stub;
+import godwit.backend.vm.listlock;
+import godwit.backend.inc.sbuffer;
+import godwit.backend.inc.utilcode;
+import godwit.backend.inc.shash;
+import godwit.backend.vm.hash;
 
 public struct LoaderAllocator
 {
@@ -63,8 +63,8 @@ final:
     /// U->M thunks that are not associated with a delegate. \
     /// The cache is keyed by MethodDesc pointers.
     UMEntryThunkCache* m_umEntryThunkCache;
-    CodeRangeMapRangeList m_stubPrecodeRangeList;
-    CodeRangeMapRangeList m_fixupPrecodeRangeList;
+    @exempt CodeRangeMapRangeList m_stubPrecodeRangeList;
+    @exempt CodeRangeMapRangeList m_fixupPrecodeRangeList;
     static if (PGO)
     {
         // ----> PgoManager <----

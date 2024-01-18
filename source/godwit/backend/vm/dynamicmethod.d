@@ -1,10 +1,10 @@
-module godwit.backend.dynamicmethod;
+module godwit.backend.vm.dynamicmethod;
 
-import godwit.backend.crst;
-import godwit.backend.methodtable;
-import godwit.backend.ceeload;
-import godwit.backend.appdomain;
-import godwit.backend.method;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.appdomain;
+import godwit.backend.vm.method;
 import caiman.traits;
 
 public struct DynamicMethodTable

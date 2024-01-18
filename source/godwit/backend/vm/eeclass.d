@@ -1,15 +1,15 @@
-module godwit.backend.eeclass;
+module godwit.backend.vm.eeclass;
 
-import godwit.backend.methodtable;
-import godwit.backend.method;
-import godwit.backend.field;
-import godwit.backend.stub;
-import godwit.backend.typehandle;
-import godwit.backend.corhdr;
-import godwit.backend.object;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.method;
+import godwit.backend.vm.field;
+import godwit.backend.vm.stub;
+import godwit.backend.vm.typehandle;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.object;
 import godwit.packedfields;
 import caiman.traits;
-import godwit.backend.corinfo;
+import godwit.backend.inc.corinfo;
 import godwit.impl;
 
 public struct CCWTemplate
@@ -313,13 +313,13 @@ final:
     ubyte m_baseSizePadding;
     union
     {
-        struct asArray
+        struct ArrayClass
         {
             ubyte m_rank;
             CorElementType m_elemType;
         }
-
-        struct asDelegate
+        
+        struct DelegateClass
         {
             Stub* m_staticCallStub;
             Stub* m_instRetBuffCallStub;
@@ -336,6 +336,8 @@ final:
             }
         }
 
+        ArrayClass m_arrayClass;
+        DelegateClass m_delegateClass;
         struct
         {
             LayoutInfo m_layoutInfo;
@@ -381,10 +383,10 @@ final:
     extern (C) export FieldDesc*[] fields()
     {
         int length = numTotalFields();
-        FieldDesc*[] fieldDescs = new FieldDesc*[length];
+        FieldDesc*[] fieldDescs;
 
         for (int i = 0; i < length; i++)
-            fieldDescs[i] = fieldDescList + i;
+            fieldDescs ~= fieldDescList + i;
 
         return fieldDescs;
     }

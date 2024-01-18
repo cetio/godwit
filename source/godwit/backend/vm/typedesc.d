@@ -1,9 +1,9 @@
-module godwit.backend.typedesc;
+module godwit.backend.vm.typedesc;
 
 import std.bitmanip;
-import godwit.backend.typehandle;
-import godwit.backend.corhdr;
-import godwit.backend.ceeload;
+import godwit.backend.vm.typehandle;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.ceeload;
 import caiman.traits;
 
 /**

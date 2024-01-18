@@ -1,6 +1,6 @@
-module godwit.backend.bundle;
+module godwit.backend.inc.bundle;
 
-import godwit.backend.sbuffer;
+import godwit.backend.inc.sbuffer;
 import caiman.traits;
 
 public struct BundleFileLocation

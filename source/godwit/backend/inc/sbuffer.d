@@ -1,4 +1,4 @@
-module godwit.backend.sbuffer;
+module godwit.backend.inc.sbuffer;
 
 import caiman.traits;
 

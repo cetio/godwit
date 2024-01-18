@@ -1,7 +1,7 @@
-module godwit.backend.assemblyspec;
+module godwit.backend.vm.assemblyspec;
 
-import godwit.backend.hash;
-import godwit.backend.loaderheap;
+import godwit.backend.vm.hash;
+import godwit.backend.inc.loaderheap;
 import caiman.traits;
 
 public struct AssemblySpecBindingCache

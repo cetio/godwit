@@ -1,8 +1,8 @@
-module godwit.backend.peassembly;
+module godwit.backend.vm.peassembly;
 
-import godwit.backend.peimage;
-import godwit.backend.assemblybinder;
-import godwit.backend.bspace;
+import godwit.backend.vm.peimage;
+import godwit.backend.vm.assemblybinder;
+import godwit.backend.binder.bspace;
 import caiman.traits;
 import godwit.impl;
 
@@ -56,5 +56,5 @@ final:
     /// load context would be propagated to the assembly being dynamically generated.
     AssemblyBinder* m_fallbackBinder;
 
-    mixin accessors;
+    //mixin accessors;
 }

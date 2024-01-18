@@ -1,5 +1,5 @@
 /// Represents precode/prologue data for methods
-module godwit.backend.precode;
+module godwit.backend.vm.precode;
 
 import caiman.traits;
 

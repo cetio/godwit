@@ -1,13 +1,13 @@
-module godwit.backend.readytoruninfo;
+module godwit.backend.vm.readytoruninfo;
 
-import godwit.backend.peimagelayout;
-import godwit.backend.readytorun;
-import godwit.backend.crst;
-import godwit.backend.corhdr;
-import godwit.backend.ceeload;
-import godwit.backend.nativeimage;
-import godwit.backend.hash;
-import godwit.backend.inlinetracking;
+import godwit.backend.vm.peimagelayout;
+import godwit.backend.inc.readytorun;
+import godwit.backend.vm.crst;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.nativeimage;
+import godwit.backend.vm.hash;
+import godwit.backend.vm.inlinetracking;
 import caiman.traits;
 
 public struct ReadyToRunCoreInfo

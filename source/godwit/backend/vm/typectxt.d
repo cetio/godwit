@@ -1,6 +1,6 @@
-module godwit.backend.typectxt;
+module godwit.backend.vm.typectxt;
 
-import godwit.backend.typehandle;
+import godwit.backend.vm.typehandle;
 import caiman.traits;
 
 public struct SigTypeContext

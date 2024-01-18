@@ -1,9 +1,9 @@
-module godwit.backend.listlock;
+module godwit.backend.vm.listlock;
 
-import godwit.backend.codeversion;
-import godwit.backend.crst;
-import godwit.backend.threads;
-import godwit.backend.loaderallocator;
+import godwit.backend.vm.codeversion;
+import godwit.backend.vm.crst;
+import godwit.backend.vm.threads;
+import godwit.backend.vm.loaderallocator;
 import caiman.traits;
 import caiman.state;
 

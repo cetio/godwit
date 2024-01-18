@@ -7,11 +7,11 @@
  * Type handles are in one-to-one correspondence with TypeKeys.
  * In particular, note that tokens in the key are resolved TypeDefs.
  */
-module godwit.backend.typekey;
+module godwit.backend.vm.typekey;
 
-import godwit.backend.corhdr;
-import godwit.backend.ceeload;
-import godwit.backend.typehandle;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.typehandle;
 
 /**
  * Represents a TypeKey structure used for type lookups based on type components.

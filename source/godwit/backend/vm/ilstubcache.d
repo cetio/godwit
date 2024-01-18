@@ -1,12 +1,12 @@
-module godwit.backend.ilstubcache;
+module godwit.backend.vm.ilstubcache;
 
-import godwit.backend.crst;
-import godwit.backend.loaderheap;
-import godwit.backend.methodtable;
-import godwit.backend.method;
-import godwit.backend.shash;
+import godwit.backend.vm.crst;
+import godwit.backend.inc.loaderheap;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.method;
+import godwit.backend.inc.shash;
 import caiman.traits;
-import godwit.backend.loaderallocator;
+import godwit.backend.vm.loaderallocator;
 
 public struct ILStubHashBlobBase
 {

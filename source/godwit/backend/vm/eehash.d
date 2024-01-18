@@ -1,4 +1,4 @@
-module godwit.backend.eehash;
+module godwit.backend.vm.eehash;
 
 import std.uuid;
 import caiman.traits;

@@ -2,12 +2,12 @@
     Definitions for "dictionaries" used to encapsulate generic instantiations
     and instantiation-specific information for shared-code generics
 */
-module godwit.backend.genericdict;
+module godwit.backend.vm.genericdict;
 
-import godwit.backend.typehandle;
-import godwit.backend.method;
-import godwit.backend.field;
-import godwit.backend.corhdr;
+import godwit.backend.vm.typehandle;
+import godwit.backend.vm.method;
+import godwit.backend.vm.field;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 
 /// Generic dictionary, for instantiated types and methods (TBD) \

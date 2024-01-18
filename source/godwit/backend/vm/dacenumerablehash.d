@@ -1,7 +1,7 @@
-module godwit.backend.dacenumerablehash;
+module godwit.backend.vm.dacenumerablehash;
 
-import godwit.backend.ceeload;
-import godwit.backend.loaderheap;
+import godwit.backend.vm.ceeload;
+import godwit.backend.inc.loaderheap;
 import caiman.traits;
 
 public struct VolatileEntry(T)

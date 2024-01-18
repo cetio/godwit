@@ -1,7 +1,7 @@
-module godwit.backend.contractimpl;
+module godwit.backend.vm.contractimpl;
 
-import godwit.backend.hash;
-import godwit.backend.crst;
+import godwit.backend.vm.hash;
+import godwit.backend.vm.crst;
 import caiman.traits;
 import godwit.impl;
 

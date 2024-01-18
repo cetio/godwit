@@ -1,4 +1,4 @@
-module godwit.backend.crst;
+module godwit.backend.vm.crst;
 
 import caiman.traits;
 import godwit.impl;

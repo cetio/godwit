@@ -1,7 +1,7 @@
-module godwit.backend.peimagelayout;
+module godwit.backend.vm.peimagelayout;
 
-import godwit.backend.peimage;
-import godwit.backend.corhdr;
+import godwit.backend.vm.peimage;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 
 public struct PEImageLayout

@@ -1,14 +1,14 @@
-module godwit.backend.domainassembly;
+module godwit.backend.vm.domainassembly;
 
-import godwit.backend.assembly;
-import godwit.backend.appdomain;
-import godwit.backend.peassembly;
-import godwit.backend.ceeload;
-import godwit.backend.loaderallocator;
-import godwit.backend.exinfo;
+import godwit.backend.vm.assembly;
+import godwit.backend.vm.appdomain;
+import godwit.backend.vm.peassembly;
+import godwit.backend.vm.ceeload;
+import godwit.backend.vm.loaderallocator;
+import godwit.backend.vm.exinfo;
 import caiman.traits;
-import godwit.backend.corhdr;
-import godwit.backend.dynamicmethod;
+import godwit.backend.inc.corhdr;
+import godwit.backend.vm.dynamicmethod;
 
 public struct DomainAssembly
 {

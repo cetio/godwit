@@ -1,6 +1,6 @@
-module godwit.backend.gcdesc;
+module godwit.backend.gc.gcdesc;
 
-import godwit.backend.methodtable;
+import godwit.backend.vm.methodtable;
 import caiman.traits;
 import godwit.impl;
 

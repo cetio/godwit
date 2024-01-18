@@ -1,9 +1,9 @@
-module godwit.backend.loaderheap;
+module godwit.backend.inc.loaderheap;
 
-import godwit.backend.corhdr;
+import godwit.backend.inc.corhdr;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.utilcode;
+import godwit.backend.inc.utilcode;
 
 public struct LoaderHeapBlock
 {

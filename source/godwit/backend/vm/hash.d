@@ -1,4 +1,4 @@
-module godwit.backend.hash;
+module godwit.backend.vm.hash;
 
 import caiman.traits;
 import godwit.impl;

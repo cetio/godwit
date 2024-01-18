@@ -1,4 +1,4 @@
-module godwit.backend.assemblyversion;
+module godwit.backend.binder.assemblyversion;
 
 import caiman.traits;
 

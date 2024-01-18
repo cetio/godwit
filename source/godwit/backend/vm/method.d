@@ -1,11 +1,11 @@
-module godwit.backend.method;
+module godwit.backend.vm.method;
 
 import std.bitmanip;
-import godwit.backend.methodtable;
-import godwit.backend.methodimpl;
+import godwit.backend.vm.methodtable;
+import godwit.backend.vm.methodimpl;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.genericdict;
+import godwit.backend.vm.genericdict;
 
 public struct MethodDescChunk
 {

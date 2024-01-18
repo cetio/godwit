@@ -1,11 +1,11 @@
-module godwit.backend.exinfo;
+module godwit.backend.vm.exinfo;
 
-import godwit.backend.object;
-import godwit.backend.pal;
-import godwit.backend.clrex;
-import godwit.backend.object;
+import godwit.backend.vm.object;
+import godwit.backend.inc.pal;
+import godwit.backend.vm.clrex;
+import godwit.backend.vm.object;
 import caiman.traits;
-import godwit.backend.exstatecommon;
+import godwit.backend.vm.exstatecommon;
 import godwit.impl;
 
 public struct EHContext
