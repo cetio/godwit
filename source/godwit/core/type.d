@@ -1,20 +1,14 @@
-module godwit.type;
+module godwit.core.type;
 
 import godwit.backend.vm.methodtable;
-import godwit.method;
-import godwit.field;
-import godwit.backend.vm.eeclass;
+import godwit.core.method;
+import godwit.core.field;
 
-public class Type
+public struct Type
 {
 package:
 final:
     MethodTable* methodTable;
-
-    this(MethodTable* methodTable)
-    {
-        this.methodTable = methodTable;
-    }
 
 public:
     string name()
@@ -24,7 +18,7 @@ public:
 
     uint sizeOf()
     {
-        return methodTable.baseSize;
+        return methodTable.eeClass.layoutInfo.managedSize;
     }
     
     extern (C) export Method[] methods()
@@ -37,9 +31,7 @@ public:
     {
         Field[] ret;
         foreach (field; methodTable.eeClass.fields)
-            ret ~= new Field(field);
-        import std.stdio;
-        writeln(*methodTable.eeClass);
+            ret ~= cast(Field)field;
         return ret;
     }
 }

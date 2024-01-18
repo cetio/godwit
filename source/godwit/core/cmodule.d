@@ -1,6 +1,6 @@
-module godwit.cmodule;
+module godwit.core.cmodule;
 
-public class Module
+public struct Module
 {
 public:
 final:

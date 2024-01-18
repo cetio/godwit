@@ -129,7 +129,7 @@ final:
     }
 
     /// Modules will store their name as a cached string for performance.
-    const(char*) m_simpleName;
+    const(char)* m_simpleName;
     /// Equivalent to assembly.peAssembly.
     PEAssembly* m_peAssembly;
     /// None of these flags survive a prejit save/restore.
@@ -218,7 +218,7 @@ final:
     {
         JITInlineTrackingMap* m_jitInlinerTrackingMap;
     }
-    const(char*) m_assemblyRefByNameTable;
+    const(char)* m_assemblyRefByNameTable;
     uint m_assemblyRefByNameCount;
     Assembly* m_nativeMetadataAssemblyRefMap;
     // For protecting dictionary layout slot expansions

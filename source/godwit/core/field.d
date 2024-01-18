@@ -1,18 +1,22 @@
-module godwit.field;
+module godwit.core.field;
 
 import godwit.backend.vm.field;
+import godwit.backend.metadata;
 
-public class Field
+public struct Field
 {
 package:
 final:
     FieldDesc* fieldDesc;
 
-    this(FieldDesc* fieldDesc)
+public:
+    FieldDef token()
     {
-        this.fieldDesc = fieldDesc;
+        return tokenFromRid(fieldDesc.rid, CorTokenType.FieldDef);
     }
 
-public:
-
+    uint offsetOf()
+    {
+        return fieldDesc.offset;
+    }
 }

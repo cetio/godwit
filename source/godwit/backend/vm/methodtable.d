@@ -216,7 +216,7 @@ final:
     ushort m_numInterfaces;
     static if (DEBUG)
     {
-        const(char*) m_className;
+        const(char)* m_className;
     }
     MethodTable* m_parentMethodTable;
     Module* m_ceemodule;

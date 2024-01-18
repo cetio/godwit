@@ -1,6 +1,6 @@
-module godwit.member;
+module godwit.core.member;
 
-public class Member
+public struct Member
 {
 public:
 final:

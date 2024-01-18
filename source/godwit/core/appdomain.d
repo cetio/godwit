@@ -1,6 +1,6 @@
-module godwit.appdomain;
+module godwit.core.appdomain;
 
-public class AppDomain
+public struct AppDomain
 {
 public:
 final:

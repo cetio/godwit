@@ -7,7 +7,7 @@ import godwit.backend.vm.stub;
 import godwit.backend.vm.typehandle;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.object;
-import godwit.packedfields;
+import godwit.backend.packedfields;
 import caiman.traits;
 import godwit.backend.inc.corinfo;
 import godwit.impl;
@@ -284,7 +284,7 @@ final:
     GuidInfo* m_guidInfo;
     static if (DEBUG)
     {
-        const(char*) m_debugClassName;
+        const(char)* m_debugClassName;
         bool m_debuggingClass;
     }
     OptionalFields* m_optionalFields;

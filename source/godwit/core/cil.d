@@ -1,6 +1,6 @@
 /// CIL/IL assembly, diassembly, and execution support
 // TODO: execution support
-module godwit.cil;
+module godwit.core.cil;
 
 import std.conv;
 import std.string;

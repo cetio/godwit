@@ -15,7 +15,7 @@ public struct NativeImage
 public:
 final:
     /// Points to the OwnerCompositeExecutable section content within the component MSIL module
-    const(char*) m_fileName;
+    const(char)* m_fileName;
     AssemblyBinder* m_assemblyBinder;
     ReadyToRunInfo* m_readyToRunInfo;
     // ----> IMDInternalImport <----

@@ -92,9 +92,9 @@ final:
 
     LoaderHeapEvent* m_next;
     AllocationType m_allocationType;
-    const(char*) m_file;
+    const(char)* m_file;
     int m_lineNum;
-    const(char*) m_allocFile;
+    const(char)* m_allocFile;
     int m_allocLineNum;
     void* m_mem;
     size_t m_requestedSize;

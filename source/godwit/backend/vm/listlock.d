@@ -32,7 +32,7 @@ final:
     ListLockBase!T* m_list;
     T m_data;
     Crst m_crst;
-    const(char*) m_description;
+    const(char)* m_description;
     ListLockEntryBase!T* m_next;
     uint m_refCount;
     HResult m_hresultCode;

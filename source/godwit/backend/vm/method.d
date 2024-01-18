@@ -83,9 +83,9 @@ final:
 
     static if (DEBUG)
     {
-        const(char*) m_debugMethodName;
-        const(char*) m_debugClassName;
-        const(char*) m_debugMethodSignature;
+        const(char)* m_debugMethodName;
+        const(char)* m_debugClassName;
+        const(char)* m_debugMethodSignature;
         MethodTable* m_debugMethodTable;
         // ----> GCCoverageInfo <----
         uint* m_gcCover;
@@ -220,7 +220,7 @@ final:
         ILStubTypeMask = ~(FlagMask | StackArgSizeMask)
     }
 
-    const(char*) m_methodName;
+    const(char)* m_methodName;
     // ----> DynamicResolver <----
     ubyte* m_resolver;
 
@@ -266,10 +266,10 @@ final:
         NDirectPopulated = 0x8000, // Indicate if the NDirect has been fully populated.
     }
 
-    const(char*) m_entrypointName;
+    const(char)* m_entrypointName;
     union
     {
-        const(char*) m_libName;
+        const(char)* m_libName;
         /// ECallID for QCalls
         uint m_ecallId;
     }
