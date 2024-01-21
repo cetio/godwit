@@ -36,12 +36,7 @@ public:
     }
 }
 
-/**
- * A map that holds CIL instructions as strings and their corresponding bytecode representations as arrays of bytes.
- */
-const ubyte[][string] instructions;
-
-// Initializes instructions
+private const ubyte[][string] instructions;
 shared static this()
 {
     instructions = [

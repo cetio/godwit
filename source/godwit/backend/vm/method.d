@@ -3,9 +3,11 @@ module godwit.backend.vm.method;
 import std.bitmanip;
 import godwit.backend.vm.methodtable;
 import godwit.backend.vm.methodimpl;
+import godwit.backend.metadata;
+import godwit.backend.vm.genericdict;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.vm.genericdict;
+import caiman.state;
 
 public struct MethodDescChunk
 {
@@ -19,22 +21,45 @@ final:
 
     MethodTable* m_declaringMethodTable;
     MethodDescChunk* m_nextChunk;
+    /// The size of this chunk minus 1
     ubyte m_size;
+    /// The number of `MethodDesc` in this chunk minus 1
     ubyte m_count;
     ChunkFlags m_chunkFlags;
-    // This is an array of MethodDesc.
-    // MethodDescs are aligned to the nearest 8 byte boundary.
-    align(8) MethodDesc m_methodDesc;
+
+    ushort tokenRange()
+    {
+        return cast(ushort)(chunkFlags & ChunkFlags.TokenRangeMask);
+    }
+
+    MethodDesc*[] methods()
+        scope return
+    {
+        MethodDesc*[] ret;
+        uint size;
+        foreach (i; 0..(count + 1))
+        {
+            ubyte* pMD = cast(ubyte*)&this + size + MethodDescChunk.sizeof;
+            pMD += cast(ptrdiff_t)pMD % ptrdiff_t.sizeof;
+
+            // WE LOVE CASTS!!!!
+            ret ~= cast(MethodDesc*)pMD;
+            MethodDesc._chunkLookup[*cast(MethodDesc*)pMD] = &this;
+
+            size += (cast(MethodDesc*)pMD).sizeOf;
+        }
+        return ret;
+    }
 
     mixin accessors;
 }
 
-// Equivalent to System.Runtime.MethodInfo.
+/// Equivalent to System.Runtime.MethodInfo.
 public struct MethodDesc
 {
 public:
 final:
-    @flags enum MethodClassification : uint
+    enum Classification : uint
     {
         IL,
         FCall,
@@ -95,9 +120,74 @@ final:
     ubyte m_methodIndex;
     ushort m_slotNumber;
     mixin(bitfields!(
-        MethodClassification, "m_classification", 3,
+        Classification, "m_classification", 3,
         MethodProperties, "m_properties", 13
     ));
+
+    /// TODO: This is bad, fix later
+    package static MethodDescChunk*[MethodDesc] _chunkLookup;
+
+    /// This is incredibly unstable and needs worked on,
+    /// built upon sticks and stones because this constantly exhibits UB.
+    uint sizeOf()
+    {
+        uint baseSize;
+        switch (classification)
+        {
+            case Classification.IL:
+                baseSize = MethodDesc.sizeof - 8;
+                break;
+            case Classification.FCall:
+                baseSize = FCallMethodDesc.sizeof;
+                break;
+            case Classification.NDirect:
+                baseSize = NDirectMethodDesc.sizeof;
+                break;
+            case Classification.EEImpl:
+                baseSize = EEImplMethodDesc.sizeof;
+                break;
+            case Classification.Array:
+                baseSize = ArrayMethodDesc.sizeof;
+                break;
+            case Classification.Instantiated:
+                baseSize = InstantiatedMethodDesc.sizeof - 20;
+                break;
+            case Classification.Dynamic:
+                baseSize = DynamicMethodDesc.sizeof;
+                break;
+            default:
+                break;
+        }
+
+        static if (COM_INTEROP)
+            baseSize += ComPlusCallInfo.sizeof;
+
+        if (isHasNonVtableSlot)
+            baseSize += size_t.sizeof;
+
+        if (isMethodImpl)
+            baseSize += MethodImpl.sizeof;
+
+        if (isHasNativeCodeSlot)
+            baseSize += size_t.sizeof;
+
+        return baseSize;
+    }
+
+    MethodDescChunk* methodDescChunk()
+        scope return
+    {
+        return _chunkLookup[this];
+    }
+
+    MethodDef token()
+    {
+        ushort range = methodDescChunk.tokenRange;
+        ushort rem = codeFlags & CodeFlags.TokenRemainderMask;
+
+        // METHOD_TOKEN_REMAINDER_BIT_COUNT
+        return (range << 12) | rem | CorTokenType.MethodDef;
+    }
 
     mixin accessors;
 }
@@ -109,7 +199,7 @@ public struct InstantiatedMethodDesc
 
 public:
 final:
-    @flags enum InstantiationFlags
+    @flags enum InstantiationFlags : ushort
     {
         KindMask = 0x07,
         GenericMethodDefinition = 0x01,
@@ -126,7 +216,7 @@ final:
     }
     Dictionary* m_perInstInfo;
     InstantiationFlags m_instFlags;
-    int m_genericsCount;
+    ushort m_genericsCount;
 
     mixin accessors;
 }
@@ -305,12 +395,12 @@ final:
     }
     MethodTable* m_interfaceMethodTable;
     bool m_requiresArgWrapping;
-    short m_cachedComSlot;
+    ushort m_cachedComSlot;
     version (X86)
     {
         // Size of outgoing arguments (on stack). This is currently used only
         // on x86 when we have an InlinedCallFrame representing a CLR->COM call.
-        short m_numStackArgSize;
+        ushort m_numStackArgSize;
         void* m_retThunk;
     }
 

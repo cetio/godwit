@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Godwit;
@@ -36,6 +37,10 @@ unsafe
     var h = typeof(TestStructure).Module.ModuleHandle;
     var pMod = **(nint**)Unsafe.AsPointer(ref h);
     Console.WriteLine(initialize(typeof(TestStructure).TypeHandle.Value));
+    foreach (MethodInfo method in typeof(TestStructure).GetMethods().Where(x => x.Name.StartsWith("test")))
+        Console.WriteLine(method.MethodHandle.Value.ToString("X"));
+    foreach (ConstructorInfo ctor in typeof(TestStructure).GetConstructors())
+        Console.WriteLine(ctor.MethodHandle.Value.ToString("X"));
     //Module mod = pMod.To<Module>();
     //Console.WriteLine(mod.peAssembly.ToString("X"));
     /*int a = 1;
@@ -51,4 +56,31 @@ unsafe
 struct TestStructure
 {
     int a;
+    double b;
+
+    public void testa<T>()
+    {
+        
+    }
+
+    public int testb()
+    {
+        return 0;
+    }
+
+    public int testc()
+    {
+        return 0;
+    }
+
+    public int testd()
+    {
+        return 0;
+    }
+
+    public TestStructure(int a)
+    {
+        this.a = a;
+        this.b = 0;
+    }
 }

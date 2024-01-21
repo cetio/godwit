@@ -7,9 +7,10 @@ import godwit.backend.vm.ceeload;
 import godwit.backend.vm.genericdict;
 import godwit.backend.inc.corhdr;
 import godwit.backend.gc.gcdesc;
+import godwit.backend.metadata;
+import godwit.backend.vm.typehandle;
 import caiman.traits;
 import godwit.impl;
-import godwit.backend.vm.typehandle;
 
 
 public struct AuxillaryData
@@ -288,6 +289,11 @@ final:
     bool hasTokenOverflow()
     {
         return mdToken == 0xFFFF;
+    }
+    
+    TypeDef token()
+    {
+        return tokenFromRid(mdToken, CorTokenType.TypeDef);
     }
 
     pragma(mangle, "MethodTable_gcDesc_get")
