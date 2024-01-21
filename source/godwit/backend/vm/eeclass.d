@@ -310,6 +310,7 @@ final:
     CorElementType m_corElementType;
     bool m_fieldsArePacked;
     ubyte m_fixedEEClassFields;
+    /// Broken? Figure out why
     ubyte m_baseSizePadding;
     union
     {
@@ -340,6 +341,7 @@ final:
         DelegateClass m_delegateClass;
         struct
         {
+            /// Broken? Figure out why
             LayoutInfo m_layoutInfo;
             NativeLayoutInfo* m_nativeLayoutInfo;
         }
@@ -384,10 +386,8 @@ final:
     {
         int length = numTotalFields();
         FieldDesc*[] fieldDescs;
-
         for (int i = 0; i < length; i++)
             fieldDescs ~= fieldDescList + i;
-
         return fieldDescs;
     }
 }

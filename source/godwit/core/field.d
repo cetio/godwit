@@ -10,13 +10,18 @@ final:
     FieldDesc* fieldDesc;
 
 public:
-    FieldDef token()
+    string name()
     {
-        return tokenFromRid(fieldDesc.rid, CorTokenType.FieldDef);
+        throw new Exception("Unimplemented");
     }
 
     uint offsetOf()
     {
         return fieldDesc.offset;
+    }
+
+    FieldDef token()
+    {
+        return tokenFromRid(fieldDesc.rid, CorTokenType.FieldDef);
     }
 }

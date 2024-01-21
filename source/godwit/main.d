@@ -63,6 +63,7 @@ extern (C) export bool initialize(MethodTable* pMT)
     make!(godwit.backend.binder, r"C:\Users\stake\Documents\").csharp("ICLR"); */
     Type type = cast(Type)pMT;
     writeln("Fields: ", type.fields);
+    writeln("Methods: ", type.methods);
     writeln("SizeOf: ", type.sizeof);
     writeln("Token: ", type.fields[0].token.to!string(16));
     if (onInitialize != null)
