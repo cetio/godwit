@@ -67,7 +67,7 @@ struct TestStructure
     {
         return 0;
     }
-
+//
     public int testc()
     {
         return 0;
