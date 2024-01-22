@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stake\\source\\repos\\godwit\\tests\\Tests.csproj": {}
+    "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stake\\source\\repos\\godwit\\tests\\Tests.csproj": {
+    "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stake\\source\\repos\\godwit\\tests\\Tests.csproj",
+        "projectUniqueName": "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "C:\\Users\\stake\\source\\repos\\godwit\\tests\\Tests.csproj",
+        "projectPath": "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\Tests.csproj",
         "packagesPath": "C:\\Users\\stake\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stake\\source\\repos\\godwit\\tests\\obj\\",
+        "outputPath": "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\stake\\AppData\\Roaming\\NuGet\\NuGet.Config",

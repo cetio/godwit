@@ -14,3 +14,6 @@ godwit-test-*
 *.o
 *.obj
 *.lst
+*.dll
+*.lib
+*.a
