@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HzWGGDJNYeoA4A2WU8Im66aCAhFhPq88h4NKW7xKuEwKq7p7JRm0YrsG12YEOHvE+DUfQx7CA8RoiRTd29RI1Q==",
+  "dgSpecHash": "81F798Mi7CIWXJE+xj2kglNHrZw4HvioLAS+FscgiE9ntWlaYstFLOrVRbyLSPlCOy0o+3+rMKvkmNMhV1Y1Tw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\stake\\source\\repos\\godwit\\tests\\Tests.csproj",
+  "projectFilePath": "C:\\Users\\stake\\source\\repos\\godwit\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stake\\.nuget\\packages\\penet\\4.0.2\\penet.4.0.2.nupkg.sha512",
     "C:\\Users\\stake\\.nuget\\packages\\penet.asn1\\2.0.1\\penet.asn1.2.0.1.nupkg.sha512",
