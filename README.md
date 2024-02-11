@@ -1,6 +1,7 @@
 # Godwit
 
-[![License](https://img.shields.io/badge/License-MPL--2-blue)](#license)
+[![GitHub tag](https://img.shields.io/github/tag/cetio/godwit?include_prereleases=&sort=semver&color=blue)](https://github.com/cetio/godwit/releases/)
+[![License](https://img.shields.io/badge/License-AGPL--3-blue)](#license)
 [![Build - Intangible](https://img.shields.io/badge/Build-Intangible-informational)](https://)
 
 [![Caiman](https://img.shields.io/badge/Caiman-blueviolet?style=for-the-badge&logo=github)](https://github.com/cetio/caiman)
@@ -96,4 +97,4 @@ NO DEPENDENCIES
 
 ## License
 
-[MPL-2](/LICENSE.txt) 🎅🎅🎅
+Released under [AGPL-3](/LICENSE.txt) by [@cetio](https://github.com/cetio).
