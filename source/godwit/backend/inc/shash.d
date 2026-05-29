@@ -1,6 +1,5 @@
 module godwit.backend.inc.shash;
 
-import tern.accessors;
 import godwit.backend.vm.nativeimage;
 import godwit.backend.vm.assembly;
 import godwit.backend.binder.applicationcontext;

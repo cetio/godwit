@@ -8,7 +8,6 @@ import godwit.backend.vm.ceeload;
 import godwit.backend.vm.nativeimage;
 import godwit.backend.vm.hash;
 import godwit.backend.vm.inlinetracking;
-import tern.accessors;
 
 public struct ReadyToRunCoreInfo
 {
@@ -18,7 +17,7 @@ final:
     ReadyToRunCoreHeader* m_coreHeader;
     bool m_forbidLoadILBodyFixups;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ReadyToRunInfo
@@ -48,5 +47,5 @@ final:
     PersistentInlineTrackingMapR2R* m_crossModulePersistentInlineTrackingMap;
     ReadyToRunInfo* m_nextR2RForUnrelatedCode;
 
-    mixin accessors;
+// mixin accessors;
 }

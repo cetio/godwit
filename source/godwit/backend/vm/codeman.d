@@ -3,7 +3,6 @@ module godwit.backend.vm.codeman;
 import godwit.backend.inc.loaderheap;
 import godwit.backend.vm.crst;
 import godwit.backend.vm.loaderallocator;
-import tern.accessors;
 
 public struct FreeBlock
 {
@@ -13,7 +12,7 @@ final:
     // Size of this block (includes size of FreeBlock)
     size_t m_size;      
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public enum StubBlockKind
@@ -55,5 +54,5 @@ final:
     StubBlockKind m_kind;
     Crst m_crst;
 
-    mixin accessors;
+// mixin accessors;
 }

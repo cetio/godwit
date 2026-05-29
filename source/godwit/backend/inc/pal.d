@@ -1,6 +1,5 @@
 module godwit.backend.inc.pal;
 
-import tern.accessors;
 
 public struct ExceptionRecord
 {
@@ -13,7 +12,7 @@ final:
     uint m_numParams;
     uint*[15] m_exceptionInfo;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ExceptionPointers
@@ -23,7 +22,7 @@ final:
     ExceptionRecord* m_exceptionRecord;
     Context* m_context;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct FloatingSaveArea
@@ -40,7 +39,7 @@ final:
     ubyte[80] m_registerArea;
     uint m_cr0NPXState;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct Context
@@ -75,5 +74,5 @@ final:
     uint m_segSs;
     ubyte[512] m_extendedRegisters;
 
-    mixin accessors;
+// mixin accessors;
 }

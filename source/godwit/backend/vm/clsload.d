@@ -3,7 +3,6 @@ module godwit.backend.vm.clsload;
 import godwit.backend.vm.assembly;
 import godwit.backend.vm.crst;
 import godwit.backend.vm.pendingload;
-import tern.accessors;
 import godwit.impl;
 
 public struct ClassLoader
@@ -39,5 +38,5 @@ final:
         size_t m_numEEClassData;
     }
     
-    mixin accessors;
+// mixin accessors;
 }

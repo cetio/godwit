@@ -1,6 +1,5 @@
 module godwit.backend.vm.crst;
 
-import tern.accessors;
 import godwit.impl;
 
 public struct CrstBase
@@ -153,7 +152,7 @@ final:
         int m_cannotLeave;
         uint m_numNoTriggerGC;
     }
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct Crst

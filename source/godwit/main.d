@@ -1,7 +1,5 @@
 module godwit.main;
 
-import core.sys.windows.windows;
-import core.sys.windows.windef : HINSTANCE, BOOL, DWORD, LPVOID;
 import core.sys.windows.dll;
 import godwit;
 import std.stdio;
@@ -9,8 +7,8 @@ import std.conv;
 
 public static bool function() onInitialize;
 
-extern(Windows)
-BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
+extern (Windows)
+int DllMain(void* hInstance, uint ulReason, void* reserved)
 {
     import core.sys.windows.winnt;
     import core.sys.windows.dll :
@@ -20,17 +18,17 @@ BOOL DllMain(HINSTANCE hInstance, DWORD ulReason, LPVOID reserved)
     {
         default: assert(0);
         case DLL_PROCESS_ATTACH:
-            return dll_process_attach( hInstance, true );
+            return dll_process_attach(hInstance, true);
 
         case DLL_PROCESS_DETACH:
-            dll_process_detach( hInstance, true );
+            dll_process_detach(hInstance, true);
             return true;
 
         case DLL_THREAD_ATTACH:
-            return dll_thread_attach( true, true );
+            return dll_thread_attach(true, true);
 
         case DLL_THREAD_DETACH:
-            return dll_thread_detach( true, true );
+            return dll_thread_detach(true, true);
     }
 }
 

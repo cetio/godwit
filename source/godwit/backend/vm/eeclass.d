@@ -8,7 +8,6 @@ import godwit.backend.vm.typehandle;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.object;
 import godwit.backend.packedfields;
-import tern.accessors;
 import godwit.backend.inc.corinfo;
 import godwit.impl;
 
@@ -26,7 +25,7 @@ final:
     ubyte* m_extraInfo;
     MethodTable* m_interfaceMethodTable;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct SparseVTableEntry
@@ -37,7 +36,7 @@ final:
     ushort m_count;
     ushort m_vtStart;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct SparseVTableMap
@@ -51,7 +50,7 @@ final:
     ushort m_vtSlot;
     ushort m_mtSlot;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct LayoutInfo
@@ -87,7 +86,7 @@ final:
     LayoutFlags m_layoutFlags;
     ubyte m_packingSize;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // fieldmarshaler.h
@@ -109,7 +108,7 @@ final:
     uint m_numFields;
     NativeFieldDescriptor* m_nativeFieldDescriptor;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // fieldmarshaler.h
@@ -142,41 +141,36 @@ final:
     uint m_offset;
     NativeFieldCategory m_category;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct OptionalFields
 {
 public:
 final:
-    /// If IsSharedByGenericInstantiations(), layout of handle dictionary for generic type
-    /// (the last dictionary pointed to from PerInstInfo). Otherwise NULL.
-    ubyte* m_dictLayout;
-    /// Variance info for each type parameter (gpNonVariant, gpCovariant, or gpContravariant)
-    // If NULL, this type has no type parameters that are co/contravariant
+    void* m_dictLayout;
     ubyte* m_varianceInfo;
+
     static if (COM_INTEROP)
     {
         SparseVTableMap* m_sparseVTableMap;
         TypeHandle m_coClass;
         static if (COM_INTEROP_UNMANAGED_ACTIVATION)
         {
-            /// Points to activation information if the type is an activatable COM class.
-            MethodTable** m_classFactory;
+            void** m_classFactory;
         }
     }
+
     version (Posix)
     {
-        /// Number of eightBytes in the following arrays
-        int m_numberEightBytes;
-        // CLR_SYSTEMV_MAX_EIGHTBYTES_COUNT_TO_PASS_IN_REGISTERS
+        ubyte m_numEightBytes;
         SystemVClassification[2] m_eightByteClassifications;
-        uint[2] m_eightByteSizes;
+        ubyte[2] m_eightByteSizes;
     }
-    uint m_moduleDynamicID;
+
     ubyte m_requiredFieldAlignment;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEClass
@@ -201,13 +195,10 @@ final:
         kExplicitLayout = 0x00000010,
 
         Abstract = 0x00000080,
-        // Class is concrete and may not be extended.
         Sealed = 0x00000100,
         SpecialName = 0x00000400,
-        // Class/interface is imported.
         Import = 0x00001000,
         Serializable = 0x00002000,
-        // Type is a Windows Runtime type.
         WindowsRuntime = 0x00004000,
 
         StringFormatMask = 0x00030000,
@@ -215,11 +206,9 @@ final:
         kUnicodeClass = 0x00010000,
         kAutoClass = 0x00020000,
 
-        // Initialize the struct any time before first static field access.
         BeforeFieldInit = 0x00100000,
 
         ReservedMask = 0x00040800,
-        // Runtime should check name encoding.
         kRTSpecialName = 0x00000800,
         kHasSecurity = 0x00040000
     }
@@ -227,158 +216,120 @@ final:
     @flags enum VMFlags : uint
     {
         LayoutDependsOnOtherModules = 0x00000001,
-        // This EEClass represents a DelegateClass.
         Delegate = 0x00000002,
         ENCStaticFields = 0x00000004,
         FixedAddressVtStatics = 0x00000020,
         HasLayout = 0x00000040,
-
         IsNested = 0x00000080,
         IsEquivalentType = 0x00000200,
         HasOverlayedFields = 0x00000400,
-        // Contains static fields.
         HasFieldsWhichMustBeInited = 0x00000800,
         UnsafeValueType = 0x00001000,
-
         BestFitMappingInited = 0x00002000,
         BestFitMapping = 0x00004000,
         ThrowOnUnmappableChar = 0x00008000,
-
-        // GuidInfo does exist but does not contain a Guid.
+        InlineArray = 0x00010000,
         NoGuid = 0x00020000,
-        HasNonPublicFields = 0x00040000,
+        HasRVAStaticFields = 0x00040000,
+        HasCustomFieldAlignment = 0x00080000,
         ContainsStackPtr = 0x00100000,
         PreferAlign8 = 0x00200000,
-
+        OnlyAbstractMethods = 0x00400000,
         SparseForCominterop = 0x00800000,
         HasCoClassAttrib = 0x01000000,
         ComEventItfMask = 0x02000000,
-        ProjectedFromWinRT = 0x04000000,
-        ExportedToWinRT = 0x08000000,
-
-        // Fields are packed but not tightly.
+        VTableMethodImpl = 0x04000000,
+        CovariantOverride = 0x08000000,
         NotTightlyPacked = 0x10000000,
         ContainsMethodImpls = 0x20000000,
-
-        MarshalingTypeMask = 0xc0000000,
-        kInhibit = 0x40000000,
-        kFreeThreaded = 0x80000000,
-        kStandard = 0xc0000000
-    }
-
-    enum EEClassFieldId
-    {
-        NumInstanceFields,
-        NumMethods,
-        NumStaticFields,
-        NumHandleStatics,
-        NumBoxedStatics,
-        NonGCStaticFieldBytes,
-        NumThreadStaticFields,
-        NumHandleThreadStatics,
-        NumBoxedThreadStatics,
-        NonGCThreadStaticFieldBytes,
-        NumNonVirtualSlots
     }
 
     GuidInfo* m_guidInfo;
+
     static if (DEBUG)
     {
-        const(char)* m_debugClassName;
-        bool m_debuggingClass;
+        const(char)* debugClassName;
+        bool debuggingClass;
     }
+
     OptionalFields* m_optionalFields;
     MethodTable* m_methodTable;
     FieldDesc* m_fieldDescList;
-    MethodDescChunk* m_methodDescChunk;
+    MethodDescChunk* m_chunks;
+
     static if (COM_INTEROP)
     {
-        union
-        {
-            ObjectHandle m_delegateObjectHandle;
-            CorInterfaceType m_corInterfaceType;
-        }
-        CCWTemplate* m_ccwTemplate;
+        CorInterfaceType m_comInterfaceType;
+        void* m_ccwTemplate;
     }
-    TypeAttributes m_typeAttributes;
-    VMFlags m_vmFlags;
+
+    uint m_attrClass;
+    uint m_vmFlags;
+
     static if (DEBUG)
     {
-        /// This is never used.
-        ushort m_auxFlags;
+        ushort auxFlags;
     }
-    CorElementType m_corElementType;
-    bool m_fieldsArePacked;
-    ubyte m_fixedEEClassFields;
-    /// Broken? Figure out why
+
+    ubyte m_normType;
     ubyte m_baseSizePadding;
-    union
-    {
-        struct ArrayClass
-        {
-            ubyte m_rank;
-            CorElementType m_elemType;
-        }
-        
-        struct DelegateClass
-        {
-            Stub* m_staticCallStub;
-            Stub* m_instRetBuffCallStub;
-            MethodDesc* m_invokeMethod;
-            Stub* m_multiCastInvokeStub;
-            Stub* m_wrapperDelegateInvokeStub;
-            UMThunkMarshInfo* m_umThunkMarshInfo;
-            MethodDesc* m_beginInvokeMethod;
-            MethodDesc* m_endInvokeMethod;
-            ubyte* m_marshalStub;
-            static if (COM_INTEROP)
-            {
-                ComPlusCallInfo* m_pComPlusCallInfo;
-            }
-        }
 
-        ArrayClass m_arrayClass;
-        DelegateClass m_delegateClass;
-        struct
-        {
-            /// Broken? Figure out why
-            LayoutInfo m_layoutInfo;
-            NativeLayoutInfo* m_nativeLayoutInfo;
-        }
+    ushort m_numInstanceFields;
+    ushort m_numMethods;
+    ushort m_numStaticFields;
+    ushort m_numHandleStatics;
+    ushort m_numThreadStaticFields;
+    ushort m_numHandleThreadStatics;
+    ushort m_numNonVirtualSlots;
+
+    uint m_nonGCStaticFieldBytes;
+    uint m_nonGCThreadStaticFieldBytes;
+
+// mixin accessors;
+
+    uint numTotalFields()
+    {
+        return m_numInstanceFields + m_numStaticFields;
     }
 
-    mixin accessors;
-
-    PackedFields* packedFields() 
-        scope return
+    uint numInstanceFields()
     {
-        return cast(PackedFields*)(cast(byte*)&this + fixedEEClassFields);
+        return m_numInstanceFields;
     }
 
-    uint packedField(EEClassFieldId fieldId)
+    uint numStaticFields()
     {
-        return fieldsArePacked 
-            ? packedFields().getPackedField(fieldId) 
-            : packedFields().getUnpackedField(fieldId);
+        return m_numStaticFields;
     }
 
-    pragma(mangle, "EEClass_numTotalFields_get")
-    extern (C) export uint numTotalFields()
+    uint numThreadStaticFields()
     {
-        return packedField(EEClassFieldId.NumInstanceFields) 
-            + packedField(EEClassFieldId.NumStaticFields);
+        return m_numThreadStaticFields;
     }
 
-    pragma(mangle, "EEClass_numInstanceFields_get")
-    extern (C) export uint numInstanceFields()
+    uint numHandleStatics()
     {
-        return packedField(EEClassFieldId.NumInstanceFields);
+        return m_numHandleStatics;
     }
 
-    pragma(mangle, "EEClass_numStaticFields_get")
-    extern (C) export uint numStaticFields()
+    uint numHandleThreadStatics()
     {
-        return packedField(EEClassFieldId.NumStaticFields);
+        return m_numHandleThreadStatics;
+    }
+
+    uint numNonVirtualSlots()
+    {
+        return m_numNonVirtualSlots;
+    }
+
+    uint nonGCStaticFieldBytes()
+    {
+        return m_nonGCStaticFieldBytes;
+    }
+
+    uint nonGCThreadStaticFieldBytes()
+    {
+        return m_nonGCThreadStaticFieldBytes;
     }
 
     pragma(mangle, "EEClass_fields_get")
@@ -387,7 +338,7 @@ final:
         int length = numTotalFields();
         FieldDesc*[] fieldDescs;
         for (int i = 0; i < length; i++)
-            fieldDescs ~= fieldDescList + i;
+            fieldDescs ~= m_fieldDescList + i;
         return fieldDescs;
     }
 }

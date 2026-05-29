@@ -2,7 +2,6 @@ module godwit.backend.vm.dacenumerablehash;
 
 import godwit.backend.vm.ceeload;
 import godwit.backend.inc.loaderheap;
-import tern.accessors;
 
 public struct VolatileEntry(T)
 {
@@ -15,7 +14,7 @@ final:
     // The hash value associated with the entry
     uint m_hashValue;    
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct DacEnumerableHashTable(FINAL, VALUE, int SCALE)
@@ -27,5 +26,5 @@ final:
     VolatileEntry!VALUE* m_buckets;
     uint m_entries;
 
-    mixin accessors;
+// mixin accessors;
 }

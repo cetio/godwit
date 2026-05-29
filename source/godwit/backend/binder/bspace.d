@@ -4,7 +4,6 @@ import godwit.backend.vm.peimage;
 import godwit.backend.binder.assemblyname;
 import godwit.backend.vm.assemblybinder;
 import godwit.backend.vm.domainassembly;
-import tern.accessors;
 
 public struct BinderSpace
 {
@@ -17,5 +16,5 @@ final:
     bool m_inTPA;
     DomainAssembly* m_domainAssembly;
 
-    mixin accessors;
+// mixin accessors;
 }

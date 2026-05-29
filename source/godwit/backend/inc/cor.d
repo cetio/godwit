@@ -3,8 +3,7 @@
 module godwit.backend.inc.cor;
 
 import godwit.backend.inc.corhdr;
-import tern.accessors;
-import tern.hresult;
+import godwit.hresult;
 
 /*
 This file does not include any compression, only decompression
@@ -249,7 +248,8 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             }
             else
             {
-                dataOut = (cast(uint)(pData[0] & 0x1F) << 24) | (cast(uint)pData[1] << 16) | (cast(uint)pData[2] << 8) | pData[3];
+                dataOut = (cast(uint)(pData[0] & 0x1F) << 24) | (cast(uint)pData[1] << 16)
+                    | (cast(uint)pData[2] << 8) | pData[3];
                 dataLen = 4;
                 return HResult.S_OK;
             }
@@ -304,7 +304,8 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         }
         else
         {
-            dataOut = (cast(uint)(pBytes[0] & 0x1F) << 24) | (cast(uint)pBytes[1] << 16) | (cast(uint)pBytes[2] << 8) | pBytes[3];
+            dataOut = (cast(uint)(pBytes[0] & 0x1F) << 24) | (cast(uint)pBytes[1] << 16)
+                | (cast(uint)pBytes[2] << 8) | pBytes[3];
             dataLen = 4;
             return HResult.S_OK;
         }

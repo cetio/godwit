@@ -3,7 +3,6 @@ module godwit.backend.vm.rcwrefcache;
 import godwit.backend.vm.appdomain;
 import godwit.backend.gc.qtempls;
 import godwit.backend.vm.object;
-import tern.accessors;
 
 public struct RCWRefCache
 {
@@ -18,5 +17,5 @@ final:
     /// Keep track of how many times we use less than half handles
     uint m_shrinkHint;
 
-    mixin accessors;
+// mixin accessors;
 }

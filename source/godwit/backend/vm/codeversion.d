@@ -1,7 +1,6 @@
 module godwit.backend.vm.codeversion;
 
 import godwit.backend.vm.method;
-import tern.accessors;
 import godwit.impl;
 
 public struct NativeCodeVersion
@@ -26,7 +25,7 @@ final:
         MethodDesc* m_syntheticMethodDesc;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct NativeCodeVersionNode
@@ -65,5 +64,5 @@ public:
     }
     uint m_isActiveChild;
 
-    mixin accessors;
+// mixin accessors;
 }

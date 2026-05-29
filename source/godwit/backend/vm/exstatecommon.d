@@ -1,6 +1,5 @@
 module godwit.backend.vm.exstatecommon;
 
-import tern.accessors;
 import godwit.backend.vm.method;
 import godwit.impl;
 
@@ -47,7 +46,7 @@ final:
     /// Indicates that this clause takes place in managed code
     bool m_managed;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct DebuggerExState
@@ -70,7 +69,7 @@ final:
     // The nesting level at which we want to resume execution
     int m_debuggerInterceptHandlerDepth;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EHWatsonBucketTracker
@@ -94,5 +93,5 @@ final:
         DebugFlags m_debugFlags;
     }
 
-    mixin accessors;
+// mixin accessors;
 }

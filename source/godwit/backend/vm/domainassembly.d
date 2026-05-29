@@ -6,7 +6,6 @@ import godwit.backend.vm.peassembly;
 import godwit.backend.vm.ceeload;
 import godwit.backend.vm.loaderallocator;
 import godwit.backend.vm.exinfo;
-import tern.accessors;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.dynamicmethod;
 
@@ -65,5 +64,5 @@ final:
     uint m_notifyflags;
     bool m_debuggerUnloadStarted;
 
-    mixin accessors;
+// mixin accessors;
 }

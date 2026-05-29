@@ -1,7 +1,6 @@
 module godwit.backend.binder.assemblyname;
 
 import godwit.backend.binder.assemblyidentity;
-import tern.accessors;
 
 public struct AssemblyName
 {
@@ -13,5 +12,5 @@ final:
     int m_refCount;
     bool m_isDefinition;
 
-    mixin accessors;
+// mixin accessors;
 }

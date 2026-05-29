@@ -1,6 +1,5 @@
 module godwit.backend.binder.assemblyversion;
 
-import tern.accessors;
 
 public struct AssemblyVersion
 {
@@ -11,5 +10,5 @@ final:
     uint m_build;
     uint m_revision;
 
-    mixin accessors;
+// mixin accessors;
 }

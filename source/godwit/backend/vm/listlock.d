@@ -4,8 +4,7 @@ import godwit.backend.vm.codeversion;
 import godwit.backend.vm.crst;
 import godwit.backend.vm.threads;
 import godwit.backend.vm.loaderallocator;
-import tern.accessors;
-import tern.state;
+import godwit.hresult;
 
 alias ListLock = ListLockBase!(void*);
 alias ListLockEntry = ListLockEntryBase!(void*);
@@ -21,7 +20,7 @@ final:
     bool m_hostBreakable;
     ListLockEntryBase!T* m_head;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ListLockEntryBase(T)
@@ -40,5 +39,5 @@ final:
     ptrdiff_t m_initException;
     LoaderAllocator* m_allocator;
 
-    mixin accessors;
+// mixin accessors;
 }

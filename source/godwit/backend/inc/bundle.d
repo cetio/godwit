@@ -1,7 +1,6 @@
 module godwit.backend.inc.bundle;
 
 import godwit.backend.inc.sbuffer;
-import tern.accessors;
 
 public struct BundleFileLocation
 {
@@ -11,7 +10,7 @@ final:
     long m_offset;
     long m_uncompressedSize;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct Bundle
@@ -23,5 +22,5 @@ final:
     SString m_basePath;
     uint m_basePathLen;
 
-    mixin accessors;
+// mixin accessors;
 }

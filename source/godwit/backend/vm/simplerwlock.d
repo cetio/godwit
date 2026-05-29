@@ -1,6 +1,5 @@
 module godwit.backend.simplerwlock;
 
-import tern.accessors;
 import godwit.impl;
 
 public struct SimpleRWLock
@@ -35,5 +34,5 @@ final:
         }
     }
     
-    mixin accessors;
+// mixin accessors;
 }

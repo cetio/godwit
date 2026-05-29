@@ -8,7 +8,6 @@ import godwit.backend.vm.appdomain;
 import godwit.backend.vm.clsload;
 import godwit.backend.inc.arraylist;
 import godwit.backend.inc.corhdr;
-import tern.accessors;
 import godwit.impl;
 
 /// Equivalent to System.Runtime.Assembly.
@@ -49,7 +48,7 @@ final:
     /// Indicates whether this assembly has been terminated or unloaded.
     bool m_isTerminated;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct FriendAssemblyDescriptor
@@ -62,5 +61,5 @@ final:
     ArrayList m_subjectAssemblies;
     int m_refCount;
 
-    mixin accessors;
+// mixin accessors;
 }

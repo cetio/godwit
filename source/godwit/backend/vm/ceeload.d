@@ -14,7 +14,6 @@ import godwit.backend.inc.corhdr;
 import godwit.backend.vm.classhash;
 import godwit.backend.vm.typehash;
 import godwit.backend.vm.instmethhash;
-import tern.accessors;
 import godwit.impl;
 import godwit.backend.inc.loaderheap;
 
@@ -29,7 +28,7 @@ final:
     // Set of flags that the map supports writing on top of the data value
     T* m_supportedFlags;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ModuleBase
@@ -46,7 +45,7 @@ final:
     CrstExplicitInit m_lookupTableCrst;
     LoaderAllocator* m_allocator;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct VASigCookieBlock
@@ -56,7 +55,7 @@ public:
     uint m_numCookies;
     VASigCookie[] m_cookies;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct VASigCookie
@@ -68,7 +67,7 @@ final:
     Module* m_ceemodule;
     Signature m_signature;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // Equivalent to System.Reflection.Module.
@@ -224,7 +223,7 @@ final:
     // For protecting dictionary layout slot expansions
     CrstExplicitInit m_dictionaryCrst;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // This struct stores the data used by the managed debugging infrastructure.  If it turns out that
@@ -251,5 +250,5 @@ final:
     int m_numTotalJMCFuncs;
     bool m_defaultJMCStatus;
 
-    mixin accessors;
+// mixin accessors;
 }

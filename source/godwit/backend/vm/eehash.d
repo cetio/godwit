@@ -1,7 +1,6 @@
 module godwit.backend.vm.eehash;
 
 import std.uuid;
-import tern.accessors;
 import godwit.impl;
 
 public struct EEHashEntry
@@ -14,7 +13,7 @@ final:
     /// The key is stored inline
     ubyte m_key; 
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // Double buffer to fix the race condition of growhashtable (the update
@@ -34,7 +33,7 @@ final:
         ulong m_countMul;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEHashTableBase(KEY, HELPER, bool ISDEEPCOPY)
@@ -60,7 +59,7 @@ public:
         bool m_checkThreadSafety;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
@@ -76,7 +75,7 @@ final:
     UUID m_clsId;
     wchar* m_srvName;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEStringData
@@ -92,7 +91,7 @@ final:
         uint m_debugCch;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public class EEClassFactoryInfoHashTableHelper

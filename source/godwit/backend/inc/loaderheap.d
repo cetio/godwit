@@ -1,7 +1,6 @@
 module godwit.backend.inc.loaderheap;
 
 import godwit.backend.inc.corhdr;
-import tern.accessors;
 import godwit.impl;
 import godwit.backend.inc.utilcode;
 
@@ -16,7 +15,7 @@ final:
     size_t m_virtualSize;
     bool m_releaseMem;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct UnlockedLoaderHeap
@@ -77,7 +76,7 @@ final:
     bool m_explicitControl;
     @exempt void function(ubyte* pageBase, ubyte* pageBaseRX, size_t size) codePageGenerator;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct LoaderHeapEvent
@@ -126,5 +125,5 @@ public:
 final:
     CritSecCookie m_critSec;
 
-    mixin accessors;
+// mixin accessors;
 }

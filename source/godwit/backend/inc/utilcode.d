@@ -1,6 +1,5 @@
 module godwit.backend.inc.utilcode;
 
-import tern.accessors;
 
 public struct RangeList
 {
@@ -10,7 +9,7 @@ final:
     RangeListBlock* m_firstEmptyBlock;
     uint* m_firstEmptyRange;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct Range
@@ -21,7 +20,7 @@ final:
     uint* m_end;
     uint* m_id;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct RangeListBlock
@@ -32,5 +31,5 @@ final:
     Range[10] m_ranges;
     RangeListBlock* m_next;
 
-    mixin accessors;
+// mixin accessors;
 }

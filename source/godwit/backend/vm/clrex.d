@@ -3,7 +3,6 @@ module godwit.backend.vm.clrex;
 import godwit.backend.vm.method;
 import godwit.backend.inc.ex;
 import godwit.backend.vm.object;
-import tern.accessors;
 
 public struct StackTraceInfo
 {
@@ -21,7 +20,7 @@ final:
     // index of the next location where the resolver object will be stored
     uint m_currentDynamicIndex; 
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct StackTraceElement
@@ -41,7 +40,7 @@ final:
     MethodDesc* m_fn;
     StackTraceElementFlags m_flags;    
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct CLRException
@@ -53,7 +52,7 @@ public:
 final:
     ObjectHandle m_throwableHandle;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEException
@@ -65,5 +64,5 @@ public:
 final:
     const(uint) m_kind;
 
-    mixin accessors;
+// mixin accessors;
 }

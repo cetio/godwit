@@ -2,7 +2,6 @@ module godwit.backend.vm.typehandle;
 
 import godwit.backend.vm.methodtable;
 import godwit.backend.vm.typedesc;
-import tern.accessors;
 import godwit.impl;
 
 /**
@@ -54,7 +53,7 @@ final:
         }
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /**
@@ -75,5 +74,5 @@ final:
     /// Number of arguments in the instantiation
     uint m_numArgs;
 
-    mixin accessors;
+// mixin accessors;
 }

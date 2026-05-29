@@ -4,9 +4,8 @@ import godwit.backend.vm.crst;
 import godwit.backend.vm.typehandle;
 import godwit.backend.inc.ex;
 import godwit.backend.vm.typekey;
-import tern.accessors;
-import tern.state;
 import godwit.impl;
+import godwit.hresult;
 
 public struct PendingTypeLoadEntry
 {
@@ -24,7 +23,7 @@ final:
     /// m_Crst was acquired
     bool m_lockAcquired;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct TableEntry
@@ -35,7 +34,7 @@ final:
     uint m_hashValue;
     PendingTypeLoadEntry* m_data;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct PendingTypeLoadTable
@@ -50,5 +49,5 @@ final:
         uint m_numDebugMemory;
     }
     
-    mixin accessors;
+// mixin accessors;
 }

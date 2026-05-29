@@ -2,7 +2,6 @@ module godwit.backend.binder.assemblyidentity;
 
 import godwit.backend.inc.sbuffer;
 import godwit.backend.binder.assemblyversion;
-import tern.accessors;
 
 public struct AssemblyIdentity
 {
@@ -50,5 +49,5 @@ final:
     AssemblyContentType m_contentType;
     IdentityFlags m_identityFlags;
 
-    mixin accessors;
+// mixin accessors;
 }

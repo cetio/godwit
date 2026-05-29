@@ -1,7 +1,6 @@
 module godwit.backend.vm.methodimpl;
 
 import godwit.backend.vm.method;
-import tern.accessors;
 
 // Used in cases like virtual methods, where a method can be implemented, derived, and or overriden
 public struct MethodImpl
@@ -13,5 +12,5 @@ final:
     /// The MethodDesc(s) that this MethodImpl implements
     MethodDesc** m_implement;
 
-    mixin accessors;
+// mixin accessors;
 }

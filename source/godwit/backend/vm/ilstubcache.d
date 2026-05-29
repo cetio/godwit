@@ -5,7 +5,6 @@ import godwit.backend.inc.loaderheap;
 import godwit.backend.vm.methodtable;
 import godwit.backend.vm.method;
 import godwit.backend.inc.shash;
-import tern.accessors;
 import godwit.backend.vm.loaderallocator;
 
 public struct ILStubHashBlobBase
@@ -15,7 +14,7 @@ final:
     // this is size of entire object!!
     size_t m_sizeOfBlob;  
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ILStubHashBlob
@@ -27,7 +26,7 @@ public:
 final:
     ubyte[] m_blobData;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ILStubCache
@@ -39,7 +38,7 @@ final:
     MethodTable* m_stubMethodTable;
     SHash!(ILStubCacheEntry, uint) m_hashMap;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ILStubCacheEntry
@@ -49,5 +48,5 @@ final:
     MethodDesc* m_methodDesc;
     ILStubHashBlob* m_blob;
 
-    mixin accessors;
+// mixin accessors;
 }

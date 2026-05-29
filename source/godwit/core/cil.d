@@ -5,8 +5,66 @@ module godwit.core.cil;
 import std.conv;
 import std.string;
 import std.format;
-import tern.stream;
 import std.algorithm;
+import std.bitmanip;
+import std.system : Endian;
+
+private struct BinaryStream
+{
+    ubyte[] data;
+    size_t pos;
+
+    this(ubyte[] d)
+    {
+        data = d;
+        pos = 0;
+    }
+
+    @property size_t position() const
+    {
+        return pos;
+    }
+
+    bool mayRead(size_t n = 1)
+    {
+        return pos + n <= data.length;
+    }
+
+    ubyte peek(size_t offset = 0)
+    {
+        return data[pos + offset];
+    }
+
+    void step(size_t n = 1)
+    {
+        pos += n;
+    }
+
+    T read(T)()
+        if (is(T == ubyte) || is(T == byte))
+    {
+        T ret = cast(T)data[pos];
+        pos++;
+        return ret;
+    }
+
+    T read(T)()
+        if (!is(T == ubyte) && !is(T == byte) && !is(T == ubyte[]))
+    {
+        T ret = peek!T(data[pos .. $]);
+        pos += T.sizeof;
+        return ret;
+    }
+
+    T[] read(T)(size_t count)
+    {
+        T[] ret;
+        ret.reserve(count);
+        for (size_t i = 0; i < count; i++)
+            ret ~= read!T();
+        return ret;
+    }
+}
 
 public class CILGen
 {

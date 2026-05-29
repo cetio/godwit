@@ -3,7 +3,6 @@ module godwit.backend.vm.stringliteralmap;
 import godwit.backend.inc.memorypool;
 import godwit.backend.vm.appdomain;
 import godwit.backend.vm.eehash;
-import tern.accessors;
 
 public struct StringLiteralMap
 {
@@ -14,5 +13,5 @@ final:
     /// The memorypool for hash entries for this hash table.
     MemoryPool* m_memoryPool;
 
-    mixin accessors;
+// mixin accessors;
 }

@@ -1,7 +1,6 @@
 /// Provides interface to low level runtime type/token data.
 module godwit.backend.inc.corhdr;
 
-import tern.accessors;
 
 /// ??? Runtime data.
 alias CritSecCookie = void*;
@@ -52,7 +51,7 @@ final:
     uint m_virtualAddress;
     uint m_size;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /// ???
@@ -63,7 +62,7 @@ final:
     uint m_beginAddress;
     uint m_unwindData;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /// Base tokens, used by the runtime for identifying stored structures

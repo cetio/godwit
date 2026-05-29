@@ -2,7 +2,6 @@ module godwit.backend.vm.contractimpl;
 
 import godwit.backend.vm.hash;
 import godwit.backend.vm.crst;
-import tern.accessors;
 import godwit.impl;
 
 public struct TypeIDMap
@@ -15,7 +14,7 @@ final:
     TypeIDProvider m_idProvider;
     uint m_entryCount;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct TypeIDProvider
@@ -28,7 +27,7 @@ final:
         uint m_nextFatID;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct DispatchTokenFat

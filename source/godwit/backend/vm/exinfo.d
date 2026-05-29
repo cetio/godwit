@@ -4,7 +4,6 @@ import godwit.backend.vm.object;
 import godwit.backend.inc.pal;
 import godwit.backend.vm.clrex;
 import godwit.backend.vm.object;
-import tern.accessors;
 import godwit.backend.vm.exstatecommon;
 import godwit.impl;
 
@@ -22,7 +21,7 @@ final:
     uint m_esp;
     uint m_eip;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ExInfo
@@ -72,5 +71,5 @@ final:
         }
     }
 
-    mixin accessors;
+// mixin accessors;
 }

@@ -2,7 +2,6 @@
 module godwit.backend.vm.object;
 
 import godwit.backend.vm.methodtable;
-import tern.accessors;
 import godwit.impl;
 
 alias ObjectRef = BaseObject*;
@@ -34,7 +33,7 @@ final:
     }
     SyncBlockFlags m_flags;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /// Represents a C# Object
@@ -48,7 +47,7 @@ final:
     /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
     ubyte m_data;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /// Arbitrary reference to object, namely used for interop

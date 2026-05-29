@@ -20,16 +20,16 @@ public:
 
     uint sizeOf()
     {
-        return methodTable.eeClass.layoutInfo.managedSize;
+        return methodTable.baseSize - cast(uint)(2 * size_t.sizeof);
     }
     
     Method[] methods()
     {
-        if (methodTable.eeClass.methodDescChunk == null)
+        if (methodTable.eeClass.chunks == null)
             return null;
 
         Method[] ret;
-        foreach (method; methodTable.eeClass.methodDescChunk.methods)
+        foreach (method; methodTable.eeClass.chunks.methods)
             ret ~= cast(Method)method;
         return ret;
     }

@@ -5,7 +5,6 @@ import godwit.backend.vm.methodtable;
 import godwit.backend.vm.ceeload;
 import godwit.backend.vm.appdomain;
 import godwit.backend.vm.method;
-import tern.accessors;
 
 public struct DynamicMethodTable
 {
@@ -17,5 +16,5 @@ final:
     Module* m_ceemodule;
     AppDomain* m_domain;
 
-    mixin accessors;
+// mixin accessors;
 }

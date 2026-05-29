@@ -14,7 +14,6 @@ import godwit.backend.inc.shash;
 import godwit.backend.vm.rcwrefcache;
 import godwit.backend.vm.nativeimage;
 import godwit.backend.vm.eehash;
-import tern.accessors;
 import godwit.backend.vm.comreflectioncache;
 import godwit.impl;
 import godwit.backend.inc.arraylist;
@@ -62,7 +61,7 @@ final:
     TypeIDMap m_nonGCThreadStaticBlockTypeIDMap;
     TypeIDMap m_gcThreadStaticBlockTypeIDMap;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct AppDomain
@@ -153,7 +152,7 @@ final:
         TieredCompilationManager m_tieredCompilationManager;
     } */
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct PinnedHeapHandleBucket
@@ -167,7 +166,7 @@ final:
     ObjectHandle m_hndHandleArray;
     ObjectRef* m_arrayData;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct PinnedHeapHandleTable
@@ -188,7 +187,7 @@ final:
     uint m_numEmbeddedFree;
     CrstExplicitInit m_crst;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct UnmanagedImageCacheEntry
@@ -198,5 +197,5 @@ final:
     wchar* m_name;
     ptrdiff_t m_handle;
 
-    mixin accessors;
+// mixin accessors;
 }

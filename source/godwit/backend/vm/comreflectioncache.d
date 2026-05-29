@@ -2,7 +2,6 @@ module godwit.backend.vm.comreflectioncache;
 
 import godwit.backend.simplerwlock;
 import godwit.backend.vm.methodtable;
-import tern.accessors;
 
 public struct ReflectionCache(ELEM, TYPE, int SIZE)
 {
@@ -14,7 +13,7 @@ final:
     int m_index;
     int m_stamp;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct DispIDCacheElement
@@ -27,7 +26,7 @@ final:
     int m_dispId;
     wchar[24] m_name;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 alias DispIDCache = ReflectionCache!(DispIDCacheElement, int, 128);

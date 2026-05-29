@@ -6,7 +6,6 @@ import godwit.backend.vm.crst;
 import godwit.backend.vm.fptrstubs;
 import godwit.backend.vm.stringliteralmap;
 import godwit.backend.vm.object;
-import tern.accessors;
 import godwit.impl;
 import godwit.backend.vm.appdomain;
 import godwit.backend.simplerwlock;
@@ -120,7 +119,7 @@ final:
         uint* m_onStackReplacementManager;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // crossloaderallocatorhash.h
@@ -133,7 +132,7 @@ final:
     SHash!(void*, uint) m_allocatorToDependentTrackerHash;
     SHash!(void*, uint) m_keyToDependentTrackersHash;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct CodeRangeMapRangeList
@@ -157,7 +156,7 @@ final:
     SLink m_link;
     ListLockEntry* m_listLockEntry;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct SegmentedHandleIndexStack

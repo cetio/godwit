@@ -1,7 +1,6 @@
 module godwit.backend.vm.classhash;
 
 import godwit.backend.vm.dacenumerablehash;
-import tern.accessors;
 import godwit.impl;
 
 public struct EEClassHashEntry
@@ -17,7 +16,7 @@ final:
     void* m_data;
     EEClassHashEntry* m_encloser;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct EEClassHashTable
@@ -29,5 +28,5 @@ public:
 final:
     bool m_caseInsensitive;
 
-    mixin accessors;
+// mixin accessors;
 }

@@ -5,7 +5,6 @@ import godwit.backend.inc.sbuffer;
 import godwit.backend.vm.peimagelayout;
 import godwit.backend.inc.bundle;
 import godwit.backend.simplerwlock;
-import tern.accessors;
 
 public struct PEImage
 {
@@ -35,5 +34,5 @@ final:
     // ----> IMDInternalImport* <----
     ubyte* m_mdImport;
 
-    mixin accessors;
+// mixin accessors;
 }

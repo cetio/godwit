@@ -4,7 +4,6 @@ import std.bitmanip;
 import godwit.backend.vm.typehandle;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.ceeload;
-import tern.accessors;
 
 /**
    TypeDesc is a discriminated union of all types that can not be directly
@@ -36,7 +35,7 @@ final:
         uint, "typeFlags", 24
     ));
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /** 
@@ -58,7 +57,7 @@ final:
     /// Unloadable context: slot index in LoaderAllocator's pinned table
     uint* m_exposedClassObject;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /** 
@@ -84,7 +83,7 @@ final:
     MDToken m_argMDToken;
     uint m_index;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /** 
@@ -107,5 +106,5 @@ final:
     /// Return type first, then argument types
     TypeHandle[] m_types; 
 
-    mixin accessors;
+// mixin accessors;
 }

@@ -1,7 +1,6 @@
 module godwit.backend.vm.typectxt;
 
 import godwit.backend.vm.typehandle;
-import tern.accessors;
 
 public struct SigTypeContext
 {
@@ -11,5 +10,5 @@ final:
     Instantiation m_classInst;
     Instantiation m_methodInst;
 
-    mixin accessors;
+// mixin accessors;
 }

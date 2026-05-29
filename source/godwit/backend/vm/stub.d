@@ -3,7 +3,6 @@ module godwit.backend.vm.stub;
 import godwit.backend.vm.method;
 import godwit.backend.vm.ceeload;
 import godwit.backend.siginfo;
-import tern.accessors;
 import godwit.impl;
 import godwit.backend.inc.shash;
 import godwit.backend.vm.appdomain;
@@ -20,7 +19,7 @@ final:
     Crst m_crst;
     AppDomain* m_domain;
     
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct CacheElement
@@ -30,7 +29,7 @@ final:
     MethodDesc* m_methodDesc;
     UMEntryThunk* m_thunk;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct UMEntryThunk
@@ -62,7 +61,7 @@ final:
     ubyte[3] m_jmpRAX;
     ubyte[5] m_padding2;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct UMThunkMarshInfo
@@ -74,7 +73,7 @@ final:
     Module* m_ceemodule;
     Signature m_sig;
 
-    mixin accessors;
+// mixin accessors;
 
     bool isCompletelyInited()
     {
@@ -126,5 +125,5 @@ final:
         }
     }
 
-    mixin accessors;
+// mixin accessors;
 }

@@ -3,7 +3,6 @@ module godwit.backend.siginfo;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.typectxt;
 import godwit.backend.vm.ceeload;
-import tern.accessors;
 
 public struct Signature
 {
@@ -12,7 +11,7 @@ final:
     PCCOR_SIGNATURE m_sig;
     uint m_len;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct MetaSig
@@ -40,5 +39,5 @@ final:
     Flags m_flags;
     ubyte m_callingConv;
 
-    mixin accessors;
+// mixin accessors;
 }

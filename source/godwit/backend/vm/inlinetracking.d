@@ -1,7 +1,6 @@
 module godwit.backend.vm.inlinetracking;
 
 import godwit.backend.vm.ceeload;
-import tern.accessors;
 
 public struct PersistentInlineTrackingMapR2R
 {
@@ -13,7 +12,7 @@ final:
     ubyte* m_inlinersBuffer;
     uint m_inlinersBufferSize;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ZapInlineeRecord
@@ -23,5 +22,5 @@ final:
     uint m_key;
     uint m_offset;
 
-    mixin accessors;
+// mixin accessors;
 }

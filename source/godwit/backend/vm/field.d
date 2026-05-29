@@ -2,7 +2,6 @@ module godwit.backend.vm.field;
 
 import std.bitmanip;
 import godwit.backend.inc.corhdr;
-import tern.accessors;
 import godwit.impl;
 import godwit.backend.vm.methodtable;
 
@@ -28,7 +27,7 @@ final:
         /// RID of this field
         uint, "m_rid", 24,
         /// Is this field static?
-        bool, "m_isStatic", 1, 
+        bool, "m_isStatic", 1,
         /// Is this field thread local?
         /// Has a separate instance for each thread, allowing each thread to have its own independent copy of the variable's data.
         bool, "m_isThreadLocal", 1,
@@ -51,5 +50,5 @@ final:
         const(char)* m_debugName;
     }
 
-    mixin accessors;
+// mixin accessors;
 }

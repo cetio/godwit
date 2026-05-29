@@ -3,7 +3,6 @@ module godwit.backend.vm.typeequivalencehash;
 import godwit.backend.vm.dacenumerablehash;
 import godwit.backend.vm.crst;
 import godwit.backend.vm.typehandle;
-import tern.accessors;
 
 public struct TypeEquivalenceEntry
 {
@@ -13,7 +12,7 @@ final:
     TypeHandle m_partB;
     bool m_isEquivalent;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct TypeEquivalenceHashTable
@@ -25,5 +24,5 @@ public:
 final:
     CrstExplicitInit* m_hashTableCrst;
 
-    mixin accessors;
+// mixin accessors;
 }

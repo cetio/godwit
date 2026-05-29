@@ -1,6 +1,5 @@
 module godwit.backend.inc.arraylist;
 
-import tern.accessors;
 import godwit.impl;
 
 public struct ArrayListBlock
@@ -15,7 +14,7 @@ final:
     }
     void* m_array;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct FirstArrayListBlock
@@ -30,7 +29,7 @@ final:
     }
     void*[5] m_array;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ArrayListBase
@@ -40,7 +39,7 @@ final:
     uint m_count;
     FirstArrayListBlock m_firstBlock;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ArrayList

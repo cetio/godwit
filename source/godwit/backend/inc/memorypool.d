@@ -1,6 +1,5 @@
 module godwit.backend.inc.memorypool;
 
-import tern.accessors;
 import godwit.impl;
 
 public struct PoolElement
@@ -13,7 +12,7 @@ final:
         int deadBeef;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct PoolBlock
@@ -24,7 +23,7 @@ final:
     PoolElement* m_elementsEnd;
     PoolElement* m_elements;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct MemoryPool
@@ -36,5 +35,5 @@ final:
     PoolBlock* m_blocks;
     PoolElement* m_freeList;
 
-    mixin accessors;
+// mixin accessors;
 }

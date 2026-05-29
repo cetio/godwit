@@ -1,6 +1,5 @@
 module godwit.backend.inc.sbuffer;
 
-import tern.accessors;
 
 public struct SBuffer
 {
@@ -35,7 +34,7 @@ final:
         wchar* m_asString;
     }
 
-    mixin accessors;
+// mixin accessors;
 }
 
 // Represents godwit.sstring
@@ -54,5 +53,5 @@ public:
 final:
     SBuffer buffer;
 
-    mixin accessors;
+// mixin accessors;
 }

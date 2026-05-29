@@ -8,7 +8,6 @@ import godwit.backend.vm.peimagelayout;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.crst;
 import godwit.backend.inc.shash;
-import tern.accessors;
 
 public struct NativeImage
 {
@@ -31,7 +30,7 @@ final:
     bool m_eagerFixupsHaveRun;
     bool m_readyToRunCodeDisabled;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /* public struct AssemblyNameIndexHashTraits
@@ -40,5 +39,5 @@ public:
 final:
     static const bool m_noThrow
 
-    mixin accessors;
+// mixin accessors;
 } */

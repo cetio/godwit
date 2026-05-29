@@ -5,7 +5,6 @@ import godwit.backend.binder.applicationcontext;
 import godwit.backend.inc.shash;
 import godwit.backend.inc.sbuffer;
 import godwit.backend.vm.assembly;
-import tern.accessors;
 import godwit.impl;
 
 public struct AssemblyBinder
@@ -23,7 +22,7 @@ final:
     int* m_ptrManagedAssemblyLoadContext;
     SArray!(Assembly*) m_loadedAssemblies;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct SimpleNameToMVIDAndAssembly
@@ -40,5 +39,5 @@ final:
     // To disambiguate between component images of a composite image and requirements from a non-composite --inputbubble assembly, use this bool
     bool m_compositeComponent;
     
-    mixin accessors;
+// mixin accessors;
 }

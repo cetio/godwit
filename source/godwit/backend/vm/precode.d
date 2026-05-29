@@ -1,7 +1,6 @@
 /// Represents precode/prologue data for methods
 module godwit.backend.vm.precode;
 
-import tern.accessors;
 
 /// Method prologue data structure, effectively just a byte array
 public struct Precode
@@ -12,5 +11,5 @@ final:
     /// depending on if the method was initialized with precode or not
     byte[size_t.sizeof * 2] m_data;
 
-    mixin accessors;
+// mixin accessors;
 }

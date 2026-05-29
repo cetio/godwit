@@ -1,6 +1,5 @@
 module godwit.backend.inc.slist;
 
-import tern.accessors;
 
 public struct SLink
 {
@@ -8,7 +7,7 @@ public:
 final:
     SLink* m_next;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct SList(T)
@@ -19,5 +18,5 @@ final:
     SLink* m_head;
     SLink* m_tail;
 
-    mixin accessors;
+// mixin accessors;
 }

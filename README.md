@@ -6,14 +6,6 @@
 
 [![Trello](https://img.shields.io/badge/Trello-blue?style=for-the-badge&logo=Trello)](https://trello.com/b/e5HQc6nz/godwit)
 
-> [!NOTE]
-> This project is not dead, at least not yet.
-> I may continue this on in Fern, the new language I'm working on, or this may eventually continue again here.
->
-> Progress is still technically being made on this project, but the code has become severely outdated as I've worked on the library it depends on and I haven't maintained the internals in quite a while.
-> Meaning that while this project technically has a pulse, it is lagging behind and issues with D have strongly discouraged me from working on it until further notice.
-
-
 D-CoreCLR interop library, intended to allow D and other bound languages to interact with C# programs without any explicit back and forth between the languages. This is achieved by directly translating CoreCLR structures and code into D.
 
 As of present, the interacting language must be initialized by C#, due to the constraint of not knowing where the `AppDomain` is located in memory.

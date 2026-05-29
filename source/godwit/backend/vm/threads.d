@@ -2,7 +2,6 @@
 module godwit.backend.vm.threads;
 
 import godwit.backend.gc.gcenv;
-import tern.accessors;
 import godwit.impl;
 
 /// DeadlockAwareLock is a base for building deadlock-aware locks.
@@ -19,5 +18,5 @@ final:
         const(char)* m_description;
     }
 
-    mixin accessors;
+// mixin accessors;
 }

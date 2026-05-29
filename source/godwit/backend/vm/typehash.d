@@ -3,7 +3,6 @@ module godwit.backend.vm.typehash;
 
 import godwit.backend.vm.dacenumerablehash;
 import godwit.backend.vm.loaderallocator;
-import tern.accessors;
 import godwit.impl;
 
 /**
@@ -16,7 +15,7 @@ final:
     /// Pointer to the data associated with the hash entry
     void* m_data;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 /**
@@ -37,5 +36,5 @@ final:
         long m_dwSealCount; // Can more types be added to the table?
     }
 
-    mixin accessors;
+// mixin accessors;
 }

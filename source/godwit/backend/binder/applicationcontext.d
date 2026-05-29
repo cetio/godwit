@@ -5,9 +5,8 @@ import godwit.backend.inc.corhdr;
 import godwit.backend.vm.assembly;
 import godwit.backend.inc.stringarraylist;
 import godwit.backend.inc.shash;
-import tern.accessors;
 import godwit.backend.binder.bspace;
-import tern.state;
+import godwit.hresult;
 
 public struct ApplicationContext
 {
@@ -34,7 +33,7 @@ final:
     wchar* m_ilFileName;
     wchar* m_niFileName;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct FailureCacheEntry
@@ -44,5 +43,5 @@ final:
     SString m_assemblyNameOrPath;
     HResult m_bindingResult;
 
-    mixin accessors;
+// mixin accessors;
 }

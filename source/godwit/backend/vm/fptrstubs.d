@@ -5,7 +5,6 @@ import godwit.backend.vm.crst;
 import godwit.backend.vm.method;
 import godwit.backend.vm.precode;
 import godwit.backend.inc.shash;
-import tern.accessors;
 
 /**
     Contains stubs that is used by GetMultiCallableAddrOfCode() if
@@ -22,5 +21,5 @@ final:
     /// To find a existing stub for a method
     SHash!(Precode*, uint) m_hashTable;   
 
-    mixin accessors;
+// mixin accessors;
 }

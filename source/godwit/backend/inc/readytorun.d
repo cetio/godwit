@@ -1,7 +1,6 @@
 module godwit.backend.inc.readytorun;
 
 import godwit.backend.inc.corhdr;
-import tern.accessors;
 
 public struct ReadyToRunCoreHeader
 {
@@ -29,7 +28,7 @@ final:
     Flags m_flags;
     uint m_numSections;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ReadyToRunHeader
@@ -41,7 +40,7 @@ final:
     ushort m_minor;
     ReadyToRunCoreHeader m_coreHeader;
 
-    mixin accessors;
+// mixin accessors;
 }
 
 public struct ReadyToRunImportSection
@@ -77,5 +76,5 @@ final:
     // RVA of optional auxiliary data (typically GC info)
     uint m_auxData;
 
-    mixin accessors;
+// mixin accessors;
 }
