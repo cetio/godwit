@@ -8,8 +8,8 @@ public struct Signature
 {
 public:
 final:
-    PCCOR_SIGNATURE m_sig;
-    uint m_len;
+    PCCOR_SIGNATURE sig;
+    uint len;
 
 }
 
@@ -25,17 +25,17 @@ final:
         TreatAsVArg = 0x02,
     }
 
-    Module* m_ceemodule;
+    Module* ceemodule;
     /// Instantiation for type parameters
-    SigTypeContext m_typeContext;
-    PCCOR_SIGNATURE m_start;
-    PCCOR_SIGNATURE m_walk;
-    PCCOR_SIGNATURE m_lastType;
-    PCCOR_SIGNATURE m_retType;
-    uint m_numArgs;
-    uint m_curArg;
-    CorElementType m_corRetType;
-    Flags m_flags;
-    ubyte m_callingConv;
+    SigTypeContext typeContext;
+    PCCOR_SIGNATURE start;
+    PCCOR_SIGNATURE walk;
+    PCCOR_SIGNATURE lastType;
+    PCCOR_SIGNATURE retType;
+    uint numArgs;
+    uint curArg;
+    CorElementType corRetType;
+    Flags flags;
+    ubyte callingConv;
 
 }

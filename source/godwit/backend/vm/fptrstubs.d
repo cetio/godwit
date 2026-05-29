@@ -17,8 +17,8 @@ public struct FuncPtrStubs
 {
 public:
 final:
-    Crst m_hashTableCrst;
+    Crst hashTableCrst;
     /// To find a existing stub for a method
-    SHash!(Precode*, uint) m_hashTable;
+    SHash!(Precode*, uint) hashTable;
 
 }

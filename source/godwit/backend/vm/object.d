@@ -31,7 +31,7 @@ final:
     {
         uint padding;
     }
-    SyncBlockFlags m_flags;
+    SyncBlockFlags flags;
 
 }
 
@@ -41,10 +41,10 @@ public struct BaseObject
 {
 public:
 final:
-    ObjHeader m_objHeader;
-    MethodTable* m_methodTable;
+    ObjHeader objHeader;
+    MethodTable* methodTable;
     /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
-    ubyte m_data;
+    ubyte data;
 
 }
 

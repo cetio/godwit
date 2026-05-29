@@ -16,6 +16,6 @@ public struct Dictionary
 public:
 final:
     /// Signatures of all instantiations
-    PCCOR_SIGNATURE[] m_entries;
+    PCCOR_SIGNATURE[] entries;
 
 }

@@ -14,8 +14,8 @@ final:
         LAYOUT_ANY = 0xf
     }
 
-    int m_refCount;
-    PEImage* m_owner;
+    int refCount;
+    PEImage* owner;
 
 }
 
@@ -26,8 +26,8 @@ public struct FlatImageLayout
 
 public:
 final:
-    void** m_fileView;
-    ptrdiff_t* m_fileMap;
+    void** fileView;
+    ptrdiff_t* fileMap;
 
 }
 
@@ -38,9 +38,9 @@ public struct ConvertedImageLayout
 
 public:
 final:
-    RuntimeFunction* m_exceptionDir;
+    RuntimeFunction* exceptionDir;
     // MAX_PARTS
-    size_t[16] m_imageParts;
+    size_t[16] imageParts;
 
 }
 
@@ -53,11 +53,11 @@ public:
 final:
     version (Windows)
     {
-        ptrdiff_t* m_hmodule;
+        ptrdiff_t* hmodule;
     }
     else
     {
-        void** m_loadedFile;
+        void** loadedFile;
     }
 
 }

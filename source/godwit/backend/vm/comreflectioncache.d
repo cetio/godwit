@@ -10,8 +10,8 @@ public struct ReflectionCache(ELEM, TYPE, int SIZE)
 
 public:
 final:
-    int m_index;
-    int m_stamp;
+    int index;
+    int stamp;
 
 }
 
@@ -19,11 +19,11 @@ public struct DispIDCacheElement
 {
 public:
 final:
-    MethodTable* m_methodTable;
-    int m_nameLength;
-    uint m_lcId;
-    int m_dispId;
-    wchar[24] m_name;
+    MethodTable* methodTable;
+    int nameLength;
+    uint lcId;
+    int dispId;
+    wchar[24] name;
 
 }
 

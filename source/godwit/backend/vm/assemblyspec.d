@@ -8,7 +8,7 @@ public struct AssemblySpecBindingCache
 public:
 final:
     // PtrHashMap
-    HashMap m_map;
-    LoaderHeap* m_heap;
+    HashMap map;
+    LoaderHeap* heap;
 
 }

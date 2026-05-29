@@ -14,31 +14,31 @@ final:
 
     static if (HASHTABLE_PROFILE)
     {
-        uint m_numRehash;
-        uint m_numRehashSlots;
-        uint m_numObsoleteTables;
-        uint m_numTotalBuckets;
-        uint m_numInsertProbesGT8;
+        uint numRehash;
+        uint numRehashSlots;
+        uint numObsoleteTables;
+        uint numTotalBuckets;
+        uint numInsertProbesGT8;
         // HASHTABLE_LOOKUP_PROBES_DATA
-        int[20] m_lookupProbes;
+        int[20] lookupProbes;
         uint* maxFailureProbe;
     }
     /// Compare object to be used in lookup
-    Compare* m_compare;
+    Compare* compare;
     /// Current size (index into prime array)
-    size_t m_primeIndex;
+    size_t primeIndex;
     /// Array of buckets
-    Bucket* m_buckets;
-    size_t m_prevSlotsInUse;
+    Bucket* buckets;
+    size_t prevSlotsInUse;
     /// Track the number of inserts and deletes
-    size_t m_inserts;
-    size_t m_deletes;
-    Mode m_mode;
+    size_t inserts;
+    size_t deletes;
+    Mode mode;
     static if (DEBUG)
     {
-        void* m_lockData;
-        FnLockOwner m_lockOwner;
-        EEThreadId m_writerThreadId;
+        void* lockData;
+        FnLockOwner lockOwner;
+        EEThreadId writerThreadId;
     }
 
 }
@@ -50,9 +50,9 @@ public struct Bucket
 public:
 final:
     /// Bucket keys
-    uint*[4] m_keys;
+    uint*[4] keys;
     /// Bucket values
-    uint*[4] m_values;
+    uint*[4] values;
 
 }
 

@@ -124,17 +124,17 @@ pure bool corIsModifierElementType(CorElementType elemType)
     Decompresses the size of the data of a signature.
 
     Params:
-    - `pData`: Signature to have decompressed.
+    - `data`: Signature to have decompressed.
 
     Returns:
-        Data size of `pData`.
+        Data size of `data`.
 */
-pure uint corSigUncompressedDataSize(PCCOR_SIGNATURE pData)
+pure uint corSigUncompressedDataSize(PCCOR_SIGNATURE data)
 {
-    if ((pData[0] & 0x80) == 0)
+    if ((data[0] & 0x80) == 0)
         return 1;
 
-    if ((pData[0] & 0xC0) == 0x80)
+    if ((data[0] & 0xC0) == 0x80)
         return 2;
 
     return 4;
@@ -144,27 +144,27 @@ pure uint corSigUncompressedDataSize(PCCOR_SIGNATURE pData)
     Decompresses big data from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
 
     Returns:
         Decompressed big data from the signature.
 */
-pure uint corSigUncompressBigData(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressBigData(ref PCCOR_SIGNATURE data)
 {
     uint res;
 
     // Medium.
-    if ((*pData & 0xC0) == 0x80)  // 10?? ????
+    if ((*data & 0xC0) == 0x80)  // 10?? ????
     {
-        res = cast(uint)((*pData++ & 0x3f) << 8);
-        res |= *pData++;
+        res = cast(uint)((*data++ & 0x3f) << 8);
+        res |= *data++;
     }
     else // 110? ????
     {
-        res = (*pData++ & 0x1f) << 24;
-        res |= *pData++ << 16;
-        res |= *pData++ << 8;
-        res |= *pData++;
+        res = (*data++ & 0x1f) << 24;
+        res |= *data++ << 16;
+        res |= *data++ << 8;
+        res |= *data++;
     }
 
     return res;
@@ -174,40 +174,40 @@ pure uint corSigUncompressBigData(ref PCCOR_SIGNATURE pData)
     Decompresses the data of a signature. (??)
 
     Params:
-    - `pData`: Signature to have decompressed.
+    - `data`: Signature to have decompressed.
 
     Returns:
-        4 byte data of `pData`.
+        4 byte data of `data`.
 */
-pure uint corSigUncompressData(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressData(ref PCCOR_SIGNATURE data)
 {
     // Handle smallest data inline.
-    if ((*pData & 0x80) == 0x00)        // 0??? ????
-        return *pData++;
+    if ((*data & 0x80) == 0x00)        // 0??? ????
+        return *data++;
 
-    return corSigUncompressBigData(pData);
+    return corSigUncompressBigData(data);
 }
 
 /**
     Tries to decompress a signature entirely.
 
     Params:
-    - `pData`: Signature to have decompressed.
-    - `len`: Length of `pData`.
+    - `data`: Signature to have decompressed.
+    - `len`: Length of `data`.
     - `dataOut`: Data out.
     - `dataLen`: Data length??
 
     Returns:
         HResult for the success state of decompression.
 */
-pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint dataOut, out uint dataLen)
+pure HResult corSigUncompressData(PCCOR_SIGNATURE data, uint len, out uint dataOut, out uint dataLen)
 {
-    const(ubyte)* pBytes = cast(const(ubyte)*)pData;
+    const(ubyte)* bytes = cast(const(ubyte)*)data;
 
     version(Windows)
     {
         // Smallest.
-        if ((pData[0] & 0x80) == 0x00) // 0??? ????
+        if ((data[0] & 0x80) == 0x00) // 0??? ????
         {
             if (len < 1)
             {
@@ -217,13 +217,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             }
             else
             {
-                dataOut = pData[0];
+                dataOut = data[0];
                 dataLen = 1;
                 return HResult.SOk;
             }
         }
         // Medium.
-        else if ((pData[0] & 0xC0) == 0x80) // 10?? ????
+        else if ((data[0] & 0xC0) == 0x80) // 10?? ????
         {
             if (len < 2)
             {
@@ -233,12 +233,12 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             }
             else
             {
-                dataOut = (cast(uint)(pData[0] & 0x3F) << 8) | pData[1];
+                dataOut = (cast(uint)(data[0] & 0x3F) << 8) | data[1];
                 dataLen = 2;
                 return HResult.SOk;
             }
         }
-        else if ((pData[0] & 0xE0) == 0xC0) // 110? ????
+        else if ((data[0] & 0xE0) == 0xC0) // 110? ????
         {
             if (len < 4)
             {
@@ -248,8 +248,8 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             }
             else
             {
-                dataOut = (cast(uint)(pData[0] & 0x1F) << 24) | (cast(uint)pData[1] << 16)
-                    | (cast(uint)pData[2] << 8) | pData[3];
+                dataOut = (cast(uint)(data[0] & 0x1F) << 24) | (cast(uint)data[1] << 16)
+                    | (cast(uint)data[2] << 8) | data[3];
                 dataLen = 4;
                 return HResult.SOk;
             }
@@ -263,7 +263,7 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
     }
 
     // Smallest.
-    if ((pBytes[0] & 0x80) == 0x00) // 0??? ????
+    if ((bytes[0] & 0x80) == 0x00) // 0??? ????
     {
         if (len < 1)
         {
@@ -273,13 +273,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         }
         else
         {
-            dataOut = pBytes[0];
+            dataOut = bytes[0];
             dataLen = 1;
             return HResult.SOk;
         }
     }
     // Medium.
-    else if ((pBytes[0] & 0xC0) == 0x80) // 10?? ????
+    else if ((bytes[0] & 0xC0) == 0x80) // 10?? ????
     {
         if (len < 2)
         {
@@ -289,12 +289,12 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         }
         else
         {
-            dataOut = (cast(uint)(pBytes[0] & 0x3F) << 8) | pBytes[1];
+            dataOut = (cast(uint)(bytes[0] & 0x3F) << 8) | bytes[1];
             dataLen = 2;
             return HResult.SOk;
         }
     }
-    else if ((pBytes[0] & 0xE0) == 0xC0) // 110? ????
+    else if ((bytes[0] & 0xE0) == 0xC0) // 110? ????
     {
         if (len < 4)
         {
@@ -304,8 +304,8 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         }
         else
         {
-            dataOut = (cast(uint)(pBytes[0] & 0x1F) << 24) | (cast(uint)pBytes[1] << 16)
-                | (cast(uint)pBytes[2] << 8) | pBytes[3];
+            dataOut = (cast(uint)(bytes[0] & 0x1F) << 24) | (cast(uint)bytes[1] << 16)
+                | (cast(uint)bytes[2] << 8) | bytes[3];
             dataLen = 4;
             return HResult.SOk;
         }
@@ -322,17 +322,17 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
     Decompresses the data of a signature.
 
     Params:
-    - `pData`: Signature to have decompressed.
+    - `data`: Signature to have decompressed.
     - `dataOut`: Data out.
 
     Returns:
-        Length of `pData`.
+        Length of `data`.
 */
-pure uint corSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
+pure uint corSigUncompressData(PCCOR_SIGNATURE data, out uint dataOut)
 {
     uint dataLen = 0;
 
-    if (corSigUncompressData(pData, 0xff, dataOut, dataLen).IsNotOk())
+    if (corSigUncompressData(data, 0xff, dataOut, dataLen).IsNotOk())
     {
         dataOut = 0;
         return -1;
@@ -368,14 +368,14 @@ pure CorTokenType corSigDecodeTokenType(int encoded)
    Decompresses a signature and returns the extracted token.
 
     Params:
-    - `pData`: Signature to have decompressed.
+    - `data`: Signature to have decompressed.
 
     Returns:
-        MDToken decompressed from `pData`.
+        MDToken decompressed from `data`.
 */
-pure MDToken corSigUncompressToken(ref PCCOR_SIGNATURE pData)
+pure MDToken corSigUncompressToken(ref PCCOR_SIGNATURE data)
 {
-    MDToken tk = corSigUncompressData(pData);
+    MDToken tk = corSigUncompressData(data);
     CorTokenType tkType = corSigDecodeTokenType(tk & 0x3);
 
     return tokenFromRid(tk >> 2, tkType);
@@ -385,15 +385,15 @@ pure MDToken corSigUncompressToken(ref PCCOR_SIGNATURE pData)
     Decompresses a signature and returns the extracted token.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
     - `tk`: MDToken output.
 
     Returns:
-        Length of `pData`.
+        Length of `data`.
 */
-pure uint corSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
+pure uint corSigUncompressToken(PCCOR_SIGNATURE data, out MDToken tk)
 {
-    uint size = corSigUncompressData(pData, tk);
+    uint size = corSigUncompressData(data, tk);
     CorTokenType tkType = corSigDecodeTokenType(tk & 0x3);
 
     tk = tokenFromRid(tk >> 2, tkType);
@@ -404,17 +404,17 @@ pure uint corSigUncompressToken(PCCOR_SIGNATURE pData, out MDToken tk)
     Tries to decompress a token from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
-    - `len`: Length of `pData`.
+    - `data`: Signature to be decompressed.
+    - `len`: Length of `data`.
     - `tk`: MDToken output.
     - `tkLen`: Token length.
 
     Returns:
         HResult indicating the success state of decompression.
 */
-pure HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken tk, out uint tkLen)
+pure HResult corSigUncompressToken(PCCOR_SIGNATURE data, uint len, out MDToken tk, out uint tkLen)
 {
-    HResult hr = corSigUncompressData(pData, len, tk, tkLen);
+    HResult hr = corSigUncompressData(data, len, tk, tkLen);
 
     if (hr.IsOk())
     {
@@ -433,30 +433,30 @@ pure HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken 
     Decompresses the calling convention of a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
 
     Returns:
         Calling convention extracted from the signature.
 */
-pure uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE pData)
+pure uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE data)
 {
-    return *pData++;
+    return *data++;
 }
 
 /**
     Decompresses the calling convention of a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
-    - `dwLen`: Length of `pData`.
+    - `data`: Signature to be decompressed.
+    - `len`: Length of `data`.
     - `data`: Data output.
 
     Returns:
         HResult indicating the success state of decompression.
 */
-pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out uint data)
+pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE data, uint len, out uint data)
 {
-    if (dwLen <= 0)
+    if (len <= 0)
     {
         data = 0;
         return HResult.EBadImageFormat;
@@ -469,16 +469,16 @@ pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out 
     Decompresses a signed integer from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
     - `value`: Integer output.
 
     Returns:
-        Length of `pData`.
+        Length of `data`.
 */
-pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
+pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE data, out int value)
 {
     uint data = 0;
-    uint size = corSigUncompressData(pData, data);
+    uint size = corSigUncompressData(data, data);
 
     if (size == -1)
         return size;
@@ -507,29 +507,29 @@ pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
     Decompresses an element type from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
 
     Returns:
         Decompressed element type from the signature.
 */
-pure CorElementType corSigUncompressElementType(ref PCCOR_SIGNATURE pData)
+pure CorElementType corSigUncompressElementType(ref PCCOR_SIGNATURE data)
 {
-    return cast(CorElementType)*pData++;
+    return cast(CorElementType)*data++;
 }
 
 /**
     Decompresses an element type from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
     - `elemType`: Element type output.
 
     Returns:
-        Length of `pData`.
+        Length of `data`.
 */
-pure uint corSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType elemType)
+pure uint corSigUncompressElementType(PCCOR_SIGNATURE data, out CorElementType elemType)
 {
-    elemType = cast(CorElementType)(*pData & 0x7f);
+    elemType = cast(CorElementType)(*data & 0x7f);
     return 1;
 }
 
@@ -537,14 +537,14 @@ pure uint corSigUncompressElementType(PCCOR_SIGNATURE pData, out CorElementType 
     Decompresses a pointer from a signature.
 
     Params:
-    - `pData`: Signature to be decompressed.
+    - `data`: Signature to be decompressed.
     - `ptr`: Pointer output.
 
     Returns:
-        Length of `pData`.
+        Length of `data`.
 */
-pure uint corSigUncompressPointer(PCCOR_SIGNATURE pData, out void* ptr)
+pure uint corSigUncompressPointer(PCCOR_SIGNATURE data, out void* ptr)
 {
-    ptr = *cast(void**)pData;
+    ptr = *cast(void**)data;
     return ptrdiff_t.sizeof;
 }

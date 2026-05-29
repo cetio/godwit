@@ -26,8 +26,8 @@ final:
         UnrelatedR2RCode = 0x00000080,
     }
 
-    Flags m_flags;
-    uint m_numSections;
+    Flags flags;
+    uint numSections;
 
 }
 
@@ -35,10 +35,10 @@ public struct ReadyToRunHeader
 {
 public:
 final:
-    uint m_signature;
-    ushort m_major;
-    ushort m_minor;
-    ReadyToRunCoreHeader m_coreHeader;
+    uint signature;
+    ushort major;
+    ushort minor;
+    ReadyToRunCoreHeader coreHeader;
 
 }
 
@@ -64,15 +64,15 @@ final:
     }
 
     // Section containing values to be fixed up
-    ImageDataDirectory m_section;
+    ImageDataDirectory section;
     // One or more of ReadyToRunImportSectionFlags
-    SectionFlags m_flags;
+    SectionFlags flags;
     // One of ReadyToRunImportSectionType
-    SectionType m_type;
-    ubyte m_entrySize;
+    SectionType type;
+    ubyte entrySize;
     // RVA of optional signature descriptors
-    uint m_signatures;
+    uint signatures;
     // RVA of optional auxiliary data (typically GC info)
-    uint m_auxData;
+    uint auxData;
 
 }

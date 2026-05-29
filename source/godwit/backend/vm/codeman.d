@@ -8,9 +8,9 @@ public struct FreeBlock
 {
 public:
 final:
-    void* m_block;
+    void* block;
     // Size of this block (includes size of FreeBlock)
-    size_t m_size;
+    size_t size;
 
 }
 
@@ -41,16 +41,16 @@ public enum StubBlockKind
 
 public struct CodeFragmentHeap
 {
-    ILoaderHeapBackout iLoaderHeapBackout;
-    alias iLoaderHeapBackout this;
+    ILoaderHeapBackout loaderHeapBackout;
+    alias loaderHeapBackout this;
 
 public:
 final:
 
 
-    LoaderAllocator* m_allocator;
-    FreeBlock* m_freeBlocks;
-    StubBlockKind m_kind;
-    Crst m_crst;
+    LoaderAllocator* allocator;
+    FreeBlock* freeBlocks;
+    StubBlockKind kind;
+    Crst crst;
 
 }

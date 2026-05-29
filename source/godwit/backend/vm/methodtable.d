@@ -36,19 +36,19 @@ final:
 
     union
     {
-        Flags m_flags;
+        Flags flags;
         struct
         {
-            ushort m_loFlags;
-            short m_offsetToNonVirtualSlots;
+            ushort loFlags;
+            short offsetToNonVirtualSlots;
         }
     }
 
-    int m_cachedVersionResilientHashCode;
-    Module* m_loaderModule;
+    int cachedVersionResilientHashCode;
+    Module* loaderModule;
     /// Non-unloadable context: internal RuntimeType object handle
     /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* m_exposedClassObject;
+    uint* exposedClassObject;
 
     static if (DEBUG)
     {
@@ -59,17 +59,17 @@ final:
             HasInjectedInterfaceDuplicates = 0x8000,
         }
 
-        DebugFlags m_debugFlags;
-        uint m_lastVerifiedGCCnt;
+        DebugFlags debugFlags;
+        uint lastVerifiedGCCnt;
 
         static if (HOST_x64)
         {
             uint padding;
         }
 
-        void* m_debugOnlyDynamicStatics;
-        void* m_debugOnlyGenericStatics;
-        void* m_debugOnlyThreadStatics;
+        void* debugOnlyDynamicStatics;
+        void* debugOnlyGenericStatics;
+        void* debugOnlyThreadStatics;
     }
 
 }
@@ -78,8 +78,8 @@ public struct GuidInfo
 {
 public:
 final:
-    UUID m_guid;
-    bool m_generatedFromName;
+    UUID guid;
+    bool generatedFromName;
 
 }
 
@@ -87,7 +87,7 @@ public struct InterfaceInfo
 {
 public:
 final:
-    MethodTable* m_methodTable;
+    MethodTable* methodTable;
 
 }
 
@@ -179,72 +179,72 @@ final:
 
     /// Low WORD is component size for array/string types; otherwise low flags.
     /// High WORD is category/type flags.
-    uint m_flags;
-    uint m_baseSize;
-    uint m_flags2;
-    ushort m_numVirtuals;
-    ushort m_numInterfaces;
+    uint flags;
+    uint baseSize;
+    uint flags2;
+    ushort numVirtuals;
+    ushort numInterfaces;
 
     static if (DEBUG)
     {
         const(char)* debugClassName;
     }
 
-    MethodTable* m_parentMethodTable;
-    Module* m_module;
-    MethodTableAuxiliaryData* m_auxiliaryData;
+    MethodTable* parentMethodTable;
+    Module* ceemodule;
+    MethodTableAuxiliaryData* auxiliaryData;
 
     union
     {
-        EEClass* m_eeClass;
-        size_t m_canonMT;
+        EEClass* eeClass;
+        size_t canonMT;
     }
 
     union
     {
-        PerInstInfo m_perInstInfo;
-        size_t m_elementTypeHnd;
+        PerInstInfo perInstInfo;
+        size_t elementTypeHnd;
     }
 
     union
     {
-        InterfaceInfo* m_interfaceMap;
-        size_t m_encodedNullableUnboxData;
+        InterfaceInfo* interfaceMap;
+        size_t encodedNullableUnboxData;
     }
 
 
     pragma(mangle, "MethodTable_relatedTypeKind_get")
     extern (C) export @property RelatedTypeKind relatedTypeKind()
     {
-        return cast(RelatedTypeKind)(m_canonMT & UNION_MASK);
+        return cast(RelatedTypeKind)(canonMT & UNION_MASK);
     }
 
     pragma(mangle, "MethodTable_relatedTypeKind_set")
     extern (C) export @property RelatedTypeKind relatedTypeKind(RelatedTypeKind val)
     {
-        m_canonMT = (m_canonMT & ~UNION_MASK) | cast(size_t)val;
+        canonMT = (canonMT & ~UNION_MASK) | cast(size_t)val;
         return val;
     }
 
     pragma(mangle, "MethodTable_componentSize_get")
     extern (C) export @property ushort componentSize()
     {
-        if ((m_flags & WFlagsHigh.HasComponentSize) == 0)
+        if ((flags & WFlagsHigh.HasComponentSize) == 0)
             return 0;
 
         version (BigEndian)
-            return *(cast(ushort*)&m_flags + 1);
+            return *(cast(ushort*)&flags + 1);
         else
-            return *(cast(ushort*)&m_flags);
+            return *(cast(ushort*)&flags);
     }
 
     pragma(mangle, "MethodTable_componentSize_set")
     extern (C) export @property ushort componentSize(ushort val)
     {
         version (BigEndian)
-            *(cast(ushort*)&m_flags + 1) = val;
+            *(cast(ushort*)&flags + 1) = val;
         else
-            *(cast(ushort*)&m_flags) = val;
+            *(cast(ushort*)&flags) = val;
         return val;
     }
 
@@ -256,12 +256,12 @@ final:
 
     uint baseSize()
     {
-        return m_baseSize;
+        return baseSize;
     }
 
     uint typeDefRid()
     {
-        return m_flags2 >> 8;
+        return flags2 >> 8;
     }
 
     TypeDef token()
@@ -282,7 +282,7 @@ final:
         if (relatedTypeKind != RelatedTypeKind.EEClass)
             return canonMethodTable.eeClass;
 
-        return m_eeClass;
+        return eeClass;
     }
 
     pragma(mangle, "MethodTable_canonMethodTable_get")
@@ -292,7 +292,7 @@ final:
         if (relatedTypeKind != RelatedTypeKind.CanonMT)
             return &this;
 
-        return cast(MethodTable*)(m_canonMT & ~UNION_MASK);
+        return cast(MethodTable*)(canonMT & ~UNION_MASK);
     }
 
     pragma(mangle, "MethodTable_eeClass_set")
@@ -301,7 +301,7 @@ final:
         if (relatedTypeKind != RelatedTypeKind.EEClass)
             return canonMethodTable().eeClass = val;
 
-        return m_eeClass = val;
+        return eeClass = val;
     }
 
     pragma(mangle, "MethodTable_canonMethodTable_set")
@@ -309,7 +309,7 @@ final:
     {
         if (relatedTypeKind == RelatedTypeKind.CanonMT)
         {
-            m_canonMT = cast(size_t)val | cast(size_t)RelatedTypeKind.CanonMT;
+            canonMT = cast(size_t)val | cast(size_t)RelatedTypeKind.CanonMT;
             return val;
         }
 
@@ -319,12 +319,12 @@ final:
     void setEEClassUnsafe(EEClass* newEEClass)
     {
         relatedTypeKind = RelatedTypeKind.EEClass;
-        m_eeClass = newEEClass;
+        eeClass = newEEClass;
     }
 
     void setCanonMethodTableUnsafe(MethodTable* newCanonMethodTable)
     {
         relatedTypeKind = RelatedTypeKind.CanonMT;
-        m_canonMT = cast(size_t)newCanonMethodTable | cast(size_t)RelatedTypeKind.CanonMT;
+        canonMT = cast(size_t)newCanonMethodTable | cast(size_t)RelatedTypeKind.CanonMT;
     }
 }

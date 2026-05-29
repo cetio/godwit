@@ -14,21 +14,21 @@ public struct NativeImage
 public:
 final:
     /// Points to the OwnerCompositeExecutable section content within the component MSIL module
-    const(char)* m_fileName;
-    AssemblyBinder* m_assemblyBinder;
-    ReadyToRunInfo* m_readyToRunInfo;
+    const(char)* fileName;
+    AssemblyBinder* assemblyBinder;
+    ReadyToRunInfo* readyToRunInfo;
     // ----> IMDInternalImport <----
-    void* m_manifestMetadata;
-    PEImageLayout* m_imageLayout;
-    Assembly** m_nativeMetadataAssemblyRefMap;
-    ModuleBase* m_nativeManifestModule;
-    ImageDataDirectory* m_componentAssemblies;
-    uint m_componentAssemblyCount;
-    uint m_manifestAssemblyCount;
-    //SHash!(AssemblyNameIndexHashTraits, uint) m_assemblySimpleNameToIndexMap;
-    Crst m_eagerFixupsLock;
-    bool m_eagerFixupsHaveRun;
-    bool m_readyToRunCodeDisabled;
+    void* manifestMetadata;
+    PEImageLayout* imageLayout;
+    Assembly** nativeMetadataAssemblyRefMap;
+    ModuleBase* nativeManifestModule;
+    ImageDataDirectory* componentAssemblies;
+    uint componentAssemblyCount;
+    uint manifestAssemblyCount;
+    //SHash!(AssemblyNameIndexHashTraits, uint) assemblySimpleNameToIndexMap;
+    Crst eagerFixupsLock;
+    bool eagerFixupsHaveRun;
+    bool readyToRunCodeDisabled;
 
 }
 
@@ -36,6 +36,6 @@ final:
 {
 public:
 final:
-    static const bool m_noThrow
+    static const bool noThrow
 
 } */

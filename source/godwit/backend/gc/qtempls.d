@@ -6,12 +6,12 @@ public struct CQuickMemoryBase
 {
 public:
 final:
-    byte* m_buffer;
+    byte* buffer;
     /// Number of bytes used
-    size_t m_size;
+    size_t size;
     /// Total bytes allocated in the buffer
-    size_t m_totalAlloc;
-    ulong[(511 + ulong.sizeof) / ulong.sizeof] m_data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
+    size_t totalAlloc;
+    ulong[(511 + ulong.sizeof) / ulong.sizeof] data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
 
 }
 
@@ -52,6 +52,6 @@ public struct CQuickArrayList(T)
 
 public:
 final:
-    size_t m_curSize;
+    size_t curSize;
 
 }

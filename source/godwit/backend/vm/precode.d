@@ -9,6 +9,6 @@ public:
 final:
     /// Method prologue data, may be null,
     /// depending on if the method was initialized with precode or not
-    byte[size_t.sizeof * 2] m_data;
+    byte[size_t.sizeof * 2] data;
 
 }

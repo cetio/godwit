@@ -25,13 +25,13 @@ final:
         Flag3 = 0x100,
     }
 
-    size_t m_size;
-    size_t m_allocSize;
-    State m_flags;
+    size_t size;
+    size_t allocSize;
+    State flags;
     union
     {
-        ubyte* m_buffer;
-        wchar* m_asString;
+        ubyte* buffer;
+        wchar* asString;
     }
 
 }

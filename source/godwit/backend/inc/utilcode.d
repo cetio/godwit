@@ -5,9 +5,9 @@ public struct RangeList
 {
 public:
 final:
-    RangeListBlock m_starterBlock;
-    RangeListBlock* m_firstEmptyBlock;
-    uint* m_firstEmptyRange;
+    RangeListBlock starterBlock;
+    RangeListBlock* firstEmptyBlock;
+    uint* firstEmptyRange;
 
 }
 
@@ -15,9 +15,9 @@ public struct Range
 {
 public:
 final:
-    uint* m_start;
-    uint* m_end;
-    uint* m_id;
+    uint* start;
+    uint* end;
+    uint* id;
 
 }
 
@@ -26,7 +26,7 @@ public struct RangeListBlock
 public:
 final:
     // RANGE_COUNT
-    Range[10] m_ranges;
-    RangeListBlock* m_next;
+    Range[10] ranges;
+    RangeListBlock* next;
 
 }

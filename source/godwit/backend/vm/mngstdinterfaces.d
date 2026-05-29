@@ -6,6 +6,6 @@ public struct MngStdInterfacesInfo
 {
 public:
 final:
-    SString* m_friendlyName;
+    SString* friendlyName;
 
 }

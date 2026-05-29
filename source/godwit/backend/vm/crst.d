@@ -139,18 +139,18 @@ final:
 
     // ReservedFlags only represents the base required flags,
     // This can contain more than ReservedFlags.
-    ReservedFlags m_flags;
+    ReservedFlags flags;
     static if (DEBUG)
     {
-        uint m_numEnters;
-        CrstType m_crstType;
-        const(char)* m_tag;
-        int m_crstLevel;
-        EEThreadId m_holderThreadId;
-        CrstBase* m_next;
-        CrstBase* m_prev;
-        int m_cannotLeave;
-        uint m_numNoTriggerGC;
+        uint numEnters;
+        CrstType crstType;
+        const(char)* tag;
+        int crstLevel;
+        EEThreadId holderThreadId;
+        CrstBase* next;
+        CrstBase* prev;
+        int cannotLeave;
+        uint numNoTriggerGC;
     }
 }
 

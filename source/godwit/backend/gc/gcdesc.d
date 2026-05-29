@@ -17,8 +17,8 @@ public struct VTSeriesItem
 {
 public:
 final:
-    half_size_t m_nptrs;
-    half_size_t m_skip;
+    half_size_t nptrs;
+    half_size_t skip;
 
 }
 
@@ -29,10 +29,10 @@ public:
 final:
     union
     {
-        size_t m_seriesSize;
-        VTSeriesItem m_vtItems;
+        size_t seriesSize;
+        VTSeriesItem vtItems;
     }
-    size_t m_startOffset;
+    size_t startOffset;
 
 }
 

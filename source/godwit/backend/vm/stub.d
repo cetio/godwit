@@ -15,9 +15,9 @@ public struct UMEntryThunkCache
 {
 public:
 final:
-    SHash!(CacheElement, uint) m_hash;
-    Crst m_crst;
-    AppDomain* m_domain;
+    SHash!(CacheElement, uint) hash;
+    Crst crst;
+    AppDomain* domain;
 
 }
 
@@ -25,8 +25,8 @@ public struct CacheElement
 {
 public:
 final:
-    MethodDesc* m_methodDesc;
-    UMEntryThunk* m_thunk;
+    MethodDesc* methodDesc;
+    UMEntryThunk* thunk;
 
 }
 
@@ -34,30 +34,30 @@ public struct UMEntryThunk
 {
 public:
 final:
-    uint* m_managedTarget;
-    MethodDesc* m_methodDesc;
-    ObjectHandle m_objectHandle;
+    uint* managedTarget;
+    MethodDesc* methodDesc;
+    ObjectHandle objectHandle;
     union
     {
-        UMThunkMarshInfo* m_umThunkMarshInfo;
-        UMEntryThunk* m_next;
+        UMThunkMarshInfo* umThunkMarshInfo;
+        UMEntryThunk* next;
     }
     static if (DEBUG)
     {
-        uint m_state;
+        uint state;
     }
     // UMEntryThunkCode
     // padding                  // CC CC CC CC
-    // mov r10, pUMEntryThunk   // 49 ba xx xx xx xx xx xx xx xx    // METHODDESC_REGISTER
-    // mov rax, pJmpDest        // 48 b8 xx xx xx xx xx xx xx xx    // need to ensure this imm64 is qword aligned
+    // mov r10, umEntryThunk   // 49 ba xx xx xx xx xx xx xx xx    // METHODDESC_REGISTER
+    // mov rax, jmpDest        // 48 b8 xx xx xx xx xx xx xx xx    // need to ensure this imm64 is qword aligned
     // TAILJMP_RAX              // 48 FF E0
-    ubyte[4] m_padding;
-    ubyte[2] m_movR10;
-    void* m_start;
-    ubyte[2] m_movRAX;
-    align(8) const ubyte* m_execStub;
-    ubyte[3] m_jmpRAX;
-    ubyte[5] m_padding2;
+    ubyte[4] padding;
+    ubyte[2] movR10;
+    void* start;
+    ubyte[2] movRAX;
+    align(8) const ubyte* execStub;
+    ubyte[3] jmpRAX;
+    ubyte[5] padding2;
 
 }
 
@@ -65,15 +65,15 @@ public struct UMThunkMarshInfo
 {
 public:
 final:
-    ubyte* m_ilStub;
-    MethodDesc* m_methodDesc;
-    Module* m_ceemodule;
-    Signature m_sig;
+    ubyte* ilStub;
+    MethodDesc* methodDesc;
+    Module* ceemodule;
+    Signature sig;
 
 
     bool isCompletelyInited()
     {
-        return m_ilStub != cast(ubyte*)1;
+        return ilStub != cast(ubyte*)1;
     }
 }
 
@@ -98,20 +98,20 @@ final:
         MaxCodeBytes = CodeBytesMask + 1,
     }
 
-    uint m_refCount;
+    uint refCount;
     union
     {
-        CodeFlags m_codeFlags;
-        uint m_numCodeBytes;
+        CodeFlags codeFlags;
+        uint numCodeBytes;
     }
     union
     {
-        ushort m_patchOffset;
-        MethodDesc* m_instantiatedMethod;
+        ushort patchOffset;
+        MethodDesc* instantiatedMethod;
     }
     static if (DEBUG)
     {
-        uint m_signature;
+        uint signature;
         static if (HOST_x64)
         {
             /// Ensure code after the Stub struct align to 16-bytes.

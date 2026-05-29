@@ -8,11 +8,11 @@ public struct TypeIDMap
 {
 public:
 final:
-    HashMap m_idMap;
-    HashMap m_mtMap;
-    Crst m_lock;
-    TypeIDProvider m_idProvider;
-    uint m_entryCount;
+    HashMap idMap;
+    HashMap mtMap;
+    Crst lock;
+    TypeIDProvider idProvider;
+    uint entryCount;
 
 }
 
@@ -20,10 +20,10 @@ public struct TypeIDProvider
 {
 public:
 final:
-    uint m_nextID;
+    uint nextID;
     static if (FAT_DISPATCH_TOKENS)
     {
-        uint m_nextFatID;
+        uint nextFatID;
     }
 
 }
@@ -32,6 +32,6 @@ public struct DispatchTokenFat
 {
 public:
 final:
-    uint m_typeId;
-    uint m_slotNum;
+    uint typeId;
+    uint slotNum;
 }

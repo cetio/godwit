@@ -5,8 +5,8 @@ public struct Thread
 {
 public:
 final:
-    bool m_preemptiveGCDisabled;
-    uint*[16] m_allocContext;
-    Thread* m_next;
+    bool preemptiveGCDisabled;
+    uint*[16] allocContext;
+    Thread* next;
 
 }

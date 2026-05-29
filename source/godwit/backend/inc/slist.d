@@ -5,7 +5,7 @@ public struct SLink
 {
 public:
 final:
-    SLink* m_next;
+    SLink* next;
 
 }
 
@@ -13,8 +13,8 @@ public struct SList(T)
 {
 public:
 final:
-    SLink m_link;
-    SLink* m_head;
-    SLink* m_tail;
+    SLink link;
+    SLink* head;
+    SLink* tail;
 
 }

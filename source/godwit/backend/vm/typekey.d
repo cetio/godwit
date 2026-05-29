@@ -1,8 +1,8 @@
 /**
  * Support for type lookups based on components of the type (as opposed to string).
  *        Used in:
- *        - Table of constructed types (Module::m_pAvailableParamTypes)
- *        - Types currently being loaded (ClassLoader::m_pUnresolvedClassHash)
+ *        - Table of constructed types (Module::availableParamTypes)
+ *        - Types currently being loaded (ClassLoader::unresolvedClassHash)
  *
  * Type handles are in one-to-one correspondence with TypeKeys.
  * In particular, note that tokens in the key are resolved TypeDefs.
@@ -43,7 +43,7 @@ final:
             uint numGenericArgs;
             /// NULL for non-generic types
             TypeHandle* genericArgs;
-            // Note that for DAC builds, m_pGenericArgs is a host allocated buffer
+            // Note that for DAC builds, genericArgs is a host allocated buffer
             // (eg. by in SigPointer::GetTypeHandleThrowing),
             // not a copy of an object marshalled by DAC.
         }

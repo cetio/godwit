@@ -6,6 +6,6 @@ public struct StringArrayList
 {
 public:
 final:
-    ArrayList m_elements;
+    ArrayList elements;
 
 }

@@ -21,12 +21,12 @@ public struct LookupMap(T)
 {
 public:
 final:
-    LookupMap* m_next;
-    T** m_table;
+    LookupMap* next;
+    T** table;
     // Number of elements in this node (only RIDs less than this value can be present in this node)
-    uint m_count;
+    uint count;
     // Set of flags that the map supports writing on top of the data value
-    T* m_supportedFlags;
+    T* supportedFlags;
 
 }
 
@@ -35,23 +35,23 @@ public struct ModuleBase
 public:
 final:
     /// Linear mapping from TypeRef token to TypeHandle *
-    LookupMap!TypeRef m_typeRefToMethodTableMap;
+    LookupMap!TypeRef typeRefToMethodTableMap;
     /// Mapping of AssemblyRef token to Module *
-    LookupMap!Module m_manifestModuleRefsMap;
+    LookupMap!Module manifestModuleRefsMap;
     /// mapping from MemberRef token to MethodDesc*, FieldDesc*
-    LookupMap!uint m_memberRefMap;
+    LookupMap!uint memberRefMap;
     /// For protecting additions to the heap
-    CrstExplicitInit m_lookupTableCrst;
-    LoaderAllocator* m_allocator;
+    CrstExplicitInit lookupTableCrst;
+    LoaderAllocator* allocator;
 
 }
 
 public struct VASigCookieBlock
 {
 public:
-    VASigCookieBlock* m_next;
-    uint m_numCookies;
-    VASigCookie[] m_cookies;
+    VASigCookieBlock* next;
+    uint numCookies;
+    VASigCookie[] cookies;
 
 }
 
@@ -59,10 +59,10 @@ public struct VASigCookie
 {
 public:
 final:
-    uint m_sizeOfArgs;
-    ubyte* m_ndirectILStub;
-    Module* m_ceemodule;
-    Signature m_signature;
+    uint sizeOfArgs;
+    ubyte* ndirectILStub;
+    Module* ceemodule;
+    Signature signature;
 
 }
 
@@ -117,107 +117,107 @@ final:
         //If module has default dll import search paths attribute
         DefaultDllImportSearchPathsStatus = 0x00000800,
 
-        //If m_MethodDefToPropertyInfoMap has been generated
+        //If MethodDefToPropertyInfoMap has been generated
         ComputedMethodDefToPropertyInfoMap = 0x00002000,
         RuntimeMarshalingEnabledIsCached = 0x00008000,
         RuntimeMarshalingEnabled = 0x00010000,
     }
 
     /// Modules will store their name as a cached string for performance.
-    const(char)* m_simpleName;
+    const(char)* simpleName;
     /// Equivalent to assembly.peAssembly.
-    PEAssembly* m_peAssembly;
+    PEAssembly* peAssembly;
     /// None of these flags survive a prejit save/restore.
-    TransientFlags m_transientFlags;
+    TransientFlags transientFlags;
     /// Will survive a prejit save/restore.
-    PersistentFlags m_persistentFlags;
-    /// Linked list of VASig cookie blocks = protected by m_pStubListCrst
-    VASigCookieBlock* m_vaSigCookieBlock;
+    PersistentFlags persistentFlags;
+    /// Linked list of VASig cookie blocks = protected by stubListCrst
+    VASigCookieBlock* vaSigCookieBlock;
     /// Parent assembly.
-    Assembly* m_assembly;
-    CrstExplicitInit m_crst;
-    CrstExplicitInit m_fixupCrst;
+    Assembly* assembly;
+    CrstExplicitInit crst;
+    CrstExplicitInit fixupCrst;
     /// Debugging symbols reader interface.
     // ----> ISymUnmanagedReader <----
-    void* m_symUnmanagedReader;
-    CrstExplicitInit m_symUnmanagedReaderCrst;
+    void* symUnmanagedReader;
+    CrstExplicitInit symUnmanagedReaderCrst;
     /// Storage for the in-memory symbol stream if any debugger may retrieve this from out-of-process.
     // ----> CGrowableStream <----
-    void* m_streamSym;
+    void* streamSym;
     /// Linear mapping from TypeDef token to MethodTable *
     // For generic types, IsGenericTypeDefinition() is true i.e. instantiation at formals
-    LookupMap!MethodTable m_typeDefToMethodTableMap;
+    LookupMap!MethodTable typeDefToMethodTableMap;
     /// Linear mapping from MethodDef token to MethodDesc *
     // For generic methods, IsGenericTypeDefinition() is true i.e. instantiation at formals
-    LookupMap!MethodDesc m_methodDefToDescMap;
+    LookupMap!MethodDesc methodDefToDescMap;
     /// Linear mapping from FieldDef token to FieldDesc*
-    LookupMap!FieldDesc m_fieldDefToDescMap;
+    LookupMap!FieldDesc fieldDefToDescMap;
     // Linear mapping from GenericParam token to TypeVarTypeDesc*
-    LookupMap!TypeVarTypeDesc m_genericParamToDescMap;
+    LookupMap!TypeVarTypeDesc genericParamToDescMap;
     // Linear mapping from TypeDef token to the MethodTable * for its canonical generic instantiation
     // If the type is not generic, the entry is guaranteed to be NULL.  This means we are paying extra
     // space in order to use the LookupMap infrastructure, but what it buys us is IBC support and
     // a compressed format for NGen that makes up for it.
-    LookupMap!MethodTable m_genericTypeDefToCanonMethodTableMap;
+    LookupMap!MethodTable genericTypeDefToCanonMethodTableMap;
     /// Mapping from MethodDef token to pointer-sized value encoding property information
-    LookupMap!size_t m_methodDefToPropertyInfoMap;
+    LookupMap!size_t methodDefToPropertyInfoMap;
     /// IL stub cache with fabricated MethodTable parented by this module.
-    ILStubCache* m_ilStubCache;
-    uint m_defaultDllImportSearchPathsAttributeValue;
+    ILStubCache* ilStubCache;
+    uint defaultDllImportSearchPathsAttributeValue;
     /// Hash of available types by name
-    EEClassHashTable* m_availableClasses;
+    EEClassHashTable* availableClasses;
     /// Hashtable of generic type instances
-    EETypeHashTable* m_availableParamTypes;
-    /// For protecting additions to m_pInstMethodHashTable
-    CrstExplicitInit m_instMethodHashTableCrst;
+    EETypeHashTable* availableParamTypes;
+    /// For protecting additions to instMethodHashTable
+    CrstExplicitInit instMethodHashTableCrst;
     /// Hashtable of instantiated methods and per-instantiation static methods
-    InstMethodHashTable* m_instMethodHashTable;
-    uint m_debuggerJMCProbeCount;
-    EEClassHashTable* m_availableClassesCaseIns;
+    InstMethodHashTable* instMethodHashTable;
+    uint debuggerJMCProbeCount;
+    EEClassHashTable* availableClassesCaseIns;
     // ----> CoreLibBinder <----
-    uint* m_binder;
+    uint* binder;
 
     static if (READYTORUN)
     {
-        ReadyToRunInfo* m_readyToRunInfo;
-        NativeImage* m_nativeImage;
+        ReadyToRunInfo* readyToRunInfo;
+        NativeImage* nativeImage;
     }
     static if (PROFILING_SUPPORTED_DATA)
     {
-        uint m_typeCount;
-        uint m_exportedTypeCount;
-        uint m_customAttributeCount;
+        uint typeCount;
+        uint exportedTypeCount;
+        uint customAttributeCount;
     }
     static if (METADATA_UPDATER)
     {
-        CUnorderedArray!(EnCEEClassData*, 5) m_classList;
+        CUnorderedArray!(EnCEEClassData*, 5) classList;
     }
     /// LoaderHeap for storing IJW thunks
-    LoaderHeap* m_thunkHeap;
+    LoaderHeap* thunkHeap;
     // ----> DomainLocalModule <----
-    uint* m_moduleID;
-    size_t m_moduleIndex;
-    uint* m_regularStaticOffsets;
-    uint* m_threadStaticOffsets;
-    RID m_maxTypeRidStaticsAllocated;
-    uint m_maxGCRegularStaticHandles;
-    uint m_maxGCThreadStaticHandles;
-    uint m_regularStaticsBlockSize;
-    uint m_threadStaticsBlockSize;
-    size_t m_numDynamicEntries;
-    size_t m_maxDynamicEntries;
-    MethodTable** m_dynamicStaticsInfo;
+    uint* moduleID;
+    size_t moduleIndex;
+    uint* regularStaticOffsets;
+    uint* threadStaticOffsets;
+    RID maxTypeRidStaticsAllocated;
+    uint maxGCRegularStaticHandles;
+    uint maxGCThreadStaticHandles;
+    uint regularStaticsBlockSize;
+    uint threadStaticsBlockSize;
+    size_t numDynamicEntries;
+    size_t maxDynamicEntries;
+    MethodTable** dynamicStaticsInfo;
 
-    DebuggerSpecificData m_debuggerSpecificData;
+    DebuggerSpecificData debuggerSpecificData;
     static if (PROFILING_SUPPORTED || PROFILING_SUPPORTED_DATA)
     {
-        JITInlineTrackingMap* m_jitInlinerTrackingMap;
+        JITInlineTrackingMap* jitInlinerTrackingMap;
     }
-    const(char)* m_assemblyRefByNameTable;
-    uint m_assemblyRefByNameCount;
-    Assembly* m_nativeMetadataAssemblyRefMap;
+    const(char)* assemblyRefByNameTable;
+    uint assemblyRefByNameCount;
+    Assembly* nativeMetadataAssemblyRefMap;
     // For protecting dictionary layout slot expansions
-    CrstExplicitInit m_dictionaryCrst;
+    CrstExplicitInit dictionaryCrst;
 
 }
 
@@ -229,20 +229,20 @@ public struct DebuggerSpecificData
 public:
 final:
     /// Mutex protecting update access to the DynamicILBlobTable and TemporaryILBlobTable
-    Crst* m_dynamicILCrst;
+    Crst* dynamicILCrst;
     /// Maps tokens for EnC/dynamics/reflection emit to their corresponding IL blobs
     // this map *always* overrides the Metadata RVA
     // ----> DynamicILBlobTable <----
-    uint* m_dynamicILBlobTable;
+    uint* dynamicILBlobTable;
     /// Maps tokens for to their corresponding overridden IL blobs
     // this map conditionally overrides the Metadata RVA and the DynamicILBlobTable
     // ----> DynamicILBlobTable <----
-    uint* m_temporaryILBlobTable;
+    uint* temporaryILBlobTable;
     /// Hash table storing any profiler-provided instrumented IL offset mapping
     // ----> ILOffsetMappingTable <----
-    uint* m_ilOffsetMappingTable;
+    uint* ilOffsetMappingTable;
     /// Strict count of # of methods in this module that are JMC-enabled.
-    int m_numTotalJMCFuncs;
-    bool m_defaultJMCStatus;
+    int numTotalJMCFuncs;
+    bool defaultJMCStatus;
 
 }

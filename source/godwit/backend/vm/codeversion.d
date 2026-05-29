@@ -16,13 +16,13 @@ final:
 
     static if (CODE_VERSIONING)
     {
-        MethodDesc* m_methodDesc;
+        MethodDesc* methodDesc;
     }
-    StorageKind m_storageKind;
+    StorageKind storageKind;
     union
     {
-        NativeCodeVersionNode* m_versionNode;
-        MethodDesc* m_syntheticMethodDesc;
+        NativeCodeVersionNode* versionNode;
+        MethodDesc* syntheticMethodDesc;
     }
 
 }
@@ -41,26 +41,26 @@ public:
         Tier1Instrumented,
     }
 
-    void* m_nativeCode;
-    MethodDesc* m_methodDesc;
-    long m_parentId;
-    NativeCodeVersionNode* m_next;
-    uint m_nativeCodeVersionId;
+    void* nativeCode;
+    MethodDesc* methodDesc;
+    long parentId;
+    NativeCodeVersionNode* next;
+    uint nativeCodeVersionId;
     static if (TIERED_COMPILATION)
     {
-        OptimizationTier m_optTier;
+        OptimizationTier optTier;
     }
     static if (GCCOVER)
     {
         // ----> GCCoverageInfo <----
-        uint* m_gcCover;
+        uint* gcCover;
     }
     static if (ON_STACK_REPLACEMENT)
     {
         // ----> PatchpointInfo <----
-        uint* m_patchpointInfo;
-        uint m_ilOffset;
+        uint* patchpointInfo;
+        uint ilOffset;
     }
-    uint m_isActiveChild;
+    uint isActiveChild;
 
 }

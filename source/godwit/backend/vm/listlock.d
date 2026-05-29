@@ -14,11 +14,11 @@ public struct ListLockBase(T)
 {
 public:
 final:
-    CrstStatic m_crst;
-    bool m_isfInit;
+    CrstStatic crst;
+    bool isfInit;
     /// Lock can be broken by a host for deadlock detection
-    bool m_hostBreakable;
-    ListLockEntryBase!T* m_head;
+    bool hostBreakable;
+    ListLockEntryBase!T* head;
 
 }
 
@@ -26,16 +26,16 @@ public struct ListLockEntryBase(T)
 {
 public:
 final:
-    DeadlockAwareLock m_deadlock;
-    ListLockBase!T* m_list;
-    T m_data;
-    Crst m_crst;
-    const(char)* m_description;
-    ListLockEntryBase!T* m_next;
-    uint m_refCount;
-    HResult m_hresultCode;
+    DeadlockAwareLock deadlock;
+    ListLockBase!T* list;
+    T data;
+    Crst crst;
+    const(char)* description;
+    ListLockEntryBase!T* next;
+    uint refCount;
+    HResult hresultCode;
     // LOADERHANDLE
-    ptrdiff_t m_initException;
-    LoaderAllocator* m_allocator;
+    ptrdiff_t initException;
+    LoaderAllocator* allocator;
 
 }

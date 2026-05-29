@@ -12,10 +12,10 @@ public:
 final:
     /// Volatile
     /// The thread that this lock is maintaining
-    Thread* m_holdingThread;
+    Thread* holdingThread;
     static if (DEBUG)
     {
-        const(char)* m_description;
+        const(char)* description;
     }
 
 }

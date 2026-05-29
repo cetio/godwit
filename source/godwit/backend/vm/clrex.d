@@ -10,15 +10,15 @@ public:
 final:
     // for building stack trace info
     // pointer to stack trace storage
-    StackTraceElement*  m_pStackTrace;
+    StackTraceElement*  stackTrace;
     // size of stack trace storage
-    uint m_stackTrace;
+    uint stackTrace;
     // current frame in stack trace
-    uint m_frameCount;
+    uint frameCount;
     // number of items in the Dynamic Method array
-    uint m_dynamicMethodItems;
+    uint dynamicMethodItems;
     // index of the next location where the resolver object will be stored
-    uint m_currentDynamicIndex;
+    uint currentDynamicIndex;
 
 }
 
@@ -34,10 +34,10 @@ final:
         IpAdjusted = 0x0002,
     }
 
-    uint* m_ip;
-    uint* m_sp;
-    MethodDesc* m_fn;
-    StackTraceElementFlags m_flags;
+    uint* ip;
+    uint* sp;
+    MethodDesc* fn;
+    StackTraceElementFlags flags;
 
 }
 
@@ -48,7 +48,7 @@ public struct CLRException
 
 public:
 final:
-    ObjectHandle m_throwableHandle;
+    ObjectHandle throwableHandle;
 
 }
 
@@ -59,6 +59,6 @@ public struct EEException
 
 public:
 final:
-    const(uint) m_kind;
+    const(uint) kind;
 
 }

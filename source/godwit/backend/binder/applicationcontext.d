@@ -12,14 +12,14 @@ public struct ApplicationContext
 {
 public:
 final:
-    int m_appVersion;
-    SString m_applicationName;
-    SHash!(BinderSpace*, uint)* m_executionContext;
-    SHash!(FailureCacheEntry*, uint)* m_failureCache;
-    CritSecCookie m_contextCS;
-    StringArrayList m_platformResourceRoots;
-    StringArrayList m_appPaths;
-    SHash!(SimpleNameToFileNameMapEntry, uint) m_trustedPlatformAssemblyMap;
+    int appVersion;
+    SString applicationName;
+    SHash!(BinderSpace*, uint)* executionContext;
+    SHash!(FailureCacheEntry*, uint)* failureCache;
+    CritSecCookie contextCS;
+    StringArrayList platformResourceRoots;
+    StringArrayList appPaths;
+    SHash!(SimpleNameToFileNameMapEntry, uint) trustedPlatformAssemblyMap;
 
     //mixin accessors;
 }
@@ -29,9 +29,9 @@ public struct SimpleNameToFileNameMapEntry
 {
 public:
 final:
-    wchar* m_simpleName;
-    wchar* m_ilFileName;
-    wchar* m_niFileName;
+    wchar* simpleName;
+    wchar* ilFileName;
+    wchar* niFileName;
 
 }
 
@@ -39,7 +39,7 @@ public struct FailureCacheEntry
 {
 public:
 final:
-    SString m_assemblyNameOrPath;
-    HResult m_bindingResult;
+    SString assemblyNameOrPath;
+    HResult bindingResult;
 
 }

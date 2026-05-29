@@ -9,12 +9,12 @@ public:
 final:
     static if (DEBUG)
     {
-        const(char*[2]) m_debugKey;
+        const(char*[2]) debugKey;
     }
     // Either the token (if EECLASSHASH_TYPEHANDLE_DISCR), or the type handle encoded
     // as a relative pointer
-    void* m_data;
-    EEClassHashEntry* m_encloser;
+    void* data;
+    EEClassHashEntry* encloser;
 
 }
 
@@ -25,6 +25,6 @@ public struct EEClassHashTable
 
 public:
 final:
-    bool m_caseInsensitive;
+    bool caseInsensitive;
 
 }

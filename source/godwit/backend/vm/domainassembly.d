@@ -41,27 +41,27 @@ final:
         Active
     }
 
-    Assembly* m_assembly;
-    AppDomain* m_domain;
-    PEAssembly* m_peAssembly;
-    Module* m_ceemodule;
-    bool m_isfCollectible;
-    DomainAssembly* m_nextInALC;
-    LoaderAllocator* m_allocator;
-    FileLoadLevel m_fileLoadLevel;
-    bool m_isLoading;
+    Assembly* assembly;
+    AppDomain* domain;
+    PEAssembly* peAssembly;
+    Module* ceemodule;
+    bool isfCollectible;
+    DomainAssembly* nextInALC;
+    LoaderAllocator* allocator;
+    FileLoadLevel fileLoadLevel;
+    bool isLoading;
 
-    ptrdiff_t m_exposedModuleObject;
-    ptrdiff_t m_exposedAssemblyObject;
-    ExInfo* m_error;
-    bool m_disableActivationCheck;
-    bool m_hostAssemblyPublished;
-    // m_pDynamicMethodTable is used by the light code generation to allow method
+    ptrdiff_t exposedModuleObject;
+    ptrdiff_t exposedAssemblyObject;
+    ExInfo* error;
+    bool disableActivationCheck;
+    bool hostAssemblyPublished;
+    // dynamicMethodTable is used by the light code generation to allow method
     // generation on the fly. They are lazily created when/if a dynamic method is requested
     // for this specific module
-    DynamicMethodTable* m_dynamicMethodTable;
-    DebuggerAssemblyControlFlags m_debuggerFlags;
-    uint m_notifyflags;
-    bool m_debuggerUnloadStarted;
+    DynamicMethodTable* dynamicMethodTable;
+    DebuggerAssemblyControlFlags debuggerFlags;
+    uint notifyflags;
+    bool debuggerUnloadStarted;
 
 }

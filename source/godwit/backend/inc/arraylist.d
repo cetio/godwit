@@ -6,13 +6,13 @@ public struct ArrayListBlock
 {
 public:
 final:
-    ArrayListBlock* m_next;
-    uint m_blockSize;
+    ArrayListBlock* next;
+    uint blockSize;
     static if (HOST_x64)
     {
         uint padding;
     }
-    void* m_array;
+    void* array;
 
 }
 
@@ -21,12 +21,12 @@ public struct FirstArrayListBlock
 public:
 final:
     ArrayListBlock* next;
-    uint m_blockSize;
+    uint blockSize;
     static if (HOST_x64)
     {
         uint padding;
     }
-    void*[5] m_array;
+    void*[5] array;
 
 }
 
@@ -34,8 +34,8 @@ public struct ArrayListBase
 {
 public:
 final:
-    uint m_count;
-    FirstArrayListBlock m_firstBlock;
+    uint count;
+    FirstArrayListBlock firstBlock;
 
 }
 

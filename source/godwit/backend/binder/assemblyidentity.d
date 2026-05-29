@@ -41,12 +41,12 @@ final:
         FullName = (SimpleName | Version)
     }
 
-    SString m_simpleName;
-    AssemblyVersion m_asmVersion;
-    SString m_cultureOrLanguage;
-    SBuffer m_publicKeyOrTokenBlob;
-    PEKind m_cpuArchitecture;
-    AssemblyContentType m_contentType;
-    IdentityFlags m_identityFlags;
+    SString simpleName;
+    AssemblyVersion asmVersion;
+    SString cultureOrLanguage;
+    SBuffer publicKeyOrTokenBlob;
+    PEKind cpuArchitecture;
+    AssemblyContentType contentType;
+    IdentityFlags identityFlags;
 
 }

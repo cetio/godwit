@@ -7,16 +7,16 @@ public struct EEHashEntry
 {
 public:
 final:
-    EEHashEntry* m_next;
-    uint m_hashValue;
-    void* m_data;
+    EEHashEntry* next;
+    uint hashValue;
+    void* data;
     /// The key is stored inline
-    ubyte m_key;
+    ubyte key;
 
 }
 
 // Double buffer to fix the race condition of growhashtable (the update
-// of m_pBuckets and m_dwNumBuckets has to be atomic, so we double buffer
+// of buckets and numBuckets has to be atomic, so we double buffer
 // the structure and access it through a pointer, which can be updated
 // atomically. The union is in order to not change the SOS macros.
 public struct BucketTable
@@ -24,12 +24,12 @@ public struct BucketTable
 public:
 final:
     /// Pointer to first entry for each bucket
-    EEHashEntry* m_buckets;
-    uint m_count;
+    EEHashEntry* buckets;
+    uint count;
     static if (TARGET_x64)
     {
-        /// "Fast Mod" multiplier for "X % m_dwNumBuckets"
-        ulong m_countMul;
+        /// "Fast Mod" multiplier for "X % numBuckets"
+        ulong countMul;
     }
 
 }
@@ -45,16 +45,16 @@ public:
     // have any problem)
     // BE VERY CAREFUL WITH WHAT YOU DO WITH THIS VARIABLE AS USING IT BADLY CAN CAUSE
     // RACING CONDITIONS
-    BucketTable* m_bucketTable;
-    uint m_count;
-    void* m_heap;
-    int m_growing;
+    BucketTable* bucketTable;
+    uint count;
+    void* heap;
+    int growing;
     static if (DEBUG)
     {
-        void* m_lockData;
-        FnLockOwner m_lockOwner;
-        EEThreadId m_writerThreadId;
-        bool m_checkThreadSafety;
+        void* lockData;
+        FnLockOwner lockOwner;
+        EEThreadId writerThreadId;
+        bool checkThreadSafety;
     }
 
 }
@@ -69,8 +69,8 @@ public struct ClassFactoryInfo
 {
 public:
 final:
-    UUID m_clsId;
-    wchar* m_srvName;
+    UUID clsId;
+    wchar* srvName;
 
 }
 
@@ -79,12 +79,12 @@ public struct EEStringData
 public:
 final:
     /// The string data.
-    wchar* m_str;
-    uint m_length;
+    wchar* str;
+    uint length;
     static if (DEBUG)
     {
-        bool m_debugOnlyLowChars;
-        uint m_debugCch;
+        bool debugOnlyLowChars;
+        uint debugCch;
     }
 
 }

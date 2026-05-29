@@ -6,11 +6,11 @@ public struct PersistentInlineTrackingMapR2R
 {
 public:
 final:
-    Module* m_ceemodule;
-    ZapInlineeRecord* m_inlineeIndex;
-    uint m_inlineeIndexSize;
-    ubyte* m_inlinersBuffer;
-    uint m_inlinersBufferSize;
+    Module* ceemodule;
+    ZapInlineeRecord* inlineeIndex;
+    uint inlineeIndexSize;
+    ubyte* inlinersBuffer;
+    uint inlinersBufferSize;
 
 }
 
@@ -18,7 +18,7 @@ public struct ZapInlineeRecord
 {
 public:
 final:
-    uint m_key;
-    uint m_offset;
+    uint key;
+    uint offset;
 
 }

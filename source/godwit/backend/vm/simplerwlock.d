@@ -14,19 +14,19 @@ final:
     }
 
     /// Lock used for R/W synchronization
-    int m_rwLock;
+    int rwLock;
     /// Does this lock require to be taken in PreemptiveGC mode?
-    const GC_MODE m_gcMode;
+    const GC_MODE gcMode;
     /// Spin count for a reader waiting for a writer to release the lock
-    int m_spinCount;
+    int spinCount;
     /// Used to prevent writers from being starved by readers \
     /// We currently do not prevent writers from starving readers since writers
     /// are supposed to be rare.
-    bool m_writerWaiting;
+    bool writerWaiting;
     static if (DEBUG)
     {
         /// Check for dead lock situation.
-        int m_countNoTriggerGC;
+        int countNoTriggerGC;
         static if (HOST_x64)
         {
             /// Ensures that we are a multiple of 8-bytes

@@ -13,15 +13,15 @@ final:
     * Unpacked fields are individual fields within the bit vector.
     *
     * Params:
-    *   - `dwFieldIndex`: The index of the field to retrieve.
+    *   - `fieldIndex`: The index of the field to retrieve.
     *
     * Returns:
     *   The value of the unpacked field at the specified index.
     */
-    @nogc uint getUnpackedField(uint dwFieldIndex)
+    @nogc uint getUnpackedField(uint fieldIndex)
         scope return
     {
-        return (cast(uint*)&this)[dwFieldIndex];
+        return (cast(uint*)&this)[fieldIndex];
     }
 
     /**
@@ -30,19 +30,19 @@ final:
     * Packed fields are stored as consecutive bits in the bit vector.
     *
     * Params:
-    *  `dwFieldIndex`: The index of the field to retrieve.
+    *  `fieldIndex`: The index of the field to retrieve.
     *
     * Returns:
     *   The value of the packed field at the specified index.
     */
-    @nogc uint getPackedField(uint dwFieldIndex)
+    @nogc uint getPackedField(uint fieldIndex)
     {
         // Calculate the offset and length of the packed field.
-        uint dwOffset = calculateOffset(dwFieldIndex);
-        uint dwFieldLength = bitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
+        uint offset = calculateOffset(fieldIndex);
+        uint fieldLength = bitVectorGet(offset, MAX_LENGTH_BITS) + 1;
 
         // Extract and return the packed field value.
-        return bitVectorGet(dwOffset + MAX_LENGTH_BITS, dwFieldLength);
+        return bitVectorGet(offset + MAX_LENGTH_BITS, fieldLength);
     }
 
 private:
@@ -55,18 +55,18 @@ private:
     * The offset is the position within the bit vector where the field starts.
     *
     * Params:
-    *   - `dwFieldIndex`: The index of the field to calculate the offset for.
+    *   - `fieldIndex`: The index of the field to calculate the offset for.
     *
     * Returns:
     *   The offset of the specified field within the bit vector.
     */
-    @nogc uint calculateOffset(uint dwFieldIndex)
+    @nogc uint calculateOffset(uint fieldIndex)
     {
-        uint dwOffset = 0;
-        for (uint i = 0; i < dwFieldIndex; i++)
-            dwOffset += MAX_LENGTH_BITS + bitVectorGet(dwOffset, MAX_LENGTH_BITS) + 1;
+        uint offset = 0;
+        for (uint i = 0; i < fieldIndex; i++)
+            offset += MAX_LENGTH_BITS + bitVectorGet(offset, MAX_LENGTH_BITS) + 1;
 
-        return dwOffset;
+        return offset;
     }
 
     /**
@@ -75,18 +75,18 @@ private:
     * This function extracts and returns the value of a specific portion of the bit vector.
     *
     * Params:
-    *   - `dwOffset`: The starting offset within the bit vector.
-    *   - `dwLength`: The length of the portion to extract.
+    *   - `offset`: The starting offset within the bit vector.
+    *   - `length`: The length of the portion to extract.
     *
     * Returns:
     *   The extracted value from the bit vector.
     */
-    @nogc uint bitVectorGet(uint dwOffset, uint dwLength)
+    @nogc uint bitVectorGet(uint offset, uint length)
         scope return
     {
-        uint dwValueShift = dwOffset % BITS_PER_UINT;
-        uint dwValueMask = (1 << dwLength) - 1 << dwValueShift;
+        uint valueShift = offset % BITS_PER_UINT;
+        uint valueMask = (1 << length) - 1 << valueShift;
 
-        return ((cast(uint*)&this)[dwOffset / BITS_PER_UINT] & dwValueMask) >> dwValueShift;
+        return ((cast(uint*)&this)[offset / BITS_PER_UINT] & valueMask) >> valueShift;
     }
 }

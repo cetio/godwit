@@ -1,4 +1,4 @@
-module godwit.core.ceemodule;
+module godwit.core.cmodule;
 
 public struct Module
 {

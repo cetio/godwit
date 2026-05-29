@@ -22,33 +22,33 @@ final:
         Public = 6
     }
 
-    MethodTable* m_methodTable;
+    MethodTable* methodTable;
     mixin(bitfields!(
         /// RID of this field
-        uint, "m_rid", 24,
+        uint, "rid", 24,
         /// Is this field static?
-        bool, "m_isStatic", 1,
+        bool, "isStatic", 1,
         /// Is this field thread local?
         /// Has a separate instance for each thread, allowing each thread to have
         /// its own independent copy of the variable's data.
-        bool, "m_isThreadLocal", 1,
+        bool, "isThreadLocal", 1,
         /// Does this field use a RVA (relative value address) to store its data?
         /// If so, this requires extra parsing in the PE to get the address of this field's data.
-        bool, "m_isRVA", 1,
+        bool, "isRVA", 1,
         /// Protection level of this field.
-        Protection, "m_protection", 5
+        Protection, "protection", 5
     ));
     mixin(bitfields!(
         /// Offset of this field in memory (assuming that you have a pointer to an instance of its containing type.)
         /// This will lie to you if this field is static/RVA.
-        uint, "m_offset", 27,
+        uint, "offset", 27,
         /// CorElementType of this field.
         /// This will not directly give you the type of this field.
-        CorElementType, "m_elemType", 5
+        CorElementType, "elemType", 5
     ));
     static if (DEBUG)
     {
-        const(char)* m_debugName;
+        const(char)* debugName;
     }
 
 }

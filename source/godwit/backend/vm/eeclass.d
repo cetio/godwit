@@ -15,15 +15,15 @@ public struct CCWTemplate
 {
 public:
 final:
-    ubyte* m_vtable;
-    MethodTable* m_wrappedMethodTable;
-    MethodDesc* m_wrappedMethodDesc;
-    ubyte* m_mlHeader;
-    ubyte* m_mlCode;
-    MethodDescChunk* m_methodDescChunk;
-    ubyte* m_ilCode;
-    ubyte* m_extraInfo;
-    MethodTable* m_interfaceMethodTable;
+    ubyte* vtable;
+    MethodTable* wrappedMethodTable;
+    MethodDesc* wrappedMethodDesc;
+    ubyte* mlHeader;
+    ubyte* mlCode;
+    MethodDescChunk* methodDescChunk;
+    ubyte* ilCode;
+    ubyte* extraInfo;
+    MethodTable* interfaceMethodTable;
 
 }
 
@@ -31,9 +31,9 @@ public struct SparseVTableEntry
 {
 public:
 final:
-    ushort m_mtStart;
-    ushort m_count;
-    ushort m_vtStart;
+    ushort mtStart;
+    ushort count;
+    ushort vtStart;
 
 }
 
@@ -41,12 +41,12 @@ public struct SparseVTableMap
 {
 public:
 final:
-    SparseVTableEntry* m_entryMapList;
-    ushort m_numMapEntries;
-    ushort m_numAllocated;
-    ushort m_lastUsedIndex;
-    ushort m_vtSlot;
-    ushort m_mtSlot;
+    SparseVTableEntry* entryMapList;
+    ushort numMapEntries;
+    ushort numAllocated;
+    ushort lastUsedIndex;
+    ushort vtSlot;
+    ushort mtSlot;
 
 }
 
@@ -78,10 +78,10 @@ final:
         IsOrHasInt128Field = 0x20
     }
 
-    uint m_managedSize;
-    ubyte m_largestMemberAlignmentReq;
-    LayoutFlags m_layoutFlags;
-    ubyte m_packingSize;
+    uint managedSize;
+    ubyte largestMemberAlignmentReq;
+    LayoutFlags layoutFlags;
+    ubyte packingSize;
 
 }
 
@@ -90,19 +90,19 @@ public struct NativeLayoutInfo
 {
 public:
 final:
-    ubyte m_alignmentReq;
+    ubyte alignmentReq;
     version (Posix)
     {
-        bool m_passInRegisters;
+        bool passInRegisters;
     }
     static if (HFA)
     {
-        CorInfoHFAElemType m_hfaType;
+        CorInfoHFAElemType hfaType;
     }
-    bool m_isMarshalable;
-    ushort m_size;
-    uint m_numFields;
-    NativeFieldDescriptor* m_nativeFieldDescriptor;
+    bool isMarshalable;
+    ushort size;
+    uint numFields;
+    NativeFieldDescriptor* nativeFieldDescriptor;
 
 }
 
@@ -119,22 +119,22 @@ final:
         Illegal
     }
 
-    FieldDesc* m_fieldDesc;
+    FieldDesc* fieldDesc;
     union
     {
         struct
         {
-            MethodTable* m_nestedType;
-            uint m_numNestedElements;
+            MethodTable* nestedType;
+            uint numNestedElements;
         }
         struct
         {
-            uint m_nativeSize;
-            uint m_numFieldElements;
+            uint nativeSize;
+            uint numFieldElements;
         }
     }
-    uint m_offset;
-    NativeFieldCategory m_category;
+    uint offset;
+    NativeFieldCategory category;
 
 }
 
@@ -142,27 +142,27 @@ public struct OptionalFields
 {
 public:
 final:
-    void* m_dictLayout;
-    ubyte* m_varianceInfo;
+    void* dictLayout;
+    ubyte* varianceInfo;
 
     static if (COM_INTEROP)
     {
-        SparseVTableMap* m_sparseVTableMap;
-        TypeHandle m_coClass;
+        SparseVTableMap* sparseVTableMap;
+        TypeHandle coClass;
         static if (COM_INTEROP_UNMANAGED_ACTIVATION)
         {
-            void** m_classFactory;
+            void** classFactory;
         }
     }
 
     version (Posix)
     {
-        ubyte m_numEightBytes;
-        SystemVClassification[2] m_eightByteClassifications;
-        ubyte[2] m_eightByteSizes;
+        ubyte numEightBytes;
+        SystemVClassification[2] eightByteClassifications;
+        ubyte[2] eightByteSizes;
     }
 
-    ubyte m_requiredFieldAlignment;
+    ubyte requiredFieldAlignment;
 
 }
 
@@ -237,7 +237,7 @@ final:
         ContainsMethodImpls = 0x20000000,
     }
 
-    GuidInfo* m_guidInfo;
+    GuidInfo* guidInfo;
 
     static if (DEBUG)
     {
@@ -245,88 +245,88 @@ final:
         bool debuggingClass;
     }
 
-    OptionalFields* m_optionalFields;
-    MethodTable* m_methodTable;
-    FieldDesc* m_fieldDescList;
-    MethodDescChunk* m_chunks;
+    OptionalFields* optionalFields;
+    MethodTable* methodTable;
+    FieldDesc* fieldDescList;
+    MethodDescChunk* chunks;
 
     static if (COM_INTEROP)
     {
-        CorInterfaceType m_comInterfaceType;
-        void* m_ccwTemplate;
+        CorInterfaceType comInterfaceType;
+        void* ccwTemplate;
     }
 
-    uint m_attrClass;
-    uint m_vmFlags;
+    uint attrClass;
+    uint vmFlags;
 
     static if (DEBUG)
     {
         ushort auxFlags;
     }
 
-    ubyte m_normType;
-    ubyte m_baseSizePadding;
+    ubyte normType;
+    ubyte baseSizePadding;
 
-    ushort m_numInstanceFields;
-    ushort m_numMethods;
-    ushort m_numStaticFields;
-    ushort m_numHandleStatics;
-    ushort m_numThreadStaticFields;
-    ushort m_numHandleThreadStatics;
-    ushort m_numNonVirtualSlots;
+    ushort numInstanceFields;
+    ushort numMethods;
+    ushort numStaticFields;
+    ushort numHandleStatics;
+    ushort numThreadStaticFields;
+    ushort numHandleThreadStatics;
+    ushort numNonVirtualSlots;
 
-    uint m_nonGCStaticFieldBytes;
-    uint m_nonGCThreadStaticFieldBytes;
+    uint nonGCStaticFieldBytes;
+    uint nonGCThreadStaticFieldBytes;
 
 
     uint numTotalFields()
     {
-        return m_numInstanceFields + m_numStaticFields;
+        return numInstanceFields + numStaticFields;
     }
 
     uint numInstanceFields()
     {
-        return m_numInstanceFields;
+        return numInstanceFields;
     }
 
     uint numStaticFields()
     {
-        return m_numStaticFields;
+        return numStaticFields;
     }
 
     uint numThreadStaticFields()
     {
-        return m_numThreadStaticFields;
+        return numThreadStaticFields;
     }
 
     uint numHandleStatics()
     {
-        return m_numHandleStatics;
+        return numHandleStatics;
     }
 
     uint numHandleThreadStatics()
     {
-        return m_numHandleThreadStatics;
+        return numHandleThreadStatics;
     }
 
     uint numNonVirtualSlots()
     {
-        return m_numNonVirtualSlots;
+        return numNonVirtualSlots;
     }
 
     uint nonGCStaticFieldBytes()
     {
-        return m_nonGCStaticFieldBytes;
+        return nonGCStaticFieldBytes;
     }
 
     uint nonGCThreadStaticFieldBytes()
     {
-        return m_nonGCThreadStaticFieldBytes;
+        return nonGCThreadStaticFieldBytes;
     }
 
     MethodDescChunk* chunks()
     {
-        return m_chunks;
+        return chunks;
     }
 
     pragma(mangle, "EEClass_fields_get")
@@ -335,7 +335,7 @@ final:
         int length = numTotalFields();
         FieldDesc*[] fieldDescs;
         for (int i = 0; i < length; i++)
-            fieldDescs ~= m_fieldDescList + i;
+            fieldDescs ~= fieldDescList + i;
         return fieldDescs;
     }
 }

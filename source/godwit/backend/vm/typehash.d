@@ -13,7 +13,7 @@ public struct EETypeHashEntry
 public:
 final:
     /// Pointer to the data associated with the hash entry
-    void* m_data;
+    void* data;
 
 }
 
@@ -29,10 +29,10 @@ public struct EETypeHashTable
 public:
 final:
     /// This is the domain in which the hash table is allocated
-    LoaderAllocator* m_allocator;
+    LoaderAllocator* allocator;
     static if (DEBUG)
     {
-        long m_dwSealCount; // Can more types be added to the table?
+        long sealCount; // Can more types be added to the table?
     }
 
 }

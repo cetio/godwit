@@ -11,17 +11,17 @@ public struct PendingTypeLoadEntry
 {
 public:
 final:
-    Crst m_crst;
+    Crst crst;
     /// Result of loading; this is first created in the CREATE stage of class loading
-    TypeHandle m_typeHandle;
-    TypeKey m_typeKey;
+    TypeHandle typeHandle;
+    TypeKey typeKey;
     /// Number of threads waiting for this type
-    int m_waitCount;
+    int waitCount;
     /// Error result, propagated to all threads loading this class
-    HResult m_hresult;
-    EXException* m_exception;
-    /// m_Crst was acquired
-    bool m_lockAcquired;
+    HResult hresult;
+    EXException* exception;
+    /// Crst was acquired
+    bool lockAcquired;
 
 }
 
@@ -29,9 +29,9 @@ public struct TableEntry
 {
 public:
 final:
-    TableEntry* m_next;
-    uint m_hashValue;
-    PendingTypeLoadEntry* m_data;
+    TableEntry* next;
+    uint hashValue;
+    PendingTypeLoadEntry* data;
 
 }
 
@@ -40,11 +40,11 @@ public struct PendingTypeLoadTable
 public:
 final:
     /// Pointer to first entry for each bucket
-    TableEntry** m_buckets;
-    uint m_numBuckets;
+    TableEntry** buckets;
+    uint numBuckets;
     static if (DEBUG)
     {
-        uint m_numDebugMemory;
+        uint numDebugMemory;
     }
 
 }

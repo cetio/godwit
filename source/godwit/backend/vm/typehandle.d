@@ -42,14 +42,14 @@ final:
     // TypeHandle may represent any of the following:
     union
     {
-        uint* m_taddr;
+        uint* taddr;
         static if (!DACCESS_COMPILE)
         {
-            MethodTable* m_methodTable;
-            TypeDesc* m_typeDesc;
-            ParamTypeDesc* m_paramTypeDesc;
-            TypeVarTypeDesc* m_typeVarTypeDesc;
-            FnPtrTypeDesc* m_fnPtrTypeDesc;
+            MethodTable* methodTable;
+            TypeDesc* typeDesc;
+            ParamTypeDesc* paramTypeDesc;
+            TypeVarTypeDesc* typeVarTypeDesc;
+            FnPtrTypeDesc* fnPtrTypeDesc;
         }
     }
 
@@ -67,10 +67,10 @@ public struct Instantiation
 {
 public:
 final:
-    /// Note that for DAC builds, m_pArgs may be host allocated buffer, not a copy of an object marshalled by DAC.
+    /// Note that for DAC builds, args may be host allocated buffer, not a copy of an object marshalled by DAC.
     /// Pointer to TypeHandles for the instantiation
-    TypeHandle* m_args;
+    TypeHandle* args;
     /// Number of arguments in the instantiation
-    uint m_numArgs;
+    uint numArgs;
 
 }

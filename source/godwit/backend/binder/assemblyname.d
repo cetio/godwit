@@ -9,7 +9,7 @@ public struct AssemblyName
 
 public:
 final:
-    int m_refCount;
-    bool m_isDefinition;
+    int refCount;
+    bool isDefinition;
 
 }

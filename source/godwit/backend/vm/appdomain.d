@@ -25,41 +25,41 @@ public struct BaseDomain
 public:
 final:
     // Protects the list of assemblies in the domain
-    ListLock m_fileLoadLock;
-    CrstExplicitInit m_domainCrst;
+    ListLock fileLoadLock;
+    CrstExplicitInit domainCrst;
     // Protects the Assembly and Unmanaged caches
-    CrstExplicitInit m_domainCacheCrst;
-    CrstExplicitInit m_domainLocalBlockCrst;
+    CrstExplicitInit domainCacheCrst;
+    CrstExplicitInit domainLocalBlockCrst;
     // Used to protect the reference lists in the collectible loader allocators attached to this appdomain
-    CrstExplicitInit m_crstLoaderAllocatorReferences;
-    CrstExplicitInit m_crstStaticBoxInitLock;
+    CrstExplicitInit crstLoaderAllocatorReferences;
+    CrstExplicitInit crstStaticBoxInitLock;
     // Used to protect the assembly list. Taken also by GC or debugger thread, therefore we have to avoid
     // triggering GC while holding this lock (by switching the thread to GC_NOTRIGGER while it is held).
-    CrstExplicitInit m_crstAssemblyList;
-    ListLock m_classInitLock;
-    JitListLock m_jitLock;
-    ListLock m_ilStubGenLock;
-    ListLock m_nativeTypeLoadLock;
+    CrstExplicitInit crstAssemblyList;
+    ListLock classInitLock;
+    JitListLock jitLock;
+    ListLock ilStubGenLock;
+    ListLock nativeTypeLoadLock;
     // Reference to the binding context that holds TPA list details
-    DefaultAssemblyBinder* m_defaultBinder;
-    IGCHandleStore m_handleStore;
+    DefaultAssemblyBinder* defaultBinder;
+    IGCHandleStore handleStore;
     // The pinned heap handle table.
-    PinnedHeapHandleTable m_pinnedHeapHandleTable;
+    PinnedHeapHandleTable pinnedHeapHandleTable;
     // Information regarding the managed standard interfaces.
-    MngStdInterfacesInfo* m_mngStdInterfacesInfo;
+    MngStdInterfacesInfo* mngStdInterfacesInfo;
     // I have yet to figure out an efficient way to get the number of handles
     // of a particular type that's currently used by the process without
     // spending more time looking at the handle table code. We know that
     // our only customer (asp.net) in Dev10 is not going to create many of
     // these handles so I am taking a shortcut for now and keep the sizedref
     // handle count on the AD itself.
-    uint m_sizedRefHandles;
-    TypeIDMap m_typeIDMap;
+    uint sizedRefHandles;
+    TypeIDMap typeIDMap;
     // MethodTable to `typeIndex` map. `typeIndex` is embedded in the code during codegen.
     // During execution corresponding thread static data blocks are stored in `t_NonGCThreadStaticBlocks`
     // and `t_GCThreadStaticBlocks` array at the `typeIndex`.
-    TypeIDMap m_nonGCThreadStaticBlockTypeIDMap;
-    TypeIDMap m_gcThreadStaticBlockTypeIDMap;
+    TypeIDMap nonGCThreadStaticBlockTypeIDMap;
+    TypeIDMap gcThreadStaticBlockTypeIDMap;
 
 }
 
@@ -98,57 +98,57 @@ final:
         IgnoreUnhandledExceptions = 0x10000,
     }
 
-    CrstExplicitInit m_reflectionCrst;
-    CrstExplicitInit m_refClassFactCrst;
+    CrstExplicitInit reflectionCrst;
+    CrstExplicitInit refClassFactCrst;
     // Hash table that maps a class factory info to a COM comp.
-    EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) m_refClassFactHash;
+    EEHashTable!(ClassFactoryInfo*, EEClassFactoryInfoHashTableHelper, true) refClassFactHash;
     static if (COM_INTEROP)
     {
-        DispIDCache* m_refDispIDCache;
+        DispIDCache* refDispIDCache;
         // Handle points to Missing.Value Object which is used for [Optional] arg scenario during IDispatch CCW Call
-        ObjectHandle m_hndMissing;
+        ObjectHandle hndMissing;
     }
-    SString m_friendlyName;
-    Assembly* m_rootAssembly;
-    ContextFlags m_contextFlags;
+    SString friendlyName;
+    Assembly* rootAssembly;
+    ContextFlags contextFlags;
     // When an application domain is created the ref count is artificially incremented
     // by one. For it to hit zero an explicit close must have happened.
-    int m_refCount;
+    int refCount;
     // Map of loaded composite native images indexed by base load addresses
-    CrstExplicitInit m_nativeImageLoadCrst;
+    CrstExplicitInit nativeImageLoadCrst;
     // Wrong?
-    SHash!(char*, NativeImage*) m_nativeImageMap;
+    SHash!(char*, NativeImage*) nativeImageMap;
     static if (COM_INTEROP)
     {
         /// This cache stores the RCWs in this domain
-        RCWRefCache* m_rcwCache;
+        RCWRefCache* rcwCache;
     }
     static if (COM_WRAPPERS)
     {
         /// This cache stores the RCW -> CCW references in this domain
-        RCWRefCache* m_rcwRefCache;
+        RCWRefCache* rcwRefCache;
     }
-    Stage m_stage;
+    Stage stage;
 
-    ArrayList m_failedAssemblies;
-    AssemblySpecBindingCache m_assemblyCache;
-    size_t m_memoryPressure;
-    ArrayList m_nativeDllSearchDirectories;
-    bool m_forceTrivialWaitOperations;
-    SHash!(UnmanagedImageCacheEntry, uint) m_unmanagedCache;
+    ArrayList failedAssemblies;
+    AssemblySpecBindingCache assemblyCache;
+    size_t memoryPressure;
+    ArrayList nativeDllSearchDirectories;
+    bool forceTrivialWaitOperations;
+    SHash!(UnmanagedImageCacheEntry, uint) unmanagedCache;
     static if (TYPE_EQUIVALENCE)
     {
-        TypeEquivalenceHashTable m_typeEquivalenceTable;
-        CrstExplicitInit m_typeEquivalenceCrst;
+        TypeEquivalenceHashTable typeEquivalenceTable;
+        CrstExplicitInit typeEquivalenceCrst;
     }
     // I can't see how these could be useful, so I'm not adding them
     /* static if (MULTICORE_JIT)
     {
-        MulticoreJitManager m_multicoreJitManager;
+        MulticoreJitManager multicoreJitManager;
     }
     static if (TIERED_COMPILATION)
     {
-        TieredCompilationManager m_tieredCompilationManager;
+        TieredCompilationManager tieredCompilationManager;
     } */
 
 }
@@ -157,12 +157,12 @@ public struct PinnedHeapHandleBucket
 {
 public:
 final:
-    PinnedHeapHandleBucket* m_next;
-    int m_arraySize;
-    int m_currentPos;
-    int m_currentEmbeddedFreePos;
-    ObjectHandle m_hndHandleArray;
-    ObjectRef* m_arrayData;
+    PinnedHeapHandleBucket* next;
+    int arraySize;
+    int currentPos;
+    int currentEmbeddedFreePos;
+    ObjectHandle hndHandleArray;
+    ObjectRef* arrayData;
 
 }
 
@@ -171,18 +171,18 @@ public struct PinnedHeapHandleTable
 public:
 final:
     // The buckets of object handles.
-    // synchronized by m_Crst
-    PinnedHeapHandleBucket* m_head;
+    // synchronized by Crst
+    PinnedHeapHandleBucket* head;
     // We need to know the containing domain so we know where to allocate handles
-    BaseDomain* m_domain;
+    BaseDomain* domain;
     // The size of the PinnedHeapHandleBucket.
-    // synchronized by m_Crst
-    uint m_nextBucketSize;
+    // synchronized by Crst
+    uint nextBucketSize;
     // for finding and re-using embedded free items in the list
-    // these fields are synchronized by m_Crst
-    PinnedHeapHandleBucket* m_freeSearchHint;
-    uint m_numEmbeddedFree;
-    CrstExplicitInit m_crst;
+    // these fields are synchronized by Crst
+    PinnedHeapHandleBucket* freeSearchHint;
+    uint numEmbeddedFree;
+    CrstExplicitInit crst;
 
 }
 
@@ -190,7 +190,7 @@ public struct UnmanagedImageCacheEntry
 {
 public:
 final:
-    wchar* m_name;
-    ptrdiff_t m_handle;
+    wchar* name;
+    ptrdiff_t handle;
 
 }

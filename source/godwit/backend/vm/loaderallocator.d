@@ -24,99 +24,99 @@ public struct LoaderAllocator
 {
 public:
 final:
-    align(8) ubyte* m_initialReservedMemForLoaderHeaps;
-    ubyte[LoaderHeap.sizeof] m_lowFreqHeapInstance;
-    ubyte[LoaderHeap.sizeof] m_highFreqHeapInstance;
-    ubyte[LoaderHeap.sizeof] m_stubHeapInstance;
-    ubyte[CodeFragmentHeap.sizeof] m_precodeHeapInstance;
-    ubyte[LoaderHeap.sizeof] m_fixupPrecodeHeapHeapInstance;
-    ubyte[LoaderHeap.sizeof] m_newStubPrecodeHeapInstance;
-    LoaderHeap* m_lowFreqHeap;
-    LoaderHeap* m_highFreqHeap;
+    align(8) ubyte* initialReservedMemForLoaderHeaps;
+    ubyte[LoaderHeap.sizeof] lowFreqHeapInstance;
+    ubyte[LoaderHeap.sizeof] highFreqHeapInstance;
+    ubyte[LoaderHeap.sizeof] stubHeapInstance;
+    ubyte[CodeFragmentHeap.sizeof] precodeHeapInstance;
+    ubyte[LoaderHeap.sizeof] fixupPrecodeHeapHeapInstance;
+    ubyte[LoaderHeap.sizeof] newStubPrecodeHeapInstance;
+    LoaderHeap* lowFreqHeap;
+    LoaderHeap* highFreqHeap;
     /// Stubs for PInvoke, remoting, etc
-    LoaderHeap* m_stubHeap;
-    CodeFragmentHeap* m_precodeHeap;
-    LoaderHeap* m_executableHeap;
+    LoaderHeap* stubHeap;
+    CodeFragmentHeap* precodeHeap;
+    LoaderHeap* executableHeap;
     static if (READYTORUN)
     {
-        CodeFragmentHeap* m_dynamicHelpersHeap;
+        CodeFragmentHeap* dynamicHelpersHeap;
     }
-    LoaderHeap* m_fixupPrecodeHeap;
-    LoaderHeap* m_newStubPrecodeHeap;
-    ObjectHandle m_allocatorObjectHandle;
+    LoaderHeap* fixupPrecodeHeap;
+    LoaderHeap* newStubPrecodeHeap;
+    ObjectHandle allocatorObjectHandle;
     /// For GetMultiCallableAddrOfCode()
-    FuncPtrStubs* m_funcPtrStubs;
+    FuncPtrStubs* funcPtrStubs;
     /// The LoaderAllocator specific string literal map.
-    StringLiteralMap* m_stringLiteralMap;
-    CrstExplicitInit m_crstLoaderAllocator;
-    bool m_gcPressure;
-    bool m_unloaded;
-    bool m_terminated;
-    bool m_marked;
-    int m_gcCount;
-    bool m_isCollectible;
+    StringLiteralMap* stringLiteralMap;
+    CrstExplicitInit crstLoaderAllocator;
+    bool gcPressure;
+    bool unloaded;
+    bool terminated;
+    bool marked;
+    int gcCount;
+    bool isCollectible;
 
     /// Pre-allocated blocks of heap for collectible assemblies. Will be set to NULL as soon as it is used.
-    ubyte* m_vsdHeapInitialAlloc;
-    ubyte* m_codeHeapInitialAlloc;
+    ubyte* vsdHeapInitialAlloc;
+    ubyte* codeHeapInitialAlloc;
     /// U->M thunks that are not associated with a delegate. \
     /// The cache is keyed by MethodDesc pointers.
-    UMEntryThunkCache* m_umEntryThunkCache;
-    CodeRangeMapRangeList m_stubPrecodeRangeList;
-    CodeRangeMapRangeList m_fixupPrecodeRangeList;
+    UMEntryThunkCache* umEntryThunkCache;
+    CodeRangeMapRangeList stubPrecodeRangeList;
+    CodeRangeMapRangeList fixupPrecodeRangeList;
     static if (PGO)
     {
         // ----> PgoManager <----
-        uint* m_pgoManager;
+        uint* pgoManager;
     }
 
-    BaseDomain* m_domain;
+    BaseDomain* domain;
     /// ExecutionManager caches
-    void* m_lastUsedCodeHeap;
-    void* m_lastUsedDynamicCodeHeap;
-    void* m_jumpStubCache;
+    void* lastUsedCodeHeap;
+    void* lastUsedDynamicCodeHeap;
+    void* jumpStubCache;
     /// Used in LoaderAllocator GC process (during sweeping)
-    LoaderAllocator* m_loaderAllocatorDestroyNext;
+    LoaderAllocator* loaderAllocatorDestroyNext;
     static if (FAT_DISPATCH_TOKENS)
     {
-        SimpleRWLock* m_fatTokenSetLock;
+        SimpleRWLock* fatTokenSetLock;
         // Wrong?
-        SHash!(DispatchTokenFat*, uint)* m_pFatTokenSet;
+        SHash!(DispatchTokenFat*, uint)* fatTokenSet;
     }
 
     // ----> VirtualCallStubManager <----
-    uint* m_virtualCallStubManager;
+    uint* virtualCallStubManager;
     // Wrong?
-    SHash!(LoaderAllocator*, uint) m_allocatorReferences;
+    SHash!(LoaderAllocator*, uint) allocatorReferences;
     uint numRefs;
-    DomainAssembly* m_firstDomainAssemblyFromSameALCToDelete;
+    DomainAssembly* firstDomainAssemblyFromSameALCToDelete;
     ulong numAllocator;
 
-    SList!(FailedTypeInitCleanupListItem) m_failedTypeInitCleanupList;
-    SegmentedHandleIndexStack m_freeHandleIndexesStack;
+    SList!(FailedTypeInitCleanupListItem) failedTypeInitCleanupList;
+    SegmentedHandleIndexStack freeHandleIndexesStack;
     static if (COM_INTEROP)
     {
         // ----> ComCallWrapperCache <----
-        uint* m_comCallWrapperCache;
-        /// Used for synchronizing creation of the m_comCallWrapperCache
-        CrstExplicitInit m_ComCallWrapperCrst;
+        uint* comCallWrapperCache;
+        /// Used for synchronizing creation of the comCallWrapperCache
+        CrstExplicitInit ComCallWrapperCrst;
         /// Hash table that maps a MethodTable to COM Interop compatibility data.
-        HashMap* m_interopDataHash;
+        HashMap* interopDataHash;
     }
-    /// Used for synchronizing access to the m_interopDataHash and m_pMarshalingData
-    CrstExplicitInit m_interopDataCrst;
+    /// Used for synchronizing access to the interopDataHash and marshalingData
+    CrstExplicitInit interopDataCrst;
     // ----> EEMarshalingData <----
-    uint* m_marshalingData;
+    uint* marshalingData;
     static if (TIERED_COMPILATION)
     {
         // ----> CallCountingManager <----
-        uint* m_callCountingManager;
+        uint* callCountingManager;
     }
-    MethodDescBackpatchInfoTracker m_methodDescBackpatchInfoTracker;
+    MethodDescBackpatchInfoTracker methodDescBackpatchInfoTracker;
     static if (ON_STACK_REPLACEMENT)
     {
         // ----> OnStackReplacementManager <----
-        uint* m_onStackReplacementManager;
+        uint* onStackReplacementManager;
     }
 
 }
@@ -127,9 +127,9 @@ public struct MethodDescBackpatchInfoTracker
 {
 public:
 final:
-    LoaderAllocator* m_allocator;
-    SHash!(void*, uint) m_allocatorToDependentTrackerHash;
-    SHash!(void*, uint) m_keyToDependentTrackersHash;
+    LoaderAllocator* allocator;
+    SHash!(void*, uint) allocatorToDependentTrackerHash;
+    SHash!(void*, uint) keyToDependentTrackersHash;
 
 }
 
@@ -140,19 +140,19 @@ public struct CodeRangeMapRangeList
 
 public:
 final:
-    SimpleRWLock m_rangeListRWLock;
-    StubBlockKind m_rangeListType;
-    SArray!(uint*) m_starts;
-    void* m_id;
-    bool m_collectible;
+    SimpleRWLock rangeListRWLock;
+    StubBlockKind rangeListType;
+    SArray!(uint*) starts;
+    void* id;
+    bool collectible;
 }
 
 public struct FailedTypeInitCleanupListItem
 {
 public:
 final:
-    SLink m_link;
-    ListLockEntry* m_listLockEntry;
+    SLink link;
+    ListLockEntry* listLockEntry;
 
 }
 
@@ -161,18 +161,18 @@ public struct SegmentedHandleIndexStack
 public:
 final:
     /// Segment containing the TOS
-    Segment* m_tosSegment;
+    Segment* tosSegment;
     /// One free segment to prevent rapid delete / new if pop / push happens rapidly
     /// at the boundary of two segments.
-    Segment* m_freeSegment;
+    Segment* freeSegment;
     /// Index of the top of stack in the TOS segment
     // SIZE
-    int m_tosIndex;
+    int tosIndex;
 }
 
 public struct Segment
 {
-    Segment* m_prev;
+    Segment* prev;
     // SIZE
-    uint[64] m_data;
+    uint[64] data;
 }

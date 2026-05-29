@@ -8,11 +8,11 @@ public struct VolatileEntry(T)
 public:
 final:
     // The derived-class format of an entry
-    T m_value;
+    T value;
     // Pointer to the next entry in the bucket chain (or NULL)
-    VolatileEntry* m_nextEntry;
+    VolatileEntry* nextEntry;
     // The hash value associated with the entry
-    uint m_hashValue;
+    uint hashValue;
 
 }
 
@@ -20,9 +20,9 @@ public struct DacEnumerableHashTable(FINAL, VALUE, int SCALE)
 {
 public:
 final:
-    Module* m_ceemodule;
-    LoaderHeap* m_heap;
-    VolatileEntry!VALUE* m_buckets;
-    uint m_entries;
+    Module* ceemodule;
+    LoaderHeap* heap;
+    VolatileEntry!VALUE* buckets;
+    uint entries;
 
 }

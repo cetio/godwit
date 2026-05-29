@@ -8,9 +8,9 @@ public struct TypeEquivalenceEntry
 {
 public:
 final:
-    TypeHandle m_partA;
-    TypeHandle m_partB;
-    bool m_isEquivalent;
+    TypeHandle partA;
+    TypeHandle partB;
+    bool isEquivalent;
 
 }
 
@@ -21,6 +21,6 @@ public struct TypeEquivalenceHashTable
 
 public:
 final:
-    CrstExplicitInit* m_hashTableCrst;
+    CrstExplicitInit* hashTableCrst;
 
 }

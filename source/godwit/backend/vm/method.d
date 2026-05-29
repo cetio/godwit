@@ -18,28 +18,28 @@ final:
         LoaderModuleAttachedToChunk = 0x8000,
     }
 
-    MethodTable* m_methodTable;
-    MethodDescChunk* m_next;
+    MethodTable* methodTable;
+    MethodDescChunk* next;
     /// The size of this chunk minus 1 (in multiples of MethodDesc.ALIGNMENT)
-    ubyte m_size;
+    ubyte size;
     /// The number of MethodDescs in this chunk minus 1
-    ubyte m_count;
-    ChunkFlags m_flagsAndTokenRange;
+    ubyte count;
+    ChunkFlags flagsAndTokenRange;
 
     ushort tokenRange()
     {
-        return cast(ushort)(m_flagsAndTokenRange & ChunkFlags.TokenRangeMask);
+        return cast(ushort)(flagsAndTokenRange & ChunkFlags.TokenRangeMask);
     }
 
     MethodDesc*[] methods()
         scope return
     {
         MethodDesc*[] ret;
-        MethodDesc* pMD = cast(MethodDesc*)(cast(ubyte*)&this + MethodDescChunk.sizeof);
-        foreach (i; 0..(m_count + 1))
+        MethodDesc* md = cast(MethodDesc*)(cast(ubyte*)&this + MethodDescChunk.sizeof);
+        foreach (i; 0..(count + 1))
         {
-            ret ~= pMD;
-            pMD = cast(MethodDesc*)(cast(ubyte*)pMD + pMD.sizeOf);
+            ret ~= md;
+            md = cast(MethodDesc*)(cast(ubyte*)md + md.sizeOf);
         }
         return ret;
     }
@@ -113,12 +113,12 @@ final:
         ALIGNMENT_MASK = ALIGNMENT - 1,
     }
 
-    ushort m_flags3AndTokenRemainder;
-    ubyte m_chunkIndex;
-    ubyte m_flags4;
-    ushort m_slotNumber;
-    ushort m_flags;
-    MethodDescCodeData* m_codeData;
+    ushort flags3AndTokenRemainder;
+    ubyte chunkIndex;
+    ubyte flags4;
+    ushort slotNumber;
+    ushort flags;
+    MethodDescCodeData* codeData;
 
     static if (DEBUG)
     {
@@ -131,7 +131,7 @@ final:
 
     Classification classification()
     {
-        return cast(Classification)(m_flags & 0x0007);
+        return cast(Classification)(flags & 0x0007);
     }
 
     uint sizeOf()
@@ -167,16 +167,16 @@ final:
         static if (COM_INTEROP)
             baseSize += cast(uint)ComPlusCallInfo.sizeof;
 
-        if ((m_flags & Properties.HasNonVtableSlot) != 0)
+        if ((flags & Properties.HasNonVtableSlot) != 0)
             baseSize += size_t.sizeof;
 
-        if ((m_flags & Properties.MethodImpl) != 0)
+        if ((flags & Properties.MethodImpl) != 0)
             baseSize += cast(uint)MethodImpl.sizeof;
 
-        if ((m_flags & Properties.HasNativeCodeSlot) != 0)
+        if ((flags & Properties.HasNativeCodeSlot) != 0)
             baseSize += size_t.sizeof;
 
-        if ((m_flags & Properties.HasAsyncMethodData) != 0)
+        if ((flags & Properties.HasAsyncMethodData) != 0)
             baseSize += cast(uint)AsyncMethodData.sizeof;
 
         return baseSize;
@@ -184,7 +184,7 @@ final:
 
     int methodDescChunkIndex()
     {
-        return m_chunkIndex;
+        return chunkIndex;
     }
 
     MethodDescChunk* methodDescChunk()
@@ -197,7 +197,7 @@ final:
     MethodDef token()
     {
         ushort range = methodDescChunk.tokenRange;
-        ushort rem = m_flags3AndTokenRemainder & Flags3.TokenRemainderMask;
+        ushort rem = flags3AndTokenRemainder & Flags3.TokenRemainderMask;
         return (range << 12) | rem | CorTokenType.MethodDef;
     }
 
@@ -221,12 +221,12 @@ final:
 
     union
     {
-        void* m_dictLayout;
-        MethodDesc* m_wrappedMethodDesc;
+        void* dictLayout;
+        MethodDesc* wrappedMethodDesc;
     }
-    Dictionary* m_perInstInfo;
-    ushort m_flags2;
-    ushort m_numGenericArgs;
+    Dictionary* perInstInfo;
+    ushort flags2;
+    ushort numGenericArgs;
 
 }
 
@@ -264,9 +264,9 @@ public struct StoredSigMethodDesc
 
 public:
 final:
-    size_t m_sig;
-    uint m_count;
-    uint m_extendedFlags;
+    size_t sig;
+    uint count;
+    uint extendedFlags;
 
 }
 
@@ -286,7 +286,7 @@ public struct FCallMethodDesc
 
 public:
 final:
-    uint m_ecallId;
+    uint ecallId;
 
     static if (HOST_x64)
     {
@@ -343,8 +343,8 @@ final:
         ILStubTypeMask = ~(FlagMask | StackArgSizeMask)
     }
 
-    const(char)* m_methodName;
-    void* m_resolver;
+    const(char)* methodName;
+    void* resolver;
 
 }
 
@@ -358,7 +358,7 @@ public struct NDirectWriteableData
 {
 public:
 final:
-    void* m_directTarget;
+    void* directTarget;
 
 }
 
@@ -386,20 +386,20 @@ final:
         NDirectPopulated = 0x8000,
     }
 
-    const(char)* m_entrypointName;
+    const(char)* entrypointName;
     union
     {
-        const(char)* m_libName;
-        uint m_ecallId;
+        const(char)* libName;
+        uint ecallId;
     }
-    NDirectWriteableData* m_writeableData;
-    void* m_importThunkGlue;
-    uint m_defaultDllSearchAttr;
-    BindingFlags m_bindingFlags;
+    NDirectWriteableData* writeableData;
+    void* importThunkGlue;
+    uint defaultDllSearchAttr;
+    BindingFlags bindingFlags;
 
     static if (TARGET_x64)
     {
-        short m_numStackArgSize;
+        short numStackArgSize;
     }
 
 }
@@ -410,17 +410,17 @@ public:
 final:
     union
     {
-        uint* m_ilStub;
-        MethodDesc* m_methodDesc;
+        uint* ilStub;
+        MethodDesc* methodDesc;
     }
-    MethodTable* m_interfaceMethodTable;
-    bool m_requiresArgWrapping;
-    ushort m_cachedComSlot;
+    MethodTable* interfaceMethodTable;
+    bool requiresArgWrapping;
+    ushort cachedComSlot;
 
     version (X86)
     {
-        ushort m_numStackArgSize;
-        void* m_retThunk;
+        ushort numStackArgSize;
+        void* retThunk;
     }
 
 }

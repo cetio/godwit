@@ -5,9 +5,9 @@ public struct AssemblyVersion
 {
 public:
 final:
-    uint m_major;
-    uint m_minor;
-    uint m_build;
-    uint m_revision;
+    uint major;
+    uint minor;
+    uint build;
+    uint revision;
 
 }

@@ -10,28 +10,28 @@ public struct PEImage
 {
 public:
 final:
-    SString m_path;
-    uint m_pathHash;
-    int m_refCount;
+    SString path;
+    uint pathHash;
+    int refCount;
     /// Means this is a unique (deduped) instance.
-    bool m_inHashMap;
+    bool inHashMap;
     /// If this image is located within a single-file bundle, the location within the bundle. \
-    /// If m_bundleFileLocation is valid, it takes precedence over m_path for loading.
-    BundleFileLocation m_bundleFileLocation;
+    /// If bundleFileLocation is valid, it takes precedence over path for loading.
+    BundleFileLocation bundleFileLocation;
     /// Valid handle if we tried to open the file/path and succeeded.
-    ptrdiff_t m_fileHandle;
-    uint m_peKind;
-    uint m_machine;
+    ptrdiff_t fileHandle;
+    uint peKind;
+    uint machine;
     // This variable will have the data of module name.
     // It is only used by DAC to remap fusion loaded modules back to
     // disk IL. This really is a workaround. The real fix is for fusion loader
     // hook (public API on hosting) to take an additional file name hint.
     // We are piggy backing on the fact that module name is the same as file name!!!
-    SString m_moduleFileNameHintUsedByDac; // This is only used by DAC
-    SimpleRWLock* m_layoutLock;
+    SString moduleFileNameHintUsedByDac; // This is only used by DAC
+    SimpleRWLock* layoutLock;
     // IMAGE_COUNT
-    PEImageLayout*[3] m_layouts;
+    PEImageLayout*[3] layouts;
     // ----> IMDInternalImport* <----
-    ubyte* m_mdImport;
+    ubyte* mdImport;
 
 }

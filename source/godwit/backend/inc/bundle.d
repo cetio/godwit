@@ -6,9 +6,9 @@ public struct BundleFileLocation
 {
 public:
 final:
-    long m_size;
-    long m_offset;
-    long m_uncompressedSize;
+    long size;
+    long offset;
+    long uncompressedSize;
 
 }
 
@@ -16,9 +16,9 @@ public struct Bundle
 {
 public:
 final:
-    SString m_path;
+    SString path;
     bool function(const(char)* path, long* offset, long* size, long* compressedSize) probe;
-    SString m_basePath;
-    uint m_basePathLen;
+    SString basePath;
+    uint basePathLen;
 
 }

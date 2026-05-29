@@ -10,10 +10,10 @@ public struct DynamicMethodTable
 {
 public:
 final:
-    CrstExplicitInit m_crst;
-    DynamicMethodDesc* m_dynamicMethodList;
-    MethodTable* m_methodTable;
-    Module* m_ceemodule;
-    AppDomain* m_domain;
+    CrstExplicitInit crst;
+    DynamicMethodDesc* dynamicMethodList;
+    MethodTable* methodTable;
+    Module* ceemodule;
+    AppDomain* domain;
 
 }

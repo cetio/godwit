@@ -12,7 +12,7 @@ public struct ILStubHashBlobBase
 public:
 final:
     // this is size of entire object!!
-    size_t m_sizeOfBlob;
+    size_t sizeOfBlob;
 
 }
 
@@ -23,7 +23,7 @@ public struct ILStubHashBlob
 
 public:
 final:
-    ubyte[] m_blobData;
+    ubyte[] blobData;
 
 }
 
@@ -31,10 +31,10 @@ public struct ILStubCache
 {
 public:
 final:
-    Crst m_crst;
-    LoaderAllocator* m_allocator;
-    MethodTable* m_stubMethodTable;
-    SHash!(ILStubCacheEntry, uint) m_hashMap;
+    Crst crst;
+    LoaderAllocator* allocator;
+    MethodTable* stubMethodTable;
+    SHash!(ILStubCacheEntry, uint) hashMap;
 
 }
 
@@ -42,7 +42,7 @@ public struct ILStubCacheEntry
 {
 public:
 final:
-    MethodDesc* m_methodDesc;
-    ILStubHashBlob* m_blob;
+    MethodDesc* methodDesc;
+    ILStubHashBlob* blob;
 
 }

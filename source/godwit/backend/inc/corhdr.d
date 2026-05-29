@@ -48,8 +48,8 @@ public struct ImageDataDirectory
 {
 public:
 final:
-    uint m_virtualAddress;
-    uint m_size;
+    uint virtualAddress;
+    uint size;
 
 }
 
@@ -58,8 +58,8 @@ public struct RuntimeFunction
 {
 public:
 final:
-    uint m_beginAddress;
-    uint m_unwindData;
+    uint beginAddress;
+    uint unwindData;
 
 }
 

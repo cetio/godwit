@@ -30,7 +30,7 @@ final:
 
     // For whatever reason, we can't generate accessors for typeFlags
     mixin(bitfields!(
-        CorElementType, "m_elemType", 8,
+        CorElementType, "elemType", 8,
     // TODO: This todo exists to mark that this is intentionally not part of the accessor gen.
         uint, "typeFlags", 24
     ));
@@ -49,12 +49,12 @@ public struct ParamTypeDesc
 
 public:
 final:
-    /// The m_typeAndFlags field in TypeDesc tell what kind of parameterized type we have
-    TypeHandle m_arg;
+    /// The typeAndFlags field in TypeDesc tell what kind of parameterized type we have
+    TypeHandle arg;
     // ----> RUNTIMETYPEHANDLE <----
     /// Non-unloadable context: internal RuntimeType object handle
     /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* m_exposedClassObject;
+    uint* exposedClassObject;
 
 }
 
@@ -73,13 +73,13 @@ public struct TypeVarTypeDesc
 
 public:
 final:
-    Module* m_ceemodule;
-    MDToken m_mdToken;
-    uint m_numConstraints;
-    TypeHandle* m_constraints;
-    uint* m_exposedClassObject;
-    MDToken m_argMDToken;
-    uint m_index;
+    Module* ceemodule;
+    MDToken mdToken;
+    uint numConstraints;
+    TypeHandle* constraints;
+    uint* exposedClassObject;
+    MDToken argMDToken;
+    uint index;
 
 }
 
@@ -95,12 +95,12 @@ public:
 final:
     /// Non-unloadable context: internal RuntimeType object handle
     /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* m_exposedClassObject;
+    uint* exposedClassObject;
     /// Number of arguments
-    uint m_numArgs;
+    uint numArgs;
     /// Calling convention (actually just a single byte)
-    uint m_callingConv;
+    uint callingConv;
     /// Return type first, then argument types
-    TypeHandle[] m_types;
+    TypeHandle[] types;
 
 }

@@ -9,7 +9,7 @@ public struct InstMethodHashEntry
 {
 public:
 final:
-    MethodDesc* m_data;
+    MethodDesc* data;
 }
 
 public struct InstMethodHashTable
@@ -20,11 +20,11 @@ public struct InstMethodHashTable
 public:
 final:
     /// This is the domain in which the hash table is allocated
-    LoaderAllocator* m_allocator;
+    LoaderAllocator* allocator;
     static if (DEBUG)
     {
         /// Can more types be added to the table?
-        int m_sealCount;
+        int sealCount;
     }
 
 }

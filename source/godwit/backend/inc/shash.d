@@ -8,11 +8,11 @@ public struct SHash(ELEM, COUNT)
 {
 public:
 final:
-    ELEM* m_table;
-    COUNT m_size;
-    COUNT m_count;
-    COUNT m_occupied;
-    COUNT m_max;
+    ELEM* table;
+    COUNT size;
+    COUNT count;
+    COUNT occupied;
+    COUNT max;
 
     //mixin accessors;
 }
