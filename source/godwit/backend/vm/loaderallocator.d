@@ -62,8 +62,8 @@ final:
     /// U->M thunks that are not associated with a delegate. \
     /// The cache is keyed by MethodDesc pointers.
     UMEntryThunkCache* m_umEntryThunkCache;
-    @exempt CodeRangeMapRangeList m_stubPrecodeRangeList;
-    @exempt CodeRangeMapRangeList m_fixupPrecodeRangeList;
+    CodeRangeMapRangeList m_stubPrecodeRangeList;
+    CodeRangeMapRangeList m_fixupPrecodeRangeList;
     static if (PGO)
     {
         // ----> PgoManager <----
@@ -119,7 +119,6 @@ final:
         uint* m_onStackReplacementManager;
     }
 
-// mixin accessors;
 }
 
 // crossloaderallocatorhash.h
@@ -132,7 +131,6 @@ final:
     SHash!(void*, uint) m_allocatorToDependentTrackerHash;
     SHash!(void*, uint) m_keyToDependentTrackersHash;
 
-// mixin accessors;
 }
 
 public struct CodeRangeMapRangeList
@@ -156,7 +154,6 @@ final:
     SLink m_link;
     ListLockEntry* m_listLockEntry;
 
-// mixin accessors;
 }
 
 public struct SegmentedHandleIndexStack

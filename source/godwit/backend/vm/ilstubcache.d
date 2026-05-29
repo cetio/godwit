@@ -12,9 +12,8 @@ public struct ILStubHashBlobBase
 public:
 final:
     // this is size of entire object!!
-    size_t m_sizeOfBlob;  
+    size_t m_sizeOfBlob;
 
-// mixin accessors;
 }
 
 public struct ILStubHashBlob
@@ -26,7 +25,6 @@ public:
 final:
     ubyte[] m_blobData;
 
-// mixin accessors;
 }
 
 public struct ILStubCache
@@ -38,7 +36,6 @@ final:
     MethodTable* m_stubMethodTable;
     SHash!(ILStubCacheEntry, uint) m_hashMap;
 
-// mixin accessors;
 }
 
 public struct ILStubCacheEntry
@@ -48,5 +45,4 @@ final:
     MethodDesc* m_methodDesc;
     ILStubHashBlob* m_blob;
 
-// mixin accessors;
 }

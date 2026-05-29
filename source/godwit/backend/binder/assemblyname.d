@@ -12,5 +12,4 @@ final:
     int m_refCount;
     bool m_isDefinition;
 
-// mixin accessors;
 }

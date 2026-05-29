@@ -4,7 +4,8 @@ module godwit.impl;
 
 public:
 static:
-// TARGET_x64 and HOST_x64 should always be equal to eachother, or else you risk conflicts in native integer sizes.
+// TARGET_x64 and HOST_x64 should always be equal to eachother,
+// or else you risk conflicts in native integer sizes.
 // Everything else is able to be freely modified.
 
 /// Default `false`.

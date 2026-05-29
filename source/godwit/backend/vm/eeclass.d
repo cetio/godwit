@@ -25,7 +25,6 @@ final:
     ubyte* m_extraInfo;
     MethodTable* m_interfaceMethodTable;
 
-// mixin accessors;
 }
 
 public struct SparseVTableEntry
@@ -36,7 +35,6 @@ final:
     ushort m_count;
     ushort m_vtStart;
 
-// mixin accessors;
 }
 
 public struct SparseVTableMap
@@ -50,14 +48,13 @@ final:
     ushort m_vtSlot;
     ushort m_mtSlot;
 
-// mixin accessors;
 }
 
 public struct LayoutInfo
 {
 public:
 final:
-    @flags enum LayoutFlags : ubyte
+    enum LayoutFlags : ubyte
     {
         // TRUE if the GC layout of the struct is bit-for-bit identical
         // to its unmanaged counterpart with the runtime marshalling system
@@ -86,7 +83,6 @@ final:
     LayoutFlags m_layoutFlags;
     ubyte m_packingSize;
 
-// mixin accessors;
 }
 
 // fieldmarshaler.h
@@ -108,7 +104,6 @@ final:
     uint m_numFields;
     NativeFieldDescriptor* m_nativeFieldDescriptor;
 
-// mixin accessors;
 }
 
 // fieldmarshaler.h
@@ -141,7 +136,6 @@ final:
     uint m_offset;
     NativeFieldCategory m_category;
 
-// mixin accessors;
 }
 
 public struct OptionalFields
@@ -170,14 +164,13 @@ final:
 
     ubyte m_requiredFieldAlignment;
 
-// mixin accessors;
 }
 
 public struct EEClass
 {
 public:
 final:
-    @flags enum TypeAttributes : uint
+    enum TypeAttributes : uint
     {
         VisibilityMask = 0x00000007,
         kNotPublic = 0x00000000,
@@ -213,7 +206,7 @@ final:
         kHasSecurity = 0x00040000
     }
 
-    @flags enum VMFlags : uint
+    enum VMFlags : uint
     {
         LayoutDependsOnOtherModules = 0x00000001,
         Delegate = 0x00000002,
@@ -285,7 +278,6 @@ final:
     uint m_nonGCStaticFieldBytes;
     uint m_nonGCThreadStaticFieldBytes;
 
-// mixin accessors;
 
     uint numTotalFields()
     {
@@ -330,6 +322,11 @@ final:
     uint nonGCThreadStaticFieldBytes()
     {
         return m_nonGCThreadStaticFieldBytes;
+    }
+
+    MethodDescChunk* chunks()
+    {
+        return m_chunks;
     }
 
     pragma(mangle, "EEClass_fields_get")

@@ -28,7 +28,6 @@ final:
     // Set of flags that the map supports writing on top of the data value
     T* m_supportedFlags;
 
-// mixin accessors;
 }
 
 public struct ModuleBase
@@ -45,7 +44,6 @@ final:
     CrstExplicitInit m_lookupTableCrst;
     LoaderAllocator* m_allocator;
 
-// mixin accessors;
 }
 
 public struct VASigCookieBlock
@@ -55,7 +53,6 @@ public:
     uint m_numCookies;
     VASigCookie[] m_cookies;
 
-// mixin accessors;
 }
 
 public struct VASigCookie
@@ -67,7 +64,6 @@ final:
     Module* m_ceemodule;
     Signature m_signature;
 
-// mixin accessors;
 }
 
 // Equivalent to System.Reflection.Module.
@@ -78,7 +74,7 @@ public struct Module
 
 public:
 final:
-    @flags enum TransientFlags : uint
+    enum TransientFlags : uint
     {
         // Set once we know for sure the Module will not be freed until the appdomain itself exits
         ModuleIsTenured = 0x00000001,
@@ -86,7 +82,7 @@ final:
         IsEnc = 0x00000008,
         IsProfilerNotified = 0x00000010,
         IsETWNotified = 0x00000020,
-        
+
         DebuggerUserOverridePriv = 0x00000400,
         DebuggerAllowJITOptsPriv = 0x00000800,
         DebuggerTrackJITInfoPriv = 0x00001000,
@@ -107,7 +103,7 @@ final:
         ModuleSaved = 0x80000000,
     }
 
-    @flags enum PersistentFlags : uint
+    enum PersistentFlags : uint
     {
         ComputedGlobalClass = 0x00000002,
         // This flag applies to assembly, but it is stored so it can be cached in ngen image
@@ -211,7 +207,7 @@ final:
     size_t m_numDynamicEntries;
     size_t m_maxDynamicEntries;
     MethodTable** m_dynamicStaticsInfo;
-    
+
     DebuggerSpecificData m_debuggerSpecificData;
     static if (PROFILING_SUPPORTED || PROFILING_SUPPORTED_DATA)
     {
@@ -223,7 +219,6 @@ final:
     // For protecting dictionary layout slot expansions
     CrstExplicitInit m_dictionaryCrst;
 
-// mixin accessors;
 }
 
 // This struct stores the data used by the managed debugging infrastructure.  If it turns out that
@@ -250,5 +245,4 @@ final:
     int m_numTotalJMCFuncs;
     bool m_defaultJMCStatus;
 
-// mixin accessors;
 }

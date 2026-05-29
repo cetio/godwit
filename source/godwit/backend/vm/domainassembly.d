@@ -36,9 +36,9 @@ final:
         DeliverEvents,
         LoadVTableFixups,
         // Loaded by not yet active
-        Loaded,           
+        Loaded,
         // Fully active (constructors run & security checked)
-        Active                   
+        Active
     }
 
     Assembly* m_assembly;
@@ -64,5 +64,4 @@ final:
     uint m_notifyflags;
     bool m_debuggerUnloadStarted;
 
-// mixin accessors;
 }

@@ -10,5 +10,4 @@ final:
     uint m_build;
     uint m_revision;
 
-// mixin accessors;
 }

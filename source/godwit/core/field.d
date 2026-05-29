@@ -16,12 +16,8 @@ public:
     }
 
     uint offsetOf()
-    {
-        return fieldDesc.offset;
-    }
+        => fieldDesc.m_offset;
 
     FieldDef token()
-    {
-        return tokenFromRid(fieldDesc.rid, CorTokenType.FieldDef);
-    }
+        => tokenFromRid(fieldDesc.m_rid, CorTokenType.FieldDef);
 }

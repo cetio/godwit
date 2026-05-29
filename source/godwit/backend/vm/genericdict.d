@@ -18,5 +18,4 @@ final:
     /// Signatures of all instantiations
     PCCOR_SIGNATURE[] m_entries;
 
-// mixin accessors;
 }

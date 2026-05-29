@@ -15,7 +15,6 @@ final:
     /// Pointer to the data associated with the hash entry
     void* m_data;
 
-// mixin accessors;
 }
 
 /**
@@ -36,5 +35,4 @@ final:
         long m_dwSealCount; // Can more types be added to the table?
     }
 
-// mixin accessors;
 }

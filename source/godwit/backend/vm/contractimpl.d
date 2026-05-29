@@ -14,7 +14,6 @@ final:
     TypeIDProvider m_idProvider;
     uint m_entryCount;
 
-// mixin accessors;
 }
 
 public struct TypeIDProvider
@@ -27,7 +26,6 @@ final:
         uint m_nextFatID;
     }
 
-// mixin accessors;
 }
 
 public struct DispatchTokenFat

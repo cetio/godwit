@@ -213,13 +213,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             {
                 dataOut = 0;
                 dataLen = 0;
-                return HResult.E_BADIMAGEFORMAT;
+                return HResult.EBadImageFormat;
             }
             else
             {
                 dataOut = pData[0];
                 dataLen = 1;
-                return HResult.S_OK;
+                return HResult.SOk;
             }
         }
         // Medium.
@@ -229,13 +229,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             {
                 dataOut = 0;
                 dataLen = 0;
-                return HResult.E_BADIMAGEFORMAT;
+                return HResult.EBadImageFormat;
             }
             else
             {
                 dataOut = (cast(uint)(pData[0] & 0x3F) << 8) | pData[1];
                 dataLen = 2;
-                return HResult.S_OK;
+                return HResult.SOk;
             }
         }
         else if ((pData[0] & 0xE0) == 0xC0) // 110? ????
@@ -244,21 +244,21 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
             {
                 dataOut = 0;
                 dataLen = 0;
-                return HResult.E_BADIMAGEFORMAT;
+                return HResult.EBadImageFormat;
             }
             else
             {
                 dataOut = (cast(uint)(pData[0] & 0x1F) << 24) | (cast(uint)pData[1] << 16)
                     | (cast(uint)pData[2] << 8) | pData[3];
                 dataLen = 4;
-                return HResult.S_OK;
+                return HResult.SOk;
             }
         }
         else // We don't recognize this encoding
         {
             dataOut = 0;
             dataLen = 0;
-            return HResult.E_BADIMAGEFORMAT;
+            return HResult.EBadImageFormat;
         }
     }
 
@@ -269,13 +269,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         {
             dataOut = 0;
             dataLen = 0;
-            return HResult.E_BADIMAGEFORMAT;
+            return HResult.EBadImageFormat;
         }
         else
         {
             dataOut = pBytes[0];
             dataLen = 1;
-            return HResult.S_OK;
+            return HResult.SOk;
         }
     }
     // Medium.
@@ -285,13 +285,13 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         {
             dataOut = 0;
             dataLen = 0;
-            return HResult.E_BADIMAGEFORMAT;
+            return HResult.EBadImageFormat;
         }
         else
         {
             dataOut = (cast(uint)(pBytes[0] & 0x3F) << 8) | pBytes[1];
             dataLen = 2;
-            return HResult.S_OK;
+            return HResult.SOk;
         }
     }
     else if ((pBytes[0] & 0xE0) == 0xC0) // 110? ????
@@ -300,21 +300,21 @@ pure HResult corSigUncompressData(PCCOR_SIGNATURE pData, uint len, out uint data
         {
             dataOut = 0;
             dataLen = 0;
-            return HResult.E_BADIMAGEFORMAT;
+            return HResult.EBadImageFormat;
         }
         else
         {
             dataOut = (cast(uint)(pBytes[0] & 0x1F) << 24) | (cast(uint)pBytes[1] << 16)
                 | (cast(uint)pBytes[2] << 8) | pBytes[3];
             dataLen = 4;
-            return HResult.S_OK;
+            return HResult.SOk;
         }
     }
     else // We don't recognize this encoding
     {
         dataOut = 0;
         dataLen = 0;
-        return HResult.E_BADIMAGEFORMAT;
+        return HResult.EBadImageFormat;
     }
 }
 
@@ -332,7 +332,7 @@ pure uint corSigUncompressData(PCCOR_SIGNATURE pData, out uint dataOut)
 {
     uint dataLen = 0;
 
-    if (corSigUncompressData(pData, 0xff, dataOut, dataLen).NOTOK)
+    if (corSigUncompressData(pData, 0xff, dataOut, dataLen).IsNotOk())
     {
         dataOut = 0;
         return -1;
@@ -416,7 +416,7 @@ pure HResult corSigUncompressToken(PCCOR_SIGNATURE pData, uint len, out MDToken 
 {
     HResult hr = corSigUncompressData(pData, len, tk, tkLen);
 
-    if (hr.OK())
+    if (hr.IsOk())
     {
         CorTokenType tkType = corSigDecodeTokenType(tk & 0x3);
         tk = tokenFromRid(tk >> 2, tkType);
@@ -459,10 +459,10 @@ pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE pData, uint dwLen, out 
     if (dwLen <= 0)
     {
         data = 0;
-        return HResult.E_BADIMAGEFORMAT; 
+        return HResult.EBadImageFormat;
     }
 
-    return HResult.S_OK;
+    return HResult.SOk;
 }
 
 /**
@@ -480,7 +480,7 @@ pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE pData, out int value)
     uint data = 0;
     uint size = corSigUncompressData(pData, data);
 
-    if (size == -1) 
+    if (size == -1)
         return size;
 
     if ((data >>= 1) & 0x1)

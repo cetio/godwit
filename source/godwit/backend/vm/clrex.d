@@ -12,22 +12,21 @@ final:
     // pointer to stack trace storage
     StackTraceElement*  m_pStackTrace;
     // size of stack trace storage
-    uint m_stackTrace;     
+    uint m_stackTrace;
     // current frame in stack trace
-    uint m_frameCount;      
+    uint m_frameCount;
     // number of items in the Dynamic Method array
-    uint m_dynamicMethodItems; 
+    uint m_dynamicMethodItems;
     // index of the next location where the resolver object will be stored
-    uint m_currentDynamicIndex; 
+    uint m_currentDynamicIndex;
 
-// mixin accessors;
 }
 
 public struct StackTraceElement
 {
 public:
 final:
-    @flags enum StackTraceElementFlags : int
+    enum StackTraceElementFlags : int
     {
         // Set if this element represents the last frame of the foreign exception stack trace
         LastFrameFromForeign = 0x0001,
@@ -38,9 +37,8 @@ final:
     uint* m_ip;
     uint* m_sp;
     MethodDesc* m_fn;
-    StackTraceElementFlags m_flags;    
+    StackTraceElementFlags m_flags;
 
-// mixin accessors;
 }
 
 public struct CLRException
@@ -52,7 +50,6 @@ public:
 final:
     ObjectHandle m_throwableHandle;
 
-// mixin accessors;
 }
 
 public struct EEException
@@ -64,5 +61,4 @@ public:
 final:
     const(uint) m_kind;
 
-// mixin accessors;
 }

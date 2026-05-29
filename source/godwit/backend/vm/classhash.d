@@ -7,7 +7,7 @@ public struct EEClassHashEntry
 {
 public:
 final:
-    static if (DEBUG) 
+    static if (DEBUG)
     {
         const(char*[2]) m_debugKey;
     }
@@ -16,7 +16,6 @@ final:
     void* m_data;
     EEClassHashEntry* m_encloser;
 
-// mixin accessors;
 }
 
 public struct EEClassHashTable
@@ -28,5 +27,4 @@ public:
 final:
     bool m_caseInsensitive;
 
-// mixin accessors;
 }

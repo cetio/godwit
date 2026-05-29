@@ -16,7 +16,7 @@ public struct MethodTableAuxiliaryData
 {
 public:
 final:
-    @flags enum Flags : uint
+    enum Flags : uint
     {
         Initialized = 0x0001,
         HasCheckedCanCompareBitsOrUseFastGetHashCode = 0x0002,
@@ -52,7 +52,7 @@ final:
 
     static if (DEBUG)
     {
-        @flags enum DebugFlags : uint
+        enum DebugFlags : uint
         {
             IsPublished = 0x2000,
             ParentMethodTablePointerValid = 0x4000,
@@ -72,7 +72,6 @@ final:
         void* m_debugOnlyThreadStatics;
     }
 
-// mixin accessors;
 }
 
 public struct GuidInfo
@@ -82,7 +81,6 @@ final:
     UUID m_guid;
     bool m_generatedFromName;
 
-// mixin accessors;
 }
 
 public struct InterfaceInfo
@@ -91,7 +89,6 @@ public:
 final:
     MethodTable* m_methodTable;
 
-// mixin accessors;
 }
 
 public alias PerInstInfoElem = Dictionary*;
@@ -101,7 +98,7 @@ public struct MethodTable
 {
 public:
 final:
-    @flags enum WFlagsLow : uint
+    enum WFlagsLow : uint
     {
         HasCriticalFinalizer = 0x00000002,
 
@@ -125,7 +122,7 @@ final:
         StringArrayValues = (GenericsMask & GenericsMaskNonGeneric),
     }
 
-    @flags enum WFlagsHigh : uint
+    enum WFlagsHigh : uint
     {
         CategoryMask = 0x000F0000,
         CategoryClass = 0x00000000,
@@ -156,7 +153,7 @@ final:
         NonTrivialInterfaceCast = CategoryArray | ComObject | IDynamicInterfaceCastable | CategoryValueType,
     }
 
-    @flags enum WFlags2 : uint
+    enum WFlags2 : uint
     {
         HasPerInstInfo = 0x0001,
         DynamicStatics = 0x0002,
@@ -215,7 +212,6 @@ final:
         size_t m_encodedNullableUnboxData;
     }
 
-// mixin accessors;
 
     pragma(mangle, "MethodTable_relatedTypeKind_get")
     extern (C) export @property RelatedTypeKind relatedTypeKind()
@@ -254,8 +250,13 @@ final:
 
     bool isIntegerSized()
     {
-        return ((eeClass.layoutInfo.managedSize & 1) == 0 &&
-            eeClass.layoutInfo.managedSize <= 8 && eeClass.layoutInfo.managedSize != 6);
+        uint managedSize = baseSize - cast(uint)(2 * size_t.sizeof);
+        return ((managedSize & 1) == 0 && managedSize <= 8 && managedSize != 6);
+    }
+
+    uint baseSize()
+    {
+        return m_baseSize;
     }
 
     uint typeDefRid()

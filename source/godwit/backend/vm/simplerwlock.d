@@ -6,7 +6,7 @@ public struct SimpleRWLock
 {
 public:
 final:
-    enum GC_MODE 
+    enum GC_MODE
     {
         COOPERATIVE,
         PREEMPTIVE,
@@ -33,6 +33,5 @@ final:
             uint pad;
         }
     }
-    
-// mixin accessors;
+
 }

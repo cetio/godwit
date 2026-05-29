@@ -40,10 +40,11 @@ final:
             Module* ceemodule;
             MDToken typeDef;
             /// 0 for non-generic types
-            uint numGenericArgs; 
+            uint numGenericArgs;
             /// NULL for non-generic types
-            TypeHandle* genericArgs;   
-            // Note that for DAC builds, m_pGenericArgs is a host allocated buffer (eg. by in SigPointer::GetTypeHandleThrowing),
+            TypeHandle* genericArgs;
+            // Note that for DAC builds, m_pGenericArgs is a host allocated buffer
+            // (eg. by in SigPointer::GetTypeHandleThrowing),
             // not a copy of an object marshalled by DAC.
         }
         /**
@@ -54,7 +55,7 @@ final:
             /// Element type
             TypeHandle paramType;
             /// Non-zero for `ARRAY`, 1 for `SZARRAY`, 0 for `PTR` or `BYREF`
-            uint rank;        
+            uint rank;
         }
         /**
          * Struct for elements identified as function pointers (`FNPTR`).

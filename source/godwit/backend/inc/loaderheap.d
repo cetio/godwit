@@ -15,7 +15,6 @@ final:
     size_t m_virtualSize;
     bool m_releaseMem;
 
-// mixin accessors;
 }
 
 public struct UnlockedLoaderHeap
@@ -29,12 +28,12 @@ final:
         Interleaved
     }
 
-    @flags enum LoaderHeapDebugFlags : uint
+    enum LoaderHeapDebugFlags : uint
     {
         /// Keep a permanent log of all callers
-        CallTracing    = 0x00000001, 
-        /// One time flag to record that an OOM interrupted call tracing  
-        EncounteredOOM = 0x80000000,   
+        CallTracing    = 0x00000001,
+        /// One time flag to record that an OOM interrupted call tracing
+        EncounteredOOM = 0x80000000,
     }
 
     /// Linked list of ClrVirtualAlloc'd pages
@@ -74,9 +73,8 @@ final:
     }
     /// Am I a LoaderHeap or an ExplicitControlLoaderHeap?
     bool m_explicitControl;
-    @exempt void function(ubyte* pageBase, ubyte* pageBaseRX, size_t size) codePageGenerator;
+    void function(ubyte* pageBase, ubyte* pageBaseRX, size_t size) codePageGenerator;
 
-// mixin accessors;
 }
 
 public struct LoaderHeapEvent
@@ -102,7 +100,7 @@ final:
 
 public interface ILoaderHeapBackout
 {
-    
+
 }
 
 public struct ExplicitControlLoaderHeap
@@ -111,7 +109,7 @@ public struct ExplicitControlLoaderHeap
     alias unlockedLoaderHeap this;
 }
 
-public struct LoaderHeap 
+public struct LoaderHeap
 {
     UnlockedLoaderHeap unlockedLoaderHeap;
     // LoaderHeap is intended to inherit from
@@ -125,5 +123,4 @@ public:
 final:
     CritSecCookie m_critSec;
 
-// mixin accessors;
 }

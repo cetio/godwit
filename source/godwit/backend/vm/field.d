@@ -11,7 +11,7 @@ public struct FieldDesc
 {
 public:
 final:
-    @flags enum Protection
+    enum Protection
     {
         Unknown = 0,
         Private = 1,
@@ -29,7 +29,8 @@ final:
         /// Is this field static?
         bool, "m_isStatic", 1,
         /// Is this field thread local?
-        /// Has a separate instance for each thread, allowing each thread to have its own independent copy of the variable's data.
+        /// Has a separate instance for each thread, allowing each thread to have
+        /// its own independent copy of the variable's data.
         bool, "m_isThreadLocal", 1,
         /// Does this field use a RVA (relative value address) to store its data?
         /// If so, this requires extra parsing in the PE to get the address of this field's data.
@@ -50,5 +51,4 @@ final:
         const(char)* m_debugName;
     }
 
-// mixin accessors;
 }

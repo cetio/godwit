@@ -14,30 +14,31 @@ private struct BinaryStream
     ubyte[] data;
     size_t pos;
 
-    this(ubyte[] d)
+    this(ubyte[] bytes)
     {
-        data = d;
+        data = bytes;
         pos = 0;
     }
 
-    @property size_t position() const
+    size_t position() const
     {
         return pos;
     }
 
-    bool mayRead(size_t n = 1)
+    bool mayRead(size_t count = 1)
     {
-        return pos + n <= data.length;
+        return pos + count <= data.length;
     }
 
-    ubyte peek(size_t offset = 0)
+    ubyte[] peek(T)(size_t count)
+        if (is(T == ubyte))
     {
-        return data[pos + offset];
+        return data[pos..pos + count];
     }
 
-    void step(size_t n = 1)
+    void step(T)(size_t count = 1)
     {
-        pos += n;
+        pos += count * T.sizeof;
     }
 
     T read(T)()
@@ -51,8 +52,7 @@ private struct BinaryStream
     T read(T)()
         if (!is(T == ubyte) && !is(T == byte) && !is(T == ubyte[]))
     {
-        T ret = peek!T(data[pos .. $]);
-        pos += T.sizeof;
+        T ret = readLittleEndian!T();
         return ret;
     }
 
@@ -63,6 +63,44 @@ private struct BinaryStream
         for (size_t i = 0; i < count; i++)
             ret ~= read!T();
         return ret;
+    }
+
+private:
+    T readLittleEndian(T)()
+    {
+        static if (is(T == float))
+        {
+            uint rawBits = std.bitmanip.peek!(uint, Endian.littleEndian)(data, pos);
+            pos += uint.sizeof;
+            return *cast(float*)&rawBits;
+        }
+        else static if (is(T == double))
+        {
+            ulong rawBits = std.bitmanip.peek!(ulong, Endian.littleEndian)(data, pos);
+            pos += ulong.sizeof;
+            return *cast(double*)&rawBits;
+        }
+        else static if (is(T == ptrdiff_t))
+        {
+            static if (ptrdiff_t.sizeof == 8)
+            {
+                long ret = std.bitmanip.peek!(long, Endian.littleEndian)(data, pos);
+                pos += long.sizeof;
+                return cast(T)ret;
+            }
+            else
+            {
+                int ret = std.bitmanip.peek!(int, Endian.littleEndian)(data, pos);
+                pos += int.sizeof;
+                return cast(T)ret;
+            }
+        }
+        else
+        {
+            T ret = std.bitmanip.peek!(T, Endian.littleEndian)(data, pos);
+            pos += T.sizeof;
+            return ret;
+        }
     }
 }
 
@@ -86,10 +124,6 @@ public:
 
     ptrdiff_t run()
     {
-        foreach (b; code)
-        {
-            
-        }
         return -1;
     }
 }
@@ -338,7 +372,7 @@ shared static this()
  */
 @trusted ubyte[] assemble(string str)
 {
-    ubyte[] assembly;
+    ubyte[] ret;
     const string[string] prefixes = [
         "no": "no.",
         "tail": "tail.",
@@ -349,17 +383,16 @@ shared static this()
 
     foreach (line; str.strip.splitLines)
     {
-        auto parts = line.strip.splitter(" ");
+        string[] parts = line.strip.split(" ");
 
-        string mnemonic = parts.front;
-        parts.popFront();
-        string operand = parts.empty ? "" : parts.join(" ");
+        string mnemonic = parts[0];
+        string operand = parts.length > 1 ? parts[1..$].join(" ") : "";
 
         foreach (key, val; prefixes)
         {
             if (mnemonic.startsWith(val))
             {
-                assembly ~= assemble(key);
+                ret ~= assemble(key);
                 mnemonic = mnemonic[val.length..$];
             }
         }
@@ -380,9 +413,9 @@ shared static this()
             case "brnull":
             case "brtrue":
             case "brzero":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!int;
-                assembly ~= (cast(ubyte*)&op)[0..int.sizeof];
+                ret ~= instructions[mnemonic];
+                int operandValue = operand.to!int;
+                ret ~= (cast(ubyte*)&operandValue)[0..int.sizeof];
                 break;
             case "beq.s":
             case "bge.s":
@@ -398,14 +431,14 @@ shared static this()
             case "brnull.s":
             case "brtrue.s":
             case "brzero.s":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!byte;
-                assembly ~= (cast(ubyte*)&op)[0..byte.sizeof];
+                ret ~= instructions[mnemonic];
+                byte operandValue = operand.to!byte;
+                ret ~= (cast(ubyte*)&operandValue)[0..byte.sizeof];
                 break;
             case "calli":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!ptrdiff_t;
-                assembly ~= (cast(ubyte*)&op)[0..ptrdiff_t.sizeof];
+                ret ~= instructions[mnemonic];
+                ptrdiff_t operandValue = operand.to!ptrdiff_t;
+                ret ~= (cast(ubyte*)&operandValue)[0..ptrdiff_t.sizeof];
                 break;
             case "box":
             case "call":
@@ -436,9 +469,9 @@ shared static this()
             case "initobj":
             case "ldftn":
             case "sizeof":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!uint;
-                assembly ~= (cast(ubyte*)&op)[0..uint.sizeof];
+                ret ~= instructions[mnemonic];
+                uint operandValue = operand.to!uint;
+                ret ~= (cast(ubyte*)&operandValue)[0..uint.sizeof];
                 break;
             case "ldarg.s":
             case "ldarga.s":
@@ -446,9 +479,9 @@ shared static this()
             case "ldloca.s":
             case "starg.s":
             case "stloc.s":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!ubyte;
-                assembly ~= (cast(ubyte*)&op)[0..ubyte.sizeof];
+                ret ~= instructions[mnemonic];
+                ubyte operandValue = operand.to!ubyte;
+                ret ~= (cast(ubyte*)&operandValue)[0..ubyte.sizeof];
                 break;
             case "ldarg":
             case "ldarga":
@@ -456,59 +489,58 @@ shared static this()
             case "ldloca":
             case "starg":
             case "stloc":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!ushort;
-                assembly ~= (cast(ubyte*)&op)[0..ushort.sizeof];
+                ret ~= instructions[mnemonic];
+                ushort operandValue = operand.to!ushort;
+                ret ~= (cast(ubyte*)&operandValue)[0..ushort.sizeof];
                 break;
             case "ldc.i4.s":
             case "leave.s":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!byte;
-                assembly ~= (cast(ubyte*)&op)[0..byte.sizeof];
+                ret ~= instructions[mnemonic];
+                byte operandValue = operand.to!byte;
+                ret ~= (cast(ubyte*)&operandValue)[0..byte.sizeof];
                 break;
             case "ldc.i4":
             case "leave":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!int;
-                assembly ~= (cast(ubyte*)&op)[0..int.sizeof];
+                ret ~= instructions[mnemonic];
+                int operandValue = operand.to!int;
+                ret ~= (cast(ubyte*)&operandValue)[0..int.sizeof];
                 break;
             case "ldc.i8":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!long;
-                assembly ~= (cast(ubyte*)&op)[0..long.sizeof];
+                ret ~= instructions[mnemonic];
+                long operandValue = operand.to!long;
+                ret ~= (cast(ubyte*)&operandValue)[0..long.sizeof];
                 break;
             case "ldc.r4":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!float;
-                assembly ~= (cast(ubyte*)&op)[0..float.sizeof];
+                ret ~= instructions[mnemonic];
+                float operandValue = operand.to!float;
+                ret ~= (cast(ubyte*)&operandValue)[0..float.sizeof];
                 break;
             case "ldc.r8":
-                assembly ~= instructions[mnemonic];
-                auto op = operand.to!double;
-                assembly ~= (cast(ubyte*)&op)[0..double.sizeof];
+                ret ~= instructions[mnemonic];
+                double operandValue = operand.to!double;
+                ret ~= (cast(ubyte*)&operandValue)[0..double.sizeof];
                 break;
             case "switch":
-                import std.array;
-                assembly ~= instructions[mnemonic];
-                string[] array = operand.replace(",", "").split(" ");
-                auto op = array[0].to!uint;
+                ret ~= instructions[mnemonic];
+                string[] targets = operand.replace(",", "").split(" ");
+                uint operandValue = targets[0].to!uint;
                 uint index = 1;
-                assembly ~= (cast(ubyte*)&op)[0..uint.sizeof];
-                while (index < op + 1)
+                ret ~= (cast(ubyte*)&operandValue)[0..uint.sizeof];
+                while (index < operandValue + 1)
                 {
-                    int item =  array[index++].to!int;
-                    assembly ~= (cast(ubyte*)&item)[0..int.sizeof];
+                    int target = targets[index++].to!int;
+                    ret ~= (cast(ubyte*)&target)[0..int.sizeof];
                 }
                 break;
             default:
                 if (mnemonic !in instructions || operand != null)
                     throw new Exception("Invalid mnemonic or operand: "~line);
-                assembly ~= instructions[mnemonic];
+                ret ~= instructions[mnemonic];
                 break;
         }
     }
 
-    return assembly;
+    return ret;
 }
 
 /**
@@ -522,10 +554,10 @@ shared static this()
  */
 @trusted string disassemble(ubyte[] bytes)
 {
-    string disassembly;
+    string ret;
     string prefix;
     bool keepPrefix;
-    BinaryStream stream = new BinaryStream(bytes);
+    BinaryStream stream = BinaryStream(bytes);
 
     while (stream.mayRead)
     {
@@ -533,13 +565,18 @@ shared static this()
         {
             string mnemonic = instructions.keys.filter!(key => instructions[key] == stream.peek!ubyte(1)).front;
             stream.step!ubyte(1);
-            
-            if (mnemonic.startsWith("ld") || mnemonic.startsWith("new") || mnemonic == "mkrefany" || mnemonic == "dup" || mnemonic == "push")
+
+            if (mnemonic.startsWith("ld") || mnemonic.startsWith("new") || mnemonic == "mkrefany"
+                || mnemonic == "dup" || mnemonic == "push")
                 prefix = '+'~prefix;
-            else if (mnemonic.startsWith("st") || mnemonic.startsWith("loc") || mnemonic.startsWith("init") || mnemonic.startsWith("call") || 
-                     mnemonic.startsWith("add") || mnemonic.startsWith("sub") || mnemonic.startsWith("mul") || mnemonic.startsWith("div") 
-                     || mnemonic.startsWith("rem") || mnemonic == "pop" || mnemonic == "and" || mnemonic == "xor" || mnemonic == "or" || 
-                     mnemonic == "shl" || mnemonic == "shr" || mnemonic == "rethrow" || mnemonic.startsWith("cp") || mnemonic == "ret")
+            else if (mnemonic.startsWith("st") || mnemonic.startsWith("loc")
+                || mnemonic.startsWith("init") || mnemonic.startsWith("call")
+                || mnemonic.startsWith("add") || mnemonic.startsWith("sub")
+                || mnemonic.startsWith("mul") || mnemonic.startsWith("div")
+                || mnemonic.startsWith("rem") || mnemonic == "pop"
+                || mnemonic == "and" || mnemonic == "xor" || mnemonic == "or"
+                || mnemonic == "shl" || mnemonic == "shr" || mnemonic == "rethrow"
+                || mnemonic.startsWith("cp") || mnemonic == "ret")
                 prefix = '-'~prefix;
             else
                 prefix = '~'~prefix;
@@ -561,7 +598,8 @@ shared static this()
                 case "brnull":
                 case "brtrue":
                 case "brzero":
-                    disassembly ~= format("%08d: %s%s $loc_%X\n", stream.position - 1, prefix, mnemonic, stream.read!int);
+                    ret ~= format("%08d: %s%s $loc_%X\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!int);
                     break;
                 case "beq.s":
                 case "bge.s":
@@ -577,10 +615,12 @@ shared static this()
                 case "brnull.s":
                 case "brtrue.s":
                 case "brzero.s":
-                    disassembly ~= format("%08d: %s%s $loc_%X\n", stream.position - 1, prefix, mnemonic, stream.read!byte);
+                    ret ~= format("%08d: %s%s $loc_%X\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!byte);
                     break;
                 case "calli":
-                    disassembly ~= format("%08d: %s%s %08d\n", stream.position - 1, prefix, mnemonic, stream.read!ptrdiff_t);
+                    ret ~= format("%08d: %s%s %08d\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!ptrdiff_t);
                     break;
                 case "box":
                 case "call":
@@ -608,7 +648,8 @@ shared static this()
                 case "stsfld":
                 case "unbox":
                 case "unbox.any":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!uint);
+                    ret ~= format("%08d: %s%s %X\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!uint);
                     break;
                 case "ldarg.s":
                 case "ldarga.s":
@@ -616,30 +657,33 @@ shared static this()
                 case "ldloca.s":
                 case "starg.s":
                 case "stloc.s":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!ubyte);
+                    ret ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!ubyte);
                     break;
                 case "ldc.i4.s":
                 case "leave.s":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!byte);
+                    ret ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!byte);
                     break;
                 case "ldc.i4":
                 case "leave":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!int);
+                    ret ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!int);
                     break;
                 case "ldc.i8":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, mnemonic, stream.read!long);
+                    ret ~= format("%08d: %s%s %X\n", stream.position - 1, mnemonic, stream.read!long);
                     break;
                 case "ldc.r4":
-                    disassembly ~= format("%08d: %s%s %f\n", stream.position - 1, prefix, mnemonic, stream.read!float);
+                    ret ~= format("%08d: %s%s %f\n", stream.position - 1, prefix, mnemonic, stream.read!float);
                     break;
                 case "ldc.r8":
-                    disassembly ~= format("%08d: %s%s %f\n", stream.position - 1, prefix, mnemonic, stream.read!double);
+                    ret ~= format("%08d: %s%s %f\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!double);
                     break;
                 case "switch":
-                    disassembly ~= format("%08d: %s%s %s\n", stream.position - 1, prefix, mnemonic, stream.read!int(stream.read!uint).to!string);
+                    ret ~= format("%08d: %s%s %s\n",
+                    stream.position - 1, prefix, mnemonic,
+                    stream.read!int(stream.read!uint).to!string);
                     break;
                 default:
-                    disassembly ~= format("%08d: %s%s\n", stream.position - 1, prefix, mnemonic);
+                    ret ~= format("%08d: %s%s\n", stream.position - 1, prefix, mnemonic);
                     break;
             }
         }
@@ -649,12 +693,17 @@ shared static this()
             string mnemonic = instructions.keys.filter!(key => instructions[key] == stream.peek!ubyte(2)).front;
             stream.step!ubyte(2);
 
-            if (mnemonic.startsWith("ld") || mnemonic.startsWith("new") || mnemonic == "mkrefany" || mnemonic == "dup" || mnemonic == "push")
+            if (mnemonic.startsWith("ld") || mnemonic.startsWith("new") || mnemonic == "mkrefany"
+                || mnemonic == "dup" || mnemonic == "push")
                 prefix = '+'~prefix;
-            else if (mnemonic.startsWith("st") || mnemonic.startsWith("loc") || mnemonic.startsWith("init") || mnemonic.startsWith("call") || 
-                     mnemonic.startsWith("add") || mnemonic.startsWith("sub") || mnemonic.startsWith("mul") || mnemonic.startsWith("div") 
-                     || mnemonic.startsWith("rem") || mnemonic == "pop" || mnemonic == "and" || mnemonic == "xor" || mnemonic == "or" || 
-                     mnemonic == "shl" || mnemonic == "shr" || mnemonic == "rethrow" || mnemonic.startsWith("cp") || mnemonic == "ret")
+            else if (mnemonic.startsWith("st") || mnemonic.startsWith("loc")
+                || mnemonic.startsWith("init") || mnemonic.startsWith("call")
+                || mnemonic.startsWith("add") || mnemonic.startsWith("sub")
+                || mnemonic.startsWith("mul") || mnemonic.startsWith("div")
+                || mnemonic.startsWith("rem") || mnemonic == "pop"
+                || mnemonic == "and" || mnemonic == "xor" || mnemonic == "or"
+                || mnemonic == "shl" || mnemonic == "shr" || mnemonic == "rethrow"
+                || mnemonic.startsWith("cp") || mnemonic == "ret")
                 prefix = '-'~prefix;
             else
                 prefix = '~'~prefix;
@@ -664,7 +713,8 @@ shared static this()
                 case "initobj":
                 case "ldftn":
                 case "sizeof":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!uint);
+                    ret ~= format("%08d: %s%s %X\n",
+                    stream.position - 1, prefix, mnemonic, stream.read!uint);
                     break;
                 case "ldarg":
                 case "ldarga":
@@ -672,7 +722,7 @@ shared static this()
                 case "ldloca":
                 case "starg":
                 case "stloc":
-                    disassembly ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!ushort);
+                    ret ~= format("%08d: %s%s %X\n", stream.position - 1, prefix, mnemonic, stream.read!ushort);
                     break;
                 case "no":
                     prefix ~= "no.";
@@ -695,7 +745,7 @@ shared static this()
                     keepPrefix = true;
                     break;
                 default:
-                    disassembly ~= format("%08d: %s%s\n", stream.position - 1, prefix, mnemonic);
+                    ret ~= format("%08d: %s%s\n", stream.position - 1, prefix, mnemonic);
                     break;
             }
         }
@@ -706,12 +756,12 @@ shared static this()
 
             throw new Exception(format("Invalid bytes for an IL instruction (0..2): %(%02X%)", stream.read!ubyte(2)));
         }
-        
+
         // Gross! T.T
         if (keepPrefix)
             keepPrefix = false;
         else
             prefix = null;
     }
-    return disassembly.strip;
+    return ret.strip;
 }

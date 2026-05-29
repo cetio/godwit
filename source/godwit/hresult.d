@@ -2,45 +2,45 @@ module godwit.hresult;
 
 public enum HResult
 {
-    S_OK = 0x00000000,
-    S_FALSE = 0x00000001,
-    E_ABORT = 0x80004004,
-    E_FAIL = 0x80004005,
-    E_NOINTERFACE = 0x80004002,
-    E_NOTIMPL = 0x80004001,
-    E_POINTER = 0x80004003,
-    E_UNEXPECTED = 0x8000FFFF,
+    SOk = 0x00000000,
+    SFalse = 0x00000001,
+    EAbort = 0x80004004,
+    EFail = 0x80004005,
+    ENoInterface = 0x80004002,
+    ENotImpl = 0x80004001,
+    EPointer = 0x80004003,
+    EUnexpected = 0x8000FFFF,
 
-    E_ACCESSDENIED = 0x80070005,
-    E_HANDLE = 0x80070006,
-    E_INVALIDARG = 0x80070057,
-    E_OUTOFMEMORY = 0x8007000E,
-    E_BADIMAGEFORMAT = 0x8007000B,
-    E_BOUNDS = 0x8000000B,
-    E_PENDING = 0x8000000A,
-    E_NOT_SET = 0x80070490,
+    EAccessDenied = 0x80070005,
+    EHandle = 0x80070006,
+    EInvalidArg = 0x80070057,
+    EOutOfMemory = 0x8007000E,
+    EBadImageFormat = 0x8007000B,
+    EBounds = 0x8000000B,
+    EPending = 0x8000000A,
+    ENotSet = 0x80070490,
 
-    CO_E_NOTINITIALIZED = 0x800401F0,
-    CO_E_ALREADYINITIALIZED = 0x800401F1,
-    CO_E_NOTSUPPORTED = 0x80004021,
-    CO_E_CLASSSTRING = 0x800401F3,
-    CO_E_APPNOTFOUND = 0x800401F5,
-    CO_E_OBJECTNOTCONNECTED = 0x800401FD,
+    CoENotInitialized = 0x800401F0,
+    CoEAlreadyInitialized = 0x800401F1,
+    CoENotSupported = 0x80004021,
+    CoEClassString = 0x800401F3,
+    CoEAppNotFound = 0x800401F5,
+    CoEObjectNotConnected = 0x800401FD,
 
-    DISP_E_BADINDEX = 0x8002000B,
-    DISP_E_OVERFLOW = 0x8002000A,
-    DISP_E_TYPEMISMATCH = 0x80020005,
-    DISP_E_PARAMNOTFOUND = 0x80020004,
-    DISP_E_UNKNOWNINTERFACE = 0x80020001,
+    DispEBadIndex = 0x8002000B,
+    DispEOverflow = 0x8002000A,
+    DispETypeMismatch = 0x80020005,
+    DispEParamNotFound = 0x80020004,
+    DispEUnknownInterface = 0x80020001,
 
-    RPC_E_CHANGED_MODE = 0x80010106,
-    RPC_E_TOO_LATE = 0x80010119,
-    RPC_E_INVALIDMETHOD = 0x80010104,
-    RPC_E_DISCONNECTED = 0x80010108,
-    RPC_E_SERVERFAULT = 0x80010105,
-    RPC_E_TIMEOUT = 0x8001011F,
-    RPC_E_NOT_REGISTERED = 0x80010103,
-    RPC_E_DUPLICATE_NAME = 0x8001012C,
+    RpcEChangedMode = 0x80010106,
+    RpcETooLate = 0x80010119,
+    RpcEInvalidMethod = 0x80010104,
+    RpcEDisconnected = 0x80010108,
+    RpcEServerFault = 0x80010105,
+    RpcETimeout = 0x8001011F,
+    RpcENotRegistered = 0x80010103,
+    RpcEDuplicateName = 0x8001012C,
 }
 
 public:
@@ -48,146 +48,146 @@ static:
 pure:
 @nogc:
 /// Checks HResult
-bool OK(HResult hr)
-    => hr == HResult.S_OK;
+bool IsOk(HResult hr)
+    => hr == HResult.SOk;
 
 /// ditto
-bool NOTOK(HResult hr)
-    => hr != HResult.S_OK;
+bool IsNotOk(HResult hr)
+    => hr != HResult.SOk;
 
 /// ditto
-bool FALSE(HResult hr)
-    => hr == HResult.S_FALSE;
+bool IsFalse(HResult hr)
+    => hr == HResult.SFalse;
 
 /// ditto
-bool ABORT(HResult hr)
-    => hr == HResult.E_ABORT;
+bool IsAbort(HResult hr)
+    => hr == HResult.EAbort;
 
 /// ditto
-bool FAIL(HResult hr)
-    => hr == HResult.E_FAIL;
+bool IsFail(HResult hr)
+    => hr == HResult.EFail;
 
 /// ditto
-bool NOINTERFACE(HResult hr)
-    => hr == HResult.E_NOINTERFACE;
+bool IsNoInterface(HResult hr)
+    => hr == HResult.ENoInterface;
 
 /// ditto
-bool NOTIMPL(HResult hr)
-    => hr == HResult.E_NOTIMPL;
+bool IsNotImpl(HResult hr)
+    => hr == HResult.ENotImpl;
 
 /// ditto
-bool POINTER(HResult hr)
-    => hr == HResult.E_POINTER;
+bool IsPointer(HResult hr)
+    => hr == HResult.EPointer;
 
 /// ditto
-bool UNEXPECTED(HResult hr)
-    => hr == HResult.E_UNEXPECTED;
+bool IsUnexpected(HResult hr)
+    => hr == HResult.EUnexpected;
 
 /// ditto
-bool ACCESSDENIED(HResult hr)
-    => hr == HResult.E_ACCESSDENIED;
+bool IsAccessDenied(HResult hr)
+    => hr == HResult.EAccessDenied;
 
 /// ditto
-bool HANDLE(HResult hr)
-    => hr == HResult.E_HANDLE;
+bool IsHandle(HResult hr)
+    => hr == HResult.EHandle;
 
 /// ditto
-bool INVALIDARG(HResult hr)
-    => hr == HResult.E_INVALIDARG;
+bool IsInvalidArg(HResult hr)
+    => hr == HResult.EInvalidArg;
 
 /// ditto
-bool OUTOFMEMORY(HResult hr)
-    => hr == HResult.E_OUTOFMEMORY;
+bool IsOutOfMemory(HResult hr)
+    => hr == HResult.EOutOfMemory;
 
 /// ditto
-bool BADIMAGEFORMAT(HResult hr)
-    => hr == HResult.E_BADIMAGEFORMAT;
+bool IsBadImageFormat(HResult hr)
+    => hr == HResult.EBadImageFormat;
 
 /// ditto
-bool BOUNDS(HResult hr)
-    => hr == HResult.E_BOUNDS;
+bool IsBounds(HResult hr)
+    => hr == HResult.EBounds;
 
 /// ditto
-bool PENDING(HResult hr)
-    => hr == HResult.E_PENDING;
+bool IsPending(HResult hr)
+    => hr == HResult.EPending;
 
 /// ditto
-bool NOT_SET(HResult hr)
-    => hr == HResult.E_NOT_SET;
+bool IsNotSet(HResult hr)
+    => hr == HResult.ENotSet;
 
 /// ditto
-bool NOTINITIALIZED(HResult hr)
-    => hr == HResult.CO_E_NOTINITIALIZED;
+bool IsNotInitialized(HResult hr)
+    => hr == HResult.CoENotInitialized;
 
 /// ditto
-bool ALREADYINITIALIZED(HResult hr)
-    => hr == HResult.CO_E_ALREADYINITIALIZED;
+bool IsAlreadyInitialized(HResult hr)
+    => hr == HResult.CoEAlreadyInitialized;
 
-/// ditto   
-bool NOTSUPPORTED(HResult hr)
-    => hr == HResult.CO_E_NOTSUPPORTED;
+/// ditto
+bool IsNotSupported(HResult hr)
+    => hr == HResult.CoENotSupported;
 
 
 /// ditto
-bool CLASSSTRING(HResult hr)
-    => hr == HResult.CO_E_CLASSSTRING;
+bool IsClassString(HResult hr)
+    => hr == HResult.CoEClassString;
 
 /// ditto
-bool APPNOTFOUND(HResult hr)
-    => hr == HResult.CO_E_APPNOTFOUND;
+bool IsAppNotFound(HResult hr)
+    => hr == HResult.CoEAppNotFound;
 
 /// ditto
-bool OBJECTNOTCONNECTED(HResult hr)
-    => hr == HResult.CO_E_OBJECTNOTCONNECTED;
+bool IsObjectNotConnected(HResult hr)
+    => hr == HResult.CoEObjectNotConnected;
 
 /// ditto
-bool BADINDEX(HResult hr)
-    => hr == HResult.DISP_E_BADINDEX;
+bool IsBadIndex(HResult hr)
+    => hr == HResult.DispEBadIndex;
 
 /// ditto
-bool OVERFLOW(HResult hr)
-    => hr == HResult.DISP_E_OVERFLOW;
+bool IsOverflow(HResult hr)
+    => hr == HResult.DispEOverflow;
 
 /// ditto
-bool TYPEMISMATCH(HResult hr)
-    => hr == HResult.DISP_E_TYPEMISMATCH;
+bool IsTypeMismatch(HResult hr)
+    => hr == HResult.DispETypeMismatch;
 
 /// ditto
-bool PARAMNOTFOUND(HResult hr)
-    => hr == HResult.DISP_E_PARAMNOTFOUND;
+bool IsParamNotFound(HResult hr)
+    => hr == HResult.DispEParamNotFound;
 
 /// ditto
-bool UNKNOWNINTERFACE(HResult hr)
-    => hr == HResult.DISP_E_UNKNOWNINTERFACE;
+bool IsUnknownInterface(HResult hr)
+    => hr == HResult.DispEUnknownInterface;
 
 /// ditto
-bool CHANGEDMODE(HResult hr)
-    => hr == HResult.RPC_E_CHANGED_MODE;
+bool IsChangedMode(HResult hr)
+    => hr == HResult.RpcEChangedMode;
 
 /// ditto
-bool TOOLATE(HResult hr)
-    => hr == HResult.RPC_E_TOO_LATE;
+bool IsTooLate(HResult hr)
+    => hr == HResult.RpcETooLate;
 
 /// ditto
-bool INVALIDMETHOD(HResult hr)
-    => hr == HResult.RPC_E_INVALIDMETHOD;
+bool IsInvalidMethod(HResult hr)
+    => hr == HResult.RpcEInvalidMethod;
 
 /// ditto
-bool DISCONNECTED(HResult hr)
-    => hr == HResult.RPC_E_DISCONNECTED;
+bool IsDisconnected(HResult hr)
+    => hr == HResult.RpcEDisconnected;
 
 /// ditto
-bool SERVERFAULT(HResult hr)
-    => hr == HResult.RPC_E_SERVERFAULT;
+bool IsServerFault(HResult hr)
+    => hr == HResult.RpcEServerFault;
 
 /// ditto
-bool TIMEOUT(HResult hr)
-    => hr == HResult.RPC_E_TIMEOUT;
+bool IsTimeout(HResult hr)
+    => hr == HResult.RpcETimeout;
 
 /// ditto
-bool NOTREGISTERED(HResult hr)
-    => hr == HResult.RPC_E_NOT_REGISTERED;
+bool IsNotRegistered(HResult hr)
+    => hr == HResult.RpcENotRegistered;
 
 /// ditto
-bool DUPLICATENAME(HResult hr)
-    => hr == HResult.RPC_E_DUPLICATE_NAME;
+bool IsDuplicateName(HResult hr)
+    => hr == HResult.RpcEDuplicateName;

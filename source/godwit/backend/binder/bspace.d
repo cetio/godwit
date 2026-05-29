@@ -16,5 +16,4 @@ final:
     bool m_inTPA;
     DomainAssembly* m_domainAssembly;
 
-// mixin accessors;
 }

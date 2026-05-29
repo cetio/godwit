@@ -1,8 +1,8 @@
-module godwit.core.cmodule;
+module godwit.core.ceemodule;
 
 public struct Module
 {
 public:
 final:
-    
+
 }

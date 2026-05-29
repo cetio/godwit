@@ -21,7 +21,6 @@ final:
     uint m_esp;
     uint m_eip;
 
-// mixin accessors;
 }
 
 public struct ExInfo
@@ -71,5 +70,4 @@ final:
         }
     }
 
-// mixin accessors;
 }

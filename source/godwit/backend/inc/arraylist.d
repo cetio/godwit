@@ -14,7 +14,6 @@ final:
     }
     void* m_array;
 
-// mixin accessors;
 }
 
 public struct FirstArrayListBlock
@@ -29,7 +28,6 @@ final:
     }
     void*[5] m_array;
 
-// mixin accessors;
 }
 
 public struct ArrayListBase
@@ -39,7 +37,6 @@ final:
     uint m_count;
     FirstArrayListBlock m_firstBlock;
 
-// mixin accessors;
 }
 
 public struct ArrayList

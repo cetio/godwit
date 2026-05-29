@@ -8,13 +8,12 @@ public struct VolatileEntry(T)
 public:
 final:
     // The derived-class format of an entry
-    T m_value;           
+    T m_value;
     // Pointer to the next entry in the bucket chain (or NULL)
-    VolatileEntry* m_nextEntry;       
+    VolatileEntry* m_nextEntry;
     // The hash value associated with the entry
-    uint m_hashValue;    
+    uint m_hashValue;
 
-// mixin accessors;
 }
 
 public struct DacEnumerableHashTable(FINAL, VALUE, int SCALE)
@@ -26,5 +25,4 @@ final:
     VolatileEntry!VALUE* m_buckets;
     uint m_entries;
 
-// mixin accessors;
 }

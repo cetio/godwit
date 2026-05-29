@@ -10,7 +10,6 @@ final:
     long m_offset;
     long m_uncompressedSize;
 
-// mixin accessors;
 }
 
 public struct Bundle
@@ -18,9 +17,8 @@ public struct Bundle
 public:
 final:
     SString m_path;
-    @exempt bool function(const(char)* path, long* offset, long* size, long* compressedSize) probe;
+    bool function(const(char)* path, long* offset, long* size, long* compressedSize) probe;
     SString m_basePath;
     uint m_basePathLen;
 
-// mixin accessors;
 }

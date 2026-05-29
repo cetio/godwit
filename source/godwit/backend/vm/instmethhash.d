@@ -27,5 +27,4 @@ final:
         int m_sealCount;
     }
 
-// mixin accessors;
 }

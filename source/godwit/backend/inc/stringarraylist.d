@@ -8,5 +8,4 @@ public:
 final:
     ArrayList m_elements;
 
-// mixin accessors;
 }

@@ -5,7 +5,7 @@ public struct SBuffer
 {
 public:
 final:
-    @flags enum Representation {
+    enum Representation {
         Empty = 0x00,
         Unicode = 0x04,
         ASCII = 0x01,
@@ -15,7 +15,7 @@ final:
         Mask = 0x07
     }
 
-    @Representation @flags enum State
+    @Representation enum State
     {
         Allocated = 0x08,
         Immutable = 0x10,
@@ -34,7 +34,6 @@ final:
         wchar* m_asString;
     }
 
-// mixin accessors;
 }
 
 // Represents godwit.sstring
@@ -53,5 +52,4 @@ public:
 final:
     SBuffer buffer;
 
-// mixin accessors;
 }

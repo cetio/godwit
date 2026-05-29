@@ -12,7 +12,6 @@ final:
     TypeHandle m_partB;
     bool m_isEquivalent;
 
-// mixin accessors;
 }
 
 public struct TypeEquivalenceHashTable
@@ -24,5 +23,4 @@ public:
 final:
     CrstExplicitInit* m_hashTableCrst;
 
-// mixin accessors;
 }

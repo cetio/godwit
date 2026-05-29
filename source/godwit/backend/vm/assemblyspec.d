@@ -11,5 +11,4 @@ final:
     HashMap m_map;
     LoaderHeap* m_heap;
 
-// mixin accessors;
 }

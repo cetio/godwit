@@ -11,19 +11,18 @@ final:
     PCCOR_SIGNATURE m_sig;
     uint m_len;
 
-// mixin accessors;
 }
 
 public struct MetaSig
 {
 public:
 final:
-    @flags enum Flags : ubyte
+    enum Flags : ubyte
     {
         SigRetTypeInited = 0x01,
         /// Used to treat some sigs as special case vararg \
         /// Used by calli to unmanaged target
-        TreatAsVArg = 0x02,     
+        TreatAsVArg = 0x02,
     }
 
     Module* m_ceemodule;
@@ -39,5 +38,4 @@ final:
     Flags m_flags;
     ubyte m_callingConv;
 
-// mixin accessors;
 }

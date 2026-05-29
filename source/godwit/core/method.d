@@ -16,7 +16,5 @@ public:
     }
 
     MethodDef token()
-    {
-        return methodDesc.token;
-    }
+        => methodDesc.token;
 }

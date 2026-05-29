@@ -20,7 +20,6 @@ final:
     bool m_hostBreakable;
     ListLockEntryBase!T* m_head;
 
-// mixin accessors;
 }
 
 public struct ListLockEntryBase(T)
@@ -39,5 +38,4 @@ final:
     ptrdiff_t m_initException;
     LoaderAllocator* m_allocator;
 
-// mixin accessors;
 }

@@ -15,7 +15,7 @@ alias HalfMDToken = ushort;
 alias PCCOR_SIGNATURE = ubyte*;
 
 /// See `CorTokenType`
-/// 
+///
 /// Base token, assigned to `uint`
 alias ModuleDef = uint;
 alias TypeRef = uint; /// ditto
@@ -44,14 +44,13 @@ alias GenericParamConstraint = uint; /// ditto
 
 /// ???
 /// Possibly for identifying CoreCLR PE data directory?
-public struct ImageDataDirectory 
+public struct ImageDataDirectory
 {
 public:
 final:
     uint m_virtualAddress;
     uint m_size;
 
-// mixin accessors;
 }
 
 /// ???
@@ -62,7 +61,6 @@ final:
     uint m_beginAddress;
     uint m_unwindData;
 
-// mixin accessors;
 }
 
 /// Base tokens, used by the runtime for identifying stored structures
@@ -174,7 +172,7 @@ public enum DebuggerAssemblyControlFlags
     UserOverride = 0x01,
     AllowJITOpts = 0x02,
     // obsolete in V2.0, we're always tracking.
-    ObsoleteTrackJITInfo = 0x04, 
+    ObsoleteTrackJITInfo = 0x04,
     ENCEnabled = 0x08,
     IgnorePDBs = 0x20,
     ControlFlagsMask = 0x2F,

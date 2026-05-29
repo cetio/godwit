@@ -19,7 +19,7 @@ public struct TypeDesc
 {
 public:
 final:
-    @flags enum TypeFlags
+    enum TypeFlags
     {
         Unrestored = 0x00000400,
         UnrestoredTypeKey = 0x00000800,
@@ -35,12 +35,11 @@ final:
         uint, "typeFlags", 24
     ));
 
-// mixin accessors;
 }
 
-/** 
-    Used for parameterized types that have exactly one argument type. 
- 
+/**
+    Used for parameterized types that have exactly one argument type.
+
     This includes arrays, byrefs, pointers.
  */
 public struct ParamTypeDesc
@@ -57,14 +56,13 @@ final:
     /// Unloadable context: slot index in LoaderAllocator's pinned table
     uint* m_exposedClassObject;
 
-// mixin accessors;
 }
 
-/** 
+/**
  * These are for verification of generic code and reflection over generic code.
- * 
+ *
  * Each TypeVarTypeDesc represents a class or method type variable, as specified by a GenericParam entry.
- * 
+ *
  * The type variables are tied back to the class or method that *defines* them.
  * This is done through typedef or methoddef tokens.
  */
@@ -83,10 +81,9 @@ final:
     MDToken m_argMDToken;
     uint m_index;
 
-// mixin accessors;
 }
 
-/** 
+/**
  * Represents a function pointer type, such as a delegate
  */
 public struct FnPtrTypeDesc
@@ -104,7 +101,6 @@ final:
     /// Calling convention (actually just a single byte)
     uint m_callingConv;
     /// Return type first, then argument types
-    TypeHandle[] m_types; 
+    TypeHandle[] m_types;
 
-// mixin accessors;
 }

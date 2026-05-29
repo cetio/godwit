@@ -13,5 +13,4 @@ final:
     /// The memorypool for hash entries for this hash table.
     MemoryPool* m_memoryPool;
 
-// mixin accessors;
 }

@@ -17,5 +17,4 @@ final:
     /// Keep track of how many times we use less than half handles
     uint m_shrinkHint;
 
-// mixin accessors;
 }

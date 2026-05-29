@@ -12,7 +12,6 @@ final:
     ubyte* m_inlinersBuffer;
     uint m_inlinersBufferSize;
 
-// mixin accessors;
 }
 
 public struct ZapInlineeRecord
@@ -22,5 +21,4 @@ final:
     uint m_key;
     uint m_offset;
 
-// mixin accessors;
 }

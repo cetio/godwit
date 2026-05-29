@@ -12,7 +12,6 @@ final:
         int deadBeef;
     }
 
-// mixin accessors;
 }
 
 public struct PoolBlock
@@ -23,7 +22,6 @@ final:
     PoolElement* m_elementsEnd;
     PoolElement* m_elements;
 
-// mixin accessors;
 }
 
 public struct MemoryPool
@@ -35,5 +33,4 @@ final:
     PoolBlock* m_blocks;
     PoolElement* m_freeList;
 
-// mixin accessors;
 }

@@ -26,7 +26,7 @@ final:
         Invalid = 0xffffffff
     }
 
-    @flags enum IdentityFlags
+    enum IdentityFlags
     {
         Empty = 0x000,
         SimpleName = 0x001,
@@ -49,5 +49,4 @@ final:
     AssemblyContentType m_contentType;
     IdentityFlags m_identityFlags;
 
-// mixin accessors;
 }

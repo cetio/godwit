@@ -4,5 +4,5 @@ public struct Member
 {
 public:
 final:
-    
+
 }

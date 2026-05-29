@@ -48,7 +48,6 @@ final:
     /// Indicates whether this assembly has been terminated or unloaded.
     bool m_isTerminated;
 
-// mixin accessors;
 }
 
 public struct FriendAssemblyDescriptor
@@ -61,5 +60,4 @@ final:
     ArrayList m_subjectAssemblies;
     int m_refCount;
 
-// mixin accessors;
 }

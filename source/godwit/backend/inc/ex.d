@@ -7,5 +7,4 @@ public:
 final:
     EXException* m_innerException;
 
-// mixin accessors;
 }

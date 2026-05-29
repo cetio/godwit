@@ -10,9 +10,8 @@ public:
 final:
     void* m_block;
     // Size of this block (includes size of FreeBlock)
-    size_t m_size;      
+    size_t m_size;
 
-// mixin accessors;
 }
 
 public enum StubBlockKind
@@ -47,12 +46,11 @@ public struct CodeFragmentHeap
 
 public:
 final:
-    
+
 
     LoaderAllocator* m_allocator;
     FreeBlock* m_freeBlocks;
     StubBlockKind m_kind;
     Crst m_crst;
 
-// mixin accessors;
 }

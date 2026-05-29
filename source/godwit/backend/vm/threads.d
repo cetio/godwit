@@ -18,5 +18,4 @@ final:
         const(char)* m_description;
     }
 
-// mixin accessors;
 }

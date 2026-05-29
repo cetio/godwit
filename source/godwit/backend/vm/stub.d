@@ -18,8 +18,7 @@ final:
     SHash!(CacheElement, uint) m_hash;
     Crst m_crst;
     AppDomain* m_domain;
-    
-// mixin accessors;
+
 }
 
 public struct CacheElement
@@ -29,7 +28,6 @@ final:
     MethodDesc* m_methodDesc;
     UMEntryThunk* m_thunk;
 
-// mixin accessors;
 }
 
 public struct UMEntryThunk
@@ -61,7 +59,6 @@ final:
     ubyte[3] m_jmpRAX;
     ubyte[5] m_padding2;
 
-// mixin accessors;
 }
 
 public struct UMThunkMarshInfo
@@ -73,11 +70,10 @@ final:
     Module* m_ceemodule;
     Signature m_sig;
 
-// mixin accessors;
 
     bool isCompletelyInited()
     {
-        return ilStub != cast(ubyte*)1;
+        return m_ilStub != cast(ubyte*)1;
     }
 }
 
@@ -87,7 +83,7 @@ public struct Stub
 {
 public:
 final:
-    @flags enum CodeFlags : uint
+    enum CodeFlags : uint
     {
         /// Is a MulticastDelegate?
         MulticastDelegate = 0x80000000,
@@ -125,5 +121,4 @@ final:
         }
     }
 
-// mixin accessors;
 }

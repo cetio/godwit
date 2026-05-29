@@ -25,7 +25,6 @@ final:
         MethodDesc* m_syntheticMethodDesc;
     }
 
-// mixin accessors;
 }
 
 public struct NativeCodeVersionNode
@@ -64,5 +63,4 @@ public:
     }
     uint m_isActiveChild;
 
-// mixin accessors;
 }

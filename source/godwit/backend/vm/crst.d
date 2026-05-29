@@ -6,7 +6,7 @@ public struct CrstBase
 {
 public:
 final:
-    @flags enum ReservedFlags : uint
+    enum ReservedFlags : uint
     {
         ReservedFlagsMask = 0xC0000000,
         kInitialized = 0x80000000,
@@ -152,7 +152,6 @@ final:
         int m_cannotLeave;
         uint m_numNoTriggerGC;
     }
-// mixin accessors;
 }
 
 public struct Crst

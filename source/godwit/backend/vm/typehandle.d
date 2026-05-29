@@ -53,14 +53,13 @@ final:
         }
     }
 
-// mixin accessors;
 }
 
 /**
  * Represents an instantiation of generic types.
  *
  * It is simple read-only array of TypeHandles. In NGen, the type handles
- * may be encoded using indirections. 
+ * may be encoded using indirections.
  *
  * That's one reason why it is convenient to have wrapper class that performs the decoding.
  */
@@ -74,5 +73,4 @@ final:
     /// Number of arguments in the instantiation
     uint m_numArgs;
 
-// mixin accessors;
 }

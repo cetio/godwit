@@ -41,7 +41,6 @@ final:
         EEThreadId m_writerThreadId;
     }
 
-// mixin accessors;
 }
 
 /// Bucket acting as a dictionary with keys and values \
@@ -55,7 +54,6 @@ final:
     /// Bucket values
     uint*[4] m_values;
 
-// mixin accessors;
 }
 
 /// Wrapper for comparisons, contains a function pointer to a comparer
@@ -64,7 +62,6 @@ public struct Compare
 public:
 final:
     /// Comparer function, to compare 2 objects (may be changed with op_x?)
-    @exempt bool function(uint*, uint*) fn;
+    bool function(uint*, uint*) fn;
 
-// mixin accessors;
 }

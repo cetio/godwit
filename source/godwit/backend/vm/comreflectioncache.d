@@ -13,7 +13,6 @@ final:
     int m_index;
     int m_stamp;
 
-// mixin accessors;
 }
 
 public struct DispIDCacheElement
@@ -26,7 +25,6 @@ final:
     int m_dispId;
     wchar[24] m_name;
 
-// mixin accessors;
 }
 
 alias DispIDCache = ReflectionCache!(DispIDCacheElement, int, 128);

@@ -20,7 +20,6 @@ final:
     half_size_t m_nptrs;
     half_size_t m_skip;
 
-// mixin accessors;
 }
 
 // CGCDescSeries
@@ -35,7 +34,6 @@ final:
     }
     size_t m_startOffset;
 
-// mixin accessors;
 }
 
 // CGCDesc

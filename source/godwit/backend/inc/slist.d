@@ -7,7 +7,6 @@ public:
 final:
     SLink* m_next;
 
-// mixin accessors;
 }
 
 public struct SList(T)
@@ -18,5 +17,4 @@ final:
     SLink* m_head;
     SLink* m_tail;
 
-// mixin accessors;
 }

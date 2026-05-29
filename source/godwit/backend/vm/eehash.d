@@ -11,9 +11,8 @@ final:
     uint m_hashValue;
     void* m_data;
     /// The key is stored inline
-    ubyte m_key; 
+    ubyte m_key;
 
-// mixin accessors;
 }
 
 // Double buffer to fix the race condition of growhashtable (the update
@@ -33,7 +32,6 @@ final:
         ulong m_countMul;
     }
 
-// mixin accessors;
 }
 
 public struct EEHashTableBase(KEY, HELPER, bool ISDEEPCOPY)
@@ -59,7 +57,6 @@ public:
         bool m_checkThreadSafety;
     }
 
-// mixin accessors;
 }
 
 public struct EEHashTable(KEY, HELPER, bool ISDEEPCOPY)
@@ -75,7 +72,6 @@ final:
     UUID m_clsId;
     wchar* m_srvName;
 
-// mixin accessors;
 }
 
 public struct EEStringData
@@ -91,12 +87,11 @@ final:
         uint m_debugCch;
     }
 
-// mixin accessors;
 }
 
 public class EEClassFactoryInfoHashTableHelper
 {
-    
+
 }
 
 alias EEUnicodeStringLiteralHashTable = EEHashTable!(EEStringData*, EEClassFactoryInfoHashTableHelper, true);

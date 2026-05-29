@@ -17,7 +17,6 @@ final:
     ReadyToRunCoreHeader* m_coreHeader;
     bool m_forbidLoadILBodyFixups;
 
-// mixin accessors;
 }
 
 public struct ReadyToRunInfo
@@ -47,5 +46,4 @@ final:
     PersistentInlineTrackingMapR2R* m_crossModulePersistentInlineTrackingMap;
     ReadyToRunInfo* m_nextR2RForUnrelatedCode;
 
-// mixin accessors;
 }

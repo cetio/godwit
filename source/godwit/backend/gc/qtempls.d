@@ -13,7 +13,6 @@ final:
     size_t m_totalAlloc;
     ulong[(511 + ulong.sizeof) / ulong.sizeof] m_data; // (512+sizeof(UINT64)-1)/sizeof(UINT64)
 
-// mixin accessors;
 }
 
 public struct CQuickBytesBase
@@ -55,5 +54,4 @@ public:
 final:
     size_t m_curSize;
 
-// mixin accessors;
 }

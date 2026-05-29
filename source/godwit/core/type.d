@@ -19,10 +19,8 @@ public:
     }
 
     uint sizeOf()
-    {
-        return methodTable.baseSize - cast(uint)(2 * size_t.sizeof);
-    }
-    
+        => methodTable.baseSize - cast(uint)(2 * size_t.sizeof);
+
     Method[] methods()
     {
         if (methodTable.eeClass.chunks == null)
@@ -43,7 +41,5 @@ public:
     }
 
     TypeDef token()
-    {
-        return methodTable.token;
-    }
+        => methodTable.token;
 }

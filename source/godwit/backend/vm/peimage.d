@@ -34,5 +34,4 @@ final:
     // ----> IMDInternalImport* <----
     ubyte* m_mdImport;
 
-// mixin accessors;
 }

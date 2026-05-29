@@ -37,6 +37,5 @@ final:
         uint m_numMethodDescData;
         size_t m_numEEClassData;
     }
-    
-// mixin accessors;
+
 }

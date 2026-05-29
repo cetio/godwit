@@ -23,7 +23,6 @@ final:
     /// m_Crst was acquired
     bool m_lockAcquired;
 
-// mixin accessors;
 }
 
 public struct TableEntry
@@ -34,7 +33,6 @@ final:
     uint m_hashValue;
     PendingTypeLoadEntry* m_data;
 
-// mixin accessors;
 }
 
 public struct PendingTypeLoadTable
@@ -42,12 +40,11 @@ public struct PendingTypeLoadTable
 public:
 final:
     /// Pointer to first entry for each bucket
-    TableEntry** m_buckets;    
+    TableEntry** m_buckets;
     uint m_numBuckets;
     static if (DEBUG)
     {
         uint m_numDebugMemory;
     }
-    
-// mixin accessors;
+
 }

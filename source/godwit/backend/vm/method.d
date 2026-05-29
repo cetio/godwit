@@ -11,7 +11,7 @@ public struct MethodDescChunk
 {
 public:
 final:
-    @flags enum ChunkFlags : ushort
+    enum ChunkFlags : ushort
     {
         TokenRangeMask = 0x0FFF,
         DeterminedIsEligibleForTieredCompilation = 0x4000,
@@ -28,7 +28,7 @@ final:
 
     ushort tokenRange()
     {
-        return cast(ushort)(flagsAndTokenRange & ChunkFlags.TokenRangeMask);
+        return cast(ushort)(m_flagsAndTokenRange & ChunkFlags.TokenRangeMask);
     }
 
     MethodDesc*[] methods()
@@ -36,7 +36,7 @@ final:
     {
         MethodDesc*[] ret;
         MethodDesc* pMD = cast(MethodDesc*)(cast(ubyte*)&this + MethodDescChunk.sizeof);
-        foreach (i; 0..(count + 1))
+        foreach (i; 0..(m_count + 1))
         {
             ret ~= pMD;
             pMD = cast(MethodDesc*)(cast(ubyte*)pMD + pMD.sizeOf);
@@ -44,7 +44,6 @@ final:
         return ret;
     }
 
-// mixin accessors;
 }
 
 /// Equivalent to System.Runtime.MethodInfo.
@@ -65,7 +64,7 @@ final:
         Count
     }
 
-    @flags enum Properties : ushort
+    enum Properties : ushort
     {
         HasNonVtableSlot = 0x0008,
         MethodImpl = 0x0010,
@@ -82,7 +81,7 @@ final:
         Intrinsic = 0x8000
     }
 
-    @flags enum Flags3 : ushort
+    enum Flags3 : ushort
     {
         TokenRemainderMask = 0x0FFF,
         HasStableEntryPoint = 0x1000,
@@ -91,7 +90,7 @@ final:
         IsEligibleForTieredCompilation = 0x8000
     }
 
-    @flags enum Flags4 : ubyte
+    enum Flags4 : ubyte
     {
         ComputedRequiresStableEntryPoint = 0x01,
         RequiresStableEntryPoint = 0x02,
@@ -128,6 +127,11 @@ final:
         const(char)* debugMethodSignature;
         MethodTable* debugMethodTable;
         void* gcCover;
+    }
+
+    Classification classification()
+    {
+        return cast(Classification)(m_flags & 0x0007);
     }
 
     uint sizeOf()
@@ -197,7 +201,6 @@ final:
         return (range << 12) | rem | CorTokenType.MethodDef;
     }
 
-// mixin accessors;
 }
 
 public struct InstantiatedMethodDesc
@@ -207,7 +210,7 @@ public struct InstantiatedMethodDesc
 
 public:
 final:
-    @flags enum InstantiationFlags : ushort
+    enum InstantiationFlags : ushort
     {
         KindMask = 0x07,
         GenericMethodDefinition = 0x01,
@@ -225,7 +228,6 @@ final:
     ushort m_flags2;
     ushort m_numGenericArgs;
 
-// mixin accessors;
 }
 
 public struct ComPlusCallMethodDesc
@@ -243,7 +245,6 @@ public:
 final:
     size_t temporaryEntryPoint;
 
-// mixin accessors;
 }
 
 public struct AsyncMethodData
@@ -254,7 +255,6 @@ final:
     void* sig;
     uint sigLen;
 
-// mixin accessors;
 }
 
 public struct StoredSigMethodDesc
@@ -268,7 +268,6 @@ final:
     uint m_count;
     uint m_extendedFlags;
 
-// mixin accessors;
 }
 
 public struct EEImplMethodDesc
@@ -278,7 +277,6 @@ public struct EEImplMethodDesc
 
 public:
 final:
-// mixin accessors;
 }
 
 public struct FCallMethodDesc
@@ -295,7 +293,6 @@ final:
         uint padding;
     }
 
-// mixin accessors;
 }
 
 public struct DynamicMethodDesc
@@ -305,7 +302,7 @@ public struct DynamicMethodDesc
 
 public:
 final:
-    @flags enum ILStubType : uint
+    enum ILStubType : uint
     {
         StubNotSet = 0,
         StubPInvoke = 1,
@@ -331,7 +328,7 @@ final:
         StubLast = 21
     }
 
-    @flags enum Flag : uint
+    enum Flag : uint
     {
         FlagNone = 0x00000000,
         FlagPublic = 0x00000800,
@@ -349,7 +346,6 @@ final:
     const(char)* m_methodName;
     void* m_resolver;
 
-// mixin accessors;
 }
 
 public struct ArrayMethodDesc
@@ -364,7 +360,6 @@ public:
 final:
     void* m_directTarget;
 
-// mixin accessors;
 }
 
 public struct NDirectMethodDesc
@@ -374,7 +369,7 @@ public struct NDirectMethodDesc
 
 public:
 final:
-    @flags enum BindingFlags
+    enum BindingFlags
     {
         EarlyBound = 0x0001,
         DefaultDllImportSearchPathsIsCached = 0x0004,
@@ -407,7 +402,6 @@ final:
         short m_numStackArgSize;
     }
 
-// mixin accessors;
 }
 
 public struct ComPlusCallInfo
@@ -429,5 +423,4 @@ final:
         void* m_retThunk;
     }
 
-// mixin accessors;
 }

@@ -12,5 +12,4 @@ final:
     /// The MethodDesc(s) that this MethodImpl implements
     MethodDesc** m_implement;
 
-// mixin accessors;
 }

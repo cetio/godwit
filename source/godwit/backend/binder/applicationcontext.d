@@ -33,7 +33,6 @@ final:
     wchar* m_ilFileName;
     wchar* m_niFileName;
 
-// mixin accessors;
 }
 
 public struct FailureCacheEntry
@@ -43,5 +42,4 @@ final:
     SString m_assemblyNameOrPath;
     HResult m_bindingResult;
 
-// mixin accessors;
 }

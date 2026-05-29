@@ -10,5 +10,4 @@ final:
     Instantiation m_classInst;
     Instantiation m_methodInst;
 
-// mixin accessors;
 }

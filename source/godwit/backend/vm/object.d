@@ -13,7 +13,7 @@ public struct ObjHeader
 {
 public:
 final:
-    @flags enum SyncBlockFlags : uint
+    enum SyncBlockFlags : uint
     {
         StringHasNoHighChars = 0x80000000,
         AgileInProgress = 0x80000000,
@@ -33,7 +33,6 @@ final:
     }
     SyncBlockFlags m_flags;
 
-// mixin accessors;
 }
 
 /// Represents a C# Object
@@ -47,7 +46,6 @@ final:
     /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
     ubyte m_data;
 
-// mixin accessors;
 }
 
 /// Arbitrary reference to object, namely used for interop

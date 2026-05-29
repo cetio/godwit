@@ -17,7 +17,6 @@ final:
     int m_refCount;
     PEImage* m_owner;
 
-// mixin accessors;
 }
 
 public struct FlatImageLayout
@@ -30,7 +29,6 @@ final:
     void** m_fileView;
     ptrdiff_t* m_fileMap;
 
-// mixin accessors;
 }
 
 public struct ConvertedImageLayout
@@ -44,7 +42,6 @@ final:
     // MAX_PARTS
     size_t[16] m_imageParts;
 
-// mixin accessors;
 }
 
 public struct LoadedImageLayout
@@ -63,5 +60,4 @@ final:
         void** m_loadedFile;
     }
 
-// mixin accessors;
 }

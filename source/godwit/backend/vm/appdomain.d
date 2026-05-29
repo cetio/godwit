@@ -46,7 +46,7 @@ final:
     // The pinned heap handle table.
     PinnedHeapHandleTable m_pinnedHeapHandleTable;
     // Information regarding the managed standard interfaces.
-    MngStdInterfacesInfo* m_mngStdInterfacesInfo;    
+    MngStdInterfacesInfo* m_mngStdInterfacesInfo;
     // I have yet to figure out an efficient way to get the number of handles
     // of a particular type that's currently used by the process without
     // spending more time looking at the handle table code. We know that
@@ -61,7 +61,6 @@ final:
     TypeIDMap m_nonGCThreadStaticBlockTypeIDMap;
     TypeIDMap m_gcThreadStaticBlockTypeIDMap;
 
-// mixin accessors;
 }
 
 public struct AppDomain
@@ -71,7 +70,7 @@ public struct AppDomain
 
 public:
 final:
-    enum Stage 
+    enum Stage
     {
         Creating,
         ReadyForManagedCode,
@@ -92,11 +91,11 @@ final:
         Closed
     }
 
-    @flags enum ContextFlags
+    enum ContextFlags
     {
         ContextInitialize = 0x0001,
         // AppDomain was created using the APPDOMAIN_IGNORE_UNHANDLED_EXCEPTIONS flag
-        IgnoreUnhandledExceptions = 0x10000, 
+        IgnoreUnhandledExceptions = 0x10000,
     }
 
     CrstExplicitInit m_reflectionCrst;
@@ -127,7 +126,7 @@ final:
     static if (COM_WRAPPERS)
     {
         /// This cache stores the RCW -> CCW references in this domain
-        RCWRefCache* m_rcwRefCache; 
+        RCWRefCache* m_rcwRefCache;
     }
     Stage m_stage;
 
@@ -152,7 +151,6 @@ final:
         TieredCompilationManager m_tieredCompilationManager;
     } */
 
-// mixin accessors;
 }
 
 public struct PinnedHeapHandleBucket
@@ -166,7 +164,6 @@ final:
     ObjectHandle m_hndHandleArray;
     ObjectRef* m_arrayData;
 
-// mixin accessors;
 }
 
 public struct PinnedHeapHandleTable
@@ -187,7 +184,6 @@ final:
     uint m_numEmbeddedFree;
     CrstExplicitInit m_crst;
 
-// mixin accessors;
 }
 
 public struct UnmanagedImageCacheEntry
@@ -197,5 +193,4 @@ final:
     wchar* m_name;
     ptrdiff_t m_handle;
 
-// mixin accessors;
 }

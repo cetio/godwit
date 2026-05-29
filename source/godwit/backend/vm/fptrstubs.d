@@ -19,7 +19,6 @@ public:
 final:
     Crst m_hashTableCrst;
     /// To find a existing stub for a method
-    SHash!(Precode*, uint) m_hashTable;   
+    SHash!(Precode*, uint) m_hashTable;
 
-// mixin accessors;
 }

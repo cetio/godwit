@@ -30,7 +30,6 @@ final:
     bool m_eagerFixupsHaveRun;
     bool m_readyToRunCodeDisabled;
 
-// mixin accessors;
 }
 
 /* public struct AssemblyNameIndexHashTraits
@@ -39,5 +38,4 @@ public:
 final:
     static const bool m_noThrow
 
-// mixin accessors;
 } */

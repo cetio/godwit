@@ -3,13 +3,13 @@ module godwit.backend.vm.exstatecommon;
 import godwit.backend.vm.method;
 import godwit.impl;
 
-public @flags enum ExceptionFlags
+public enum ExceptionFlags
 {
     IsRethrown = 0x00000001,
     UnwindingToFindResumeFrame = 0x00000002,
     UnwindHasStarted = 0x00000004,
     // Use this ExInfo to unwind a fault (AV, zerodiv) back to managed code?
-    UseExInfoForStackwalk = 0x00000008,        
+    UseExInfoForStackwalk = 0x00000008,
 
     SentDebugUserFirstChance = 0x00000010,
     SentDebugFirstChance = 0x00000020,
@@ -32,7 +32,7 @@ public enum CorPrfClauseType
     Filter = 1,
     Catch = 2,
     Finally = 3,
-} 
+}
 
 public struct EHClauseInfo
 {
@@ -46,7 +46,6 @@ final:
     /// Indicates that this clause takes place in managed code
     bool m_managed;
 
-// mixin accessors;
 }
 
 public struct DebuggerExState
@@ -69,14 +68,13 @@ final:
     // The nesting level at which we want to resume execution
     int m_debuggerInterceptHandlerDepth;
 
-// mixin accessors;
 }
 
 public struct EHWatsonBucketTracker
 {
 public:
 final:
-    @flags enum DebugFlags : uint
+    enum DebugFlags : uint
     {
         // Bucket details were captured for ThreadAbort
         CapturedForThreadAbort = 1,
@@ -93,5 +91,4 @@ final:
         DebugFlags m_debugFlags;
     }
 
-// mixin accessors;
 }

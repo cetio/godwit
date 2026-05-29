@@ -16,5 +16,4 @@ final:
     Module* m_ceemodule;
     AppDomain* m_domain;
 
-// mixin accessors;
 }
