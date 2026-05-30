@@ -41,9 +41,6 @@
 		}
 	],
 	"copyright": "Copyright © 2024, cet",
-	"dependencies": {
-		"tern": "~>0.2.23"
-	},
 	"description": "D-CoreCLR interop library",
 	"license": "MPL-2.0",
 	"name": "godwit",
