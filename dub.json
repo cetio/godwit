@@ -8,21 +8,33 @@
 	"configurations": [
 		{
 			"dflags": [
-				"-J=source\\godwit"
+				"-defaultlib=",
+				"-J=source/godwit"
+			],
+			"lflags": [
+				"/usr/lib64/libphobos2.a"
 			],
 			"name": "executable",
 			"targetType": "dynamicLibrary"
 		},
 		{
 			"dflags": [
-				"-J=source\\godwit"
+				"-defaultlib=",
+				"-J=source/godwit"
+			],
+			"lflags": [
+				"/usr/lib64/libphobos2.a"
 			],
 			"name": "application",
 			"targetType": "dynamicLibrary"
 		},
 		{
 			"dflags": [
-				"-J=source\\godwit"
+				"-defaultlib=",
+				"-J=source/godwit"
+			],
+			"lflags": [
+				"/usr/lib64/libphobos2.a"
 			],
 			"name": "dynamicLibrary",
 			"targetType": "dynamicLibrary"

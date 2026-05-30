@@ -18,3 +18,5 @@ godwit-test-*
 *.lib
 *.a
 libgodwit*
+GodwitExampleMod/
+*tmod/

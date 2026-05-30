@@ -8,4 +8,5 @@ public import godwit.core.field;
 public import godwit.core.member;
 public import godwit.core.method;
 public import godwit.core.object;
+public import godwit.core.reflection;
 public import godwit.core.type;

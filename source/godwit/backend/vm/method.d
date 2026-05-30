@@ -126,49 +126,55 @@ final:
         return cast(Classification)(flags & 0x0007);
     }
 
-    uint sizeOf()
+    uint baseSize()
     {
-        uint baseSize;
+        uint ret;
         switch (classification)
         {
             case Classification.IL:
-                baseSize = cast(uint)MethodDesc.sizeof;
+                ret = cast(uint)MethodDesc.sizeof;
                 break;
             case Classification.FCall:
-                baseSize = cast(uint)FCallMethodDesc.sizeof;
+                ret = cast(uint)FCallMethodDesc.sizeof;
                 break;
             case Classification.NDirect:
-                baseSize = cast(uint)NDirectMethodDesc.sizeof;
+                ret = cast(uint)NDirectMethodDesc.sizeof;
                 break;
             case Classification.EEImpl:
-                baseSize = cast(uint)EEImplMethodDesc.sizeof;
+                ret = cast(uint)EEImplMethodDesc.sizeof;
                 break;
             case Classification.Array:
-                baseSize = cast(uint)ArrayMethodDesc.sizeof;
+                ret = cast(uint)ArrayMethodDesc.sizeof;
                 break;
             case Classification.Instantiated:
-                baseSize = cast(uint)InstantiatedMethodDesc.sizeof;
+                ret = cast(uint)InstantiatedMethodDesc.sizeof;
                 break;
             case Classification.Dynamic:
-                baseSize = cast(uint)DynamicMethodDesc.sizeof;
+                ret = cast(uint)DynamicMethodDesc.sizeof;
                 break;
             default:
                 break;
         }
+        return ret;
+    }
+
+    uint sizeOf()
+    {
+        uint ret = baseSize;
 
         static if (COM_INTEROP)
-            baseSize += cast(uint)ComPlusCallInfo.sizeof;
+            ret += cast(uint)ComPlusCallInfo.sizeof;
 
         if ((flags & Properties.HasNonVtableSlot) != 0)
-            baseSize += size_t.sizeof;
+            ret += size_t.sizeof;
 
         if ((flags & Properties.MethodImpl) != 0)
-            baseSize += cast(uint)MethodImpl.sizeof;
+            ret += cast(uint)MethodImpl.sizeof;
 
         if ((flags & Properties.HasNativeCodeSlot) != 0)
-            baseSize += size_t.sizeof;
+            ret += size_t.sizeof;
 
-        return baseSize;
+        return ret;
     }
 
     int methodDescChunkIndex()

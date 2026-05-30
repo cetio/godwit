@@ -1,9 +1,9 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"intel-intrinsics": "1.11.20",
+		"intel-intrinsics": "1.11.25",
 		"mir-linux-kernel": "1.0.1",
 		"tanya": "0.19.0",
-		"tern": "0.2.24"
+		"tern": "0.2.27"
 	}
 }
