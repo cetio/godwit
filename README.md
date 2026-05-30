@@ -12,7 +12,7 @@ As of present, the interacting language must be initialized by C#, due to the co
 
 ## Support
 
-Primary support is for Windows, **MacOS does not, and will never have support**, and Linux will have support albeit slightly less up-to-code than Windows potentially.
+Primary support is for Windows and Linux. MacOS is not supported.
 
 Godwit is intended to have support for all of the things that `System.Reflection` in C# supports, including PE/metadata reading, assembly, disassembly, and execution of IL code.
 
