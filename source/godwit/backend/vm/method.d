@@ -13,9 +13,8 @@ public:
 final:
     enum ChunkFlags : ushort
     {
-        TokenRangeMask = 0x0FFF,
-        DeterminedIsEligibleForTieredCompilation = 0x4000,
-        LoaderModuleAttachedToChunk = 0x8000,
+        TokenRangeMask = 0x03FF,
+        IsZapped = 0x8000,
     }
 
     MethodTable* methodTable;
@@ -69,34 +68,28 @@ final:
         HasNonVtableSlot = 0x0008,
         MethodImpl = 0x0010,
         HasNativeCodeSlot = 0x0020,
-        HasAsyncMethodData = 0x0040,
         Static = 0x0080,
-        ValueTypeParametersWalked = 0x0100,
-        ValueTypeParametersLoaded = 0x0200,
         Duplicate = 0x0400,
-        DoesNotHaveEquivalentValuetypeParameters = 0x0800,
-        RequiresCovariantReturnTypeChecking = 0x1000,
         NotInline = 0x2000,
         Synchronized = 0x4000,
-        Intrinsic = 0x8000
     }
 
     enum Flags3 : ushort
     {
-        TokenRemainderMask = 0x0FFF,
-        HasStableEntryPoint = 0x1000,
-        HasPrecode = 0x2000,
-        IsUnboxingStub = 0x4000,
-        IsEligibleForTieredCompilation = 0x8000
+        TokenRemainderMask = 0x3FFF,
+        HasForwardedValuetypeParameter = 0x4000,
+        ValueTypeParametersWalked = 0x4000,
+        DoesNotHaveEquivalentValuetypeParameters = 0x8000,
     }
 
-    enum Flags4 : ubyte
+    enum Flags2 : ubyte
     {
-        ComputedRequiresStableEntryPoint = 0x01,
-        RequiresStableEntryPoint = 0x02,
-        TemporaryEntryPointAssigned = 0x04,
-        EnCAddedMethod = 0x08,
-        PendingThunkResolution = 0x10,
+        HasStableEntryPoint = 0x01,
+        HasPrecode = 0x02,
+        IsUnboxingStub = 0x04,
+        IsJitIntrinsic = 0x10,
+        IsEligibleForTieredCompilation = 0x20,
+        RequiresCovariantReturnTypeChecking = 0x40,
     }
 
     enum CallerGCMode
@@ -115,10 +108,9 @@ final:
 
     ushort flags3AndTokenRemainder;
     ubyte chunkIndex;
-    ubyte flags4;
+    ubyte flags2;
     ushort slotNumber;
     ushort flags;
-    MethodDescCodeData* codeData;
 
     static if (DEBUG)
     {
@@ -176,9 +168,6 @@ final:
         if ((flags & Properties.HasNativeCodeSlot) != 0)
             baseSize += size_t.sizeof;
 
-        if ((flags & Properties.HasAsyncMethodData) != 0)
-            baseSize += cast(uint)AsyncMethodData.sizeof;
-
         return baseSize;
     }
 
@@ -198,7 +187,7 @@ final:
     {
         ushort range = methodDescChunk.tokenRange;
         ushort rem = flags3AndTokenRemainder & Flags3.TokenRemainderMask;
-        return (range << 12) | rem | CorTokenType.MethodDef;
+        return (range << 14) | rem | CorTokenType.MethodDef;
     }
 
 }

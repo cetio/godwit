@@ -252,7 +252,11 @@ final:
 
     static if (COM_INTEROP)
     {
-        CorInterfaceType comInterfaceType;
+        union
+        {
+            size_t ohDelegate;
+            CorInterfaceType comInterfaceType;
+        }
         void* ccwTemplate;
     }
 
@@ -265,18 +269,69 @@ final:
     }
 
     ubyte normType;
+    bool fieldsArePacked;
+    ubyte fixedEEClassFieldsSize;
     ubyte baseSizePadding;
 
-    ushort numInstanceFields;
-    ushort numMethods;
-    ushort numStaticFields;
-    ushort numHandleStatics;
-    ushort numThreadStaticFields;
-    ushort numHandleThreadStatics;
-    ushort numNonVirtualSlots;
+    PackedFields* packedFields()
+    {
+        return cast(PackedFields*)(cast(ubyte*)&this + fixedEEClassFieldsSize);
+    }
 
-    uint nonGCStaticFieldBytes;
-    uint nonGCThreadStaticFieldBytes;
+    uint numInstanceFields()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(0) : packedFields.getUnpackedField(0);
+    }
+
+    uint numMethods()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(1) : packedFields.getUnpackedField(1);
+    }
+
+    uint numStaticFields()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(2) : packedFields.getUnpackedField(2);
+    }
+
+    uint numHandleStatics()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(3) : packedFields.getUnpackedField(3);
+    }
+
+    uint numBoxedStatics()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(4) : packedFields.getUnpackedField(4);
+    }
+
+    uint nonGCStaticFieldBytes()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(5) : packedFields.getUnpackedField(5);
+    }
+
+    uint numThreadStaticFields()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(6) : packedFields.getUnpackedField(6);
+    }
+
+    uint numHandleThreadStatics()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(7) : packedFields.getUnpackedField(7);
+    }
+
+    uint numBoxedThreadStatics()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(8) : packedFields.getUnpackedField(8);
+    }
+
+    uint nonGCThreadStaticFieldBytes()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(9) : packedFields.getUnpackedField(9);
+    }
+
+    uint numNonVirtualSlots()
+    {
+        return fieldsArePacked ? packedFields.getPackedField(10) : packedFields.getUnpackedField(10);
+    }
 
     pragma(mangle, "EEClass_fields_get")
     extern (C) export FieldDesc*[] fields()

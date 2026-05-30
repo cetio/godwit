@@ -12,64 +12,34 @@ import godwit.backend.vm.typehandle;
 import godwit.impl;
 
 
-public struct MethodTableAuxiliaryData
+public struct MethodTableWriteableData
 {
 public:
 final:
     enum Flags : uint
     {
-        Initialized = 0x0001,
-        HasCheckedCanCompareBitsOrUseFastGetHashCode = 0x0002,
-        CanCompareBitsOrUseFastGetHashCode = 0x0004,
-        IsTlsIndexAllocated = 0x0008,
-        HasApproxParent = 0x0010,
-        MayHaveOpenInterfaceInInterfaceMap = 0x0020,
-        IsNotFullyLoaded = 0x0040,
-        DependenciesLoaded = 0x0080,
-        IsInitError = 0x0100,
-        IsStaticDataAllocated = 0x0200,
-        HasCheckedStreamOverride = 0x0400,
-        StreamOverriddenRead = 0x0800,
-        StreamOverriddenWrite = 0x1000,
-        EnsuredInstanceActive = 0x2000,
+        Unrestored = 0x00000004,
+        HasApproxParent = 0x00000010,
+        UnrestoredTypeKey = 0x00000020,
+        IsNotFullyLoaded = 0x00000040,
+        DependenciesLoaded = 0x00000080,
+        CanCompareBitsOrUseFastGetHashCode = 0x00000200,
+        HasCheckedCanCompareBitsOrUseFastGetHashCode = 0x00000400,
     }
 
-    union
-    {
-        Flags flags;
-        struct
-        {
-            ushort loFlags;
-            short offsetToNonVirtualSlots;
-        }
-    }
-
-    int cachedVersionResilientHashCode;
-    Module* loaderModule;
+    uint flags;
     /// Non-unloadable context: internal RuntimeType object handle
     /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* exposedClassObject;
+    size_t exposedClassObject;
 
     static if (DEBUG)
     {
-        enum DebugFlags : uint
-        {
-            IsPublished = 0x2000,
-            ParentMethodTablePointerValid = 0x4000,
-            HasInjectedInterfaceDuplicates = 0x8000,
-        }
-
-        DebugFlags debugFlags;
         uint lastVerifiedGCCnt;
 
         static if (HOST_x64)
         {
             uint padding;
         }
-
-        void* debugOnlyDynamicStatics;
-        void* debugOnlyGenericStatics;
-        void* debugOnlyThreadStatics;
     }
 
 }
@@ -100,7 +70,14 @@ public:
 final:
     enum WFlagsLow : uint
     {
-        HasCriticalFinalizer = 0x00000002,
+        StaticsMask = 0x00000006,
+        StaticsMaskNonDynamic = 0x00000000,
+        StaticsMaskDynamic = 0x00000002,
+        StaticsMaskGenerics = 0x00000004,
+        StaticsMaskCrossModuleGenerics = 0x00000006,
+        StaticsMaskIfGenericsThenCrossModule = 0x00000002,
+
+        NotInPZM = 0x00000008,
 
         GenericsMask = 0x00000030,
         GenericsMaskNonGeneric = 0x00000000,
@@ -116,72 +93,93 @@ final:
         IsRegStructPassed = 0x00000800,
 
         IsByRefLike = 0x00001000,
-        HasBoxedRegularStatics = 0x00002000,
-        HasBoxedThreadStatics = 0x00004000,
 
-        StringArrayValues = (GenericsMask & GenericsMaskNonGeneric),
+        StringArrayValues = StaticsMaskNonDynamic | NotInPZM |
+                            GenericsMaskNonGeneric,
     }
 
     enum WFlagsHigh : uint
     {
         CategoryMask = 0x000F0000,
         CategoryClass = 0x00000000,
+        CategoryUnused1 = 0x00010000,
+        CategoryUnused2 = 0x00020000,
+        CategoryUnused3 = 0x00030000,
         CategoryValueType = 0x00040000,
+        CategoryValueTypeMask = 0x000C0000,
         CategoryNullable = 0x00050000,
-        CategoryPrimitive = 0x00060000,
+        CategoryPrimitiveValueType = 0x00060000,
         CategoryTruePrimitive = 0x00070000,
         CategoryArray = 0x00080000,
         CategoryArrayMask = 0x000C0000,
         IfArrayThenSzArray = 0x00020000,
         CategoryInterface = 0x000C0000,
+        CategoryUnused4 = 0x000D0000,
+        CategoryUnused5 = 0x000E0000,
+        CategoryUnused6 = 0x000F0000,
 
         CategoryElementTypeMask = 0x000E0000,
 
         HasFinalizer = 0x00100000,
-        Collectible = 0x00200000,
+        IDynamicInterfaceCastable = 0x00200000,
+        ICastable = 0x00400000,
+        HasIndirectParent = 0x00800000,
 
-        RequiresAlign8 = 0x00800000,
-
-        ContainsGCPointers = 0x01000000,
+        ContainsPointers = 0x01000000,
         HasTypeEquivalence = 0x02000000,
         IsTrackedReferenceWithFinalizer = 0x04000000,
-        IDynamicInterfaceCastable = 0x10000000,
+        HasCriticalFinalizer = 0x08000000,
+        Collectible = 0x10000000,
         ContainsGenericVariables = 0x20000000,
         ComObject = 0x40000000,
         HasComponentSize = 0x80000000,
 
-        NonTrivialInterfaceCast = CategoryArray | ComObject | IDynamicInterfaceCastable | CategoryValueType,
+        NonTrivialInterfaceCast = CategoryArray | ComObject | IDynamicInterfaceCastable |
+                                ICastable | CategoryValueType,
     }
 
     enum WFlags2 : uint
     {
+        MultipurposeSlotsMask = 0x001F,
         HasPerInstInfo = 0x0001,
-        DynamicStatics = 0x0002,
+        HasInterfaceMap = 0x0002,
         HasDispatchMapSlot = 0x0004,
+        HasNonVirtualSlots = 0x0008,
+        HasModuleOverride = 0x0010,
 
-        IsIntrinsicType = 0x0020,
-        HasCctor = 0x0040,
-        HasVirtualStaticMethods = 0x0080,
+        IsZapped = 0x0020,
+        IsPreRestored = 0x0040,
+        HasModuleDependencies = 0x0080,
 
-        TokenMask = 0xFFFFFF00,
+        IsIntrinsicType = 0x0100,
+        RequiresDispatchTokenFat = 0x0200,
+        HasCctor = 0x0400,
+        HasVirtualStaticMethods = 0x0800,
+
+        HasBoxedRegularStatics = 0x2000,
+        HasSingleNonVirtualSlot = 0x4000,
+        DependsOnEquivalentOrForwardedStructs = 0x8000,
     }
 
     enum RelatedTypeKind
     {
         EEClass = 0,
-        CanonMT = 1,
+        Invalid = 1,
+        MethodTable = 2,
+        Indirection = 3,
     }
 
     enum : size_t
     {
-        UNION_MASK = 1,
+        UNION_MASK = 3,
     }
 
     /// Low WORD is component size for array/string types; otherwise low flags.
     /// High WORD is category/type flags.
     uint flags;
     uint baseSize;
-    uint flags2;
+    ushort flags2;
+    ushort _token;
     ushort numVirtuals;
     ushort numInterfaces;
 
@@ -192,7 +190,7 @@ final:
 
     MethodTable* parentMethodTable;
     Module* ceemodule;
-    MethodTableAuxiliaryData* auxiliaryData;
+    MethodTableWriteableData* writeableData;
 
     union
     {
@@ -256,7 +254,7 @@ final:
 
     uint typeDefRid()
     {
-        return flags2 >> 8;
+        return _token;
     }
 
     TypeDef token()
@@ -284,10 +282,13 @@ final:
     extern (C) export @property MethodTable* canonMethodTable()
         scope return
     {
-        if (relatedTypeKind != RelatedTypeKind.CanonMT)
+        if (relatedTypeKind == RelatedTypeKind.EEClass)
             return &this;
 
-        return cast(MethodTable*)(canonMT & ~UNION_MASK);
+        if (relatedTypeKind == RelatedTypeKind.MethodTable)
+            return cast(MethodTable*)(canonMT & ~UNION_MASK);
+
+        return null;
     }
 
     pragma(mangle, "MethodTable_eeClass_set")
@@ -302,9 +303,9 @@ final:
     pragma(mangle, "MethodTable_canonMethodTable_set")
     extern (C) export @property MethodTable* canonMethodTable(MethodTable* val)
     {
-        if (relatedTypeKind == RelatedTypeKind.CanonMT)
+        if (relatedTypeKind == RelatedTypeKind.MethodTable)
         {
-            canonMT = cast(size_t)val | cast(size_t)RelatedTypeKind.CanonMT;
+            canonMT = cast(size_t)val | cast(size_t)RelatedTypeKind.MethodTable;
             return val;
         }
 
@@ -319,7 +320,7 @@ final:
 
     void setCanonMethodTableUnsafe(MethodTable* newCanonMethodTable)
     {
-        relatedTypeKind = RelatedTypeKind.CanonMT;
-        canonMT = cast(size_t)newCanonMethodTable | cast(size_t)RelatedTypeKind.CanonMT;
+        relatedTypeKind = RelatedTypeKind.MethodTable;
+        canonMT = cast(size_t)newCanonMethodTable | cast(size_t)RelatedTypeKind.MethodTable;
     }
 }

@@ -36,7 +36,10 @@ final:
         /// If so, this requires extra parsing in the PE to get the address of this field's data.
         bool, "isRVA", 1,
         /// Protection level of this field.
-        Protection, "protection", 5
+        ubyte, "protection", 3,
+        /// Does this field's mb require all 24 bits
+        bool, "requiresFullMbValue", 1,
+        bool, "", 1
     ));
     mixin(bitfields!(
         /// Offset of this field in memory (assuming that you have a pointer to an instance of its containing type.)

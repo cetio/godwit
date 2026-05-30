@@ -36,15 +36,19 @@ final:
 }
 
 /// Represents a C# Object
-/// Directly contains type info and syncblock index
+/// ObjHeader is at a negative offset for cache line alignment.
 public struct BaseObject
 {
 public:
 final:
-    ObjHeader objHeader;
     MethodTable* methodTable;
     /// Byte array of object data, length is `methodTable.eeClass.layoutInfo.managedSize`
     ubyte data;
+
+    ObjHeader* objHeader()
+    {
+        return cast(ObjHeader*)(cast(ubyte*)&this - ObjHeader.sizeof);
+    }
 
 }
 

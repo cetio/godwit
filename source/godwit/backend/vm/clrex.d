@@ -34,8 +34,8 @@ final:
         IpAdjusted = 0x0002,
     }
 
-    uint* ip;
-    uint* sp;
+    size_t ip;
+    size_t sp;
     MethodDesc* fn;
     StackTraceElementFlags flags;
 
