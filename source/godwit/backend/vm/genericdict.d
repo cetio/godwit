@@ -10,12 +10,11 @@ import godwit.backend.vm.field;
 import godwit.backend.inc.corhdr;
 
 /// Generic dictionary, for instantiated types and methods (TBD) \
-/// This is just an abstraction around an open-ended array
+/// This is just an abstraction around an open-ended array of pointer-sized entries
 public struct Dictionary
 {
 public:
 final:
-    /// Signatures of all instantiations
-    PCCOR_SIGNATURE[] entries;
+    size_t entry;
 
 }
