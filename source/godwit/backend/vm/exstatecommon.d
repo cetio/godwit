@@ -38,12 +38,10 @@ public struct EHClauseInfo
 {
 public:
 final:
-    uint* ip;
-    uint* sf;
-    /// Caller stack frame
-    uint* csf;
-    CorPrfClauseType ClauseType;
-    /// Indicates that this clause takes place in managed code
+    size_t ip;
+    size_t sf;
+    size_t csf;
+    CorPrfClauseType clauseType;
     bool managed;
 
 }
@@ -52,20 +50,15 @@ public struct DebuggerExState
 {
 public:
 final:
-    // This frame pointer marks the latest stack frame examined by the EH subsystem in the first pass.
-    // An exception cannot be intercepted closer to the root than this frame pointer.
-    uint* debuggerIndicatedFramePointer;
+    size_t debuggerIndicatedFramePointer;
     MethodDesc* debuggerInterceptedFn;
-    /// The frame pointer of the stack frame where we are intercepting the exception
-    uint* debuggerInterceptFramePointer;
+    size_t debuggerInterceptFramePointer;
     void* debuggerContext;
-    /// The native offset at which to resume execution
-    uint* debuggerInterceptNativeOffset;
+    size_t debuggerInterceptNativeOffset;
     static if (!EH_FUNCLETS)
     {
-        uint* debuggerInterceptFrame;
+        void* debuggerInterceptFrame;
     }
-    // The nesting level at which we want to resume execution
     int debuggerInterceptHandlerDepth;
 
 }
@@ -85,7 +78,7 @@ final:
     }
 
     void* unhandledBuckets;
-    uint* unhandledIp;
+    size_t unhandledIp;
     static if (DEBUG)
     {
         DebugFlags debugFlags;

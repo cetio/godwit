@@ -21,7 +21,7 @@ final:
     void* manifestMetadata;
     PEImageLayout* imageLayout;
     Assembly** nativeMetadataAssemblyRefMap;
-    ModuleBase* nativeManifestModule;
+    Module* nativeManifestModule;
     ImageDataDirectory* componentAssemblies;
     uint componentAssemblyCount;
     uint manifestAssemblyCount;

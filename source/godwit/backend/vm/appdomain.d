@@ -19,6 +19,7 @@ import godwit.impl;
 import godwit.backend.inc.arraylist;
 import godwit.backend.vm.assemblyspec;
 import godwit.backend.vm.typeequivalencehash;
+import godwit.backend.inc.utilcode;
 
 public struct BaseDomain
 {
@@ -32,7 +33,6 @@ final:
     CrstExplicitInit domainLocalBlockCrst;
     // Used to protect the reference lists in the collectible loader allocators attached to this appdomain
     CrstExplicitInit crstLoaderAllocatorReferences;
-    CrstExplicitInit crstStaticBoxInitLock;
     // Used to protect the assembly list. Taken also by GC or debugger thread, therefore we have to avoid
     // triggering GC while holding this lock (by switching the thread to GC_NOTRIGGER while it is held).
     CrstExplicitInit crstAssemblyList;
@@ -44,9 +44,13 @@ final:
     DefaultAssemblyBinder* defaultBinder;
     IGCHandleStore handleStore;
     // The pinned heap handle table.
-    PinnedHeapHandleTable pinnedHeapHandleTable;
-    // Information regarding the managed standard interfaces.
-    MngStdInterfacesInfo* mngStdInterfacesInfo;
+    PinnedHeapHandleTable* pinnedHeapHandleTable;
+    CrstExplicitInit pinnedHeapHandleTableCrst;
+    static if (COM_INTEROP)
+    {
+        // Information regarding the managed standard interfaces.
+        MngStdInterfacesInfo* mngStdInterfacesInfo;
+    }
     // I have yet to figure out an efficient way to get the number of handles
     // of a particular type that's currently used by the process without
     // spending more time looking at the handle table code. We know that
@@ -55,11 +59,7 @@ final:
     // handle count on the AD itself.
     uint sizedRefHandles;
     TypeIDMap typeIDMap;
-    // MethodTable to `typeIndex` map. `typeIndex` is embedded in the code during codegen.
-    // During execution corresponding thread static data blocks are stored in `t_NonGCThreadStaticBlocks`
-    // and `t_GCThreadStaticBlocks` array at the `typeIndex`.
-    TypeIDMap nonGCThreadStaticBlockTypeIDMap;
-    TypeIDMap gcThreadStaticBlockTypeIDMap;
+    LockedRangeList collVSDRanges;
 
 }
 

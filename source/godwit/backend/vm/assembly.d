@@ -35,6 +35,7 @@ final:
     {
         bool isCollectible;
     }
+    uint nextAvailableModuleIndex;
     /// Pointer to the loader allocator responsible for allocating memory for this assembly.
     LoaderAllocator* allocator;
     /// If a TypeLib is ever required for this module, cache the pointer here.

@@ -24,7 +24,7 @@ public struct ReadyToRunInfo
 public:
 final:
     Module* ceemodule;
-    ModuleBase* nativeManifestModule;
+    Module* nativeManifestModule;
     ReadyToRunHeader* header;
     bool isComponentAssembly;
     NativeImage* nativeImage;

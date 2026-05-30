@@ -4,6 +4,7 @@ import std.bitmanip;
 import godwit.backend.vm.typehandle;
 import godwit.backend.inc.corhdr;
 import godwit.backend.vm.ceeload;
+import godwit.backend.vm.methodtable;
 
 /**
    TypeDesc is a discriminated union of all types that can not be directly
@@ -49,12 +50,9 @@ public struct ParamTypeDesc
 
 public:
 final:
-    /// The typeAndFlags field in TypeDesc tell what kind of parameterized type we have
+    MethodTable* templateMethodTable;
     TypeHandle arg;
-    // ----> RUNTIMETYPEHANDLE <----
-    /// Non-unloadable context: internal RuntimeType object handle
-    /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* exposedClassObject;
+    size_t exposedClassObject;
 
 }
 
@@ -74,11 +72,11 @@ public struct TypeVarTypeDesc
 public:
 final:
     Module* ceemodule;
-    MDToken mdToken;
+    MDToken typeOrMethodDef;
     uint numConstraints;
     TypeHandle* constraints;
-    uint* exposedClassObject;
-    MDToken argMDToken;
+    size_t exposedClassObject;
+    MDToken token;
     uint index;
 
 }
@@ -93,14 +91,9 @@ public struct FnPtrTypeDesc
 
 public:
 final:
-    /// Non-unloadable context: internal RuntimeType object handle
-    /// Unloadable context: slot index in LoaderAllocator's pinned table
-    uint* exposedClassObject;
-    /// Number of arguments
+    size_t exposedClassObject;
     uint numArgs;
-    /// Calling convention (actually just a single byte)
     uint callingConv;
-    /// Return type first, then argument types
-    TypeHandle[] types;
+    TypeHandle retAndArgType;
 
 }

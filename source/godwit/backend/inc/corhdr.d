@@ -34,6 +34,7 @@ alias ModuleRef = uint; /// ditto
 alias TypeSpec = uint; /// ditto
 alias AssemblyDef = uint; /// ditto
 alias AssemblyRef = uint; /// ditto
+alias FileDef = uint; /// ditto
 alias File = uint; /// ditto
 alias ExportedType = uint; /// ditto
 alias ManifestResource = uint; /// ditto

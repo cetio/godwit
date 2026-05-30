@@ -1,13 +1,32 @@
 module godwit.backend.inc.utilcode;
 
+import godwit.impl;
+
 
 public struct RangeList
 {
 public:
 final:
+    size_t vtablePtr;
     RangeListBlock starterBlock;
     RangeListBlock* firstEmptyBlock;
-    uint* firstEmptyRange;
+    size_t firstEmptyRange;
+
+}
+
+public struct LockedRangeList
+{
+public:
+final:
+    RangeList base;
+    static if (DEBUG)
+    {
+        size_t[3] rwLock;
+    }
+    else
+    {
+        size_t[2] rwLock;
+    }
 
 }
 
