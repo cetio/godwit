@@ -454,11 +454,11 @@ pure uint corSigUncompressCallingConv(ref PCCOR_SIGNATURE data)
     Returns:
         HResult indicating the success state of decompression.
 */
-pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE data, uint len, out uint data)
+pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE data, uint len, out uint callingConv)
 {
     if (len <= 0)
     {
-        data = 0;
+        callingConv = 0;
         return HResult.EBadImageFormat;
     }
 
@@ -477,29 +477,29 @@ pure HResult corSigUncompressCallingConv(PCCOR_SIGNATURE data, uint len, out uin
 */
 pure uint corSigUncompressSignedInt(PCCOR_SIGNATURE data, out int value)
 {
-    uint data = 0;
-    uint size = corSigUncompressData(data, data);
+    uint rawValue = 0;
+    uint size = corSigUncompressData(data, rawValue);
 
     if (size == -1)
         return size;
 
-    if ((data >>= 1) & 0x1)
+    if ((rawValue >>= 1) & 0x1)
     {
         if (size == 1)
         {
-            data |= 0xffffffc0;
+            rawValue |= 0xffffffc0;
         }
         else if (size == 2)
         {
-            data |= 0xffffe000;
+            rawValue |= 0xffffe000;
         }
         else
         {
-            data |= 0xf0000000;
+            rawValue |= 0xf0000000;
         }
     }
 
-    value = data;
+    value = rawValue;
     return size;
 }
 

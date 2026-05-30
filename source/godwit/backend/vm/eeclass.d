@@ -278,61 +278,10 @@ final:
     uint nonGCStaticFieldBytes;
     uint nonGCThreadStaticFieldBytes;
 
-
-    uint numTotalFields()
-    {
-        return numInstanceFields + numStaticFields;
-    }
-
-    uint numInstanceFields()
-    {
-        return numInstanceFields;
-    }
-
-    uint numStaticFields()
-    {
-        return numStaticFields;
-    }
-
-    uint numThreadStaticFields()
-    {
-        return numThreadStaticFields;
-    }
-
-    uint numHandleStatics()
-    {
-        return numHandleStatics;
-    }
-
-    uint numHandleThreadStatics()
-    {
-        return numHandleThreadStatics;
-    }
-
-    uint numNonVirtualSlots()
-    {
-        return numNonVirtualSlots;
-    }
-
-    uint nonGCStaticFieldBytes()
-    {
-        return nonGCStaticFieldBytes;
-    }
-
-    uint nonGCThreadStaticFieldBytes()
-    {
-        return nonGCThreadStaticFieldBytes;
-    }
-
-    MethodDescChunk* chunks()
-    {
-        return chunks;
-    }
-
     pragma(mangle, "EEClass_fields_get")
     extern (C) export FieldDesc*[] fields()
     {
-        int length = numTotalFields();
+        int length = numInstanceFields + numStaticFields;
         FieldDesc*[] fieldDescs;
         for (int i = 0; i < length; i++)
             fieldDescs ~= fieldDescList + i;

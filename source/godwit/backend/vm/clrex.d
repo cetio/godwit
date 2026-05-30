@@ -12,7 +12,7 @@ final:
     // pointer to stack trace storage
     StackTraceElement*  stackTrace;
     // size of stack trace storage
-    uint stackTrace;
+    uint size;
     // current frame in stack trace
     uint frameCount;
     // number of items in the Dynamic Method array

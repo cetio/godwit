@@ -196,7 +196,7 @@ final:
 
     union
     {
-        EEClass* eeClass;
+        EEClass* _eeClass;
         size_t canonMT;
     }
 
@@ -254,11 +254,6 @@ final:
         return ((managedSize & 1) == 0 && managedSize <= 8 && managedSize != 6);
     }
 
-    uint baseSize()
-    {
-        return baseSize;
-    }
-
     uint typeDefRid()
     {
         return flags2 >> 8;
@@ -280,9 +275,9 @@ final:
     extern (C) export @property EEClass* eeClass()
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
-            return canonMethodTable.eeClass;
+            return canonMethodTable._eeClass;
 
-        return eeClass;
+        return _eeClass;
     }
 
     pragma(mangle, "MethodTable_canonMethodTable_get")
@@ -299,9 +294,9 @@ final:
     extern (C) export @property EEClass* eeClass(EEClass* val)
     {
         if (relatedTypeKind != RelatedTypeKind.EEClass)
-            return canonMethodTable().eeClass = val;
+            return canonMethodTable()._eeClass = val;
 
-        return eeClass = val;
+        return _eeClass = val;
     }
 
     pragma(mangle, "MethodTable_canonMethodTable_set")
