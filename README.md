@@ -4,8 +4,6 @@
 [![License](https://img.shields.io/badge/License-AGPL--3-blue)](#license)
 [![Build - Intangible](https://img.shields.io/badge/Build-Intangible-informational)](https://)
 
-[![Trello](https://img.shields.io/badge/Trello-blue?style=for-the-badge&logo=Trello)](https://trello.com/b/e5HQc6nz/godwit)
-
 D-CoreCLR interop library, intended to allow D and other bound languages to interact with C# programs without any explicit back and forth between the languages. This is achieved by directly translating CoreCLR structures and code into D.
 
 As of present, the interacting language must be initialized by C#, due to the constraint of not knowing where the `AppDomain` is located in memory.
@@ -84,16 +82,6 @@ Do whatever you want to contribute, ideally a pull request, but faxing the diff 
 
 If you find any bugs or have any suggestions, please open an issue. Bugs will be my first priority but I will make sure that any reasonable suggestions get put on my TODO and will be gotten around to.
 
-### Reference & Standards
-
-Keep things simple, do not go overboard with OOP or anything of the like, and remember, composition over inheritance.
-
-I've labeled all files and classes according to how they were named in the CoreCLR source code, with some exceptions. Any exceptions should have comments somewhere near the top or the type name indicating where it originally came from or what it represents.
-
-Structures that don't accurately represent the original are okay, so long as it doesn't have any detriment, but I personally prefer to keep things as close to the original as possible.
-
-NO DEPENDENCIES
-
 ## License
 
-Released under [AGPL-3](/LICENSE.txt) by [@cetio](https://github.com/cetio).
+Godwit is licensed under [AGPL-3](/LICENSE.txt).
